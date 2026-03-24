@@ -7,10 +7,9 @@ format:
     css: styles.css
     toc: true
     keep-md: true
-  commonmark: default
+  
 
 website:
-  twitter-card: true
   open-graph: true
   repo-actions: [issue]
   navbar:
