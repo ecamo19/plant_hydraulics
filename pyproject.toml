@@ -33,4 +33,4 @@ include = ["plant_hydraulics"]
 [tool.nbdev]
 
 [tool.setuptools.package-data]
-"bonan_hydraulics" = ["data/*"]
+"plant_hydraulics" = ["data/*"]
