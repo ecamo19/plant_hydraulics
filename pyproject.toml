@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "plant_hydraulics"
 dynamic = ["version"]
-description = ""
+description = "Python code for plant hydraulics models"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "Apache-2.0"}
@@ -15,7 +15,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
 ]
-dependencies = []
+dependencies = ['numpy', 'matplotlib', 'itables', 'pandas']
 
 [project.urls]
 Repository = "https://github.com/ecamo19/plant_hydraulics"
@@ -31,3 +31,6 @@ version = {attr = "plant_hydraulics.__version__"}
 include = ["plant_hydraulics"]
 
 [tool.nbdev]
+
+[tool.setuptools.package-data]
+"bonan_hydraulics" = ["data/*"]
