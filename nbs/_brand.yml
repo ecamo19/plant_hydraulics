@@ -1,0 +1,35 @@
+color:
+  palette:
+    white: "#FFFFFF"
+    blue: "#ddeaf1"
+    vanilla: "#f8f3df"
+    black: "#323030"
+  background: vanilla
+  foreground: black
+  primary: vanilla
+
+defaults:
+  bootstrap:
+    defaults:
+      navbar-bg: "#323030"
+      navbar-fg: "#f8f3df"
+      navbar-hl: "#323030"
+
+logo: 
+  small: tree.png
+
+typography:
+  monospace-inline:
+    color: green
+    background-color: vanilla
+  monospace-block:
+    color:  black
+    background-color: "#F2F2F2"
+  link:
+    color: green
+  fonts:
+    - family: Jura
+      source: google
+  base: 
+    family: Jura
+  headings: Jura

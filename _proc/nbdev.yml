@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "plant_hydraulics"
+  site-url: "https://ecamo19.github.io/plant_hydraulics"
+  description: ""
+  repo-branch: main
+  repo-url: "https://github.com/ecamo19/plant_hydraulics"
