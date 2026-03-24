@@ -15,7 +15,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
 ]
-dependencies = ['numpy', 'matplotlib', 'itables', 'pandas', 'requests']
+dependencies = ['numpy', 'matplotlib', 'itables', 'pandas', 'requests', 'scipy']
 
 [project.urls]
 Repository = "https://github.com/ecamo19/plant_hydraulics"
