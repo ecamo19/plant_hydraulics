@@ -394,7 +394,7 @@ def SurEauVegetationParams(
     - LMA:                  Leaf mass per area (Table 1, g/m2leaf)
     - C_LApo_init:          Constant capacitance of the leaf apoplasm, CLApo (Table 1, Eq. 6, mmol/m2leaf/MPa)
 
-__Phenology__
+- __Phenology__
 
     - foliage:              Foliage type: "Evergreen" or "Deciduous" or "Forced" (Appendix A)
     - nb_day_LAI:           Number of days from budburst to full canopy, controls RLAI (Appendix A, days)
@@ -405,7 +405,7 @@ __Phenology__
     - day_end_forced:       Fixed senescence date for the "Forced" phenology model (DOY) 
     - defoliation:          Whether cavitation-induced leaf shedding is enabled (bool) 
 
- __Stem__
+ - __Stem__
 
     - P50_VC_stem:          Water potential causing 50% loss of stem hydraulic conductance, ψ50,S (Table 1, Eq. 16, MPa)
     - slope_VC_stem:        Slope of rate of stem embolism spread at ψ50,S, slopeS (Table 1, Eq. 16, %/MPa)
@@ -420,7 +420,7 @@ __Phenology__
     - f_TRB_to_leaf:        Ratio converting stem surface area to leaf area basis for stem transpiration (-)  
     - g_BL_stem:            Bark boundary layer conductance for stem transpiration (mmol/m2/s)  
 
-__Root__
+- __Root__
 
     - f_root_to_leaf:       Root-to-leaf area ratio, RaLa (Table 1, Eq. 18, -)
     - root_radius:          Root diameter / 2, dR/2 (Table 1, Eq. 21, m)
@@ -640,19 +640,93 @@ def SurEauPlantState(
 
 ```
 
-*Plant hydraulic state — mutated by the solver, carried forward in time.*
+*Plant hydraulic state for SurEau-Ecos — mutated by the solver, carried forward in time.*
 
-Contains the 4-compartment water potentials (leaf/stem × apoplasm/symplasm),
-cavitation fronts, conductances, capacitances, phenology, and tissue water
-content.  Everything here is needed to restart the simulation from a
-checkpoint.
+Contains the four-compartment water potentials (leaf/stem ×
+apoplasm/symplasm), cavitation fronts, conductances, capacitances,
+phenology, and tissue water content. Everything here is needed to
+restart the simulation from a checkpoint.
+
+References to equations and sections are from Ruffault et al. (2022),
+Geosci. Model Dev., 15, 5593–5626.
+
+- __Water potentials__
+
+    - psi_LApo:          Water potential of the leaf apoplasm, ψLApo (Eq. 6, Fig. 1c, MPa)
+    - psi_SApo:          Water potential of the stem apoplasm, ψSApo (Eq. 7, Fig. 1c, MPa)
+    - psi_LSym:          Water potential of the leaf symplasm, ψLSym (Eq. 8, Fig. 1c, MPa)
+    - psi_SSym:          Water potential of the stem symplasm, ψSSym (Eq. 9, Fig. 1c, MPa)
+    - psi_LApo_cav:      Historical minimum of ψLApo — the most negative value ever reached. Controls the current cavitation level: PLCLeaf = PLC(ψcavLApo). Irreversible: only decreases over time (Eq. 25, MPa)
+    - psi_SApo_cav:      Historical minimum of ψSApo — same role for stem cavitation (Eq. 27, MPa)
+    - psi_all_soil:      Conductance-weighted average soil water potential across all layers (MPa). Diagnostic, computed from Σ(k_soil_to_stem × ψsoilj) / Σk_soil_to_stem
+
+- __Hydraulic conductances__
+
+    - k_plant:           Total plant hydraulic conductance from soil to leaf symplasm, KPlant (Eq. 13, mmol/m2leaf/s/MPa)
+    - k_LSym:            Conductance from leaf apoplasm to leaf symplasm, KLSym (Table 1, Eq. 8, mmol/m2leaf/s/MPa)
+    - k_SSym:            Conductance from stem apoplasm to stem symplasm, KSSym (Table 1, Eq. 9, mmol/m2leaf/s/MPa)
+    - k_RSApo:           Root-to-stem apoplasmic conductance per soil layer, KRj-SApo, reduced by stem PLC (Eq. 16, mmol/m2leaf/s/MPa). Array, one value per soil layer
+    - k_SLApo:           Stem-to-leaf apoplasmic conductance, KSApo-LApo, reduced by leaf PLC (Eq. 14, mmol/m2leaf/s/MPa)
+    - k_soil_to_stem:    Combined soil-to-stem conductance per soil layer, Ksoilj-SApo, series combination of soil-to-root and root-to-stem (Eq. 20, mmol/m2leaf/s/MPa). Array, one value per soil layer
+
+- __Capacitances__
+
+    - C_LSym:            Capacitance of the leaf symplasm, CLSym = QsatLSym × RWC' (Eq. 42, Eq. 44, mmol/m2leaf/MPa). Variable — depends on current ψLSym via the pressure-volume curve
+    - C_SSym:            Capacitance of the stem symplasm, CSSym = QsatSSym × RWC' (Eq. 42, Eq. 44, mmol/m2leaf/MPa). Variable — depends on current ψSSym via the pressure-volume curve
+    - C_LApo:            Capacitance of the leaf apoplasm, CLApo (Eq. 6, mmol/m2leaf/MPa). Constant — xylem wall is inelastic (Sect. 2.5.1)
+    - C_SApo:            Capacitance of the stem apoplasm, CSApo (Eq. 7, mmol/m2leaf/MPa). Constant — xylem wall is inelastic (Sect. 2.5.1)
+
+- __Cavitation__
+
+    - PLC_leaf:          Percent loss of leaf hydraulic conductivity, PLCL (Eq. 15, %). Irreversible — only increases. Used in Eq. 14
+    - PLC_stem:          Percent loss of stem hydraulic conductivity, PLCS (Eq. 15 with stem parameters, %). Irreversible — only increases. Used in Eq. 16
+
+- __LAI and phenology__
+
+    - LAI_pheno:         Phenological LAI target, ∅ × LAImax (Eq. A1, m2leaf/m2soil). Set by compute_pheno (Appendix A)
+    - LAI:               Actual functional LAI after defoliation, LAI = LAI_pheno − LAI_dead (Eq. A1 modified, m2leaf/m2soil)
+    - canopy_storage_capacity:  cws × LAI (Table 1, mm)
+    - FCC:               Fractional canopy cover, 1 − exp(−K × LAI) (Beer-Lambert, -)
+    - LAI_dead:          LAI of drought-killed leaves from cavitation-induced defoliation (m2leaf/m2soil)
+
+- __Phenology accumulator__
+
+    - sum_temperature:   Cumulative forcing temperature for budburst, Σ Rf(Td) (Eq. A2, °C)
+    - budburst_date:     Day of year when budburst occurred, tf (Eq. A2, DOY). NaN if budburst has not yet occurred this year
+
+- __Tissue water content (saturated references)__ 
+
+    - Q_LApo_sat_mmol:        Leaf apoplasm water at saturation, QsatLApo (Eq. 37, mmol/m2soil)
+    - Q_LApo_sat_L:           Leaf apoplasm water at saturation in litres (L/m2soil)
+    - Q_LApo_sat_mmol_per_LA: Leaf apoplasm water at saturation normalised by leaf area (mmol/m2leaf). Feeds Eq. 25 (cavitation flux)
+    - Q_SApo_sat_mmol:        Stem apoplasm water at saturation, QsatSApo (Eq. 40, mmol/m2soil)
+    - Q_SApo_sat_L:           Stem apoplasm water at saturation in litres (L/m2soil)
+    - Q_SApo_sat_mmol_per_LA: Stem apoplasm water at saturation normalised by leaf area (mmol/m2leaf). Feeds Eq. 27 (cavitation flux)
+    - Q_LSym_sat_mmol:        Leaf symplasm water at saturation, QsatLSym (Eq. 36, mmol/m2soil)
+    - Q_LSym_sat_L:           Leaf symplasm water at saturation in litres (L/m2soil)
+    - Q_LSym_sat_mmol_per_LA: Leaf symplasm water at saturation normalised by leaf area (mmol/m2leaf). Feeds Eq. 42 (capacitance)
+    - Q_SSym_sat_mmol:        Stem symplasm water at saturation, QsatSSym (Eq. 39, mmol/m2soil)
+    - Q_SSym_sat_L:           Stem symplasm water at saturation in litres (L/m2soil)
+    - Q_SSym_sat_mmol_per_LA: Stem symplasm water at saturation normalised by leaf area (mmol/m2leaf). Feeds Eq. 42 (capacitance)
+
+- __Tissue water content (current)__
+
+    - Q_LApo_L:          Current leaf apoplasm water content, derived from (1 − PLC_leaf/100) × QsatLApo (L/m2soil)
+    - Q_SApo_L:          Current stem apoplasm water content, derived from (1 − PLC_stem/100) × QsatSApo (L/m2soil)
+    - Q_LSym_L:          Current leaf symplasm water content, derived from RWC × QsatLSym via Eq. 43 (L/m2soil)
+    - Q_SSym_L:          Current stem symplasm water content, derived from RWC × QsatSSym via Eq. 43 (L/m2soil)
+
+- __Canopy dry matter__
+
+    - DM_live_canopy:    Dry mass of living leaves, LAI × LMA (g/m2soil). Used with succulence (Eq. 38) to compute leaf water volumes
+    - DM_dead_canopy:    Dry mass of dead (drought-shed) leaves (g/m2soil). Used for canopy fuel moisture content  [not in paper, fire risk extension]
 
 
 ### Fluxes class: recomputed every (sub-)timestep 
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1339){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1500){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauPlantFluxes
 
@@ -671,17 +745,56 @@ def SurEauPlantFluxes(
 
 ```
 
-*Instantaneous fluxes & conductances — computed from state + forcing.*
+*Instantaneous fluxes and conductances for SurEau-Ecos — computed from state + forcing.*
 
 Everything here can safely be zeroed between timesteps; the solver
 fills them in from SurEauPlantState + atmospheric forcing.
+
+- __Stomatal and canopy conductance__
+
+    - gmin:              Cuticular conductance of the leaf, gcutiL, temperature-adjusted via Q10 (Eqs. 31–32, mmol/m2leaf/s)
+    - gmin_S:            Cuticular conductance of the stem, gcutiS (Eq. 30 context, mmol/m2leaf/s)
+    - regul_fact:        Stomatal regulation factor γ, varies 0 (fully closed) to 1 (fully open) (Eq. 34, -)
+    - gs_bound:          Light-limited stomatal conductance before water stress, gstom_max modulated by light, temperature, and CO2 (Eq. 33 context, Jarvis 1976, mmol/m2leaf/s)
+    - gs_lim:            Water-limited stomatal conductance, gs_bound × γ (Eq. 33, mmol/m2leaf/s)
+    - g_canopy_bound:    Unstressed canopy conductance, series combination of gs_bound + gmin, g_BL, and g_crown (Eq. 29, mmol/m2leaf/s)
+    - g_canopy_lim:      Water-limited canopy conductance, series combination of gs_lim + gmin, g_BL, and g_crown (Eq. 29 with Eq. 33, mmol/m2leaf/s)
+    - g_BL:              Leaf boundary layer conductance, gbound (Eq. 29, mmol/m2leaf/s). Function of wind speed and leaf size (Jones 2013)
+    - g_crown:           Crown-level aerodynamic conductance, gcrown (Eq. 29, mmol/m2leaf/s). Function of wind speed (Jones 2013)
+
+- __Water fluxes__
+
+    - E_prime:           Derivative of stomatal transpiration with respect to ψLSym, dE/dψ. Used by the implicit solver for transpiration linearization (Eq. 60, mmol/m2leaf/s/MPa)
+    - E_min:             Leaf cuticular transpiration, EcutiL (Eq. 29 with gstom = 0, Eq. 8, mmol/m2leaf/s)
+    - E_min_S:           Stem cuticular transpiration, EcutiS (Eq. 30, Eq. 9, mmol/m2leaf/s)
+    - E_bound:           Unstressed maximum leaf transpiration (stomatal + cuticular), EL at γ = 1 (Eq. 29, mmol/m2leaf/s)
+    - E_lim:             Water-limited stomatal transpiration, Estom component of EL after regulation by γ (Eq. 33 applied to Eq. 29, mmol/m2leaf/s). Fed into Eq. 8 as the stomatal sink term
+    - flux_soil_to_stem: Water flux from each soil layer to the stem apoplasm, Ksoilj-SApo × (ψsoilj − ψSApo) (Eq. 5, mmol/m2leaf/s). Array, one value per soil layer
+    - flux_soil_to_stem_mm: Water flux from each soil layer to the stem apoplasm flux converted to water depth per soil area (mm/timestep). Used for soil water balance update (Eqs. 10–12)
+    - transpiration_mm:  Total plant transpiration EPlant converted to water depth, (E_lim + E_min + E_min_S) × LAI × dt (Eq. 28, mm/timestep)
+    - E_min_mm:          Leaf cuticular transpiration converted to water depth (mm/timestep)
+    - E_min_S_mm:        Stem cuticular transpiration converted to water depth (mm/timestep)
+    - sum_flux_soil_to_stem: Sum of soil-to-stem flux across all layers, Σ Ksoilj-SApo × (ψsoilj − ψSApo) (mmol/m2leaf/s)
+
+- __Interception__
+
+    - ppt_soil:               Precipitation reaching the soil after canopy interception, pptsoil (Eq. 10, mm)
+    - intercepted_water:      Water currently held on canopy surfaces (mm). Accumulated by rainfall, depleted by evaporation (Sect. 2.2.2, Ruffault et al. 2013)
+    - evaporation_intercepted: Evaporation of intercepted water this timestep (mm). Consumes ETP before transpiration
+    - ETP_r:                  Residual potential evapotranspiration after interception evaporation (mm). Drives transpiration in compute_transpiration
+    - ETP:                    Potential evapotranspiration allocated to the vegetation fraction this timestep (mm)
+
+- __Leaf energy balance__
+
+    - leaf_temperature:  Leaf temperature TL, solved from the leaf surface energy budget (°C). Drives cuticular conductance (Eqs. 31–32) and leaf VPD (CPRM21, Cochard et al. 2021)
+    - leaf_VPD:          Vapor pressure deficit at the leaf surface, VPDL, accounting for leaf temperature and Kelvin equation correction at ψLSym (Eq. 29 context, kPa). Drives all transpiration calculations
 
 
 ### Diagnostics class: solver quality + derived monitoring outputs class
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1422){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1631){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauPlantDiagnostics
 
@@ -704,7 +817,7 @@ back into the hydraulic solver.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1454){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1663){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauSoil
 
@@ -718,12 +831,30 @@ def SurEauSoil(
 
 ```
 
-*Soil state — mutated every timestep.*
+*Solver diagnostics and derived fire/moisture outputs for SurEau-Ecos.*
+
+Used for logging, quality control, and post-processing, never fed
+back into the hydraulic solver.
+
+- __Solver quality__
+
+    - diag_delta_regul_max:  Maximum change in stomatal regulation factor γ (Eq. 34) across sub-steps within one hourly timestep (-). Used by the adaptive sub-stepping strategy: if > 0.05, the timestep is refined (Sect. 3, Table 2)
+    - diag_delta_PLC_max:    Maximum change in percent loss of conductivity (Eq. 15) across sub-steps within one hourly timestep (%). Used by the adaptive sub-stepping strategy: if > 1.0%, the timestep is refined (Sect. 3, Table 2)
+    - diag_timestep_hours:   Actual sub-timestep duration used by the solver after adaptive refinement (hours). Corresponds to the adaptive "normal" or "fast" modes described in Sect. 3 and Table 2
+    - diag_nwhile_cavit:     Number of iterations in the cavitation self-consistency loop within sureau_solver (1–5). Counts how many (δL, δS) configurations were tried before finding a consistent solution (Appendix C2, text between Eqs. C15–C16)
+
+- __Fuel moisture content__
+
+    - DFMC:       Dead fuel moisture content, equilibrium moisture of dead leaves as a function of VPD (%). Related to forest flammability applications described in Sect. 1 and Sect. 7 (Ruffault et al. 2018b; Pimont et al. 2019)  [empirical formula not in paper]
+    - LFMC_apo:   Live fuel moisture content — apoplasmic fraction only, 100 × Q_LApo / (DM_live × αLApo / 1000) (%). Derived from cavitation-driven water release: Q_LApo = (1 − PLC_leaf/100) × QsatLApo
+    - LFMC_symp:  Live fuel moisture content — symplasmic fraction only, 100 × Q_LSym / (DM_live × (1 − αLApo) / 1000) (%). Derived from pressure-volume curve: Q_LSym = RWC × QsatLSym via Eq. 43
+    - LFMC:       Total live fuel moisture content, 100 × (Q_LApo + Q_LSym) / (DM_live / 1000) (%). The key wildfire risk metric. The paper highlights SurEau-Ecos's ability to simulate "the dynamics of live fuel moisture (foliage and twigs water content)" (Sect. 1, p. 5594) and "the seasonal dynamics of forest flammability" (Abstract, Sect. 8)
+    - FMC_canopy: Whole-canopy fuel moisture content combining live and dead leaves, 100 × (Q_LApo + Q_LSym + Q_dead) / (DM_live + DM_dead) / 1000 (%). The operationally relevant metric for fire behavior prediction (Ruffault et al. 2018b; Nolan et al. 2020, cited in Sect. 1)
 
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1470){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1697){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauClimate
 
@@ -739,12 +870,54 @@ def SurEauClimate(
 
 ```
 
-*Daily climate forcing.*
+*Daily climate forcing for SurEau-Ecos.*
+
+Holds the daily meteorological variables required to drive the
+simulation. 
+
+- __Temporal identifiers__
+
+    - DOY:            Day of year (1–365). Used in phenology (Eq. A2), solar geometry for daylength, and radiation disaggregation
+    - year:           Calendar year (int)
+    - date:           Date string (str)
+
+- __Temperature__
+
+    - T_air_mean:     Mean daily air temperature, Tmean (Table B1, °C)
+    - T_air_max:      Maximum daily air temperature, Tmax (Table B1, °C)
+    - T_air_min:      Minimum daily air temperature, Tmin (Table B1, °C)
+    - T_air_min_prev: Minimum temperature of the previous day (°C). Used for sinusoidal sub-daily temperature disaggregation (De Cáceres et al. 2021, referenced in Sect. 2.1)
+    - T_air_max_prev: Maximum temperature of the previous day (°C). Used for sub-daily temperature disaggregation during the nighttime period before sunrise
+    - T_air_min_next: Minimum temperature of the next day (°C). Used for sub-daily temperature disaggregation during the nighttime period after sunset
+
+- __Humidity__
+
+    - RH_air_mean:    Mean daily relative humidity, RHmean (Table B1, %)
+    - RH_air_max:     Maximum daily relative humidity, RHmax (Table B1, %)
+    - RH_air_min:     Minimum daily relative humidity, RHmin (Table B1, %)
+
+- __Precipitation__
+
+    - PPT:            Daily precipitation, ppt (Table B1, Eq. 10, mm)
+
+- __Radiation__
+
+    - RG:             Daily global radiation, Rglobal (Table B1, MJ/m2)
+
+- __Wind__
+
+    - WS_mean:        Mean daily wind speed, u (Table B1, m/s)
+
+- __Derived (computed from inputs)__
+
+    - VPD:            Vapor pressure deficit, computed from RH_air_mean and T_air_mean (kPa). Drives soil evaporation (Eq. 35) and transpiration (Eqs. 29–30)
+    - net_radiation:  Daily net radiation, computed from RG and cloud cover proxy (MJ/m2). Used to compute ETP  [Linacre 1968 formulation not in paper; paper references De Cáceres et al. 2021]
+    - ETP:            Daily potential evapotranspiration, computed from net_radiation and temperature (mm). Partitioned between vegetation and soil in run_sureau (Sect. 2.1, Fig. 1b)
 
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1493){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1763){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauClimateHourly
 
@@ -757,6 +930,49 @@ def SurEauClimateHourly(
 
 ```
 
-*Sub-daily disaggregated climate.*
+*Sub-daily disaggregated climate for SurEau-Ecos.*
+
+Holds hourly (or sub-daily) arrays of meteorological variables
+derived from the daily forcing in SurEauClimate. 
+
+Each field is a 1-D NumPy array with one value per sub-daily
+timestep (typically 24 for hourly resolution).
+
+- __Radiation__
+
+    - RG:             Sub-daily global radiation, disaggregated from daily Rglobal (Table B1) using a sinusoidal diurnal pattern scaled by daylength (MJ/m2 per timestep)
+    - Rn:             Sub-daily net radiation, disaggregated from daily net radiation using the same diurnal pattern as RG (MJ/m2 per timestep). Drives ETP partitioning
+    - PAR:            Photosynthetically active radiation, converted from RG via PAR = RG × 0.5 × 4.6 (µmol/m2/s). Drives the stomatal light response δ in calculate_gs_jarvis (Table 1)
+    - potential_PAR:  Clear-sky potential PAR at each timestep, computed from solar geometry at the site latitude and DOY (µmol/m2/s). Used to estimate cloud cover for the leaf energy balance (CPRM21)
+
+- __Temperature__
+
+    - T_air_mean:     Sub-daily air temperature, disaggregated from Tmin, Tmax using sinusoidal interpolation with previous/next-day temperatures (McMurtrie et al. 1990, De Cáceres et al. 2021, °C)
+
+- __Humidity__
+
+    - RH_air_mean:    Sub-daily relative humidity, disaggregated linearly from RHmin, RHmax anti-correlated with temperature (%)
+
+- __Wind__
+
+    - WS:             Sub-daily wind speed (m/s). Currently held constant at the daily mean WS_mean (Table B1) for all timesteps
+
+- __Derived atmospheric variables__
+
+    - VPD:            Sub-daily vapor pressure deficit, computed from T_air_mean and RH_air_mean at each timestep (kPa). Drives transpiration (Eqs. 29–30) and soil evaporation (Eq. 35)
+    - ETP:            Sub-daily potential evapotranspiration, computed from Rn and T_air_mean at each timestep (mm per timestep). Total across timesteps equals daily ETP
+
+- __Precipitation__
+
+    - PPT:            Sub-daily precipitation (mm per timestep). All daily precipitation is assigned to the first timestep; remaining timesteps are zero
+
+- __Temporal metadata__
+
+    - time:           Hour of day for each timestep (hours, e.g. 0.0, 1.0, ..., 23.0)
+    - n_hours:        Duration of each timestep (hours). For hourly resolution all values are 1.0. For coarser resolution (e.g. 6-hourly) values reflect the actual interval
+
+- __Vegetation-partitioned ETP__
+
+    - ETP_veg:        Potential evapotranspiration allocated to the vegetation fraction at each timestep, ETP × (1 − exp(−K × LAI)) (mm per timestep). Computed in run_sureau and passed through for the Granier transpiration model  [not in paper, implementation detail]
 
 

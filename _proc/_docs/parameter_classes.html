@@ -739,38 +739,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>LMA: Leaf mass per area (Table 1, g/m2leaf)</li>
 <li>C_LApo_init: Constant capacitance of the leaf apoplasm, CLApo (Table 1, Eq. 6, mmol/m2leaf/MPa)</li>
 </ul></li>
-</ul>
-<p><strong>Phenology</strong></p>
-<pre><code>- foliage:              Foliage type: "Evergreen" or "Deciduous" or "Forced" (Appendix A)
-- nb_day_LAI:           Number of days from budburst to full canopy, controls RLAI (Appendix A, days)
-- T_base:               Minimum temperature to start cumulating temperature for budburst, TD (Table 1, Appendix A, °C)
-- F_crit:               Amount of forcing temperature to reach budburst, F* (Table 1, Eq. A2, °C)
-- day_start:            Initial date of the forcing period for leaf phenology, t0 (Table 1, Eq. A2, DOY)
-- day_start_forced:     Fixed budburst date for the "Forced" phenology model (DOY)  
-- day_end_forced:       Fixed senescence date for the "Forced" phenology model (DOY) 
-- defoliation:          Whether cavitation-induced leaf shedding is enabled (bool) </code></pre>
-<p><strong>Stem</strong></p>
-<pre><code>- P50_VC_stem:          Water potential causing 50% loss of stem hydraulic conductance, ψ50,S (Table 1, Eq. 16, MPa)
-- slope_VC_stem:        Slope of rate of stem embolism spread at ψ50,S, slopeS (Table 1, Eq. 16, %/MPa)
-- gmin_S:               Stem cuticular conductance at reference temperature (mmol/m2leaf/s)  
-- pi_full_turgor_stem:  Osmotic potential at full turgor of the stem symplasm, π0S (Table 1, Eq. 43, MPa)
-- epsilon_sym_stem:     Modulus of elasticity of the stem symplasm, εS (Table 1, Eq. 43, MPa)
-- vol_stem:             Volume of tissue of the stem (roots, trunk, branches), VS (Table 1, Eqs. 39–40, L/m2soil)
-- apo_frac_stem:        Stem apoplasmic fraction of the wood water volume, αSApo (Table 1, Eq. 40, -)
-- sym_frac_stem:        Stem symplasmic fraction of the wood water volume, αSSym (Table 1, Eq. 39, -)
-- C_SApo_init:          Constant capacitance of the stem apoplasm, CSApo (Table 1, Eq. 7, mmol/m2leaf/MPa)
-- k_SSym_init:          Conductance from the stem apoplasm to stem symplasm, KSSym (Table 1, Eq. 9, mmol/m2leaf/s/MPa)
-- f_TRB_to_leaf:        Ratio converting stem surface area to leaf area basis for stem transpiration (-)  
-- g_BL_stem:            Bark boundary layer conductance for stem transpiration (mmol/m2/s)  </code></pre>
-<p><strong>Root</strong></p>
-<pre><code>- f_root_to_leaf:       Root-to-leaf area ratio, RaLa (Table 1, Eq. 18, -)
-- root_radius:          Root diameter / 2, dR/2 (Table 1, Eq. 21, m)
-- root_depth_max:       Maximum rooting depth (m). If None, defaults to deepest soil layer  
-- root_distribution_model:  Root profile model: "BRP" for Jackson et al. 1996 (Eq. 19) or "LDR" for Schenk &amp; Jackson 2002
-- beta_root_profile:    Shape parameter for root distribution, β (Table 1, Eq. 19, -)
-- root_Z50:             Depth above which 50% of roots are found, for LDR model (m)  
-- root_Z95:             Depth above which 95% of roots are found, for LDR model (m)  </code></pre>
+<li><p><strong>Phenology</strong></p>
 <ul>
+<li>foliage: Foliage type: “Evergreen” or “Deciduous” or “Forced” (Appendix A)</li>
+<li>nb_day_LAI: Number of days from budburst to full canopy, controls RLAI (Appendix A, days)</li>
+<li>T_base: Minimum temperature to start cumulating temperature for budburst, TD (Table 1, Appendix A, °C)</li>
+<li>F_crit: Amount of forcing temperature to reach budburst, F* (Table 1, Eq. A2, °C)</li>
+<li>day_start: Initial date of the forcing period for leaf phenology, t0 (Table 1, Eq. A2, DOY)</li>
+<li>day_start_forced: Fixed budburst date for the “Forced” phenology model (DOY)<br>
+</li>
+<li>day_end_forced: Fixed senescence date for the “Forced” phenology model (DOY)</li>
+<li>defoliation: Whether cavitation-induced leaf shedding is enabled (bool)</li>
+</ul></li>
+<li><p><strong>Stem</strong></p>
+<ul>
+<li>P50_VC_stem: Water potential causing 50% loss of stem hydraulic conductance, ψ50,S (Table 1, Eq. 16, MPa)</li>
+<li>slope_VC_stem: Slope of rate of stem embolism spread at ψ50,S, slopeS (Table 1, Eq. 16, %/MPa)</li>
+<li>gmin_S: Stem cuticular conductance at reference temperature (mmol/m2leaf/s)<br>
+</li>
+<li>pi_full_turgor_stem: Osmotic potential at full turgor of the stem symplasm, π0S (Table 1, Eq. 43, MPa)</li>
+<li>epsilon_sym_stem: Modulus of elasticity of the stem symplasm, εS (Table 1, Eq. 43, MPa)</li>
+<li>vol_stem: Volume of tissue of the stem (roots, trunk, branches), VS (Table 1, Eqs. 39–40, L/m2soil)</li>
+<li>apo_frac_stem: Stem apoplasmic fraction of the wood water volume, αSApo (Table 1, Eq. 40, -)</li>
+<li>sym_frac_stem: Stem symplasmic fraction of the wood water volume, αSSym (Table 1, Eq. 39, -)</li>
+<li>C_SApo_init: Constant capacitance of the stem apoplasm, CSApo (Table 1, Eq. 7, mmol/m2leaf/MPa)</li>
+<li>k_SSym_init: Conductance from the stem apoplasm to stem symplasm, KSSym (Table 1, Eq. 9, mmol/m2leaf/s/MPa)</li>
+<li>f_TRB_to_leaf: Ratio converting stem surface area to leaf area basis for stem transpiration (-)<br>
+</li>
+<li>g_BL_stem: Bark boundary layer conductance for stem transpiration (mmol/m2/s)</li>
+</ul></li>
+<li><p><strong>Root</strong></p>
+<ul>
+<li>f_root_to_leaf: Root-to-leaf area ratio, RaLa (Table 1, Eq. 18, -)</li>
+<li>root_radius: Root diameter / 2, dR/2 (Table 1, Eq. 21, m)</li>
+<li>root_depth_max: Maximum rooting depth (m). If None, defaults to deepest soil layer<br>
+</li>
+<li>root_distribution_model: Root profile model: “BRP” for Jackson et al.&nbsp;1996 (Eq. 19) or “LDR” for Schenk &amp; Jackson 2002</li>
+<li>beta_root_profile: Shape parameter for root distribution, β (Table 1, Eq. 19, -)</li>
+<li>root_Z50: Depth above which 50% of roots are found, for LDR model (m)<br>
+</li>
+<li>root_Z95: Depth above which 95% of roots are found, for LDR model (m)</li>
+</ul></li>
 <li><p><strong>Stomatal regulation</strong></p>
 <ul>
 <li>stomatal_reg_formulation: Stomatal regulation model: “Sigmoid” (Eq. 34), “PiecewiseLinear”, or “Turgor”</li>
@@ -818,17 +827,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="sureausoilparams" class="level3">
 <h3 class="anchored" data-anchor-id="sureausoilparams">SurEauSoilParams</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SurEauSoilParams(</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    depth:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>, RFC:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>, g_soil0:<span class="bu">float</span><span class="op">=</span><span class="fl">30.0</span>, offset_psoil:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    psoil_at_field_capacity:<span class="bu">float</span><span class="op">=</span><span class="fl">0.033</span>, reset_SWC:<span class="bu">bool</span><span class="op">=</span><span class="va">False</span>, water_soil_transfer:<span class="bu">bool</span><span class="op">=</span><span class="va">True</span>, soil_evap:<span class="bu">bool</span><span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    PTF:<span class="bu">str</span><span class="op">=</span><span class="st">'VG'</span>, Ksat:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>, saturation_capacity:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>, residual_capacity:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>,</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    alpha_vg:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>, n_vg:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>, I_vg:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>, b_camp:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>,</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    psie_camp:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>, n_layers:<span class="bu">int</span><span class="op">=</span><span class="dv">0</span>, layer_thickness:Union<span class="op">=</span><span class="va">None</span>, m:Union<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    V_field_capacity:Union<span class="op">=</span><span class="va">None</span>, V_saturation_capacity:Union<span class="op">=</span><span class="va">None</span>, V_residual_capacity:Union<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    V_wilting_point:Union<span class="op">=</span><span class="va">None</span>, B_GC:Union<span class="op">=</span><span class="va">None</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="va">None</span>:</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SurEauSoilParams(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    depth:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>, RFC:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>, g_soil0:<span class="bu">float</span><span class="op">=</span><span class="fl">30.0</span>, offset_psoil:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    psoil_at_field_capacity:<span class="bu">float</span><span class="op">=</span><span class="fl">0.033</span>, reset_SWC:<span class="bu">bool</span><span class="op">=</span><span class="va">False</span>, water_soil_transfer:<span class="bu">bool</span><span class="op">=</span><span class="va">True</span>, soil_evap:<span class="bu">bool</span><span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    PTF:<span class="bu">str</span><span class="op">=</span><span class="st">'VG'</span>, Ksat:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>, saturation_capacity:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>, residual_capacity:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    alpha_vg:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>, n_vg:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>, I_vg:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>, b_camp:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    psie_camp:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>, n_layers:<span class="bu">int</span><span class="op">=</span><span class="dv">0</span>, layer_thickness:Union<span class="op">=</span><span class="va">None</span>, m:Union<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    V_field_capacity:Union<span class="op">=</span><span class="va">None</span>, V_saturation_capacity:Union<span class="op">=</span><span class="va">None</span>, V_residual_capacity:Union<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    V_wilting_point:Union<span class="op">=</span><span class="va">None</span>, B_GC:Union<span class="op">=</span><span class="va">None</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="va">None</span>:</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Soil parameters for SurEau-Ecos — set once at initialisation.</em></p>
 <ul>
 <li><p><strong>Input parameters</strong></p>
@@ -869,12 +878,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="sureaucomputationoptions" class="level3">
 <h3 class="anchored" data-anchor-id="sureaucomputationoptions">SurEauComputationOptions</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SurEauComputationOptions(</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    n_small_timesteps:List<span class="op">=&lt;</span>factory<span class="op">&gt;</span>, numerical_scheme:<span class="bu">str</span><span class="op">=</span><span class="st">'Implicit'</span>, Lsym:<span class="bu">float</span><span class="op">=</span><span class="fl">1.0</span>, Ssym:<span class="bu">float</span><span class="op">=</span><span class="fl">1.0</span>,</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    Eord:<span class="bu">float</span><span class="op">=</span><span class="fl">1.0</span>, Lcav:<span class="bu">int</span><span class="op">=</span><span class="dv">1</span>, Scav:<span class="bu">int</span><span class="op">=</span><span class="dv">1</span>, CLapo:<span class="bu">float</span><span class="op">=</span><span class="fl">1.0</span>, CTapo:<span class="bu">float</span><span class="op">=</span><span class="fl">1.0</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="va">None</span>:</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SurEauComputationOptions(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    n_small_timesteps:List<span class="op">=&lt;</span>factory<span class="op">&gt;</span>, numerical_scheme:<span class="bu">str</span><span class="op">=</span><span class="st">'Implicit'</span>, Lsym:<span class="bu">float</span><span class="op">=</span><span class="fl">1.0</span>, Ssym:<span class="bu">float</span><span class="op">=</span><span class="fl">1.0</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    Eord:<span class="bu">float</span><span class="op">=</span><span class="fl">1.0</span>, Lcav:<span class="bu">int</span><span class="op">=</span><span class="dv">1</span>, Scav:<span class="bu">int</span><span class="op">=</span><span class="dv">1</span>, CLapo:<span class="bu">float</span><span class="op">=</span><span class="fl">1.0</span>, CTapo:<span class="bu">float</span><span class="op">=</span><span class="fl">1.0</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="va">None</span>:</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Numerical solver options for SurEau-Ecos.</em></p>
 <p>Controls the numerical resolution scheme (Sect. 2.6, Appendix C) and the adaptive sub-stepping strategy used in run_sureau.</p>
 <ul>
@@ -893,14 +902,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="sureaumodeloptions" class="level3">
 <h3 class="anchored" data-anchor-id="sureaumodeloptions">SurEauModelOptions</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SurEauModelOptions(</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    year_start:<span class="bu">int</span><span class="op">=</span><span class="dv">2000</span>, year_end:<span class="bu">int</span><span class="op">=</span><span class="dv">2000</span>, latitude:<span class="bu">float</span><span class="op">=</span><span class="fl">43.9</span>, longitude:<span class="bu">float</span><span class="op">=</span><span class="fl">43.9</span>, elevation:<span class="bu">float</span><span class="op">=</span><span class="dv">0</span>,</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    output_resolution:<span class="bu">str</span><span class="op">=</span><span class="st">'subdaily'</span>, ETP_formulation:<span class="bu">str</span><span class="op">=</span><span class="st">'PT'</span>, Rn_formulation:<span class="bu">str</span><span class="op">=</span><span class="st">'Linacre'</span>,</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    constant_climate:<span class="bu">bool</span><span class="op">=</span><span class="va">False</span>, print_progress:<span class="bu">bool</span><span class="op">=</span><span class="va">True</span>, time_steps:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>,</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    comp_options:SurEauComputationOptions<span class="op">=&lt;</span>factory<span class="op">&gt;</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="va">None</span>:</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SurEauModelOptions(</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    year_start:<span class="bu">int</span><span class="op">=</span><span class="dv">2000</span>, year_end:<span class="bu">int</span><span class="op">=</span><span class="dv">2000</span>, latitude:<span class="bu">float</span><span class="op">=</span><span class="fl">43.9</span>, longitude:<span class="bu">float</span><span class="op">=</span><span class="fl">43.9</span>, elevation:<span class="bu">float</span><span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    output_resolution:<span class="bu">str</span><span class="op">=</span><span class="st">'subdaily'</span>, ETP_formulation:<span class="bu">str</span><span class="op">=</span><span class="st">'PT'</span>, Rn_formulation:<span class="bu">str</span><span class="op">=</span><span class="st">'Linacre'</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    constant_climate:<span class="bu">bool</span><span class="op">=</span><span class="va">False</span>, print_progress:<span class="bu">bool</span><span class="op">=</span><span class="va">True</span>, time_steps:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    comp_options:SurEauComputationOptions<span class="op">=&lt;</span>factory<span class="op">&gt;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="va">None</span>:</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Simulation configuration for SurEau-Ecos.</em></p>
 <p>Controls the simulation period, site location, temporal resolution, climate processing options, and numerical solver settings. References are from Ruffault et al.&nbsp;(2022), Geosci. Model Dev., 15, 5593–5626, where applicable.</p>
 <ul>
@@ -937,97 +946,313 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="sureauplantstate" class="level3">
 <h3 class="anchored" data-anchor-id="sureauplantstate">SurEauPlantState</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SurEauPlantState(</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    psi_LApo:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, psi_SApo:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, psi_LSym:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, psi_SSym:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, psi_LApo_cav:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    psi_SApo_cav:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, psi_all_soil:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, k_plant:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, k_LSym:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, k_SSym:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    k_RSApo:Union<span class="op">=</span><span class="va">None</span>, k_SLApo:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, k_soil_to_stem:Union<span class="op">=</span><span class="va">None</span>, C_LSym:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, C_SSym:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    C_LApo:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, C_SApo:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, PLC_leaf:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, PLC_stem:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, LAI_pheno:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, LAI:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    canopy_storage_capacity:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, FCC:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, LAI_dead:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, sum_temperature:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    budburst_date:<span class="bu">float</span><span class="op">=</span>nan, Q_LApo_sat_mmol:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, Q_LApo_sat_L:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, Q_SApo_sat_mmol:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    Q_SApo_sat_L:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, Q_LSym_sat_mmol:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, Q_LSym_sat_L:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, Q_SSym_sat_mmol:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    Q_SSym_sat_L:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, Q_LApo_sat_mmol_per_LA:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, Q_SApo_sat_mmol_per_LA:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    Q_LSym_sat_mmol_per_LA:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, Q_SSym_sat_mmol_per_LA:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, Q_LApo_L:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, Q_SApo_L:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    Q_LSym_L:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, Q_SSym_L:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, DM_live_canopy:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, DM_dead_canopy:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="va">None</span>:</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><em>Plant hydraulic state — mutated by the solver, carried forward in time.</em></p>
-<p>Contains the 4-compartment water potentials (leaf/stem × apoplasm/symplasm), cavitation fronts, conductances, capacitances, phenology, and tissue water content. Everything here is needed to restart the simulation from a checkpoint.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SurEauPlantState(</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    psi_LApo:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, psi_SApo:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, psi_LSym:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, psi_SSym:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, psi_LApo_cav:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    psi_SApo_cav:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, psi_all_soil:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, k_plant:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, k_LSym:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, k_SSym:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    k_RSApo:Union<span class="op">=</span><span class="va">None</span>, k_SLApo:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, k_soil_to_stem:Union<span class="op">=</span><span class="va">None</span>, C_LSym:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, C_SSym:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    C_LApo:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, C_SApo:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, PLC_leaf:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, PLC_stem:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, LAI_pheno:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, LAI:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    canopy_storage_capacity:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, FCC:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, LAI_dead:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, sum_temperature:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    budburst_date:<span class="bu">float</span><span class="op">=</span>nan, Q_LApo_sat_mmol:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, Q_LApo_sat_L:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, Q_SApo_sat_mmol:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    Q_SApo_sat_L:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, Q_LSym_sat_mmol:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, Q_LSym_sat_L:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, Q_SSym_sat_mmol:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    Q_SSym_sat_L:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, Q_LApo_sat_mmol_per_LA:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, Q_SApo_sat_mmol_per_LA:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    Q_LSym_sat_mmol_per_LA:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, Q_SSym_sat_mmol_per_LA:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, Q_LApo_L:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, Q_SApo_L:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    Q_LSym_L:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, Q_SSym_L:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, DM_live_canopy:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, DM_dead_canopy:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="va">None</span>:</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Plant hydraulic state for SurEau-Ecos — mutated by the solver, carried forward in time.</em></p>
+<p>Contains the four-compartment water potentials (leaf/stem × apoplasm/symplasm), cavitation fronts, conductances, capacitances, phenology, and tissue water content. Everything here is needed to restart the simulation from a checkpoint.</p>
+<p>References to equations and sections are from Ruffault et al.&nbsp;(2022), Geosci. Model Dev., 15, 5593–5626.</p>
+<ul>
+<li><p><strong>Water potentials</strong></p>
+<ul>
+<li>psi_LApo: Water potential of the leaf apoplasm, ψLApo (Eq. 6, Fig. 1c, MPa)</li>
+<li>psi_SApo: Water potential of the stem apoplasm, ψSApo (Eq. 7, Fig. 1c, MPa)</li>
+<li>psi_LSym: Water potential of the leaf symplasm, ψLSym (Eq. 8, Fig. 1c, MPa)</li>
+<li>psi_SSym: Water potential of the stem symplasm, ψSSym (Eq. 9, Fig. 1c, MPa)</li>
+<li>psi_LApo_cav: Historical minimum of ψLApo — the most negative value ever reached. Controls the current cavitation level: PLCLeaf = PLC(ψcavLApo). Irreversible: only decreases over time (Eq. 25, MPa)</li>
+<li>psi_SApo_cav: Historical minimum of ψSApo — same role for stem cavitation (Eq. 27, MPa)</li>
+<li>psi_all_soil: Conductance-weighted average soil water potential across all layers (MPa). Diagnostic, computed from Σ(k_soil_to_stem × ψsoilj) / Σk_soil_to_stem</li>
+</ul></li>
+<li><p><strong>Hydraulic conductances</strong></p>
+<ul>
+<li>k_plant: Total plant hydraulic conductance from soil to leaf symplasm, KPlant (Eq. 13, mmol/m2leaf/s/MPa)</li>
+<li>k_LSym: Conductance from leaf apoplasm to leaf symplasm, KLSym (Table 1, Eq. 8, mmol/m2leaf/s/MPa)</li>
+<li>k_SSym: Conductance from stem apoplasm to stem symplasm, KSSym (Table 1, Eq. 9, mmol/m2leaf/s/MPa)</li>
+<li>k_RSApo: Root-to-stem apoplasmic conductance per soil layer, KRj-SApo, reduced by stem PLC (Eq. 16, mmol/m2leaf/s/MPa). Array, one value per soil layer</li>
+<li>k_SLApo: Stem-to-leaf apoplasmic conductance, KSApo-LApo, reduced by leaf PLC (Eq. 14, mmol/m2leaf/s/MPa)</li>
+<li>k_soil_to_stem: Combined soil-to-stem conductance per soil layer, Ksoilj-SApo, series combination of soil-to-root and root-to-stem (Eq. 20, mmol/m2leaf/s/MPa). Array, one value per soil layer</li>
+</ul></li>
+<li><p><strong>Capacitances</strong></p>
+<ul>
+<li>C_LSym: Capacitance of the leaf symplasm, CLSym = QsatLSym × RWC’ (Eq. 42, Eq. 44, mmol/m2leaf/MPa). Variable — depends on current ψLSym via the pressure-volume curve</li>
+<li>C_SSym: Capacitance of the stem symplasm, CSSym = QsatSSym × RWC’ (Eq. 42, Eq. 44, mmol/m2leaf/MPa). Variable — depends on current ψSSym via the pressure-volume curve</li>
+<li>C_LApo: Capacitance of the leaf apoplasm, CLApo (Eq. 6, mmol/m2leaf/MPa). Constant — xylem wall is inelastic (Sect. 2.5.1)</li>
+<li>C_SApo: Capacitance of the stem apoplasm, CSApo (Eq. 7, mmol/m2leaf/MPa). Constant — xylem wall is inelastic (Sect. 2.5.1)</li>
+</ul></li>
+<li><p><strong>Cavitation</strong></p>
+<ul>
+<li>PLC_leaf: Percent loss of leaf hydraulic conductivity, PLCL (Eq. 15, %). Irreversible — only increases. Used in Eq. 14</li>
+<li>PLC_stem: Percent loss of stem hydraulic conductivity, PLCS (Eq. 15 with stem parameters, %). Irreversible — only increases. Used in Eq. 16</li>
+</ul></li>
+<li><p><strong>LAI and phenology</strong></p>
+<ul>
+<li>LAI_pheno: Phenological LAI target, ∅ × LAImax (Eq. A1, m2leaf/m2soil). Set by compute_pheno (Appendix A)</li>
+<li>LAI: Actual functional LAI after defoliation, LAI = LAI_pheno − LAI_dead (Eq. A1 modified, m2leaf/m2soil)</li>
+<li>canopy_storage_capacity: cws × LAI (Table 1, mm)</li>
+<li>FCC: Fractional canopy cover, 1 − exp(−K × LAI) (Beer-Lambert, -)</li>
+<li>LAI_dead: LAI of drought-killed leaves from cavitation-induced defoliation (m2leaf/m2soil)</li>
+</ul></li>
+<li><p><strong>Phenology accumulator</strong></p>
+<ul>
+<li>sum_temperature: Cumulative forcing temperature for budburst, Σ Rf(Td) (Eq. A2, °C)</li>
+<li>budburst_date: Day of year when budburst occurred, tf (Eq. A2, DOY). NaN if budburst has not yet occurred this year</li>
+</ul></li>
+<li><p><strong>Tissue water content (saturated references)</strong></p>
+<ul>
+<li>Q_LApo_sat_mmol: Leaf apoplasm water at saturation, QsatLApo (Eq. 37, mmol/m2soil)</li>
+<li>Q_LApo_sat_L: Leaf apoplasm water at saturation in litres (L/m2soil)</li>
+<li>Q_LApo_sat_mmol_per_LA: Leaf apoplasm water at saturation normalised by leaf area (mmol/m2leaf). Feeds Eq. 25 (cavitation flux)</li>
+<li>Q_SApo_sat_mmol: Stem apoplasm water at saturation, QsatSApo (Eq. 40, mmol/m2soil)</li>
+<li>Q_SApo_sat_L: Stem apoplasm water at saturation in litres (L/m2soil)</li>
+<li>Q_SApo_sat_mmol_per_LA: Stem apoplasm water at saturation normalised by leaf area (mmol/m2leaf). Feeds Eq. 27 (cavitation flux)</li>
+<li>Q_LSym_sat_mmol: Leaf symplasm water at saturation, QsatLSym (Eq. 36, mmol/m2soil)</li>
+<li>Q_LSym_sat_L: Leaf symplasm water at saturation in litres (L/m2soil)</li>
+<li>Q_LSym_sat_mmol_per_LA: Leaf symplasm water at saturation normalised by leaf area (mmol/m2leaf). Feeds Eq. 42 (capacitance)</li>
+<li>Q_SSym_sat_mmol: Stem symplasm water at saturation, QsatSSym (Eq. 39, mmol/m2soil)</li>
+<li>Q_SSym_sat_L: Stem symplasm water at saturation in litres (L/m2soil)</li>
+<li>Q_SSym_sat_mmol_per_LA: Stem symplasm water at saturation normalised by leaf area (mmol/m2leaf). Feeds Eq. 42 (capacitance)</li>
+</ul></li>
+<li><p><strong>Tissue water content (current)</strong></p>
+<ul>
+<li>Q_LApo_L: Current leaf apoplasm water content, derived from (1 − PLC_leaf/100) × QsatLApo (L/m2soil)</li>
+<li>Q_SApo_L: Current stem apoplasm water content, derived from (1 − PLC_stem/100) × QsatSApo (L/m2soil)</li>
+<li>Q_LSym_L: Current leaf symplasm water content, derived from RWC × QsatLSym via Eq. 43 (L/m2soil)</li>
+<li>Q_SSym_L: Current stem symplasm water content, derived from RWC × QsatSSym via Eq. 43 (L/m2soil)</li>
+</ul></li>
+<li><p><strong>Canopy dry matter</strong></p>
+<ul>
+<li>DM_live_canopy: Dry mass of living leaves, LAI × LMA (g/m2soil). Used with succulence (Eq. 38) to compute leaf water volumes</li>
+<li>DM_dead_canopy: Dry mass of dead (drought-shed) leaves (g/m2soil). Used for canopy fuel moisture content [not in paper, fire risk extension]</li>
+</ul></li>
+</ul>
 </section>
 <section id="fluxes-class-recomputed-every-sub-timestep" class="level3">
 <h3 class="anchored" data-anchor-id="fluxes-class-recomputed-every-sub-timestep">Fluxes class: recomputed every (sub-)timestep</h3>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1339" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1500" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureauplantfluxes" class="level3">
 <h3 class="anchored" data-anchor-id="sureauplantfluxes">SurEauPlantFluxes</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SurEauPlantFluxes(</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    gmin:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, gmin_S:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, regul_fact:<span class="bu">float</span><span class="op">=</span><span class="fl">0.01</span>, gs_bound:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, gs_lim:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    g_canopy_bound:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, g_canopy_lim:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, g_BL:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, g_crown:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, E_prime:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    E_min:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, E_min_S:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, E_bound:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, E_lim:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, flux_soil_to_stem:Union<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    flux_soil_to_stem_mm:Union<span class="op">=</span><span class="va">None</span>, transpiration_mm:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, E_min_mm:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, E_min_S_mm:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    sum_flux_soil_to_stem:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, ppt_soil:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, intercepted_water:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    evaporation_intercepted:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, ETP_r:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, ETP:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, leaf_temperature:<span class="bu">float</span><span class="op">=</span>nan,</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    leaf_VPD:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="va">None</span>:</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><em>Instantaneous fluxes &amp; conductances — computed from state + forcing.</em></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SurEauPlantFluxes(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    gmin:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, gmin_S:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, regul_fact:<span class="bu">float</span><span class="op">=</span><span class="fl">0.01</span>, gs_bound:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, gs_lim:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    g_canopy_bound:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, g_canopy_lim:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, g_BL:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, g_crown:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, E_prime:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    E_min:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, E_min_S:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, E_bound:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, E_lim:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, flux_soil_to_stem:Union<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    flux_soil_to_stem_mm:Union<span class="op">=</span><span class="va">None</span>, transpiration_mm:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, E_min_mm:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, E_min_S_mm:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    sum_flux_soil_to_stem:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, ppt_soil:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, intercepted_water:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    evaporation_intercepted:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, ETP_r:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, ETP:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, leaf_temperature:<span class="bu">float</span><span class="op">=</span>nan,</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    leaf_VPD:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="va">None</span>:</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Instantaneous fluxes and conductances for SurEau-Ecos — computed from state + forcing.</em></p>
 <p>Everything here can safely be zeroed between timesteps; the solver fills them in from SurEauPlantState + atmospheric forcing.</p>
+<ul>
+<li><p><strong>Stomatal and canopy conductance</strong></p>
+<ul>
+<li>gmin: Cuticular conductance of the leaf, gcutiL, temperature-adjusted via Q10 (Eqs. 31–32, mmol/m2leaf/s)</li>
+<li>gmin_S: Cuticular conductance of the stem, gcutiS (Eq. 30 context, mmol/m2leaf/s)</li>
+<li>regul_fact: Stomatal regulation factor γ, varies 0 (fully closed) to 1 (fully open) (Eq. 34, -)</li>
+<li>gs_bound: Light-limited stomatal conductance before water stress, gstom_max modulated by light, temperature, and CO2 (Eq. 33 context, Jarvis 1976, mmol/m2leaf/s)</li>
+<li>gs_lim: Water-limited stomatal conductance, gs_bound × γ (Eq. 33, mmol/m2leaf/s)</li>
+<li>g_canopy_bound: Unstressed canopy conductance, series combination of gs_bound + gmin, g_BL, and g_crown (Eq. 29, mmol/m2leaf/s)</li>
+<li>g_canopy_lim: Water-limited canopy conductance, series combination of gs_lim + gmin, g_BL, and g_crown (Eq. 29 with Eq. 33, mmol/m2leaf/s)</li>
+<li>g_BL: Leaf boundary layer conductance, gbound (Eq. 29, mmol/m2leaf/s). Function of wind speed and leaf size (Jones 2013)</li>
+<li>g_crown: Crown-level aerodynamic conductance, gcrown (Eq. 29, mmol/m2leaf/s). Function of wind speed (Jones 2013)</li>
+</ul></li>
+<li><p><strong>Water fluxes</strong></p>
+<ul>
+<li>E_prime: Derivative of stomatal transpiration with respect to ψLSym, dE/dψ. Used by the implicit solver for transpiration linearization (Eq. 60, mmol/m2leaf/s/MPa)</li>
+<li>E_min: Leaf cuticular transpiration, EcutiL (Eq. 29 with gstom = 0, Eq. 8, mmol/m2leaf/s)</li>
+<li>E_min_S: Stem cuticular transpiration, EcutiS (Eq. 30, Eq. 9, mmol/m2leaf/s)</li>
+<li>E_bound: Unstressed maximum leaf transpiration (stomatal + cuticular), EL at γ = 1 (Eq. 29, mmol/m2leaf/s)</li>
+<li>E_lim: Water-limited stomatal transpiration, Estom component of EL after regulation by γ (Eq. 33 applied to Eq. 29, mmol/m2leaf/s). Fed into Eq. 8 as the stomatal sink term</li>
+<li>flux_soil_to_stem: Water flux from each soil layer to the stem apoplasm, Ksoilj-SApo × (ψsoilj − ψSApo) (Eq. 5, mmol/m2leaf/s). Array, one value per soil layer</li>
+<li>flux_soil_to_stem_mm: Water flux from each soil layer to the stem apoplasm flux converted to water depth per soil area (mm/timestep). Used for soil water balance update (Eqs. 10–12)</li>
+<li>transpiration_mm: Total plant transpiration EPlant converted to water depth, (E_lim + E_min + E_min_S) × LAI × dt (Eq. 28, mm/timestep)</li>
+<li>E_min_mm: Leaf cuticular transpiration converted to water depth (mm/timestep)</li>
+<li>E_min_S_mm: Stem cuticular transpiration converted to water depth (mm/timestep)</li>
+<li>sum_flux_soil_to_stem: Sum of soil-to-stem flux across all layers, Σ Ksoilj-SApo × (ψsoilj − ψSApo) (mmol/m2leaf/s)</li>
+</ul></li>
+<li><p><strong>Interception</strong></p>
+<ul>
+<li>ppt_soil: Precipitation reaching the soil after canopy interception, pptsoil (Eq. 10, mm)</li>
+<li>intercepted_water: Water currently held on canopy surfaces (mm). Accumulated by rainfall, depleted by evaporation (Sect. 2.2.2, Ruffault et al.&nbsp;2013)</li>
+<li>evaporation_intercepted: Evaporation of intercepted water this timestep (mm). Consumes ETP before transpiration</li>
+<li>ETP_r: Residual potential evapotranspiration after interception evaporation (mm). Drives transpiration in compute_transpiration</li>
+<li>ETP: Potential evapotranspiration allocated to the vegetation fraction this timestep (mm)</li>
+</ul></li>
+<li><p><strong>Leaf energy balance</strong></p>
+<ul>
+<li>leaf_temperature: Leaf temperature TL, solved from the leaf surface energy budget (°C). Drives cuticular conductance (Eqs. 31–32) and leaf VPD (CPRM21, Cochard et al.&nbsp;2021)</li>
+<li>leaf_VPD: Vapor pressure deficit at the leaf surface, VPDL, accounting for leaf temperature and Kelvin equation correction at ψLSym (Eq. 29 context, kPa). Drives all transpiration calculations</li>
+</ul></li>
+</ul>
 </section>
 <section id="diagnostics-class-solver-quality-derived-monitoring-outputs-class" class="level3">
 <h3 class="anchored" data-anchor-id="diagnostics-class-solver-quality-derived-monitoring-outputs-class">Diagnostics class: solver quality + derived monitoring outputs class</h3>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1422" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1631" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureauplantdiagnostics" class="level3">
 <h3 class="anchored" data-anchor-id="sureauplantdiagnostics">SurEauPlantDiagnostics</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SurEauPlantDiagnostics(</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    diag_delta_regul_max:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, diag_delta_PLC_max:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, diag_timestep_hours:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    diag_nwhile_cavit:<span class="bu">int</span><span class="op">=</span><span class="dv">0</span>, DFMC:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, LFMC_apo:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, LFMC_symp:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, LFMC:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    FMC_canopy:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="va">None</span>:</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SurEauPlantDiagnostics(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    diag_delta_regul_max:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, diag_delta_PLC_max:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, diag_timestep_hours:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    diag_nwhile_cavit:<span class="bu">int</span><span class="op">=</span><span class="dv">0</span>, DFMC:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, LFMC_apo:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, LFMC_symp:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, LFMC:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    FMC_canopy:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="va">None</span>:</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Solver diagnostics and derived fire/moisture outputs.</em></p>
 <p>Used for logging, quality control, and post-processing — never fed back into the hydraulic solver.</p>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1454" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1663" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureausoil" class="level3">
 <h3 class="anchored" data-anchor-id="sureausoil">SurEauSoil</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SurEauSoil(</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    soil_water_stock:Union<span class="op">=</span><span class="va">None</span>, psi_soil:Union<span class="op">=</span><span class="va">None</span>, k_soil:Union<span class="op">=</span><span class="va">None</span>, REW:Union<span class="op">=</span><span class="va">None</span>, evaporation:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    drainage:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, ETP:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, RWC:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, REW_tot:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, REW_wp:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="va">None</span>:</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><em>Soil state — mutated every timestep.</em></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SurEauSoil(</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    soil_water_stock:Union<span class="op">=</span><span class="va">None</span>, psi_soil:Union<span class="op">=</span><span class="va">None</span>, k_soil:Union<span class="op">=</span><span class="va">None</span>, REW:Union<span class="op">=</span><span class="va">None</span>, evaporation:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    drainage:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, ETP:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, RWC:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, REW_tot:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, REW_wp:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="va">None</span>:</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Solver diagnostics and derived fire/moisture outputs for SurEau-Ecos.</em></p>
+<p>Used for logging, quality control, and post-processing, never fed back into the hydraulic solver.</p>
+<ul>
+<li><p><strong>Solver quality</strong></p>
+<ul>
+<li>diag_delta_regul_max: Maximum change in stomatal regulation factor γ (Eq. 34) across sub-steps within one hourly timestep (-). Used by the adaptive sub-stepping strategy: if &gt; 0.05, the timestep is refined (Sect. 3, Table 2)</li>
+<li>diag_delta_PLC_max: Maximum change in percent loss of conductivity (Eq. 15) across sub-steps within one hourly timestep (%). Used by the adaptive sub-stepping strategy: if &gt; 1.0%, the timestep is refined (Sect. 3, Table 2)</li>
+<li>diag_timestep_hours: Actual sub-timestep duration used by the solver after adaptive refinement (hours). Corresponds to the adaptive “normal” or “fast” modes described in Sect. 3 and Table 2</li>
+<li>diag_nwhile_cavit: Number of iterations in the cavitation self-consistency loop within sureau_solver (1–5). Counts how many (δL, δS) configurations were tried before finding a consistent solution (Appendix C2, text between Eqs. C15–C16)</li>
+</ul></li>
+<li><p><strong>Fuel moisture content</strong></p>
+<ul>
+<li>DFMC: Dead fuel moisture content, equilibrium moisture of dead leaves as a function of VPD (%). Related to forest flammability applications described in Sect. 1 and Sect. 7 (Ruffault et al.&nbsp;2018b; Pimont et al.&nbsp;2019) [empirical formula not in paper]</li>
+<li>LFMC_apo: Live fuel moisture content — apoplasmic fraction only, 100 × Q_LApo / (DM_live × αLApo / 1000) (%). Derived from cavitation-driven water release: Q_LApo = (1 − PLC_leaf/100) × QsatLApo</li>
+<li>LFMC_symp: Live fuel moisture content — symplasmic fraction only, 100 × Q_LSym / (DM_live × (1 − αLApo) / 1000) (%). Derived from pressure-volume curve: Q_LSym = RWC × QsatLSym via Eq. 43</li>
+<li>LFMC: Total live fuel moisture content, 100 × (Q_LApo + Q_LSym) / (DM_live / 1000) (%). The key wildfire risk metric. The paper highlights SurEau-Ecos’s ability to simulate “the dynamics of live fuel moisture (foliage and twigs water content)” (Sect. 1, p.&nbsp;5594) and “the seasonal dynamics of forest flammability” (Abstract, Sect. 8)</li>
+<li>FMC_canopy: Whole-canopy fuel moisture content combining live and dead leaves, 100 × (Q_LApo + Q_LSym + Q_dead) / (DM_live + DM_dead) / 1000 (%). The operationally relevant metric for fire behavior prediction (Ruffault et al.&nbsp;2018b; Nolan et al.&nbsp;2020, cited in Sect. 1)</li>
+</ul></li>
+</ul>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1470" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1697" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureauclimate" class="level3">
 <h3 class="anchored" data-anchor-id="sureauclimate">SurEauClimate</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SurEauClimate(</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    DOY:<span class="bu">int</span><span class="op">=</span><span class="dv">0</span>, year:<span class="bu">int</span><span class="op">=</span><span class="dv">0</span>, date:<span class="bu">str</span><span class="op">=</span><span class="st">''</span>, T_air_mean:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, T_air_max:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, T_air_min:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    RH_air_mean:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, RH_air_max:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, RH_air_min:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, PPT:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, RG:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    WS_mean:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, VPD:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, net_radiation:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, ETP:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, T_air_min_prev:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    T_air_max_prev:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, T_air_min_next:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="va">None</span>:</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><em>Daily climate forcing.</em></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SurEauClimate(</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    DOY:<span class="bu">int</span><span class="op">=</span><span class="dv">0</span>, year:<span class="bu">int</span><span class="op">=</span><span class="dv">0</span>, date:<span class="bu">str</span><span class="op">=</span><span class="st">''</span>, T_air_mean:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, T_air_max:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, T_air_min:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    RH_air_mean:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, RH_air_max:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, RH_air_min:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, PPT:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, RG:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    WS_mean:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, VPD:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, net_radiation:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, ETP:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, T_air_min_prev:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    T_air_max_prev:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, T_air_min_next:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="va">None</span>:</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Daily climate forcing for SurEau-Ecos.</em></p>
+<p>Holds the daily meteorological variables required to drive the simulation.</p>
+<ul>
+<li><p><strong>Temporal identifiers</strong></p>
+<ul>
+<li>DOY: Day of year (1–365). Used in phenology (Eq. A2), solar geometry for daylength, and radiation disaggregation</li>
+<li>year: Calendar year (int)</li>
+<li>date: Date string (str)</li>
+</ul></li>
+<li><p><strong>Temperature</strong></p>
+<ul>
+<li>T_air_mean: Mean daily air temperature, Tmean (Table B1, °C)</li>
+<li>T_air_max: Maximum daily air temperature, Tmax (Table B1, °C)</li>
+<li>T_air_min: Minimum daily air temperature, Tmin (Table B1, °C)</li>
+<li>T_air_min_prev: Minimum temperature of the previous day (°C). Used for sinusoidal sub-daily temperature disaggregation (De Cáceres et al.&nbsp;2021, referenced in Sect. 2.1)</li>
+<li>T_air_max_prev: Maximum temperature of the previous day (°C). Used for sub-daily temperature disaggregation during the nighttime period before sunrise</li>
+<li>T_air_min_next: Minimum temperature of the next day (°C). Used for sub-daily temperature disaggregation during the nighttime period after sunset</li>
+</ul></li>
+<li><p><strong>Humidity</strong></p>
+<ul>
+<li>RH_air_mean: Mean daily relative humidity, RHmean (Table B1, %)</li>
+<li>RH_air_max: Maximum daily relative humidity, RHmax (Table B1, %)</li>
+<li>RH_air_min: Minimum daily relative humidity, RHmin (Table B1, %)</li>
+</ul></li>
+<li><p><strong>Precipitation</strong></p>
+<ul>
+<li>PPT: Daily precipitation, ppt (Table B1, Eq. 10, mm)</li>
+</ul></li>
+<li><p><strong>Radiation</strong></p>
+<ul>
+<li>RG: Daily global radiation, Rglobal (Table B1, MJ/m2)</li>
+</ul></li>
+<li><p><strong>Wind</strong></p>
+<ul>
+<li>WS_mean: Mean daily wind speed, u (Table B1, m/s)</li>
+</ul></li>
+<li><p><strong>Derived (computed from inputs)</strong></p>
+<ul>
+<li>VPD: Vapor pressure deficit, computed from RH_air_mean and T_air_mean (kPa). Drives soil evaporation (Eq. 35) and transpiration (Eqs. 29–30)</li>
+<li>net_radiation: Daily net radiation, computed from RG and cloud cover proxy (MJ/m2). Used to compute ETP [Linacre 1968 formulation not in paper; paper references De Cáceres et al.&nbsp;2021]</li>
+<li>ETP: Daily potential evapotranspiration, computed from net_radiation and temperature (mm). Partitioned between vegetation and soil in run_sureau (Sect. 2.1, Fig. 1b)</li>
+</ul></li>
+</ul>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1493" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1763" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureauclimatehourly" class="level3">
 <h3 class="anchored" data-anchor-id="sureauclimatehourly">SurEauClimateHourly</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SurEauClimateHourly(</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    args:VAR_POSITIONAL, kwargs:VAR_KEYWORD</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>):</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><em>Sub-daily disaggregated climate.</em></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SurEauClimateHourly(</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    args:VAR_POSITIONAL, kwargs:VAR_KEYWORD</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Sub-daily disaggregated climate for SurEau-Ecos.</em></p>
+<p>Holds hourly (or sub-daily) arrays of meteorological variables derived from the daily forcing in SurEauClimate.</p>
+<p>Each field is a 1-D NumPy array with one value per sub-daily timestep (typically 24 for hourly resolution).</p>
+<ul>
+<li><p><strong>Radiation</strong></p>
+<ul>
+<li>RG: Sub-daily global radiation, disaggregated from daily Rglobal (Table B1) using a sinusoidal diurnal pattern scaled by daylength (MJ/m2 per timestep)</li>
+<li>Rn: Sub-daily net radiation, disaggregated from daily net radiation using the same diurnal pattern as RG (MJ/m2 per timestep). Drives ETP partitioning</li>
+<li>PAR: Photosynthetically active radiation, converted from RG via PAR = RG × 0.5 × 4.6 (µmol/m2/s). Drives the stomatal light response δ in calculate_gs_jarvis (Table 1)</li>
+<li>potential_PAR: Clear-sky potential PAR at each timestep, computed from solar geometry at the site latitude and DOY (µmol/m2/s). Used to estimate cloud cover for the leaf energy balance (CPRM21)</li>
+</ul></li>
+<li><p><strong>Temperature</strong></p>
+<ul>
+<li>T_air_mean: Sub-daily air temperature, disaggregated from Tmin, Tmax using sinusoidal interpolation with previous/next-day temperatures (McMurtrie et al.&nbsp;1990, De Cáceres et al.&nbsp;2021, °C)</li>
+</ul></li>
+<li><p><strong>Humidity</strong></p>
+<ul>
+<li>RH_air_mean: Sub-daily relative humidity, disaggregated linearly from RHmin, RHmax anti-correlated with temperature (%)</li>
+</ul></li>
+<li><p><strong>Wind</strong></p>
+<ul>
+<li>WS: Sub-daily wind speed (m/s). Currently held constant at the daily mean WS_mean (Table B1) for all timesteps</li>
+</ul></li>
+<li><p><strong>Derived atmospheric variables</strong></p>
+<ul>
+<li>VPD: Sub-daily vapor pressure deficit, computed from T_air_mean and RH_air_mean at each timestep (kPa). Drives transpiration (Eqs. 29–30) and soil evaporation (Eq. 35)</li>
+<li>ETP: Sub-daily potential evapotranspiration, computed from Rn and T_air_mean at each timestep (mm per timestep). Total across timesteps equals daily ETP</li>
+</ul></li>
+<li><p><strong>Precipitation</strong></p>
+<ul>
+<li>PPT: Sub-daily precipitation (mm per timestep). All daily precipitation is assigned to the first timestep; remaining timesteps are zero</li>
+</ul></li>
+<li><p><strong>Temporal metadata</strong></p>
+<ul>
+<li>time: Hour of day for each timestep (hours, e.g.&nbsp;0.0, 1.0, …, 23.0)</li>
+<li>n_hours: Duration of each timestep (hours). For hourly resolution all values are 1.0. For coarser resolution (e.g.&nbsp;6-hourly) values reflect the actual interval</li>
+</ul></li>
+<li><p><strong>Vegetation-partitioned ETP</strong></p>
+<ul>
+<li>ETP_veg: Potential evapotranspiration allocated to the vegetation fraction at each timestep, ETP × (1 − exp(−K × LAI)) (mm per timestep). Computed in run_sureau and passed through for the Granier transpiration model [not in paper, implementation detail]</li>
+</ul></li>
+</ul>
 
 
 </section>
