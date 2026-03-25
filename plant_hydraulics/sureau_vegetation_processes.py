@@ -258,6 +258,8 @@ def compute_pheno(
         if np.isnan(state.budburst_date):
             
             # Phase 1: accumulate forcing temperatures
+            # Accumulate degree-days above T_base, following the standard
+            # thermal-time convention
             if temperature > params.T_base and DOY >= params.day_start:
                 state.sum_temperature += temperature
                 
@@ -265,8 +267,9 @@ def compute_pheno(
             if state.sum_temperature > params.F_crit:
                 state.budburst_date = DOY
                 
-        elif DOY >= 280:
-            
+        #elif DOY >= 280:
+        elif temperature < 5.0 and DOY > 180:
+                
             # Phase 3: senescence (leaf fall at DOY ≥ 280 ≈ early October)
             state.LAI_pheno = max(
                 0, state.LAI - max(0, params.LAI_max / params.nb_day_LAI)

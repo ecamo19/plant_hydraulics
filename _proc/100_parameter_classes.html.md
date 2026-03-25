@@ -369,7 +369,7 @@ def SurEauVegetationParams(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L769){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L785){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauSoilParams
 
@@ -393,7 +393,7 @@ def SurEauSoilParams(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L809){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L825){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauComputationOptions
 
@@ -412,7 +412,7 @@ def SurEauComputationOptions(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L824){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L840){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauModelOptions
 
@@ -452,7 +452,7 @@ A thin SurEauPlant wrapper is provided at the bottom for backward-compatible att
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L844){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L860){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauPlantState
 
@@ -486,7 +486,7 @@ checkpoint.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L923){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L939){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauPlantFluxes
 
@@ -515,7 +515,7 @@ fills them in from SurEauPlantState + atmospheric forcing.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L968){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L984){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauPlantDiagnostics
 
@@ -538,7 +538,7 @@ back into the hydraulic solver.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L990){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1006){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauSoil
 
@@ -557,7 +557,7 @@ def SurEauSoil(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1006){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1022){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauClimate
 
@@ -578,7 +578,7 @@ def SurEauClimate(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1029){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1045){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauClimateHourly
 

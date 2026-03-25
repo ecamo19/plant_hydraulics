@@ -222,7 +222,7 @@ F_crit = 450, day_start = 55, nb_day_LAI = 21):__
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L301){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L304){target="_blank" style="float:right; font-size:smaller"}
 
 ### update_capacitances
 
@@ -457,7 +457,7 @@ __Special cases:__
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L630){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L633){target="_blank" style="float:right; font-size:smaller"}
 
 ### update_LAI_and_stocks
 
@@ -703,7 +703,7 @@ __Defoliation numerical example (PLC_leaf = 40%, LAI_pheno = 4.5):__
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L976){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L979){target="_blank" style="float:right; font-size:smaller"}
 
 ### update_kplant
 
@@ -878,7 +878,7 @@ PLC_leaf = 30%):__
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L1178){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L1181){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_interception
 
@@ -1026,7 +1026,7 @@ FCC = 0.9):__
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L1349){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L1352){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_evapo_intercepted
 
@@ -1152,7 +1152,7 @@ __Numerical examples:__
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L1495){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L1498){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_transpiration
 
@@ -1362,7 +1362,7 @@ explicitly for better data-flow visibility at the call site.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L1853){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L1856){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_water_storage
 

@@ -1,0 +1,2174 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>SurEau plant hydraulics – plant_hydraulics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./tree.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-0bfddcd3ff3ad68050f7cb5db9cd3f8b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-0bfddcd3ff3ad68050f7cb5db9cd3f8b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-0bfddcd3ff3ad68050f7cb5db9cd3f8b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="SurEau plant hydraulics – plant_hydraulics">
+<meta property="og:description" content="Python code for plant hydraulics models">
+<meta property="og:site_name" content="plant_hydraulics">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./tree.png" alt="" class="navbar-logo light-content">
+    <img src="./tree.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">plant_hydraulics</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-end">
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sureau_plant_hydraulics.html">SurEau plant hydraulics</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./tree.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="./tree.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">plant_hydraulics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parameter_classes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parameter classes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./utils.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Package utilities</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./0_soil_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Soil params</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./1_sureau_soil_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SurEau soil params</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./root_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Root params</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./leaf_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leaf params</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sureau_vegetation_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SurEau vegetation params</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./soil_resistance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Soil resistance</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./leaf_boundary_layer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leaf boundary layer</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./leaf_temperature.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leaf temperature</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./leaf_ci_optimization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leaf Ci optimization</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./leaf_phosynthesis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leaf photosynthesis</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./leaf_water_potential.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leaf water potential</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./leaf_stomatal_efficiency.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leaf stomatal efficiency</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./0_leaf_stomatal_optimization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leaf stomatal optimization</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./1_leaf_stomatal_medlyn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leaf stomatal Medlyn</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./2_leaf_stomatal_profit_max.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leaf stomatal profit-max</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./0_leaf_fluxes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leaf fluxes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sureau_climate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SurEau climate</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sureau_soil_hydraulics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SurEau soil hydraulics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sureau_plant_hydraulics.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">SurEau plant hydraulics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sureau_vegetation_processes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SurEau vegetation processes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sureau_object_initialization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SurEau object initialization</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sureau_solver.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SurEau solver</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./run_sureau.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Run SurEau</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tutorial_1_basic_run.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial 1: Basic model run</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tutorial_2_gs_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial 2: Stomatal model comparisons</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tutorial_3_profit_max_validation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial 3: Validating profix-max model vrs Sperry et al 2017 results</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tutorial_4_diurnal_sureau.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial 4: SurEau Basic run</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#pressure-volume-curve-functions" id="toc-pressure-volume-curve-functions" class="nav-link active" data-scroll-target="#pressure-volume-curve-functions">Pressure-Volume curve functions</a>
+  <ul class="collapse">
+  <li><a href="#compute_rs" id="toc-compute_rs" class="nav-link" data-scroll-target="#compute_rs">compute_Rs</a></li>
+  <li><a href="#compute_turgor" id="toc-compute_turgor" class="nav-link" data-scroll-target="#compute_turgor">compute_turgor</a></li>
+  <li><a href="#compute_tlp" id="toc-compute_tlp" class="nav-link" data-scroll-target="#compute_tlp">compute_TLP</a></li>
+  <li><a href="#compute_turgor_from_psi" id="toc-compute_turgor_from_psi" class="nav-link" data-scroll-target="#compute_turgor_from_psi">compute_turgor_from_psi</a></li>
+  </ul></li>
+  <li><a href="#vulnerability-curve" id="toc-vulnerability-curve" class="nav-link" data-scroll-target="#vulnerability-curve">Vulnerability curve</a>
+  <ul class="collapse">
+  <li><a href="#compute_plc" id="toc-compute_plc" class="nav-link" data-scroll-target="#compute_plc">compute_PLC</a></li>
+  <li><a href="#compute_plc_prime" id="toc-compute_plc_prime" class="nav-link" data-scroll-target="#compute_plc_prime">compute_PLC_prime</a></li>
+  </ul></li>
+  <li><a href="#conductance-utilities" id="toc-conductance-utilities" class="nav-link" data-scroll-target="#conductance-utilities">Conductance utilities</a>
+  <ul class="collapse">
+  <li><a href="#kseries" id="toc-kseries" class="nav-link" data-scroll-target="#kseries">kseries</a></li>
+  <li><a href="#distribute_conductances" id="toc-distribute_conductances" class="nav-link" data-scroll-target="#distribute_conductances">distribute_conductances</a></li>
+  <li><a href="#compute_g_crown" id="toc-compute_g_crown" class="nav-link" data-scroll-target="#compute_g_crown">compute_g_crown</a></li>
+  </ul></li>
+  <li><a href="#root-distribution" id="toc-root-distribution" class="nav-link" data-scroll-target="#root-distribution">Root distribution</a>
+  <ul class="collapse">
+  <li><a href="#compute_root_profile_brp" id="toc-compute_root_profile_brp" class="nav-link" data-scroll-target="#compute_root_profile_brp">compute_root_profile_BRP</a></li>
+  <li><a href="#compute_root_profile_ldr" id="toc-compute_root_profile_ldr" class="nav-link" data-scroll-target="#compute_root_profile_ldr">compute_root_profile_LDR</a></li>
+  <li><a href="#compute_root_profile" id="toc-compute_root_profile" class="nav-link" data-scroll-target="#compute_root_profile">compute_root_profile</a></li>
+  <li><a href="#compute_root_length" id="toc-compute_root_length" class="nav-link" data-scroll-target="#compute_root_length">compute_root_length</a></li>
+  </ul></li>
+  <li><a href="#stomatal-regulation" id="toc-stomatal-regulation" class="nav-link" data-scroll-target="#stomatal-regulation">Stomatal regulation</a>
+  <ul class="collapse">
+  <li><a href="#compute_regul_fact" id="toc-compute_regul_fact" class="nav-link" data-scroll-target="#compute_regul_fact">compute_regul_fact</a></li>
+  <li><a href="#calculate_gs_jarvis" id="toc-calculate_gs_jarvis" class="nav-link" data-scroll-target="#calculate_gs_jarvis">calculate_gs_jarvis</a></li>
+  </ul></li>
+  <li><a href="#granier-ebound" id="toc-granier-ebound" class="nav-link" data-scroll-target="#granier-ebound">Granier Ebound</a>
+  <ul class="collapse">
+  <li><a href="#calculate_ebound_mm_granier" id="toc-calculate_ebound_mm_granier" class="nav-link" data-scroll-target="#calculate_ebound_mm_granier">calculate_Ebound_mm_Granier</a></li>
+  <li><a href="#calculate_ebound_granier" id="toc-calculate_ebound_granier" class="nav-link" data-scroll-target="#calculate_ebound_granier">calculate_Ebound_Granier</a></li>
+  </ul></li>
+  <li><a href="#cuticular-conductance" id="toc-cuticular-conductance" class="nav-link" data-scroll-target="#cuticular-conductance">Cuticular conductance</a>
+  <ul class="collapse">
+  <li><a href="#compute_gmin" id="toc-compute_gmin" class="nav-link" data-scroll-target="#compute_gmin">compute_gmin</a></li>
+  <li><a href="#compute_e_min" id="toc-compute_e_min" class="nav-link" data-scroll-target="#compute_e_min">compute_E_min</a></li>
+  </ul></li>
+  <li><a href="#leaf-energy-balance" id="toc-leaf-energy-balance" class="nav-link" data-scroll-target="#leaf-energy-balance">Leaf energy balance</a>
+  <ul class="collapse">
+  <li><a href="#compute_t_leaf" id="toc-compute_t_leaf" class="nav-link" data-scroll-target="#compute_t_leaf">compute_T_leaf</a></li>
+  </ul></li>
+  <li><a href="#dead-fuel-moisture" id="toc-dead-fuel-moisture" class="nav-link" data-scroll-target="#dead-fuel-moisture">Dead fuel moisture</a>
+  <ul class="collapse">
+  <li><a href="#compute_dfmc" id="toc-compute_dfmc" class="nav-link" data-scroll-target="#compute_dfmc">compute_DFMC</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/ecamo19/plant_hydraulics/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">SurEau plant hydraulics</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<section id="pressure-volume-curve-functions" class="level2">
+<h2 class="anchored" data-anchor-id="pressure-volume-curve-functions">Pressure-Volume curve functions</h2>
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L16" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="compute_rs" class="level3">
+<h3 class="anchored" data-anchor-id="compute_rs">compute_Rs</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_Rs(</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    pi_FT, <span class="co"># Osmotic potential at full turgor π₀ (MPa). Negative value,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    epsilon, <span class="co"># Bulk modulus of elasticity ε of the symplasm (MPa). </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    psi, <span class="co"># Current water potential ψ of the symplasm (MPa). </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>): <span class="co"># Relative symplasmic water deficit (dimensionless, 0 to 1).</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Compute the relative symplasmic water deficit Rs = 1 − RWC.</em></p>
+<p>Inverts the pressure–volume curve (Ruffault et al.&nbsp;2022, Eq. 43) to obtain the fractional water loss of the symplasm at a given water potential ψ. The function handles both regimes of the p–v curve (above and below the turgor loss point)</p>
+<p>Above the turgor loss point (Rs1), Rs is found by substituting RWC = 1 - Rs into Equation 46 (the product form of Eq. 43), yielding a quadratic in Rs:</p>
+<pre><code>ε·Rs² + (ψ + π₀ − ε)·Rs − ψ = 0</code></pre>
+<p>which is solved with the quadratic formula (minus root).</p>
+<p>Derivation of the quadratic solved by compute_Rs()</p>
+<pre><code>STEP 1 — Equation 43 (first case): the pressure-volume curve
+─────────────────────────────────────────────────────────────
+    ψ = −π₀ - ε(1 - RWC) + π₀ / RWC
+
+            │
+            │  Multiply both sides by RWC to clear the fraction
+            ▼
+
+STEP 2 — Equation 46: product form
+───────────────────────────────────
+    ψ·RWC + π₀·RWC + ε(1 - RWC)·RWC - π₀ = 0
+
+            │
+            │  Substitute  RWC = 1 - Rs
+            ▼
+
+STEP 3 — After substitution
+────────────────────────────
+    ψ(1 - Rs) + π₀(1 - Rs) + ε·Rs·(1 - Rs) - π₀ = 0
+
+            │
+            │  Expand every product
+            ▼
+
+STEP 4 — Expanded form
+───────────────────────
+    (ψ - ψ·Rs) + (π₀ - π₀·Rs) + (ε·Rs - ε·Rs² - π₀) = 0
+
+            │
+            │  Cancel  +π₀  and  −π₀ , then group by powers of Rs
+            ▼
+
+STEP 5 — Collected by powers of Rs
+───────────────────────────────────
+    -ε·Rs²  +  (−ψ - π₀ + ε)·Rs  +  ψ  =  0
+
+            │
+            │  Multiply everything by -1
+            ▼
+
+STEP 6 — Standard quadratic form  (a·x² + b·x + c = 0)
+────────────────────────────────────────────────────────
+    ε·Rs²  +  (ψ + π₀ - ε)·Rs  -  ψ  =  0
+
+    where   a = ε
+            b = (ψ + π₀ - ε)
+            c = −ψ
+
+            │
+            │  Apply quadratic formula, take the MINUS root
+            │  (the plus root gives Rs &gt; 1, physically impossible)
+            ▼
+
+STEP 7 — Quadratic formula (minus root)
+────────────────────────────────────────
+
+            -b  -  √(b² - 4ac)
+    Rs  =  ─────────────────────
+                2a
+
+            -(ψ + π₀ - ε)  -  √( (ψ + π₀ - ε)²  +  4·ε·ψ )
+        =   ──────────────────────────────────────────────────────
+                                    2·ε
+
+    Note: the  +4·ε·ψ  under the square root comes from
+        -4ac = -4·ε·(−ψ) = +4·ε·ψ
+
+            │
+            │  Direct translation to Python
+            ▼
+
+STEP 8 — Python implementation
+──────────────────────────────
+
+Rs1 = (
+-1 * (psi + pi_FT - epsilon)    # ← −b
+- np.sqrt((psi + pi_FT - epsilon) ** 2 + 4 * psi * epsilon) # ← −√(b²−4ac)
+) / (2 * epsilon)  # ← ÷ 2a</code></pre>
+<p>Below the turgor loss point (Rs2), turgor is zero and only the osmotic term remains (Eq. 43, second case: ψ = π₀/RWC), giving:</p>
+<pre><code>Rs = 1 − π₀/ψ</code></pre>
+<p>Physical analogy: Think of a balloon filled with sugar water. Above TLP the balloon is inflated — both the elastic wall (turgor) and the sugar concentration (osmotic pressure) resist water loss. Below TLP the balloon has deflated — only the sugar concentration matters.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p>pi_FT: Osmotic potential at full turgor π₀ (MPa). Negative value, e.g.&nbsp;−2.1.</p></li>
+<li><p>epsilon: Bulk modulus of elasticity ε of the symplasm (MPa). Positive value, e.g.&nbsp;10.</p></li>
+<li><p>psi: Current water potential ψ of the symplasm (MPa). Negative value, e.g.&nbsp;−1.5. Corresponds to <code>psi_LSym</code> or <code>psi_SSym</code></p></li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li>Rs: Relative symplasmic water deficit (dimensionless, 0 to 1). Rs = 0 means fully hydrated (RWC = 1). Rs = 1 means completely desiccated (RWC = 0).</li>
+</ul>
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L179" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="compute_turgor" class="level3">
+<h3 class="anchored" data-anchor-id="compute_turgor">compute_turgor</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_turgor(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    pi_FT, <span class="co"># Osmotic potential at full turgor π₀ (MPa).  </span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    epsilon, <span class="co"># Bulk modulus of elasticity ε of the symplasm (MPa).  </span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    Rs, <span class="co"># Relative symplasmic water deficit (dimensionless, 0 to 1). </span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>): <span class="co"># Turgor pressure (MPa). </span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Compute turgor pressure from the elastic component of the</em> pressure–volume curve.</p>
+<p>Turgor is the positive internal pressure a plant cell exerts against its cell wall when hydrated. It is extracted from Equation 43 (first case) of Ruffault et al.&nbsp;(2022) by decomposing the water potential into its turgor and osmotic components:</p>
+<pre><code>ψ  =  P  +  π</code></pre>
+<p>where P is turgor pressure and π is osmotic potential. Equation 43 can be split as:</p>
+<pre><code>ψ  =  [ −π₀ − ε(1 − RWC) ]  +  [ π₀ / RWC ]
+       ___________________      ___________
+            turgor  P            osmotic  π</code></pre>
+<p>Substituting Rs = 1 − RWC into the turgor part gives:</p>
+<pre><code>P = −π₀ − ε · Rs</code></pre>
+<p>which is what this function computes.</p>
+<p>Physical analogy: Think of the cell as a water balloon filled with sugar water. The term <code>−π₀</code> is the “natural inflation” from osmosis — even with no external pressure, the sugar solution draws water in and inflates the balloon. The term <code>−ε·Rs</code> is the “deflation penalty” — each unit of water lost costs ε MPa of turgor. When Rs reaches <code>−π₀/ε</code>, the balloon has fully deflated (turgor = 0 = the turgor loss point). Beyond that, the formula returns negative values, which are physically impossible, the calling code ( <a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_turgor_from_psi"><code>compute_turgor_from_psi</code></a> ) clamps the result to zero with <code>max(0.0, turgor)</code>.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p>pi_FT: Osmotic potential at full turgor π₀ (MPa). Negative value, e.g.&nbsp;−2.1. Equivalent to <code>pi_full_turgor_leaf</code> or <code>pi_full_turgor_stem</code> in SurEauVegetationParams.</p></li>
+<li><p>epsilon: Bulk modulus of elasticity ε of the symplasm (MPa). Positive value, e.g.&nbsp;10. Controls how fast turgor drops per unit of water lost — a stiff cell wall (high ε) loses turgor rapidly; a soft wall (low ε) loses turgor gradually. Equivalent to <code>epsilon_sym_leaf</code> or <code>epsilon_sym_stem</code> in SurEauVegetationParams.</p></li>
+<li><p>Rs: Relative symplasmic water deficit (dimensionless, 0 to 1). Rs = 0 means fully hydrated (RWC = 1); Rs = 1 means completely desiccated (RWC = 0). Obtained from <a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_rs"><code>compute_Rs()</code></a>.</p></li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li>P: Turgor pressure (MPa). Positive when the cell is inflated (above turgor loss point), zero or negative when the cell wall is flaccid (at or below turgor loss point). The caller should clamp to zero if a physically meaningful turgor is needed.</li>
+</ul>
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L258" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="compute_tlp" class="level3">
+<h3 class="anchored" data-anchor-id="compute_tlp">compute_TLP</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_TLP(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    pi_FT, epsilon</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Turgor loss point [MPa].</em></p>
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L263" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="compute_turgor_from_psi" class="level3">
+<h3 class="anchored" data-anchor-id="compute_turgor_from_psi">compute_turgor_from_psi</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_turgor_from_psi(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    pi_FT, epsilon, psi</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Turgor directly from water potential.</em></p>
+</section>
+</section>
+<section id="vulnerability-curve" class="level2">
+<h2 class="anchored" data-anchor-id="vulnerability-curve">Vulnerability curve</h2>
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L270" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="compute_plc" class="level3">
+<h3 class="anchored" data-anchor-id="compute_plc">compute_PLC</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_PLC(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    psi, <span class="co"># Water potential of the apoplasm ψ (MPa). </span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    slope, <span class="co"># Slope of the linear rate of embolism spread at the inflection point P50. </span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    P50, <span class="co"># Water potential causing 50 % loss of hydraulic conductance (MPa). </span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Compute the percent loss of hydraulic conductivity from a sigmoidal</em> vulnerability curve.</p>
+<p>Implements <strong>Equation 15</strong> of Ruffault et al.&nbsp;(2022):</p>
+<pre><code>                  100
+PLC  =  ─────────────────────────────────
+         1 + exp( slope/25 · (ψ − P50) )</code></pre>
+<p>The logistic (S-shaped) curve models the progressive failure of xylem conduits as water potential becomes more negative. A population of vessels has a distribution of breaking points, wide conduits cavitate first, narrow ones last, producing a cumulative sigmoid failure curve?</p>
+<p>Physical analogy: Imagine a bundle of 100 drinking straws of varying thickness. As suction increases, the thickest straws collapse first. P50 is the suction at which half the straws are blocked. <code>slope</code> controls how uniform the straws are: high slope means all similar thickness (sharp transition); low slope means a wide range (gradual transition).</p>
+<p>The PLC value feeds directly into the conductance reduction of Equations 14 and 16:</p>
+<pre><code>K_actual = K_max × (100 − PLC) / 100</code></pre>
+<p>This creates the positive feedback loop driving hydraulic failure: more cavitation → lower conductance → less water supply → more negative ψ → more cavitation.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p>psi: Water potential of the apoplasm ψ (MPa). Negative value, e.g.&nbsp;−3.0. Corresponds to <code>psi_LApo</code> (leaf, Eq. 15) or <code>psi_SApo</code> (stem, Eq. 16) in SurEauPlantState.</p></li>
+<li><p>slope: Slope of the linear rate of embolism spread at the inflection point P50 (% MPa⁻¹). Positive value, e.g.&nbsp;60. Higher values produce a steeper (more abrupt) transition. Equivalent to <code>slope_VC_leaf</code> or <code>slope_VC_stem</code> in SurEauVegetationParams.</p></li>
+<li><p>P50: Water potential causing 50 % loss of hydraulic conductance (MPa). Negative value, e.g.&nbsp;−3.4. The single most important trait for drought resistance — more negative P50 means more resistant. Equivalent to <code>P50_VC_leaf</code> or <code>P50_VC_stem</code> in SurEauVegetationParams.</p></li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li>PLC: Percent loss of conductivity (%, 0 to 100). PLC ≈ 0 when ψ &gt;&gt; P50 (safe). PLC = 50 when ψ = P50 (by definition). PLC ≈ 100 when ψ &lt;&lt; P50 (hydraulic failure).</li>
+</ul>
+<p><strong>References:</strong></p>
+<ul>
+<li>Ruffault et al.&nbsp;(2022), Eq. 15 (leaf) and Eq. 16 (stem, same functional form with stem-specific parameters).</li>
+</ul>
+<p><strong>Numerical example (Quercus petraea: P50 = −3.4, slope = 60):</strong></p>
+<pre><code>ψ = −1.0 MPa  →  PLC =   0.3%   (essentially intact)
+ψ = −2.5 MPa  →  PLC =  10.3%   (early damage)
+ψ = −3.4 MPa  →  PLC =  50.0%   (P50 by definition)
+ψ = −4.3 MPa  →  PLC =  89.7%   (severe damage)
+ψ = −6.0 MPa  →  PLC =  99.8%   (near-total failure)</code></pre>
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L360" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="compute_plc_prime" class="level3">
+<h3 class="anchored" data-anchor-id="compute_plc_prime">compute_PLC_prime</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_PLC_prime(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    PLC, <span class="co"># Current percent loss of conductivity (%, 0 to 100). </span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    slope, <span class="co"># Slope of the linear rate of embolism spread at the inflection point P50  </span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>): <span class="co"># Derivative dPLC/dψ (% MPa⁻¹). Always negative or zero.</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Compute the derivative of the percent loss of conductivity with</em> respect to water potential: dPLC/dψ.</p>
+<p>Implements <strong>Equation 26</strong> of Ruffault et al.&nbsp;(2022):</p>
+<pre><code>             slope     PLC        PLC
+PLC'  =  − ─────── × ───── × (1 − ─────)
+              25       100        100</code></pre>
+<p>This is the derivative of the sigmoidal vulnerability curve (Eq. 15) with respect to ψ. It can be verified by differentiating the logistic function directly: the derivative of <code>100 / (1 + exp(−x))</code> is <code>(100 · exp(−x)) / (1 + exp(−x))²</code>,</p>
+<p>which simplifies to <code>(PLC/100) · (1 − PLC/100)</code> times the chain rule factor <code>slope/25</code>.</p>
+<p>The denominator 250,000 in the code is the product of the three scaling constants:</p>
+<pre><code>25 × 100 × 100 = 250,000
+
+where:  25   from the slope/25 convention (Pammenter &amp; Vander Willigen 1998)
+       100   from PLC/100  (first factor)
+       100   from (100 − PLC)/100  (second factor, written as (100 − PLC)/100)
+
+So:  −slope × PLC × (100 − PLC) / 250,000
+   = −(slope/25) × (PLC/100) × (1 − PLC/100)</code></pre>
+<p>Physical meaning: PLC’ tells you how fast pipes are breaking per unit drop in water potential. It is steepest at P50 (where PLC = 50, so both factors PLC/100 and (1 − PLC/100) equal 0.5) and approaches zero at both extremes (PLC ≈ 0 or PLC ≈ 100).</p>
+<p>PLC’ is used in the solver (<a href="https://ecamo19.github.io/plant_hydraulics/sureau_solver.html#sureau_solver"><code>sureau_solver</code></a>) to compute the <strong>cavitation water-release conductance</strong> K_cav (Equation 25):</p>
+<pre><code>K_cav = −Q_sat_Apo × PLC' / dt</code></pre>
+<p>This equivalent conductance lets the water released from bursting pipes be treated as a Darcy-type flux, fitting into the same numerical framework as all other fluxes in the model.</p>
+<p><strong>References:</strong></p>
+<p>Pammenter, N. W. and Vander Willigen, C.: A mathematical and statistical analysis of the curves illustrating vulnerability of xylem to cavitation, Tree Physiology, 18, 589–593, 1998.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p>PLC: Current percent loss of conductivity (%, 0 to 100). Obtained from <a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_plc"><code>compute_PLC()</code></a>. Corresponds to <code>PLC_leaf</code> or <code>PLC_stem</code> in SurEauPlantState.</p></li>
+<li><p>slope: Slope of the linear rate of embolism spread at the inflection point P50 (% MPa⁻¹). Positive value, e.g.&nbsp;60. Equivalent to <code>slope_VC_leaf</code> or <code>slope_VC_stem</code> in SurEauVegetationParams.</p></li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li>PLC_prime: Derivative dPLC/dψ (% MPa⁻¹). Always negative or zero, because PLC increases (more damage) as ψ decreases (more negative water potential).</li>
+</ul>
+<p><strong>Derivation:</strong></p>
+<pre><code>Eq. 15   PLC = 100 / (1 + exp(slope/25 · (ψ − P50)))
+      │  differentiate with respect to ψ using the chain rule
+      │  d/dψ [100/(1+e^u)] = −100·e^u/(1+e^u)² · du/dψ
+      │  where u = slope/25·(ψ−P50), so du/dψ = slope/25
+      ▼
+
+Simplify             note that e^u/(1+e^u)² = [1/(1+e^u)]·[e^u/(1+e^u)]
+      │                                      = (PLC/100)·(1 − PLC/100)
+      ▼
+
+Eq. 26   PLC' = −(slope/25) · (PLC/100) · (1 − PLC/100)
+      │  multiply out the denominators: 25 × 100 × 100 = 250,000
+      ▼
+
+    Code    return −slope × PLC × (100 − PLC) / 250,000</code></pre>
+<p><strong>Numerical example (slope = 60):</strong></p>
+<pre><code>PLC =   0%  →  PLC' = −60 ×   0 × 100 / 250000 =  0.0000  (no pipes breaking)
+PLC =  10%  →  PLC' = −60 ×  10 ×  90 / 250000 = −0.0216  (slow onset)
+PLC =  50%  →  PLC' = −60 ×  50 ×  50 / 250000 = −0.0600  (maximum rate)
+PLC =  90%  →  PLC' = −60 ×  90 ×  10 / 250000 = −0.0216  (slowing down)
+PLC = 100%  →  PLC' = −60 × 100 ×   0 / 250000 =  0.0000  (all pipes gone)</code></pre>
+</section>
+</section>
+<section id="conductance-utilities" class="level2">
+<h2 class="anchored" data-anchor-id="conductance-utilities">Conductance utilities</h2>
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L469" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="kseries" class="level3">
+<h3 class="anchored" data-anchor-id="kseries">kseries</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> kseries(</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    k1, k2</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Two conductances in series: 1/(1/k1 + 1/k2) = k1</em>k2/(k1+k2).*</p>
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L474" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="distribute_conductances" class="level3">
+<h3 class="anchored" data-anchor-id="distribute_conductances">distribute_conductances</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> distribute_conductances(</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    k_plant_init:<span class="bu">float</span>, ri:ndarray, sym_frac_leaf:<span class="bu">float</span><span class="op">=</span><span class="fl">0.4</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="bu">tuple</span>:</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Distribute whole-plant K among root, stem-leaf, and leaf symplasm.</em></p>
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L489" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="compute_g_crown" class="level3">
+<h3 class="anchored" data-anchor-id="compute_g_crown">compute_g_crown</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_g_crown(</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    g_crown0:<span class="bu">float</span>, wind_speed:<span class="bu">float</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="bu">float</span>:</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Crown aerodynamic conductance.</em></p>
+</section>
+</section>
+<section id="root-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="root-distribution">Root distribution</h2>
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L494" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="compute_root_profile_brp" class="level3">
+<h3 class="anchored" data-anchor-id="compute_root_profile_brp">compute_root_profile_BRP</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_root_profile_BRP(</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    z:ndarray, <span class="co"># Cumulative depth of the bottom of each soil layer (m).  </span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    beta:<span class="bu">float</span>, <span class="co"># Species-specific root distribution parameter (dimensionless, 0 &lt; β &lt; 1). </span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>ndarray: <span class="co"># Root fraction in each soil layer (dimensionless). Same length as z. </span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Compute per-layer root fractions using the Beta Root Profile model.</em></p>
+<p>Implements <strong>Equation 19</strong> of Ruffault et al.&nbsp;(2022), based on the exponential root distribution of Jackson et al.&nbsp;(1996):</p>
+<pre><code>r_j = β^{z_{j-1} · 100} − β^{z_j · 100}</code></pre>
+<p>which is equivalent to differencing the cumulative root fraction:</p>
+<pre><code>Y(d) = 1 − β^d              (Jackson et al. 1996)
+
+r_j  = Y(z_j) − Y(z_{j-1})</code></pre>
+<p>where d is depth in centimeters, β is a species-specific root distribution parameter (0 &lt; β &lt; 1), and z_j is the cumulative depth of the bottom of layer j in meters (converted to cm internally by multiplying by 100).</p>
+<p>The parameter β controls how deep roots extend. Think of it as a “root shallowness dial” :</p>
+<ul>
+<li><p>β close to 0 (e.g.&nbsp;0.90): roots are very shallow, most mass concentrated near the surface.</p></li>
+<li><p>β close to 1 (e.g.&nbsp;0.99): roots are spread deeply into the soil, like a deep-rooted tree reaching for groundwater.</p></li>
+</ul>
+<p>The raw fractions from this function may not sum to exactly 1.0 because the exponential tail extends beyond the deepest layer.</p>
+<p>The calling function <code>[</code>compute_root_profile<code>](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_root_profile)</code> handles normalization.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p>z: Cumulative depth of the bottom of each soil layer (m). NumPy array, e.g.&nbsp;<code>np.array([0.2, 0.8, 2.0])</code>. Corresponds to <code>soil_params.depth</code> in SurEauSoilParams.</p></li>
+<li><p>beta: Species-specific root distribution parameter (dimensionless, 0 &lt; β &lt; 1). Higher values produce deeper root profiles. Equivalent to <code>beta_root_profile</code> in SurEauVegetationParams. Reference values from the paper (Table 4): <em>Quercus ilex</em> β = 0.97, <em>Fagus sylvatica</em> β = 0.98.</p></li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li>rd: Root fraction in each soil layer (dimensionless array). Same length as z. Values are non-negative but may not sum to exactly 1.0 (see normalization note above).</li>
+</ul>
+<p><strong>References:</strong></p>
+<ul>
+<li><p>Ruffault et al.&nbsp;(2022), Eq. 19.</p></li>
+<li><p>Jackson, R. B. et al.&nbsp;(1996). A global analysis of root distributions for terrestrial biomes. <em>Oecologia</em>, 108, 389–411.</p></li>
+</ul>
+<p><strong>Derivation:</strong></p>
+<pre><code>Jackson et al. 1996    Y(d) = 1 − β^d     (cumulative, d in cm)
+      │                evaluate at each layer bottom: 
+      │                z in m → z×100 in cm
+      ▼
+
+Cumulative array    rd = 1 − β^{z·100}  = [Y(z₁), Y(z₂), ..., Y(zₙ)]
+      │             difference consecutive entries (prepend 0 for 
+      │             first layer)
+      ▼
+    Eq. 19          r_j = Y(z_j) − Y(z_{j-1})
+      │             direct translation to Python
+      ▼
+     Code          rd - np.concatenate([[0.0], rd[:-1]])</code></pre>
+<p><strong>Numerical example (β = 0.97, depths = [0.2, 0.8, 2.0] m):</strong></p>
+<p>-Cumulative: Y(20cm) = 1 − 0.97^20 = 0.4562 Y(80cm) = 1 − 0.97^80 = 0.9124 Y(200cm) = 1 − 0.97^200 = 0.9976</p>
+<p>-Per-layer: r₁ = 0.4562 − 0.0 = 0.4562 (45.6% in top 20 cm) r₂ = 0.9124 − 0.4562 = 0.4562 (45.6% in 20–80 cm) r₃ = 0.9976 − 0.9124 = 0.0852 ( 8.5% in 80–200 cm) ────── Total = 0.9976 (not exactly 1.0)</p>
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L607" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="compute_root_profile_ldr" class="level3">
+<h3 class="anchored" data-anchor-id="compute_root_profile_ldr">compute_root_profile_LDR</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_root_profile_LDR(</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    z:ndarray, <span class="co"># Cumulative depth of the bottom of each soil layer (m).</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    z50:<span class="bu">float</span>, <span class="co"># Depth above which 50 % of root density is found (m). </span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    z95:<span class="bu">float</span>, <span class="co"># Depth above which 95 % of root density is found (m). </span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>ndarray: <span class="co"># Root fraction in each soil layer (dimensionless). Same length as z. </span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Compute per-layer root fractions using the Linear Dose-Response</em> model.</p>
+<p>Implements the logistic root distribution of Schenk &amp; Jackson (2002).</p>
+<p>The cumulative root fraction at depth d is:</p>
+<pre><code>                1
+Y(d) = ────────────────────
+        1 + (d / Z50)^{pc}</code></pre>
+<p>where:</p>
+<pre><code>pc = 2.94 / ln(Z50 / Z95)</code></pre>
+<p>The constant 2.94 comes from the logistic curve properties: at d = Z50, Y = 0.5 (50% of roots above), and at d = Z95, Y ≈ 0.05 (95% of roots above). The shape parameter pc is derived so that these two constraints are satisfied simultaneously.</p>
+<p>Since Z95 &gt; Z50, the ratio Z50/Z95 &lt; 1, so ln(Z50/Z95) &lt; 0, and pc is <strong>negative</strong>. This makes (d/Z50)^pc a decreasing function of d, so Y(d) <strong>increases</strong> with depth — Y represents the cumulative fraction of roots that are ABOVE depth d (or equivalently, 1 − Y is the fraction below d). The differencing <code>yz - concat([0], yz[:-1])</code> then yields positive per-layer fractions.</p>
+<p>Per-layer fractions are obtained by differencing consecutive cumulative values, identical to the BRP approach:</p>
+<pre><code>r_j = Y(z_j) − Y(z_{j-1})</code></pre>
+<p>Physical meaning: Z50 and Z95 are field measurements, “half the roots are above this depth” and “almost all roots are above this depth.” This makes the LDR model convenient when root excavation data are reported as depth quantiles rather than as a fitted β parameter.</p>
+<p>The raw fractions from this function may not sum to exactly 1.0. The calling function <code>[</code>compute_root_profile<code>](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_root_profile)</code> handles normalization.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p>z: Cumulative depth of the bottom of each soil layer (m). NumPy array, e.g.&nbsp;<code>np.array([0.2, 0.8, 2.0])</code>. Corresponds to <code>soil_params.depth</code> in SurEauSoilParams.</p></li>
+<li><p>z50: Depth above which 50 % of root density is found (m). Positive value, e.g.&nbsp;0.3. Equivalent to <code>root_Z50</code> in SurEauVegetationParams.</p></li>
+<li><p>z95: Depth above which 95 % of root density is found (m). Positive value, must be greater than z50, e.g.&nbsp;1.2. Equivalent to <code>root_Z95</code> in SurEauVegetationParams.</p></li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li>rd: Root fraction in each soil layer (dimensionless array). Same length as z. Values are non-negative but may not sum to exactly 1.0 (see normalization note above).</li>
+</ul>
+<p><strong>References:</strong></p>
+<ul>
+<li>Schenk, H. J. and Jackson, R. B. (2002). The global biogeography of roots. <em>Ecological Monographs</em>, 72(3), 311–328.</li>
+</ul>
+<p><strong>Derivation:</strong></p>
+<pre><code>Schenk &amp; Jackson 2002   Y(d) = 1 / (1 + (d/Z50)^pc)
+      │                 compute shape parameter from Z50, Z95
+      │                 pc = 2.94 / ln(Z50 / Z95)
+      │                 NOTE: pc is NEGATIVE because Z50 &lt; Z95
+      ▼
+Cumulative array        yz = [Y(z₁), Y(z₂), ..., Y(zₙ)]
+      │                 yz INCREASES with depth (because pc &lt; 0)
+      │                 difference consecutive entries
+      │                 (prepend 0 for first layer)
+      ▼
+Per-layer               r_j = Y(z_j) − Y(z_{j-1})</code></pre>
+<p><strong>Numerical example (Z50 = 0.3 m, Z95 = 1.2 m, depths = [0.2, 0.8, 2.0] m):</strong></p>
+<pre><code>Step 1 — Shape parameter:
+    pc = 2.94 / ln(0.3/1.2) = 2.94 / (−1.386) = −2.121
+
+Step 2 — Cumulative fractions (yz INCREASES with depth):
+
+    z = 0.2:  (0.2/0.3)^{−2.121} = (0.667)^{−2.121} = 2.404
+              yz = 1/(1 + 2.404) = 0.294
+
+    z = 0.8:  (0.8/0.3)^{−2.121} = (2.667)^{−2.121} = 0.128
+              yz = 1/(1 + 0.128) = 0.887
+
+    z = 2.0:  (2.0/0.3)^{−2.121} = (6.667)^{−2.121} = 0.018
+              yz = 1/(1 + 0.018) = 0.982
+
+Step 3 — Per-layer fractions (all positive):
+
+    r₁ = 0.294 − 0.0   = 0.294  (29.4% in top 20 cm)
+    r₂ = 0.887 − 0.294 = 0.593  (59.3% in 20–80 cm)
+    r₃ = 0.982 − 0.887 = 0.095  ( 9.5% in 80–200 cm)
+                           ─────
+                   Total = 0.982  (not exactly 1.0)
+
+Note: most roots (59.3%) are in the 20–80 cm layer, which
+makes sense for Z50 = 0.3 m — half the roots are above 30 cm,
+so the 0–20 cm layer captures less than half (29.4%), and the
+20–80 cm layer captures the bulk of the remaining roots.</code></pre>
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L749" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="compute_root_profile" class="level3">
+<h3 class="anchored" data-anchor-id="compute_root_profile">compute_root_profile</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_root_profile(</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    soil_params:SurEauSoilParams, <span class="co"># Soil parameters object with the following attributes:</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>       <span class="co"># - depth : np.ndarray</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>       <span class="co">#   Cumulative depth of the bottom of each soil layer (m).</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    veg_params:SurEauVegetationParams, <span class="co"># Vegetation parameters object with the following attributes:</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># - root_distribution_model : str</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>        <span class="co">#   "BRP" for Beta Root Profile (Eq. 19) or "LDR"</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># - beta_root_profile : float</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>        <span class="co">#   β parameter for BRP (dimensionless, 0 &lt; β &lt; 1). Only used when model is "BRP".</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># - root_Z50 : float or None</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">#   Depth above which 50 % of roots are found (m). Only used when model is "LDR".</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># - root_Z95 : float or None</span></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>        <span class="co">#   Depth above which 95 % of roots are found (m). Only used when model is "LDR".</span></span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>        <span class="co"># - root_depth_max : float or None</span></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>        <span class="co">#   Maximum rooting depth (m). If None, defaults to the depth of the deepest soil layer.</span></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>ndarray: <span class="co"># Normalized root fraction in each soil layer (dimensionless).</span></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Compute and normalize the vertical root distribution across soil</em> layers.</p>
+<p>Dispatches to either the Beta Root Profile model (<a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_root_profile_brp"><code>compute_root_profile_BRP</code></a>, implementing Equation 19 of Ruffault et al.&nbsp;2022) or the Linear Dose-Response model (<a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_root_profile_ldr"><code>compute_root_profile_LDR</code></a>, Schenk &amp; Jackson 2002), depending on <code>veg_params.root_distribution_model</code>. Then normalizes the resulting fractions so they sum to exactly 1.0 within the maximum rooting depth.</p>
+<p>The normalization is necessary because:</p>
+<ol type="1">
+<li>The exponential (BRP) or logistic (LDR) tail extends mathematically beyond the deepest soil layer, leaving a small fraction unaccounted for (e.g.&nbsp;0.24% for β = 0.97 at 2.0 m depth).</li>
+<li>The user may specify a <code>root_depth_max</code> shallower than the deepest soil layer, requiring roots below that depth to be zeroed and redistributed.</li>
+</ol>
+<p>The normalization strategy is: (a) find all layers within <code>root_depth_max</code>, (b) assign any “missing” root fraction (1.0 − sum) to the deepest valid layer, and (c) zero out all layers below <code>root_depth_max</code>.</p>
+<p>Physical analogy: Think of the root system as a bundle of straws spread vertically through the soil. Each soil layer gets a certain number of straws. β (or Z50/Z95) controls how the bundle tapers with depth. The normalization step says: “All straws must be accounted for within the rooting depth. If some mathematically fell below the deepest layer, assign them to that deepest layer instead.”</p>
+<p>The output feeds directly into:</p>
+<ul>
+<li><a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_root_length"><code>compute_root_length</code></a> → Eqs. 17–18: per-layer root area RAI_j = RAI × r_j and root length density Lv.</li>
+<li><a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#distribute_conductances"><code>distribute_conductances</code></a> → Eq. 17: per-layer root-to-stem conductance K_{Rj} = RAI_j × K_{R-SApo}.</li>
+<li>The Gardner-Cowan soil-to-root geometry factor B_GC (<a href="https://ecamo19.github.io/plant_hydraulics/1_sureau_soil_params.html#compute_soil_root_geometry"><code>compute_soil_root_geometry</code></a>), which depends on La and Lv derived from the root distribution.</li>
+</ul>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p>soil_params: SurEauSoilParams object with the following attributes:</p>
+<ul>
+<li>depth: Cumulative depth of the bottom of each soil layer (m). NumPy array, e.g.&nbsp;<code>np.array([0.2, 0.8, 2.0])</code>.</li>
+</ul></li>
+<li><p>veg_params: SurEauVegetationParams object with the following attributes:</p>
+<ul>
+<li>root_distribution_model: Which model to use. <code>"BRP"</code> (default) for Beta Root Profile (Eq. 19), or <code>"LDR"</code> for Linear Dose-Response (Schenk &amp; Jackson 2002).</li>
+<li>beta_root_profile: β parameter for BRP (dimensionless, 0 &lt; β &lt; 1). Only used when model is <code>"BRP"</code>.</li>
+<li>root_Z50: Depth above which 50 % of roots are found (m). Only used when model is <code>"LDR"</code>.</li>
+<li>root_Z95: Depth above which 95 % of roots are found (m). Only used when model is <code>"LDR"</code>.</li>
+<li>root_depth_max: Maximum rooting depth (m). If None, defaults to the depth of the deepest soil layer. Roots below this depth are zeroed and their fraction is reassigned to the deepest valid layer.</li>
+</ul></li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li>rd: Normalized root fraction in each soil layer (dimensionless NumPy array). Same length as <code>soil_params.depth</code>. Guaranteed to sum to exactly 1.0. Layers below <code>root_depth_max</code> have rd = 0.</li>
+</ul>
+<p><strong>References:</strong></p>
+<ul>
+<li>Ruffault et al.&nbsp;(2022), Eq. 19 (BRP model).</li>
+<li>Jackson, R. B. et al.&nbsp;(1996). A global analysis of root distributions for terrestrial biomes. <em>Oecologia</em>, 108, 389–411.</li>
+<li>Schenk, H. J. and Jackson, R. B. (2002). The global biogeography of roots. <em>Ecological Monographs</em>, 72(3), 311–328.</li>
+</ul>
+<p><strong>Normalization logic:</strong></p>
+<pre><code>1. Compute raw fractions via BRP (Eq. 19) or LDR
+raw fractions may sum to &lt; 1.0 (exponential tail)
+      │         
+      ▼
+2. Find layers within root_depth_max
+idx = layers where z ≤ zmax
+      │  
+      ▼
+3. Compute missing fraction 
+deficit = 1.0 − sum(rd[idx])
+      │  
+      ▼
+4. Assign deficit to deepest valid layer
+rd[last_valid] += deficit
+      │  
+      ▼
+5. Zero out layers below root_depth_max 
+rd[below_zmax] = 0.0
+      │  
+      ▼
+6. Return rd (sums to exactly 1.0)</code></pre>
+<p><strong>Numerical example (BRP, β = 0.97, depths = [0.2, 0.8, 2.0] m, root_depth_max = 2.0 m):</strong></p>
+<pre><code>Raw BRP output:    [0.4562, 0.4562, 0.0852]   sum = 0.9976
+Deficit:           1.0 − 0.9976 = 0.0024
+Add to last layer: [0.4562, 0.4562, 0.0876]   sum = 1.0000 </code></pre>
+<p><strong>Numerical example (BRP, β = 0.97, depths = [0.2, 0.8, 2.0] m, root_depth_max = 0.8 m):</strong></p>
+<pre><code>Raw BRP output:    [0.4562, 0.4562, 0.0852]
+Valid layers:      idx = [0, 1] (z ≤ 0.8)
+Deficit:           1.0 − (0.4562 + 0.4562) = 0.0876
+Add to last valid: [0.4562, 0.5438, 0.0000]  sum = 1.0000 ✓
+Layer 3 zeroed:    roots below 0.8 m reassigned to layer 2</code></pre>
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L929" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="compute_root_length" class="level3">
+<h3 class="anchored" data-anchor-id="compute_root_length">compute_root_length</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_root_length(</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    soil_params:SurEauSoilParams, <span class="co"># Soil parameters object with the following attributes:</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># - layer_thickness : np.ndarray</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="co">#    Thickness of each soil layer (m).    </span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="co"># - RFC : np.ndarray</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="co">#    Rock fragment content of each soil layer (%). </span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>    veg_params:SurEauVegetationParams, <span class="co"># Vegetation parameters object with the following attributes:</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="co"># - LAI_max : float</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="co">#    Maximum leaf area index of the stand (m²_leaf / m²_soil).</span></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="co"># - f_root_to_leaf : float</span></span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="co">#    Root-to-leaf area ratio RaLa (dimensionless). </span></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a><span class="co"># - root_distribution : np.ndarray</span></span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a><span class="co">#    Normalized root fraction in each soil layer (dimensionless, sums to 1.0). </span></span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a><span class="co"># - root_radius : float</span></span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a><span class="co">#    Fine root radius r (m). E.g. 0.0002.</span></span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="bu">tuple</span>: <span class="co"># Root length per unit soil area for each layer</span></span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Compute root length per soil area (La) and root length density per</em> soil volume (Lv) for each soil layer.</p>
+<p>Implements <strong>Equation 18</strong> of Ruffault et al.&nbsp;(2022) plus two geometric conversions described in the text surrounding Eq. 21:</p>
+<ol type="1">
+<li><p>Distribute total root area index (RAI) across layers using the root fractions r_j from <a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_root_profile"><code>compute_root_profile</code></a> (<strong>Eq. 18</strong>):</p>
+<pre><code>RAI_j = RAI × r_j</code></pre></li>
+<li><p>Convert root surface area to root length using cylinder geometry (A = 2πrL, so L = A / 2πr):</p>
+<pre><code>La_j = RAI_j / (2π r)</code></pre></li>
+<li><p>Convert root length per soil area to root length per soil volume by dividing by the effective layer thickness (corrected for rock fragments, same correction as <strong>Eq. 23</strong>):</p>
+<pre><code>Lv_j = La_j / [ thickness_j × (1 − RFC_j/100) ]</code></pre></li>
+</ol>
+<p>Both outputs feed into <strong>Equation 21</strong>, the soil-to-root conductance via <a href="https://ecamo19.github.io/plant_hydraulics/1_sureau_soil_params.html#compute_soil_root_geometry"><code>compute_soil_root_geometry</code></a>, which computes the Gardner-Cowan geometry factor B_GC:</p>
+<pre><code>b    = 1 / √(π Lv_j)           (mean half-distance between roots)
+B_GC = 2π La_j / ln(b / r)     (geometry factor in Eq. 21)</code></pre>
+<p>La_j represents the total length of roots, obtained by dividing surface area by the circumference of one straw (2πr).</p>
+<p>Lv_j represents how densely packed the roots are per unit room volume, accounting for rocks taking upspace. From Lv, you can calculate how far apart the straws are on average (1/√(πLv)), which determines how far water must travel through the soil to reach the nearest straw.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p>soil_params: SurEauSoilParams object with the following attributes:</p>
+<ul>
+<li><p>layer_thickness: Thickness of each soil layer (m). NumPy array, e.g.&nbsp;<code>np.array([0.2, 0.6, 1.2])</code>. Computed by <a href="https://ecamo19.github.io/plant_hydraulics/1_sureau_soil_params.html#sureau_soil_params"><code>sureau_soil_params()</code></a> from <code>soil_params.depth</code>.</p></li>
+<li><p>RFC: Rock fragment content of each soil layer (%). NumPy array, e.g.&nbsp;<code>np.array([75.0, 75.0, 75.0])</code>. Reduces the effective soil volume available for roots.</p></li>
+</ul></li>
+<li><p>veg_params: SurEauVegetationParams object with the following attributes:</p>
+<ul>
+<li><p>LAI_max: Maximum leaf area index of the stand (m²_leaf / m²_soil). E.g. 4.5.</p></li>
+<li><p>f_root_to_leaf: Root-to-leaf area ratio RaLa (dimensionless). E.g. 1.0 means root surface area equals leaf area. Equivalent to <code>RaLa</code> in Eq. 18 text.</p></li>
+<li><p>root_distribution: Normalized root fraction in each soil layer (dimensionless array summing to 1.0). Output of <a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_root_profile"><code>compute_root_profile()</code></a>. Equivalent to r_j in Eq. 18.</p></li>
+<li><p>root_radius: Fine root radius r (m). E.g. 0.0002 (= 0.2 mm). Equivalent to <code>dR</code> in Table 1.</p></li>
+</ul></li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><p>La: Root length per unit soil area for each layer (m_root / m²_soil). NumPy array, same length as <code>soil_params.depth</code>. Stored as <code>veg_params.La</code>.</p></li>
+<li><p>Lv: Root length density per unit soil volume for each layer (m_root / m³_soil). NumPy array, same length as <code>soil_params.depth</code>. Stored as <code>veg_params.Lv</code>.</p></li>
+</ul>
+<p><strong>References:</strong></p>
+<ul>
+<li>Ruffault et al.&nbsp;(2022), Eq. 18 (per-layer RAI), Eq. 21 (where La and Lv are used), Eq. 23 (same rock fragment correction).</li>
+<li>Jackson, R. B. et al.&nbsp;(1996) for the root distribution r_j.</li>
+</ul>
+<p><strong>Derivation:</strong></p>
+<pre><code> Eq. 18 RAI = LAI × RaLa        (total root area index)
+      │                     distribute across layers using r_j 
+      │                                 (Eq. 18)
+      ▼
+    Eq. 18               RAI_j = RAI × r_j    (per-layer root area)
+      │                   cylinder geometry: A = 2πrL → L = A/(2πr)
+      ▼
+      La        La_j = RAI_j / (2π r)   (length per soil area)
+      │         divide by effective layer volume
+      │         V_eff = thickness × (1 − RFC/100)   (same as Eq. 23)
+      ▼
+      Lv         Lv_j = La_j / V_eff     (density per soil volume)
+      │          feeds into Eq. 21 via compute_soil_root_geometry
+      ▼
+   Eq. 21               b = 1/√(πLv)       (half-distance between roots)
+                     B_GC = 2πLa / ln(b/r)   (Gardner-Cowan factor)</code></pre>
+<p><strong>Numerical example (LAI_max = 4.5, f_root_to_leaf = 1.0, root_radius = 0.0002 m, root_distribution = [0.4562, 0.4562, 0.0876], layer_thickness = [0.2, 0.6, 1.2] m, RFC = [75, 75, 75] %):</strong></p>
+<pre><code>Step 1 — Total RAI:
+    RAI = 4.5 × 1.0 = 4.5 m²_root / m²_soil
+
+Step 2 — Per-layer RAI (Eq. 18):
+    RAI₁ = 4.5 × 0.4562 = 2.053 m²/m²
+    RAI₂ = 4.5 × 0.4562 = 2.053 m²/m²
+    RAI₃ = 4.5 × 0.0876 = 0.394 m²/m²
+
+Step 3 — Root length per soil area (La):
+    La₁ = 2.053 / (2π × 0.0002) = 2053 / 0.001257 = 1634 m/m²
+    La₂ = 2.053 / 0.001257                         = 1634 m/m²
+    La₃ = 0.394 / 0.001257                         =  313 m/m²
+
+Step 4 — Root length density per soil volume (Lv):
+    V_eff₁ = 0.2 × (1 − 0.75) = 0.05 m
+    Lv₁ = 1634 / 0.05 = 32,680 m/m³   (32.7 km of root per m³)
+
+    V_eff₂ = 0.6 × 0.25 = 0.15 m
+    Lv₂ = 1634 / 0.15 = 10,893 m/m³   (10.9 km per m³)
+
+    V_eff₃ = 1.2 × 0.25 = 0.30 m
+    Lv₃ = 313 / 0.30  =  1,043 m/m³   ( 1.0 km per m³)
+
+These feed into compute_soil_root_geometry:
+    b₁ = 1/√(π × 32680) = 0.0031 m  (3.1 mm between roots)
+    b₂ = 1/√(π × 10893) = 0.0054 m  (5.4 mm between roots)
+    b₃ = 1/√(π ×  1043) = 0.0175 m  (17.5 mm between roots)</code></pre>
+</section>
+</section>
+<section id="stomatal-regulation" class="level2">
+<h2 class="anchored" data-anchor-id="stomatal-regulation">Stomatal regulation</h2>
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1108" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="compute_regul_fact" class="level3">
+<h3 class="anchored" data-anchor-id="compute_regul_fact">compute_regul_fact</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_regul_fact(</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    psi, <span class="co"># Water potential of the leaf symplasm ψ_LSym (MPa). </span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    params:SurEauVegetationParams, <span class="co"># Vegetation parameters object. Which attributes are read depends on the formulation:</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="co"># - stomatal_reg_formulation : str</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="co">#    ``"Sigmoid"`` (default), ``"PiecewiseLinear"``, or ``"Turgor"``.</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Sigmoid:</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="co"># - P50_gs : float</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="co">#    Water potential at 50 % stomatal closure (MPa). Derived</span></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="co">#    from ``(P12_gs + P88_gs) / 2``.</span></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="co"># - slope_gs : float</span></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="co">#    Slope of the stomatal sigmoid at P50_gs (% MPa⁻¹).</span></span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a><span class="co">#    Derived from ``100 / (P12_gs − P88_gs)``.</span></span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a><span class="co"># PiecewiseLinear:</span></span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a><span class="co"># - psi_start_closing : float</span></span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a><span class="co">#    ψ above which stomata are fully open (MPa).</span></span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a><span class="co"># - psi_close : float</span></span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a><span class="co">#    ψ below which stomata are fully closed (MPa).</span></span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Turgor:</span></span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a><span class="co"># - pi_full_turgor_leaf : float</span></span>
+<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a><span class="co">#    Osmotic potential at full turgor π₀ (MPa).</span></span>
+<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a><span class="co"># - epsilon_sym_leaf : float</span></span>
+<span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a><span class="co">#    Bulk elastic modulus ε (MPa).</span></span>
+<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a><span class="co"># - turgor_pressure_at_gs_max : float</span></span>
+<span id="cb45-25"><a href="#cb45-25" aria-hidden="true" tabindex="-1"></a><span class="co">#    Turgor at which stomata are fully open (MPa).</span></span>
+<span id="cb45-26"><a href="#cb45-26" aria-hidden="true" tabindex="-1"></a>): <span class="co"># Stomatal regulation factor γ (dimensionless, 0 to 1).</span></span>
+<span id="cb45-27"><a href="#cb45-27" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Compute the stomatal regulation factor γ and its derivative dγ/dψ.</em></p>
+<p>The regulation factor γ is a dimensionless number between 0 and 1 that controls how open the stomata are, linking water potential to stomatal conductance via <strong>Equation 33</strong> of Ruffault et al.&nbsp;(2022):</p>
+<pre><code>g_stom = γ × g_stom,max</code></pre>
+<p>where g_stom,max is the maximum stomatal conductance (set by light, temperature, CO₂). When γ = 1, stomata are fully open; when γ = 0, stomata are fully closed.</p>
+<p>The derivative dγ/dψ is needed by the implicit solver for the transpiration linearization in <strong>Equation 60</strong>, which accounts for the quick adjustment of stomatal regulation to water potential changes within a single timestep.</p>
+<p>Three formulations are available, selected by <code>params.stomatal_reg_formulation</code>:</p>
+<p><strong>Sigmoid</strong> (default, used in the paper) Implements <strong>Equation 34</strong>: γ follows a sigmoid (S-curve) that transitions smoothly from 1 (open) to 0 (closed) as ψ_LSym decreases. The shape is controlled by P50_gs (ψ at 50% closure) and slope_gs (steepness of the transition). This is the same logistic functional form as the xylem vulnerability curve (Eq. 15), but applied to stomata using leaf symplasm ψ rather than apoplasm ψ, and scaled to 0–1 instead of 0–100.</p>
+<p><strong>PiecewiseLinear</strong> (not in the paper) A simple three-zone model: fully open above ψ_start_closing, linearly decreasing between ψ_start_closing and ψ_close, fully closed below ψ_close.</p>
+<p><strong>Turgor</strong> (not in the paper) A mechanistic model that ties stomatal opening directly to guard cell turgor pressure, computed from the pressure–volume curve (Eqs. 43/46 via <strong>compute_Rs()</strong> and <strong>compute_turgor()</strong> ). Stomata open proportionally to turgor / turgor_at_gs_max.</p>
+<p>Physical analogy: Think of γ as a valve controlled by water pressure. When the pipe pressure (ψ) is high (less negative), the valve is wide open. As pressure drops, the valve progressively shuts. The Sigmoid formulation describes a valve that shuts rapidly over a narrow pressure range (like a snap-action valve). The PiecewiseLinear formulation describes a valve that shuts at a constant rate. The Turgor formulation describes a valve directly driven by the inflation of the guard cells.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p>psi: Water potential of the leaf symplasm ψ_LSym (MPa). Negative value, e.g.&nbsp;−2.0. Corresponds to <code>psi_LSym</code> in SurEauPlantState.</p></li>
+<li><p>params: SurEauVegetationParams object with the following attributes (which are read depends on the formulation):</p>
+<ul>
+<li><p>stomatal_reg_formulation: Which model to use. <code>"Sigmoid"</code> (default, Eq. 34), <code>"PiecewiseLinear"</code>, or <code>"Turgor"</code>.</p></li>
+<li><p>Sigmoid parameters:</p>
+<ul>
+<li><p>P50_gs: Water potential at 50 % stomatal closure (MPa). Derived from (P12_gs + P88_gs) / 2 in <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_params.html#sureau_vegetation_params"><code>sureau_vegetation_params</code></a> .</p></li>
+<li><p>slope_gs: Slope of the stomatal sigmoid at P50_gs (% MPa⁻¹). Derived from 100 / (P12_gs − P88_gs) in <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_params.html#sureau_vegetation_params"><code>sureau_vegetation_params</code></a> .</p></li>
+</ul></li>
+<li><p>PiecewiseLinear parameters:</p>
+<ul>
+<li>psi_start_closing: ψ above which stomata are fully open (MPa). E.g. −0.5.</li>
+<li>psi_close: ψ below which stomata are fully closed (MPa). E.g. −2.0.</li>
+</ul></li>
+<li><p>Turgor parameters:</p>
+<ul>
+<li>pi_full_turgor_leaf: Osmotic potential at full turgor π₀ (MPa). E.g. −2.1.</li>
+<li>epsilon_sym_leaf: Bulk elastic modulus ε (MPa). E.g. 10.</li>
+<li>turgor_pressure_at_gs_max: Turgor at which stomata are fully open (MPa). E.g. 2.0.</li>
+</ul></li>
+</ul></li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><p>rf: Stomatal regulation factor γ (dimensionless, 0 to 1). γ = 1 means stomata fully open (no water stress). γ = 0 means stomata fully closed (maximum water stress).</p></li>
+<li><p>rfp: Derivative dγ/dψ (MPa⁻¹). Always non-negative (γ increases as ψ increases). Used in the implicit solver for the transpiration linearization (Eq. 60). Returns 0.0 for the Turgor formulation (no analytical derivative provided).</p></li>
+</ul>
+<p><strong>References:</strong></p>
+<ul>
+<li><p>Ruffault et al.&nbsp;(2022), Eq. 33 (stomatal conductance), Eq. 34 (sigmoid regulation factor), Eq. 60 (transpiration linearization using dγ/dψ).</p></li>
+<li><p>Pammenter, N. W. and Vander Willigen, C.: A mathematical and statistical analysis of the curves illustrating vulnerability of xylem to cavitation, Tree Physiology, 18, 589–593, 1998.</p></li>
+</ul>
+<p><strong>Derivation of the Sigmoid formulation (Eq. 34):</strong></p>
+<pre><code>    Eq. 34      γ = 1 − 1 / (1 + exp(α(ψ − P50_gs)))
+      │         define PL_gs = 1/(1+exp(α(ψ−P50)))  where α = slope_gs/25
+      ▼
+ Code line 1   PL_gs = 1/(1 + exp(α(ψ − P50_gs)))
+      │             flip: γ = 1 − PL_gs
+      ▼
+Code line 2           rf = 1 − PL_gs</code></pre>
+<p><strong>Derivation of the Sigmoid derivative:</strong></p>
+<pre><code>  Start from            γ = 1 − PL_gs
+      │             dγ/dψ = −d(PL_gs)/dψ
+      │             d(PL_gs)/dψ = −α × PL_gs × (1−PL_gs)
+      │             and (1−PL_gs) = γ = rf
+      ▼
+    Result                dγ/dψ = α × PL_gs × rf
+      │                direct translation to Python
+      ▼
+    Code               al = slope_gs / 25.0
+                      rfp = al * PL_gs * rf</code></pre>
+<p><strong>Numerical example, Sigmoid (Quercus petraea: P12_gs = −2.07, P88_gs = −2.62, giving P50_gs = −2.345, slope_gs = 182):</strong></p>
+<pre><code>ψ = −1.5 MPa (mild stress):
+    α = 182/25 = 7.28
+    PL_gs = 1/(1+exp(7.28×0.845)) = 0.002
+    γ = 0.998          ← stomata 99.8% open
+    dγ/dψ = 0.015
+
+ψ = −2.345 MPa (at P50_gs):
+    PL_gs = 0.5
+    γ = 0.500          ← stomata half closed
+    dγ/dψ = 1.82      ← maximum sensitivity
+
+ψ = −2.8 MPa (severe stress):
+    PL_gs = 0.965
+    γ = 0.035          ← stomata 96.5% closed
+    dγ/dψ = 0.246</code></pre>
+<p><strong>PiecewiseLinear formulation:</strong></p>
+<pre><code>Zone 1 (ψ &gt; ψ_start):    γ = 1.0,  dγ/dψ = 0
+      │     ψ decreasing
+      ▼
+Zone 2 (ψ_close &lt; ψ &lt; ψ_start):
+                          γ = (ψ − ψ_close) / (ψ_start − ψ_close)
+                          dγ/dψ = 1 / (ψ_start − ψ_close)
+      │  ψ decreasing
+      ▼
+Zone 3 (ψ &lt; ψ_close):    γ = 0.0,  dγ/dψ = 0</code></pre>
+<p><strong>Numerical example, PiecewiseLinear (ψ_start = −0.5, ψ_close = −2.0):</strong></p>
+<pre><code>ψ = −0.2 MPa  →  γ = 1.000,  dγ/dψ = 0.000  (Zone 1: fully open)
+ψ = −0.5 MPa  →  γ = 1.000,  dγ/dψ = 0.000  (boundary)
+ψ = −1.0 MPa  →  γ = 0.667,  dγ/dψ = 0.667  (Zone 2: linear ramp)
+ψ = −1.5 MPa  →  γ = 0.333,  dγ/dψ = 0.667  (Zone 2: linear ramp)
+ψ = −2.0 MPa  →  γ = 0.000,  dγ/dψ = 0.000  (boundary)
+ψ = −2.5 MPa  →  γ = 0.000,  dγ/dψ = 0.000  (Zone 3: fully closed)</code></pre>
+<p><strong>Turgor formulation:</strong></p>
+<pre><code>Eq. 43 (via compute_Rs)      Rs = f(ψ, π₀, ε)
+      │
+      ▼
+Turgor (via compute_turgor)   P = −π₀ − ε·Rs
+      │
+      ▼
+Regulation factor             γ = clamp(P / P_at_gs_max, 0, 1)
+                              dγ/dψ = 0   (no analytical derivative)</code></pre>
+<p><strong>Numerical example, Turgor (π₀ = −2.1, ε = 10, turgor_at_gs_max = 2.0):</strong></p>
+<pre><code>ψ = −0.5 MPa  →  Rs = 0.026, P = 1.84  →  γ = 0.920  (mostly open)
+ψ = −1.5 MPa  →  Rs = 0.121, P = 0.89  →  γ = 0.445  (half closed)
+ψ = −2.3 MPa  →  Rs = 0.193, P = 0.17  →  γ = 0.085  (nearly closed)
+ψ = −2.7 MPa  →  Rs = 0.210, P = 0.00  →  γ = 0.000  (turgor loss)</code></pre>
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1413" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="calculate_gs_jarvis" class="level3">
+<h3 class="anchored" data-anchor-id="calculate_gs_jarvis">calculate_gs_jarvis</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_gs_jarvis(</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    fluxes:SurEauPlantFluxes, params:SurEauVegetationParams, PAR:<span class="bu">float</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauPlantFluxes:</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Jarvis-type stomatal conductance with temperature correction.</em></p>
+</section>
+</section>
+<section id="granier-ebound" class="level2">
+<h2 class="anchored" data-anchor-id="granier-ebound">Granier Ebound</h2>
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1436" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="calculate_ebound_mm_granier" class="level3">
+<h3 class="anchored" data-anchor-id="calculate_ebound_mm_granier">calculate_Ebound_mm_Granier</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_Ebound_mm_Granier(</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    ETP, LAI, a:<span class="bu">float</span><span class="op">=-</span><span class="fl">0.006</span>, b:<span class="bu">float</span><span class="op">=</span><span class="fl">0.134</span>, c:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Granier-type energy-limited transpiration [mm].</em></p>
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1441" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="calculate_ebound_granier" class="level3">
+<h3 class="anchored" data-anchor-id="calculate_ebound_granier">calculate_Ebound_Granier</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_Ebound_Granier(</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>    ETP:<span class="bu">float</span>, LAI:<span class="bu">float</span>, time_step:<span class="bu">float</span>, params:SurEauVegetationParams</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="bu">float</span>:</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Ebound in mmol/m²leaf/s from Granier formulation.</em></p>
+</section>
+</section>
+<section id="cuticular-conductance" class="level2">
+<h2 class="anchored" data-anchor-id="cuticular-conductance">Cuticular conductance</h2>
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1459" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="compute_gmin" class="level3">
+<h3 class="anchored" data-anchor-id="compute_gmin">compute_gmin</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_gmin(</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>    fluxes:SurEauPlantFluxes, veg_params:SurEauVegetationParams</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="bu">float</span>:</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>gmin as function of leaf temperature (Cochard et al.&nbsp;2019).</em></p>
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1487" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="compute_e_min" class="level3">
+<h3 class="anchored" data-anchor-id="compute_e_min">compute_E_min</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_E_min(</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>    gmin:<span class="bu">float</span>, g_BL:<span class="bu">float</span>, g_crown:<span class="bu">float</span>, VPD:<span class="bu">float</span>, P_atm:<span class="bu">float</span><span class="op">=</span><span class="fl">101.3</span></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="bu">float</span>:</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Minimal transpiration from cuticular/boundary layer/crown conductances.</em></p>
+</section>
+</section>
+<section id="leaf-energy-balance" class="level2">
+<h2 class="anchored" data-anchor-id="leaf-energy-balance">Leaf energy balance</h2>
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1499" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="compute_t_leaf" class="level3">
+<h3 class="anchored" data-anchor-id="compute_t_leaf">compute_T_leaf</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_T_leaf(</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>    state:SurEauPlantState, fluxes:SurEauPlantFluxes, veg_params:SurEauVegetationParams, clim:<span class="bu">dict</span></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="bu">tuple</span>: <span class="co"># Leaf temperature (°C).</span></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Compute leaf temperature, boundary-layer conductance, and leaf VPD</em> by solving a linearized leaf energy balance.</p>
+<p>Implements the leaf energy balance described in SurEau C version (Cochard et al.&nbsp;2021):</p>
+<p>The approach is a <strong>linearized single-step Penman-Monteith solution</strong>: the leaf temperature is found analytically as a departure from air temperature, rather than iteratively (as in the Newton-Raphson approach of <code>leaf_temperature.py</code> in the Bonan framework). Both solve the same physical problem, finding the temperature at which energy in (absorbed radiation) equals energy out (longwave emission + sensible heat + latent heat).</p>
+<p>The core equation for the leaf-to-air temperature difference is:</p>
+<pre><code>         γ* × Rni × r_blr / (ρ·cp)  −  VPD
+δT  =  ──────────────────────────────────────
+                    Δ  +  γ*</code></pre>
+<p>where:</p>
+<ul>
+<li>Rni is the isothermal net radiation (W/m²), the radiation the leaf would absorb if it were at air temperature.</li>
+<li>r_blr is the combined boundary-layer + radiative resistance (s/m), representing the non-evaporative heat loss pathway.</li>
+<li>γ* = γ × (r_st / r_blr) is the modified psychrometric constant, weighting the stomatal resistance against the convective + radiative resistance. When stomata are open (r_st small), γ* is small and transpirational cooling dominates (δT &lt; 0). When stomata are closed (r_st huge), γ* is large and the leaf heats up (δT &gt; 0).</li>
+<li>Δ is the slope of the saturation vapor pressure curve (kPa/°C).</li>
+<li>VPD is the air vapor pressure deficit (kPa).</li>
+</ul>
+<p>The function also computes the <strong>leaf VPD</strong>, the actual driving force for transpiration, which accounts for both the elevated leaf temperature (raising e_sat) and the reduced water activity at low water potentials (the Kelvin equation correction).This correction is critical for accurately computing residual transpiration under extreme drought.</p>
+<p>Physical analogy: The leaf is a wet surface sitting in a breeze. Radiation heats it up; transpiration cools it down. The energy balance finds the temperature at which these effects balance. A leaf with open stomata (low r_st) is like a wet towel in the wind — much cooler than the air. A leaf with closed stomata (high r_st) is like a dry rock — warmer than the air because it can only cool by convection and longwave emission.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p>T_air: Air temperature (°C).</p></li>
+<li><p>PAR: Photosynthetically active radiation (µmol/m²/s). E.g. 500. Used to estimate shortwave radiation via <code>SWR = PAR × 0.5495</code> and cloud cover via <code>PAR / potential_PAR</code>.</p></li>
+<li><p>potential_PAR_val: Clear-sky potential PAR (µmol/m²/s). Used to estimate cloud cover for atmospheric longwave radiation. If 0 (nighttime), cloud cover is set to 0.</p></li>
+<li><p>WS: Wind speed (m/s). Floored at 0.1 m/s internally. Faster wind thins the boundary layer, increasing convective cooling.</p></li>
+<li><p>RH: Relative humidity (%). E.g. 65. Used to compute actual vapor pressure and VPD.</p></li>
+<li><p>gs: Stomatal conductance (mmol/m²/s). Only used when <code>transpiration_model="Jarvis"</code>. Default None (treated as 0). Combined with g_cuti in parallel to give the total leaf conductance to water vapor, as in Eq. 29.</p></li>
+<li><p>g_cuti: Cuticular conductance (mmol/m²/s). Only used when <code>transpiration_model="Jarvis"</code>. Default None (treated as 0). The residual conductance when stomata are fully closed.</p></li>
+<li><p>E_inst: Instantaneous transpiration rate (mmol/m²/s). Only used when <code>transpiration_model="Granier"</code>. Default None. The effective conductance is back-calculated as g = E / (VPD/P_atm).</p></li>
+<li><p>psi_leaf: Leaf water potential (MPa). Default 0.0. Used in the Kelvin equation correction for vapor pressure inside the leaf. Only significant under severe drought (ψ &lt; −5 MPa).</p></li>
+<li><p>leaf_size: Characteristic leaf dimension (mm). Default 50. Leaves &gt; 3 mm use the flat-plate boundary layer formula; smaller leaves (needles) use the cylinder formula. Larger leaves have thicker boundary layers.</p></li>
+<li><p>leaf_angle: Leaf angle from horizontal (degrees). Default 45. Affects how much direct shortwave radiation the leaf intercepts: <code>SWRabs = a_SWR × cos(angle) × SWR</code>.</p></li>
+<li><p>turn_off_EB: If True, skip the energy balance and return T_air as the leaf temperature. Default False. Diagnostic option for testing without energy balance feedback.</p></li>
+<li><p>transpiration_model: <code>"Jarvis"</code> (default) computes stomatal resistance from gs + g_cuti conductances. <code>"Granier"</code> back-calculates effective conductance from E_inst.</p></li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><p>T_leaf: Leaf temperature (°C).</p></li>
+<li><p>g_bl: Boundary layer conductance (mmol/m²/s). Used downstream in the conductance chain for computing E_min (Eqs. 29–30) and canopy-level conductances. Stored as <code>fluxes.g_BL</code>.</p></li>
+<li><p>VPD_leaf: Vapor pressure deficit at the leaf surface (kPa). Accounts for leaf temperature (via e_sat at T_leaf) and water activity correction (via Kelvin equation at ψ_leaf). Drives all transpiration calculations downstream.</p></li>
+</ul>
+<p><strong>References:</strong></p>
+<ul>
+<li><p>Cochard, H. et al.&nbsp;(2021) — CPRM21 — SurEau: a mechanistic model of plant water relations under extreme drought. <em>Ann. For. Sci.</em>, 78, 1–23. (Energy balance formulation.)</p></li>
+<li><p>Jones, H. G. (2013). <em>Plants and microclimate</em>. Cambridge University Press. (Boundary layer conductance, Eqs. 29–30 text.)</p></li>
+<li><p>Brutsaert, W. (1975). On a derivable formula for longwave radiation from clear skies. <em>Water Resources Research</em>, 11(5), 742–744. (Atmospheric emissivity.)</p></li>
+<li><p>Buck, A. L. (1981). New equations for computing vapor pressure and enhancement factor. <em>J. Appl. Meteorol.</em>, 20, 1527–1532. (Saturation vapor pressure.)</p></li>
+</ul>
+<p><strong>Computation stages:</strong></p>
+<pre><code>Stage 1 — Atmospheric properties
+─────────────────────────────────
+Tetens equation       e_sat = a·exp(b·T/(T+z))        (kPa)
+Actual VP             ea = e_sat × RH/100              (kPa)
+Slope                 Δ = e_sat·b·z / (T+z)²          (kPa/°C)
+Cloud cover           cc = PAR / potential_PAR          (0–1)
+                      NOTE:cc=1 means CLEAR sky, cc=0 means overcast,
+                      opposite to meteorological convention.
+Atm. emissivity       ε_air = f(ea, T, cc)             (Brutsaert 1975)
+VPD                   VPDx = e_sat − ea                (kPa)
+
+Stage 2 — Radiation balance
+───────────────────────────
+Absorbed SW           SWRabs = 0.5 × cos(angle) × SWR  (W/m²)
+Incoming LW           LWRin = ε_air × σ × T⁴           (W/m²)
+Outgoing LW           LWRout = ε_leaf × σ × T⁴         (W/m², at T_air)
+Isothermal net rad    Rni = SWRabs + LWRin − LWRout     (W/m²)
+Radiative resistance  r_r = ρ·cp / (4·ε·σ·T³)          (s/m)
+
+Stage 3 — Boundary layer
+────────────────────────
+BL resistance         r_bl = f(WS, leaf_size)           (Jones 2013)
+BL conductance        g_bl = (1/r_bl) × 1000 × 40      (mmol/m²/s)
+Combined non-evap     r_blr = r_bl ∥ r_r                (parallel)
+
+Stage 4 — Stomatal resistance
+─────────────────────────────
+Jarvis:  r_st = 1/(gs + g_cuti) × 1000 × 40            (s/m)
+Granier: r_st = 1/(E/VPD × P_atm) × 1000 × 40         (s/m)
+
+Stage 5 — Penman-Monteith temperature solution
+───────────────────────────────────────────────
+Modified γ            γ* = γ × (r_st / r_blr)
+Leaf−air ΔT           δT = (γ*·Rni·r_blr/(ρ·cp) − VPD) / (Δ + γ*)
+Leaf temperature      T_leaf = T_air + δT               (°C)
+
+Stage 6 — Leaf VPD with Kelvin correction
+──────────────────────────────────────────
+e_sat at T_air        Buck (1981) equation               (Pa)
+e_air                 e_sat_air × RH/100                 (Pa)
+e_sat at T_leaf       Buck (1981) at T_leaf              (Pa)
+Kelvin correction     e_leaf = e_sat_leaf × exp(ψ·Vw/(R·T))  (Pa)
+Leaf VPD              VPD_leaf = (e_leaf − e_air) / 1000 (kPa)</code></pre>
+<p><strong>Kelvin equation detail:</strong></p>
+<p>The vapor pressure inside the leaf is not simply e_sat(T_leaf) because dissolved solutes and the negative water potential reduce the water activity. The correction is:</p>
+<pre><code>e_leaf = e_sat(T_leaf) × exp(ψ × Vw / (R × T))</code></pre>
+<p>where Vw = 18.02 × 10⁻⁶ m³/mol (molar volume of water), R = 8.314 J/mol/K, T in Kelvin, and ψ in MPa. The pre-computed constant 2.16947115 ≈ Vw × 10⁶ / R handles the MPa-to-Pa conversion.</p>
+<p>At ψ = −2 MPa, T = 25°C: correction = exp(−2 × 2.169/298) = 0.986 (1.4% reduction — small).</p>
+<p>At ψ = −10 MPa, T = 25°C: correction = exp(−10 × 2.169/298) = 0.930 (7% reduction — significant for residual transpiration under extreme drought).</p>
+<p><strong>Numerical example (T_air = 25°C, PAR = 500, WS = 2 m/s, RH = 50%, gs = 100 mmol/m²/s, g_cuti = 4 mmol/m²/s):</strong></p>
+<pre><code>Stage 1: e_sat = 3.17 kPa, ea = 1.58 kPa, VPD = 1.59 kPa
+         Δ = 0.189 kPa/°C
+
+Stage 2: SWR ≈ 275 W/m², SWRabs ≈ 97 W/m²
+         LWRin ≈ 370 W/m², LWRout ≈ 382 W/m²
+         Rni ≈ 85 W/m²
+
+Stage 3: r_bl ≈ 90 s/m, r_r ≈ 220 s/m
+         r_blr ≈ 64 s/m (parallel)
+
+Stage 4: r_st = 40000 / 104 ≈ 385 s/m
+         (gs+g_cuti = 104 mmol/m²/s → 0.0026 m/s → r = 385 s/m)
+
+Stage 5: γ* = 0.066 × (385/64) = 0.397
+         δT = (0.397×85×64/1306 − 1.59) / (0.189+0.397)
+            = (1.66 − 1.59) / 0.586
+            = 0.12°C
+         T_leaf = 25.12°C (barely above air — transpiration
+         cools effectively when stomata are open)
+
+With stomata closed (gs = 0, g_cuti = 4 only):
+         r_st ≈ 10,000 s/m
+         γ* = 0.066 × (10000/64) = 10.3
+         δT = (10.3×85×64/1306 − 1.59) / (0.189+10.3)
+            = (42.9 − 1.59) / 10.49
+            = 3.94°C
+         T_leaf = 28.94°C (nearly 4°C above air —
+         much less evaporative cooling)</code></pre>
+<pre><code> INPUTS
+ ──────
+   T_air              [°C]           — air temperature
+   PAR                [µmol/m²/s]    — photosynthetically active radiation
+   potential_PAR_val  [µmol/m²/s]    — clear-sky potential PAR
+   WS                 [m/s]          — wind speed (floored at 0.1)
+   RH                 [%]            — relative humidity
+   gs                 [mmol/m²/s]    — stomatal conductance (Jarvis only)
+   g_cuti             [mmol/m²/s]    — cuticular conductance (Jarvis only)
+   E_inst             [mmol/m²/s]    — instantaneous transpiration (Granier only)
+   psi_leaf           [MPa]          — leaf water potential (for Kelvin correction)
+   leaf_size          [mm]           — characteristic leaf dimension
+   leaf_angle         [degrees]      — leaf angle from horizontal
+ 
+                         │
+                         ▼
+┌─────────────────────────────────────────────────────────┐
+│                                                         │
+│    STAGE 1: ATMOSPHERIC PROPERTIES                      │
+│    "What are the thermodynamic conditions of the air?"  │
+│                                                         │
+│  Tetens equation (kPa):                                 │
+│  e_sat = 0.61121 × exp(17.502 × T / (T + 240.97))       │
+│                                                         │
+│  Actual vapor pressure:                                 │
+│  ea = e_sat × RH / 100                                  │
+│                                                         │
+│  Slope of saturation curve (kPa/°C):                    │
+│  Δ = e_sat × 17.502 × 240.97 / (T + 240.97)²            │
+│                                                         │
+│  Clearness index (NOT cloud cover — see note):          │
+│  cc = PAR / potential_PAR       clipped to [0, 1]       │
+│  NOTE: cc=1 means CLEAR sky, cc=0 means overcast.       │
+│        Opposite to meteorological convention!           │
+│                                                         │
+│  Atmospheric emissivity (Brutsaert 1975):               │
+│  ε_air = (1−0.84·cc) × 1.31 × (10·ea/(T+273))^(1/7)     │
+│        + 0.84 × cc                                      │
+│                                                         │
+│  Vapor pressure deficit:                                │
+│  VPDx = e_sat − ea                          [kPa]       │
+│                                                         │
+│  T=25°C, RH=50%:  e_sat=3.17, ea=1.58, VPD=1.59 kPa     │
+│                    Δ = 0.189 kPa/°C                     │
+│                                                         │
+└────────────────────────┬────────────────────────────────┘
+                         │
+                         ▼
+┌─────────────────────────────────────────────────────────┐
+│                                                         │
+│    STAGE 2: RADIATION BALANCE                           │
+│    "How much energy is the leaf absorbing?"             │
+│                                                         │
+│  Convert PAR → shortwave:                               │
+│  SWR = PAR × 0.5495                          [W/m²]     │
+│                                                         │
+│  Absorbed shortwave (leaf absorptance × projection):    │
+│  SWRabs = 0.5 × cos(leaf_angle) × SWR        [W/m²]     │
+│                                                         │
+│    0.5  = leaf absorptance (50% absorbed,               │
+│           rest reflected + transmitted)                 │
+│    cos() = projection onto leaf surface                 │
+│    angle=45° → cos=0.707 → SWRabs = 0.354 × SWR         │
+│                                                         │
+│  Incoming longwave (Stefan-Boltzmann):                  │
+│  LWRin = ε_air × σ × (T_air + 273.15)⁴      [W/m²]      │
+│                                                         │
+│  Outgoing longwave (linearized at T_air):               │
+│  LWRout = ε_leaf × σ × (T_air + 273.15)⁴    [W/m²]      │
+│  NOTE: uses T_air, not T_leaf — this is the             │
+│  linearization. The δT correction comes in Stage 5.     │
+│                                                         │
+│  Isothermal net radiation:                              │
+│  Rni = SWRabs + LWRin − LWRout               [W/m²]     │
+│                                                         │
+│  Radiative resistance (linearized LW derivative):       │
+│  r_r = ρ·cp / (4 × ε_leaf × σ × T³)         [s/m]       │
+│                                                         │
+│  Constants: σ = 5.6704e−8 W/m²/K⁴                       │
+│             ε_leaf = 0.97                               │
+│             ρ = 1.292 kg/m³, cp = 1010 J/kg/K           │
+│                                                         │
+│  Example: SWR≈275, SWRabs≈97, LWRin≈370, LWRout≈382     │
+│           Rni ≈ 85 W/m²,  r_r ≈ 220 s/m                 │
+│                                                         │
+└────────────────────────┬────────────────────────────────┘
+                         │
+                         ▼
+┌─────────────────────────────────────────────────────────┐
+│                                                         │
+│    STAGE 3: BOUNDARY LAYER RESISTANCE                   │
+│    "How thick is the still-air layer around the leaf?"  │
+│                                                         │
+│  Two regimes (Jones 2013):                              │
+│                                                         │
+│  Broad leaves (leaf_size &gt; 3 mm):                       │
+│  ┌────────────────────────────────────────────────┐     │
+│  │  gflat = 0.00662,  jflat = 0.5                 │     │
+│  │  r_bl = 1 / (1.5 × gflat × WS^0.5              │     │
+│  │              / (leaf_size/1000)^0.5 )          │     │
+│  │                                                │     │
+│  │  Bigger leaf → thicker BL → higher resistance  │     │
+│  │  Faster wind → thinner BL → lower resistance   │     │
+│  └────────────────────────────────────────────────┘     │
+│                                                         │
+│  Needles (leaf_size ≤ 3 mm):                            │
+│  ┌────────────────────────────────────────────────┐     │
+│  │  gcyl = 0.00403,  jcyl = 0.6                   │     │
+│  │  r_bl = 1 / (1.5 × gcyl × WS^0.6               │     │
+│  │              / (leaf_size/1000)^0.4 )          │     │
+│  │                                                │     │
+│  │  Cylinder geometry for thin needles            │     │
+│  └────────────────────────────────────────────────┘     │
+│                                                         │
+│  Convert to SurEau conductance units:                   │
+│  g_bl = (1 / r_bl) × 1000 × 40       [mmol/m²/s]        │
+│                                                         │
+│  Combined non-evaporative resistance (parallel):        │
+│  r_blr = 1 / (1/r_bl + 1/r_r)                [s/m]      │
+│                                                         │
+│  Physical meaning: two pathways for non-evaporative     │
+│  heat loss operate simultaneously:                      │
+│    • Convection through the boundary layer (r_bl)       │
+│    • Longwave radiation to surroundings (r_r)           │
+│  Parallel combination = total non-evap resistance       │
+│                                                         │
+│  Example: r_bl ≈ 90 s/m, r_r ≈ 220 s/m                  │
+│           r_blr ≈ 64 s/m (parallel always &lt; smallest)   │
+│                                                         │
+└────────────────────────┬────────────────────────────────┘
+                         │
+                         ▼
+┌─────────────────────────────────────────────────────────┐
+│                                                         │
+│    STAGE 4: STOMATAL RESISTANCE                         │
+│    "How hard is it for water vapor to escape?"          │
+│                                                         │
+│  Depends on transpiration_model:                        │
+│                                                         │
+│  ┌──── Jarvis ──────────────────────────────────────┐   │
+│  │                                                  │   │
+│  │  Total leaf conductance (stomata + cuticle       │   │
+│  │  in parallel, as in Eq. 29):                     │   │
+│  │  g_total = gs + g_cuti       [mmol/m²/s]         │   │
+│  │                                                  │   │
+│  │  Convert to resistance:                          │   │
+│  │  r_st = (1 / g_total) × 1000 × 40      [s/m]     │   │
+│  │                                                  │   │
+│  │  If g_total = 0:  r_st = 9999.99 (≈ infinite)    │   │
+│  │                                                  │   │
+│  │  Open:   gs=100 + g_cuti=4 → r_st ≈ 385 s/m      │   │
+│  │  Closed: gs=0   + g_cuti=4 → r_st ≈ 10000 s/m    │   │
+│  │                                                  │   │
+│  └──────────────────────────────────────────────────┘   │
+│                                                         │
+│  ┌──── Granier ─────────────────────────────────────┐   │
+│  │                                                  │   │
+│  │  Back-calculate conductance from flux:           │   │
+│  │  g = E_inst / VPDx × P_atm                       │   │
+│  │                                                  │   │
+│  │  Convert to resistance:                          │   │
+│  │  r_st = (1 / g) × 1000 × 40            [s/m]     │   │
+│  │                                                  │   │
+│  └──────────────────────────────────────────────────┘   │
+│                                                         │
+└────────────────────────┬────────────────────────────────┘
+                         │
+                         ▼
+┌─────────────────────────────────────────────────────────┐
+│                                                         │
+│    STAGE 5: PENMAN-MONTEITH TEMPERATURE SOLUTION        │
+│    "What temperature balances energy in vs energy out?" │
+│                                                         │
+│  Modified psychrometric constant:                       │
+│  γ* = γ × (r_st / r_blr)                                │
+│                                                         │
+│    γ = 0.066 kPa/°C (psychrometric constant)            │
+│    r_st / r_blr = ratio of stomatal to non-evaporative  │
+│                   resistance                            │
+│                                                         │
+│    Stomata open:  r_st ≈ 385,  γ* = 0.066×385/64        │
+│                                   = 0.40  (small)       │
+│    Stomata closed: r_st ≈ 10000, γ* = 0.066×10000/64    │
+│                                   = 10.3  (large)       │
+│                                                         │
+│  Leaf-to-air temperature difference:                    │
+│  ┌─────────────────────────────────────────────────┐    │
+│  │                                                 │    │
+│  │         γ* × Rni × r_blr / (ρ·cp)  −  VPDx      │    │
+│  │  δT  = ─────────────────────────────────────    │    │
+│  │                    Δ  +  γ*                     │    │
+│  │                                                 │    │
+│  │  Numerator:                                     │    │
+│  │    1st term: heating from absorbed radiation    │    │
+│  │              (larger when stomata closed → γ*↑) │    │
+│  │    2nd term: cooling from transpiration         │    │
+│  │              (larger when air is dry → VPD↑)    │    │
+│  │                                                 │    │
+│  │  Denominator:                                   │    │
+│  │    Δ + γ* = total system sensitivity            │    │
+│  │                                                 │    │
+│  └─────────────────────────────────────────────────┘    │
+│                                                         │
+│  T_leaf = T_air + δT                          [°C]      │
+│                                                         │
+│  Example (open stomata, γ*=0.40):                       │
+│    δT = (0.40×85×64/1306 − 1.59) / (0.189+0.40)         │
+│       = (1.66 − 1.59) / 0.59 = +0.12°C                  │
+│    T_leaf = 25.12°C  (barely warmer — transpiration     │
+│                       cools effectively)                │
+│                                                         │
+│  Example (closed stomata, γ*=10.3):                     │
+│    δT = (10.3×85×64/1306 − 1.59) / (0.189+10.3)         │
+│       = (42.9 − 1.59) / 10.49 = +3.94°C                 │
+│    T_leaf = 28.94°C  (nearly 4°C warmer — much less     │
+│                       evaporative cooling)              │
+│                                                         │
+└────────────────────────┬────────────────────────────────┘
+                         │
+                         ▼
+┌─────────────────────────────────────────────────────────┐
+│                                                         │
+│    STAGE 6: LEAF VPD WITH KELVIN CORRECTION             │
+│   "What is the actual driving force for transpiration?" │
+│                                                         │
+│  Saturation VP at T_air (Buck 1981, in Pa):             │
+│  e_sat_air = 611.21 × exp((18.678 − T/234.5)            │
+│                            × T / (257.14 + T))          │
+│                                                         │
+│  Actual VP of ambient air:                              │
+│  e_air = e_sat_air × RH / 100                  [Pa]     │
+│                                                         │
+│  Saturation VP at T_leaf (Buck 1981, in Pa):            │
+│  e_sat_leaf = 611.21 × exp((18.678 − Tl/234.5)          │
+│                              × Tl / (257.14 + Tl))      │
+│                                                         │
+│  NOTE: e_sat_leaf &gt; e_sat_air when T_leaf &gt; T_air       │
+│  (warmer leaf → higher vapor pressure inside)           │
+│                                                         │
+│  Kelvin equation correction:                            │
+│  ┌─────────────────────────────────────────────────┐    │
+│  │                                                 │    │
+│  │  e_leaf = e_sat_leaf × exp(ψ × Vw / (R × T))    │    │
+│  │                                                 │    │
+│  │  In code:                                       │    │
+│  │  e_leaf = e_sat_leaf × exp(psi_leaf             │    │
+│  │                            × 2.16947115         │    │
+│  │                            / (T_leaf + 273.15)) │    │
+│  │                                                 │    │
+│  │  where 2.16947115 ≈ Vw × 10⁶ / R                │    │
+│  │    Vw = 18.02e−6 m³/mol  (molar volume H₂O)     │    │
+│  │    R  = 8.314 J/mol/K    (gas constant)         │    │
+│  │    10⁶ converts ψ from MPa to Pa                │    │
+│  │                                                 │    │
+│  │  Physical meaning: negative ψ reduces the       │    │
+│  │  water activity inside the leaf, lowering the   │    │
+│  │  effective vapor pressure below e_sat.          │    │
+│  │                                                 │    │
+│  │  Impact by drought severity:                    │    │
+│  │  ψ =  −2 MPa → correction = 0.986 (−1.4%)       │    │
+│  │  ψ =  −5 MPa → correction = 0.964 (−3.6%)       │    │
+│  │  ψ = −10 MPa → correction = 0.930 (−7.0%)       │    │
+│  │                                                 │    │
+│  │  Only significant under extreme drought,        │    │
+│  │  the regime SurEau-Ecos was designed for.       │    │
+│  │                                                 │    │
+│  └─────────────────────────────────────────────────┘    │
+│                                                         │
+│  Leaf VPD:                                              │
+│  VPD_leaf = max(0, (e_leaf − e_air) / 1000)    [kPa]    │
+│                                                         │
+│  NOTE: VPD_leaf uses e_leaf (corrected for both         │
+│  T_leaf and ψ_leaf) versus e_air (at T_air).            │
+│  This is the ACTUAL gradient driving water out          │
+│  of the leaf, not the ambient VPD.                      │
+│                                                         │
+└────────────────────────┬────────────────────────────────┘
+                         │
+                         ▼
+┌─────────────────────────────────────────────────────────┐
+│                                                         │
+│    RETURN LOGIC                                         │
+│                                                         │
+│  if turn_off_EB:                                        │
+│      return T_air, g_bl, VPD_leaf                       │
+│      (skip energy balance — diagnostic mode)            │
+│                                                         │
+│  else:                                                  │
+│      return T_leaf, g_bl, VPD_leaf                      │
+│      (normal operation)                                 │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+ 
+ OUTPUTS
+ ───────
+   T_leaf    [°C]          → stored as fluxes.leaf_temperature
+                             used by compute_gmin() (Eqs. 31–32)
+                             to compute temperature-dependent
+                             cuticular conductance
+ 
+   g_bl      [mmol/m²/s]   → stored as fluxes.g_BL
+                             used by compute_E_min() (Eqs. 29–30)
+                             in the conductance chain:
+                             1/g_total = 1/g_stom + 1/g_bl + 1/g_crown
+ 
+   VPD_leaf  [kPa]         → stored as fluxes.leaf_VPD
+                             drives ALL transpiration calculations:
+                             • E_min  = g_min × VPD_leaf / P_atm
+                             • E_lim  = g_canopy_lim × VPD_leaf / P_atm
+                             • E_bound = g_canopy_bound × VPD_leaf / P_atm
+ 
+ CALLED BY
+ ─────────
+   compute_transpiration()  (sureau_vegetation.py)
+     — called every sub-daily timestep
+     — Jarvis model calls it TWICE per timestep:
+         1st: with current gs → get initial T_leaf
+         2nd: after updating gs from regulation → get final T_leaf
+ 
+ REFERENCES
+ ──────────
+   Cochard et al. (2021)  — CPRM21 — energy balance formulation
+   Jones (2013)           — boundary layer conductance
+   Brutsaert (1975)       — atmospheric emissivity
+   Buck (1981)            — saturation vapor pressure (Pa version)
+   Tetens (via Buck 1981) — saturation vapor pressure (kPa version)
+   Kelvin equation        — water activity correction at low ψ</code></pre>
+</section>
+</section>
+<section id="dead-fuel-moisture" class="level2">
+<h2 class="anchored" data-anchor-id="dead-fuel-moisture">Dead fuel moisture</h2>
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1991" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="compute_dfmc" class="level3">
+<h3 class="anchored" data-anchor-id="compute_dfmc">compute_DFMC</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_DFMC(</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>    VPD, FM0:<span class="bu">float</span><span class="op">=</span><span class="fl">5.43</span>, FM1:<span class="bu">float</span><span class="op">=</span><span class="fl">52.91</span>, m:<span class="bu">float</span><span class="op">=</span><span class="fl">0.64</span></span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Dead fuel moisture content [%dry mass] (De Dios et al.&nbsp;2015).</em></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/ecamo19\.github\.io\/plant_hydraulics");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ecamo19/plant_hydraulics/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

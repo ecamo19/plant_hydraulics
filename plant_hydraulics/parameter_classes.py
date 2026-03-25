@@ -672,7 +672,7 @@ class Flux:
 class SurEauVegetationParams:
     """Plant parameters — set once at initialisation."""
 
-    # ── General ──────────────────────────────────────────────────────────────
+    # General -------------------------------------------------------------------
     K: float = 0.5
     transpiration_model: str = "Jarvis"
     transpi_granier_a: float = -0.006
@@ -685,11 +685,12 @@ class SurEauVegetationParams:
     canopy_storage_param: float = 1.5
     k_plant_init: float = 0.62
 
-    # Priestley-Taylor equation empirical constant accounting for vapor
-    # pressure deficit and resistance values, typically 1.26 for open water or
-    # well-watered surfaces
+    # Priestley-Taylor equation ------------------------------------------------- 
+    # Empirical constant accounting for vapor pressure deficit and resistance 
+    # values, typically 1.26 for open water or well-watered surfaces
     PT_coeff: float = 1.14
-    # ── Leaf ─────────────────────────────────────────────────────────────────
+    
+    # Leaf ----------------------------------------------------------------------
     LAI_max: float = 4.5
     P50_VC_leaf: float = -3.4
     slope_VC_leaf: float = 60.0
@@ -700,7 +701,8 @@ class SurEauVegetationParams:
     LDMC: float = 570.0
     LMA: float = 106.0
     C_LApo_init: float = 1e-5
-    # ── Phenology ────────────────────────────────────────────────────────────
+    
+    # Phenology -----------------------------------------------------------------
     foliage: str = "Evergreen"
     nb_day_LAI: int = 21
     T_base: float = 3.0
@@ -709,7 +711,8 @@ class SurEauVegetationParams:
     day_start_forced: int = 40
     day_end_forced: int = 220
     defoliation: bool = False
-    # ── Stem ─────────────────────────────────────────────────────────────────
+    
+    # Stem ----------------------------------------------------------------------
     P50_VC_stem: float = -3.4
     slope_VC_stem: float = 60.0
     gmin_S: float = 3.0
@@ -721,8 +724,11 @@ class SurEauVegetationParams:
     C_SApo_init: float = 2e-5
     k_SSym_init: float = 0.26
     f_TRB_to_leaf: float = 0.8
-    g_BL_stem: float = 2000.0   # Bark boundary layer conductance (mmol/m²/s)
-    # ── Root ─────────────────────────────────────────────────────────────────
+    
+    # Bark boundary layer conductance (mmol/m²/s)
+    g_BL_stem: float = 2000.0   
+    
+    # Root ----------------------------------------------------------------------
     f_root_to_leaf: float = 1.0
     root_radius: float = 0.0002
     root_depth_max: Optional[float] = None
@@ -730,14 +736,16 @@ class SurEauVegetationParams:
     beta_root_profile: float = 0.97
     root_Z50: Optional[float] = None
     root_Z95: Optional[float] = None
-    # ── Stomatal regulation ──────────────────────────────────────────────────
+    
+    # Stomatal regulation -------------------------------------------------------
     stomatal_reg_formulation: str = "Sigmoid"
     P12_gs: float = -2.07
     P88_gs: float = -2.62
     psi_start_closing: float = -0.5
     psi_close: float = -2.0
     turgor_pressure_at_gs_max: float = 2.0
-    # ── Jarvis ───────────────────────────────────────────────────────────────
+    
+    # Jarvis --------------------------------------------------------------------
     g_crown0: float = 45.0
     gs_max: float = 200.0
     gs_night: float = 20.0
@@ -745,9 +753,10 @@ class SurEauVegetationParams:
     T_gs_sens: float = 17.0
     T_gs_optim: float = 25.0
     
-    # ── Mortality ────────────────────────────────────────────────────────────
+    # Mortality -----------------------------------------------------------------
     threshold_mortality: float = 90.0
-    # ── Derived (filled by init_par_plant) ────────────────────────────────────
+    
+    # Derived (filled by init_par_plant) ----------------------------------------
     psi_TLP_leaf: float = 0.0
     psi_TLP_stem: float = 0.0
     P50_gs: float = 0.0
@@ -758,10 +767,17 @@ class SurEauVegetationParams:
     k_SLApo_init: float = 0.0
     k_RSApo_init: Optional[np.ndarray] = None
     k_LSym_init: float = 0.0
-    # ── Leaf morphology (new) ────────────────────────────────────────
-    leaf_size: float = 50.0        # Characteristic leaf dimension (mm)
-    leaf_angle: float = 45.0       # Leaf angle from horizontal (degrees)
-    turn_off_EB: bool = False       # Skip energy balance (diagnostic)
+    
+    # Leaf morphology -----------------------------------------------------------
+    
+    # Characteristic leaf dimension (mm)
+    leaf_size: float = 50.0        
+    
+    # Leaf angle from horizontal (degrees)
+    leaf_angle: float = 45.0       
+    
+    # Skip energy balance (diagnostic)
+    turn_off_EB: bool = False       
     
 
 # %% ../nbs/100_parameter_classes.ipynb #889c6cb7
@@ -794,7 +810,7 @@ class SurEauSoilParams:
     psie_camp: np.ndarray = field(
         default_factory=lambda: np.array([0.025, 0.025, 0.025])
     )
-    # ── Derived ──────────────────────────────────────────────────────────────
+    # Derived -------------------------------------------------------------------
     n_layers: int = 0
     layer_thickness: Optional[np.ndarray] = None
     m: Optional[np.ndarray] = None
