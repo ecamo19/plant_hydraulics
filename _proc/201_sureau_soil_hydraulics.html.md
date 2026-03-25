@@ -28,7 +28,6 @@ def compute_soil_VG(
 *Van Genuchten: transform soil moisture → water potential & conductance.*
 
 ANALOGY — The Sponge Squeeze:
-─────────────────────────────
 
 Imagine each soil layer is a sponge sitting in a bucket.
 
@@ -188,7 +187,7 @@ Equations implemented:
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L127){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L126){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_soil_Campbell
 
@@ -241,7 +240,7 @@ Transform soil moisture into water potential and k conductance
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L172){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L171){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_soil_conductance_and_psi
 
@@ -259,7 +258,7 @@ def compute_soil_conductance_and_psi(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L186){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L185){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_infiltration
 
@@ -275,7 +274,7 @@ def compute_infiltration(
 *Infiltration through soil layers, then update psi/k.*
 
 ANALOGY — Stacked Buckets:
-──────────────────────────
+
 Picture 3 buckets stacked on top of each other, each with a small
 hole at the bottom.
 
@@ -322,7 +321,7 @@ Previous timestep's soil water
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L281){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L280){target="_blank" style="float:right; font-size:smaller"}
 
 ### update_soil_water
 
@@ -337,17 +336,10 @@ def update_soil_water(
 
 *Subtract transpiration flux from soil and update.*
 
-ANALOGY — Roots are Straws:
-
-The plant's roots act like straws stuck into each bucket. The
-transpiration flux tells you how many millimetres of water each
-straw sucked out during this timestep. We simply subtract that
-amount and then recompute the sponge's grip (ψ) and permeability (k).
-
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L298){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L290){target="_blank" style="float:right; font-size:smaller"}
 
 ### set_SWC_to_field_capacity
 
@@ -372,7 +364,7 @@ the sponge back to its comfortable level."
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L321){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L313){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_evaporation
 

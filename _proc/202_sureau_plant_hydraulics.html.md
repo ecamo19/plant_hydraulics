@@ -614,20 +614,28 @@ __Derivation:__
 
 __Numerical example (β = 0.97, depths = [0.2, 0.8, 2.0] m):__
 
--Cumulative:    Y(20cm)  = 1 − 0.97^20  = 0.4562
+- Cumulative:    
+
+                Y(20cm)  = 1 − 0.97^20  = 0.4562
+
                 Y(80cm)  = 1 − 0.97^80  = 0.9124
+
                 Y(200cm) = 1 − 0.97^200 = 0.9976
 
--Per-layer:    r₁ = 0.4562 − 0.0    = 0.4562  (45.6% in top 20 cm)
-               r₂ = 0.9124 − 0.4562 = 0.4562  (45.6% in 20–80 cm)
-               r₃ = 0.9976 − 0.9124 = 0.0852  ( 8.5% in 80–200 cm)
-                                         ──────
-                                 Total = 0.9976  (not exactly 1.0)
+- Per-layer:    
+
+            r₁ = 0.4562 − 0.0    = 0.4562  (45.6% in top 20 cm)
+
+            r₂ = 0.9124 − 0.4562 = 0.4562  (45.6% in 20–80 cm)
+
+            r₃ = 0.9976 − 0.9124 = 0.0852  ( 8.5% in 80–200 cm)
+
+            Total = 0.9976  (not exactly 1.0)
 
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L607){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L615){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_root_profile_LDR
 
@@ -759,7 +767,7 @@ depths = [0.2, 0.8, 2.0] m):__
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L749){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L757){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_root_profile
 
@@ -913,7 +921,7 @@ root_depth_max = 0.8 m):__
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L929){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L937){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_root_length
 
@@ -1079,7 +1087,7 @@ root_radius = 0.0002 m, root_distribution = [0.4562, 0.4562,
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1108){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1116){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_regul_fact
 
@@ -1306,7 +1314,7 @@ turgor_at_gs_max = 2.0):__
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1413){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1421){target="_blank" style="float:right; font-size:smaller"}
 
 ### calculate_gs_jarvis
 
@@ -1326,7 +1334,7 @@ def calculate_gs_jarvis(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1436){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1444){target="_blank" style="float:right; font-size:smaller"}
 
 ### calculate_Ebound_mm_Granier
 
@@ -1344,7 +1352,7 @@ def calculate_Ebound_mm_Granier(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1441){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1449){target="_blank" style="float:right; font-size:smaller"}
 
 ### calculate_Ebound_Granier
 
@@ -1364,7 +1372,7 @@ def calculate_Ebound_Granier(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1459){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1467){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_gmin
 
@@ -1382,7 +1390,7 @@ def compute_gmin(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1487){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1495){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_E_min
 
@@ -1402,7 +1410,7 @@ def compute_E_min(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1499){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1507){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_T_leaf
 
@@ -1979,7 +1987,7 @@ RH = 50%, gs = 100 mmol/m²/s, g_cuti = 4 mmol/m²/s):__
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1991){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1999){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_DFMC
 

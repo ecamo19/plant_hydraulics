@@ -708,20 +708,20 @@ Below TLP (ψ = −4.0 MPa):
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauPlantState: <span class="co"># Updated plant state with all LAI-dependent fields recalculated.</span></span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Update actual LAI from phenology and cavitation-induced</em> defoliation, then recompute all LAI-dependent water storage volumes and capacitances.</p>
-<p>This function is the <strong>daily bookkeeper</strong> of the canopy. It sits between <code>[</code>compute_pheno<code>](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#compute_pheno)</code> (which sets the phenological LAI target) and the hourly solver (which needs water storage capacities to solve the ODEs). Called once per day in <code>[</code>run_sureau<code>](https://ecamo19.github.io/plant_hydraulics/run_sureau.html#run_sureau)</code>:</p>
+<p>This function is the <strong>daily bookkeeper</strong> of the canopy. It sits between <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#compute_pheno"><code>compute_pheno</code></a> (which sets the phenological LAI target) and the hourly solver (which needs water storage capacities to solve the ODEs). Called once per day in <a href="https://ecamo19.github.io/plant_hydraulics/run_sureau.html#run_sureau"><code>run_sureau</code></a>:</p>
 <p>The function performs three tasks in sequence:</p>
 <ol type="1">
 <li><p><strong>Compute actual LAI</strong> by subtracting drought-killed leaves from the phenological target (modified <strong>Eq. A1</strong>), plus derived canopy properties (fractional cover, interception capacity, dry matter).</p></li>
 <li><p><strong>Compute saturated water content</strong> Q_sat for all four plant compartments — leaf symplasm (<strong>Eq. 36</strong>), leaf apoplasm (<strong>Eq. 37</strong>), stem symplasm (<strong>Eq. 39</strong>), stem apoplasm (<strong>Eq. 40</strong>) — using leaf water content from the succulence relation (<strong>Eq. 38</strong>).</p></li>
 <li><p><strong>Update capacitances</strong> by delegating to <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_capacitances"><code>update_capacitances</code></a> (Eqs. 42, 44), which needs the Q_sat values computed in step 2.</p></li>
 </ol>
-<p><code>[</code>update_LAI_and_stocks<code>](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks)</code> is the daily inventory check, counting how many leaves are actually working (some may have been destroyed by drought), and recalculating the water storage capacity based on the current LAI.</p>
+<p><a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks"><code>update_LAI_and_stocks</code></a> is the daily inventory check, counting how many leaves are actually working (some may have been destroyed by drought), and recalculating the water storage capacity based on the current LAI.</p>
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><p>state: SurEauPlantState object. The following fields are read and/or written:</p>
 <p>Read:</p>
 <ul>
-<li>LAI_pheno: Phenological LAI target (m²/m²). Set by <code>[</code>compute_pheno<code>](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#compute_pheno)</code>.</li>
+<li>LAI_pheno: Phenological LAI target (m²/m²). Set by <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#compute_pheno"><code>compute_pheno</code></a>.</li>
 <li>PLC_leaf: Percent loss of leaf hydraulic conductivity (%). Used for cavitation-induced defoliation.</li>
 </ul>
 <p>Written (LAI and canopy properties):</p>
@@ -737,7 +737,7 @@ Below TLP (ψ = −4.0 MPa):
 <ul>
 <li>Q_LSym_sat_L: Leaf symplasm water at saturation (L/m²).</li>
 <li>Q_LSym_sat_mmol: Same, in mmol/m² ground.</li>
-<li>Q_LSym_sat_mmol_per_LA: Same, in mmol/m² leaf area. Feeds Eq. 42 in <code>[</code>update_capacitances<code>](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_capacitances)</code>.</li>
+<li>Q_LSym_sat_mmol_per_LA: Same, in mmol/m² leaf area. Feeds Eq. 42 in <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_capacitances"><code>update_capacitances</code></a>.</li>
 <li>Q_SSym_sat_L, Q_SSym_sat_mmol, Q_SSym_sat_mmol_per_LA: Same three units for stem symplasm.</li>
 <li>Q_LApo_sat_L, Q_LApo_sat_mmol, Q_LApo_sat_mmol_per_LA: Same three units for leaf apoplasm.</li>
 <li>Q_SApo_sat_L, Q_SApo_sat_mmol, Q_SApo_sat_mmol_per_LA: Same three units for stem apoplasm.</li>
@@ -768,7 +768,7 @@ Below TLP (ψ = −4.0 MPa):
 <li>sym_frac_stem: Symplasmic fraction of stem water (dimensionless). α_SSym in Eq. 39.</li>
 <li>apo_frac_stem: Apoplasmic fraction of stem water (dimensionless). α_SApo in Eq. 40.</li>
 </ul>
-<p>Passed through to <code>[</code>update_capacitances<code>](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_capacitances)</code>:</p>
+<p>Passed through to <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_capacitances"><code>update_capacitances</code></a>:</p>
 <ul>
 <li>pi_full_turgor_leaf, pi_full_turgor_stem: Osmotic potential at full turgor π₀ (MPa).</li>
 <li>epsilon_sym_leaf, epsilon_sym_stem: Bulk elastic modulus ε (MPa).</li>
@@ -931,8 +931,8 @@ Total: k_plant = 1/(1/Σk_RSApo + 1/k_SLApo + 1/k_LSym)  (Eq. 13)</code></pre>
 </ul></li>
 <li><p>params: SurEauVegetationParams object with the following attributes:</p>
 <ul>
-<li>k_RSApo_init: Maximum root-to-stem conductance per soil layer (mmol m⁻² s⁻¹ MPa⁻¹). Array. From <code>[</code>distribute_conductances<code>](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#distribute_conductances)</code> (Eq. 17): K_max_j = RAI_j × K_R→SApo. Layers with more roots have higher values.</li>
-<li>k_SLApo_init: Maximum stem-to-leaf apoplasmic conductance (mmol m⁻² s⁻¹ MPa⁻¹). Scalar. From <code>[</code>distribute_conductances<code>](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#distribute_conductances)</code>.</li>
+<li>k_RSApo_init: Maximum root-to-stem conductance per soil layer (mmol m⁻² s⁻¹ MPa⁻¹). Array. From <a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#distribute_conductances"><code>distribute_conductances</code></a> (Eq. 17): K_max_j = RAI_j × K_R→SApo. Layers with more roots have higher values.</li>
+<li>k_SLApo_init: Maximum stem-to-leaf apoplasmic conductance (mmol m⁻² s⁻¹ MPa⁻¹). Scalar. From <a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#distribute_conductances"><code>distribute_conductances</code></a>.</li>
 </ul></li>
 </ul>
 <p><strong>Returns:</strong></p>
@@ -942,7 +942,7 @@ Total: k_plant = 1/(1/Σk_RSApo + 1/k_SLApo + 1/k_LSym)  (Eq. 13)</code></pre>
 <p><strong>References:</strong></p>
 <ul>
 <li>Ruffault et al.&nbsp;(2022), Eq. 13 (total plant conductance), Eq. 14 (stem-to-leaf with embolism), Eq. 16 (root-to-stem with embolism), Eq. 20 (soil-to-stem series combination).</li>
-<li>Eqs. 15, 17 are prerequisites computed elsewhere (<code>[</code>compute_PLC<code>](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_plc)</code>, <code>[</code>distribute_conductances<code>](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#distribute_conductances)</code>).</li>
+<li>Eqs. 15, 17 are prerequisites computed elsewhere (<a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_plc"><code>compute_PLC</code></a>, <a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#distribute_conductances"><code>distribute_conductances</code></a>).</li>
 </ul>
 <p><strong>Equation-to-code mapping:</strong></p>
 <pre><code>Eq. 16   K_{Rj→SApo} = K_{Rj→SApo,max} × (100 − PLC_S) / 100
@@ -1019,7 +1019,7 @@ Step 4 — Eq. 13 (total plant conductance):
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Partition hourly rainfall into canopy interception and throughfall</em> to soil.</p>
 <p>Implements a simple bucket model for canopy rainfall interception, described on page 5601 of Ruffault et al.&nbsp;(2022). The canopy is treated as a reservoir with finite capacity (set by LAI in <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks"><code>update_LAI_and_stocks</code></a>). Each hour, a fraction of rainfall proportional to the fractional canopy cover (FCC) lands on leaves; the rest falls through gaps. Once the reservoir is full, all additional rainfall passes through to the soil.</p>
-<p>The output <code>ppt_soil</code> feeds directly into the precipitation term of <strong>Equation 10</strong> (top soil layer water balance). The accumulated <code>intercepted_water</code> is drawn down by <code>[</code>compute_evapo_intercepted<code>](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#compute_evapo_intercepted)</code>, which evaporates it back to the atmosphere — this evaporation consumes energy that would otherwise drive transpiration, so interception indirectly reduces plant water loss.</p>
+<p>The output <code>ppt_soil</code> feeds directly into the precipitation term of <strong>Equation 10</strong> (top soil layer water balance). The accumulated <code>intercepted_water</code> is drawn down by <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#compute_evapo_intercepted"><code>compute_evapo_intercepted</code></a>, which evaporates it back to the atmosphere — this evaporation consumes energy that would otherwise drive transpiration, so interception indirectly reduces plant water loss.</p>
 <p>Two cases are handled:</p>
 <p><strong>Case 1 — Canopy has room</strong> (ppt × FCC ≤ available): Rain is partitioned by FCC. The fraction (1 − FCC) passes through gaps to the soil; the fraction FCC is caught by leaves and added to the interception reservoir.</p>
 <p><strong>Case 2 — Canopy overflows</strong> (ppt × FCC &gt; available): The canopy absorbs only what it can (<code>available</code>), filling the reservoir to capacity. Everything else reaches the soil. FCC partitioning no longer applies because even rain landing on saturated leaves runs off immediately.</p>
@@ -1027,12 +1027,12 @@ Step 4 — Eq. 13 (total plant conductance):
 <ul>
 <li><p>state: SurEauPlantState object. The following fields are read:</p>
 <ul>
-<li><p>canopy_storage_capacity: Maximum water the canopy can hold (mm). Computed in <code>[</code>update_LAI_and_stocks<code>](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks)</code> as <code>canopy_storage_param × LAI</code>. E.g. 1.8 mm for LAI = 4.5 with param = 0.4 mm per LAI unit.</p></li>
+<li><p>canopy_storage_capacity: Maximum water the canopy can hold (mm). Computed in <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks"><code>update_LAI_and_stocks</code></a> as <code>canopy_storage_param × LAI</code>. E.g. 1.8 mm for LAI = 4.5 with param = 0.4 mm per LAI unit.</p></li>
 <li><p>FCC: Fractional canopy cover (dimensionless, 0–1). From the Beer-Lambert law: <code>1 − exp(−K × LAI)</code>. Determines what fraction of rainfall hits the canopy vs.&nbsp;falls through gaps.</p></li>
 </ul></li>
 <li><p>fluxes: SurEauPlantFluxes object. The following fields are read and written:</p>
 <ul>
-<li><p>intercepted_water: Running total of water currently stored on leaf surfaces (mm). Read to compute remaining capacity; written to update the total after this timestep. Accumulated across hourly timesteps within a day; reset as it is evaporated by <code>[</code>compute_evapo_intercepted<code>](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#compute_evapo_intercepted)</code>.</p></li>
+<li><p>intercepted_water: Running total of water currently stored on leaf surfaces (mm). Read to compute remaining capacity; written to update the total after this timestep. Accumulated across hourly timesteps within a day; reset as it is evaporated by <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#compute_evapo_intercepted"><code>compute_evapo_intercepted</code></a>.</p></li>
 <li><p>ppt_soil: Rainfall reaching the soil surface this timestep (mm). Written. Feeds into Eq. 10 (top soil layer water balance).</p></li>
 </ul></li>
 <li><p>ppt: Hourly precipitation (mm). The raw rainfall before canopy interception.</p></li>
@@ -1040,10 +1040,6 @@ Step 4 — Eq. 13 (total plant conductance):
 <p><strong>Returns:</strong></p>
 <ul>
 <li>fluxes: Updated SurEauPlantFluxes with modified <code>intercepted_water</code> and <code>ppt_soil</code>.</li>
-</ul>
-<p><strong>References:</strong></p>
-<ul>
-<li>Ruffault et al.&nbsp;(2022), page 5601 (interception description), Eq. 10 (top soil layer water balance, where <code>ppt_soil</code> appears as the precipitation input).</li>
 </ul>
 <p><strong>Logic flow:</strong></p>
 <pre><code>ppt (hourly rainfall)
@@ -1099,7 +1095,7 @@ Water balance check across all 4 hours:
     Δintercepted   = 1.8 − 0.0 = 1.8 mm
     Sum            = 4.7 + 1.8 = 6.5 mm</code></pre>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L1352" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L1346" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="compute_evapo_intercepted" class="level3">
 <h3 class="anchored" data-anchor-id="compute_evapo_intercepted">compute_evapo_intercepted</h3>
@@ -1118,12 +1114,12 @@ Water balance check across all 4 hours:
 <p>Read:</p>
 <ul>
 <li><p>ETP: Potential evapotranspiration this timestep (mm). The total atmospheric evaporative demand. Comes from climate forcing (Penman-Monteith or prescribed).</p></li>
-<li><p>intercepted_water: Water currently stored on leaf surfaces (mm). Accumulated by <code>[</code>compute_interception<code>](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#compute_interception)</code> during rain.</p></li>
+<li><p>intercepted_water: Water currently stored on leaf surfaces (mm). Accumulated by <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#compute_interception"><code>compute_interception</code></a> during rain.</p></li>
 </ul>
 <p>Written:</p>
 <ul>
 <li><p>evaporation_intercepted: Water evaporated from leaf surfaces this timestep (mm). Always ≤ min(ETP, intercepted_water).</p></li>
-<li><p>ETP_r: Residual potential evapotranspiration after interception evaporation (mm). This is what drives transpiration in <code>[</code>compute_transpiration<code>](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#compute_transpiration)</code> and <code>[</code>calculate_Ebound_Granier<code>](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#calculate_ebound_granier)</code>. ETP_r = ETP − evaporation_intercepted.</p></li>
+<li><p>ETP_r: Residual potential evapotranspiration after interception evaporation (mm). This is what drives transpiration in <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#compute_transpiration"><code>compute_transpiration</code></a> and <a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#calculate_ebound_granier"><code>calculate_Ebound_Granier</code></a>. ETP_r = ETP − evaporation_intercepted.</p></li>
 <li><p>intercepted_water: Updated after evaporation. Reduced by evaporation_intercepted, or set to 0 if fully dried.</p></li>
 </ul></li>
 </ul>
@@ -1183,7 +1179,7 @@ Case 1 — Dry canopy, no interception:
 <section id="transpiration" class="level2">
 <h2 class="anchored" data-anchor-id="transpiration">Transpiration</h2>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L1498" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L1492" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="compute_transpiration" class="level3">
 <h3 class="anchored" data-anchor-id="compute_transpiration">compute_transpiration</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -1229,7 +1225,7 @@ Case 1 — Dry canopy, no interception:
 <li>regul_fact: Stomatal regulation factor γ (0–1). Eq. 34.</li>
 <li>g_crown: Crown aerodynamic conductance (Jarvis only).</li>
 <li>gs_lim: Water-limited stomatal conductance (Jarvis only).</li>
-<li>gs_bound: Light-limited stomatal conductance (Jarvis only). Written by <code>[</code>calculate_gs_jarvis<code>](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#calculate_gs_jarvis)</code> (mutates fluxes).</li>
+<li>gs_bound: Light-limited stomatal conductance (Jarvis only). Written by <a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#calculate_gs_jarvis"><code>calculate_gs_jarvis</code></a> (mutates fluxes).</li>
 <li>g_canopy_bound: Unstressed canopy conductance (Jarvis only).</li>
 <li>g_canopy_lim: Water-limited canopy conductance (Jarvis only).</li>
 </ul></li>
@@ -1246,7 +1242,7 @@ Case 1 — Dry canopy, no interception:
 <li>gs_max, jarvis_PAR, etc.: Jarvis stomatal params.</li>
 <li>P50_gs, slope_gs: Sigmoid stomatal regulation (Eq. 34).</li>
 </ul></li>
-<li><p>clim: Climate snapshot dictionary with keys: <code>T_air_mean</code>, <code>PAR</code>, <code>[</code>potential_PAR<code>](https://ecamo19.github.io/plant_hydraulics/utils.html#potential_par)</code>, <code>WS</code>, <code>RH_air_mean</code>, <code>VPD</code>, <code>ETP</code>, <code>ETP_veg</code> (optional).</p></li>
+<li><p>clim: Climate snapshot dictionary with keys: <code>T_air_mean</code>, <code>PAR</code>, <a href="https://ecamo19.github.io/plant_hydraulics/utils.html#potential_par"><code>potential_PAR</code></a>, <code>WS</code>, <code>RH_air_mean</code>, <code>VPD</code>, <code>ETP</code>, <code>ETP_veg</code> (optional).</p></li>
 <li><p>N_hours: Number of hours in this sub-daily timestep. Used by the Granier model to convert daily ETP to sub-daily rate.</p></li>
 </ul>
 <p><strong>Returns:</strong></p>
@@ -1317,15 +1313,13 @@ gs_lim tracked       No                   Yes (used for 2nd T_leaf call)
 Light response       No                   Yes (calculate_gs_jarvis)
 LAI guard            None                 LAI_pheno &gt; 0</code></pre>
 <p><strong>Note on the Jarvis double-call to compute_T_leaf:</strong></p>
-<p>The function calls <code>[</code>compute_T_leaf<code>](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_t_leaf)</code> twice in the Jarvis branch. The first call (step 3) uses previous-timestep <code>gs_lim</code> and <code>gmin</code> to calculate leaf temperature. Steps 4–8 then update <code>gmin</code> and <code>gs_lim</code> using the freshly computed T_leaf and γ. The second call (step 10) recomputes T_leaf with these updated values, closing the T_leaf ↔︎ gs feedback loop. One iteration (not iterating to convergence) is used, which is a reasonable approximation since the coupling is typically weak over a single sub-hourly timestep.</p>
-<p><strong>Note on <code>[</code>calculate_gs_jarvis<code>](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#calculate_gs_jarvis)</code> mutation pattern:</strong></p>
-<p>The call <code>fluxes = calculate_gs_jarvis(fluxes, params, PAR)</code> mutates <code>fluxes.gs_bound</code> in place and returns the same object. The <code>fluxes =</code> assignment is technically redundant since the dataclass is modified in-place. This is a pattern inherited from the R codebase. A future cleanup could have it return <code>gs_bound</code> explicitly for better data-flow visibility at the call site.</p>
+<p>The function calls <a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_t_leaf"><code>compute_T_leaf</code></a> twice in the Jarvis branch. The first call (step 3) uses previous-timestep <code>gs_lim</code> and <code>gmin</code> to calculate leaf temperature. Steps 4–8 then update <code>gmin</code> and <code>gs_lim</code> using the freshly computed T_leaf and γ. The second call (step 10) recomputes T_leaf with these updated values, closing the T_leaf-gs feedback loop. One iteration (not iterating to convergence) is used, which is a reasonable approximation since the coupling is typically weak over a single sub-hourly timestep.</p>
 </section>
 </section>
 <section id="water-storage" class="level2">
 <h2 class="anchored" data-anchor-id="water-storage">Water storage</h2>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L1856" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L1841" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="compute_water_storage" class="level3">
 <h3 class="anchored" data-anchor-id="compute_water_storage">compute_water_storage</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -1339,7 +1333,7 @@ LAI guard            None                 LAI_pheno &gt; 0</code></pre>
 <p><em>Compute actual water content in all four plant compartments and</em> derive fuel moisture diagnostics for wildfire risk assessment.</p>
 <p>Converts the water potentials (ψ) tracked by the solver into actual water volumes (L/m² ground) using two mechanisms:</p>
 <ul>
-<li><p><strong>Symplasm</strong> (leaf and stem living cells): Water content is determined by the relative water content (RWC) from the pressure-volume curve (<strong>Eqs. 43–46</strong> via <code>[</code>compute_Rs<code>](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_rs)</code>). The sponge-like tissue releases water as ψ drops.</p></li>
+<li><p><strong>Symplasm</strong> (leaf and stem living cells): Water content is determined by the relative water content (RWC) from the pressure-volume curve (<strong>Eqs. 43–46</strong> via <a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_rs"><code>compute_Rs</code></a>). The sponge-like tissue releases water as ψ drops.</p></li>
 <li><p><strong>Apoplasm</strong> (leaf and stem xylem pipes): Water content is determined by cavitation (<strong>Eq. 15</strong> via PLC). Intact pipes are full; embolized pipes have released their water. Fraction remaining = (1 − PLC/100).</p></li>
 </ul>
 <p>The function then computes three fuel moisture diagnostics:</p>
@@ -1348,7 +1342,7 @@ LAI guard            None                 LAI_pheno &gt; 0</code></pre>
 <li><strong>DFMC</strong> (Dead Fuel Moisture Content): Equilibrium moisture of dead leaves as a function of VPD.</li>
 <li><strong>FMC_canopy</strong>: Combined moisture of live + dead leaves. The most operationally relevant metric for fire prediction.</li>
 </ul>
-<p>This is the <strong>diagnostic counterpart</strong> to <code>[</code>update_capacitances<code>](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_capacitances)</code> — while <code>[</code>update_capacitances<code>](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_capacitances)</code> computes the derivative dRWC/dψ (how much water is released per unit ψ drop), this function computes the integral (how much water is currently present).</p>
+<p>This is the <strong>diagnostic counterpart</strong> to <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_capacitances"><code>update_capacitances</code></a> — while <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_capacitances"><code>update_capacitances</code></a> computes the derivative dRWC/dψ (how much water is released per unit ψ drop), this function computes the integral (how much water is currently present).</p>
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><p>state: SurEauPlantState object. The following fields are read and/or written:</p>
@@ -1358,10 +1352,10 @@ LAI guard            None                 LAI_pheno &gt; 0</code></pre>
 <li>psi_SSym: Stem symplasm water potential (MPa).</li>
 <li>PLC_leaf: Percent loss of leaf hydraulic conductivity (%).</li>
 <li>PLC_stem: Percent loss of stem hydraulic conductivity (%).</li>
-<li>Q_LSym_sat_L: Leaf symplasm saturated water (L/m²). From <code>[</code>update_LAI_and_stocks<code>](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks)</code> (Eqs. 36, 38).</li>
-<li>Q_LApo_sat_L: Leaf apoplasm saturated water (L/m²). From <code>[</code>update_LAI_and_stocks<code>](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks)</code> (Eqs. 37, 38).</li>
-<li>Q_SSym_sat_L: Stem symplasm saturated water (L/m²). From <code>[</code>update_LAI_and_stocks<code>](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks)</code> (Eq. 39).</li>
-<li>Q_SApo_sat_L: Stem apoplasm saturated water (L/m²). From <code>[</code>update_LAI_and_stocks<code>](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks)</code> (Eq. 40).</li>
+<li>Q_LSym_sat_L: Leaf symplasm saturated water (L/m²). From <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks"><code>update_LAI_and_stocks</code></a> (Eqs. 36, 38).</li>
+<li>Q_LApo_sat_L: Leaf apoplasm saturated water (L/m²). From <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks"><code>update_LAI_and_stocks</code></a> (Eqs. 37, 38).</li>
+<li>Q_SSym_sat_L: Stem symplasm saturated water (L/m²). From <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks"><code>update_LAI_and_stocks</code></a> (Eq. 39).</li>
+<li>Q_SApo_sat_L: Stem apoplasm saturated water (L/m²). From <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks"><code>update_LAI_and_stocks</code></a> (Eq. 40).</li>
 <li>DM_live_canopy: Dry mass of living leaves (g/m²).</li>
 <li>DM_dead_canopy: Dry mass of dead leaves (g/m²).</li>
 </ul>
@@ -1377,7 +1371,7 @@ LAI guard            None                 LAI_pheno &gt; 0</code></pre>
 <li>LFMC_symp: Symplasmic leaf fuel moisture content (%).</li>
 <li>LFMC_apo: Apoplasmic leaf fuel moisture content (%).</li>
 <li>LFMC: Total live fuel moisture content (%). The key wildfire metric. Typically 40–150%.</li>
-<li>DFMC: Dead fuel moisture content (%). From VPD equilibrium via <code>[</code>compute_DFMC<code>](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_dfmc)</code>.</li>
+<li>DFMC: Dead fuel moisture content (%). From VPD equilibrium via <a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_dfmc"><code>compute_DFMC</code></a>.</li>
 <li>FMC_canopy: Canopy fuel moisture content (%, live + dead).</li>
 </ul></li>
 <li><p>params: SurEauVegetationParams object with the following attributes:</p>
@@ -1388,7 +1382,7 @@ LAI guard            None                 LAI_pheno &gt; 0</code></pre>
 <li>epsilon_sym_stem: Bulk elastic modulus ε for stem symplasm (MPa).</li>
 <li>apo_frac_leaf: Apoplasmic fraction of leaf water (dimensionless, 0–1). Used to split DM for LFMC compartment diagnostics.</li>
 </ul></li>
-<li><p>VPD: Vapor pressure deficit (kPa). Drives dead fuel moisture equilibrium via <code>[</code>compute_DFMC<code>](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_dfmc)</code>.</p></li>
+<li><p>VPD: Vapor pressure deficit (kPa). Drives dead fuel moisture equilibrium via <a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_dfmc"><code>compute_DFMC</code></a>.</p></li>
 </ul>
 <p><strong>Returns:</strong></p>
 <ul>

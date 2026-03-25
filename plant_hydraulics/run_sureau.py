@@ -161,14 +161,14 @@ def run_sureau(
         root_Z50/Z95 (root distribution); and many others.
         Derived parameters (root distribution, conductance
         partitioning, etc.) are computed internally by
-        ``sureau_vegetation_params``.
+        `sureau_vegetation_params`.
  
     - soil_params: SurEauSoilParams object. Soil parameters including:
         depth (cumulative layer depths), texture parameters (alpha, n
         for van Genuchten), theta_sat, theta_res (porosity, residual
         water), RFC (rock fragment content), and initial water content.
         Derived parameters (layer thickness, field capacity, etc.)
-        are computed internally by ``sureau_soil_params``.
+        are computed internally by `sureau_soil_params`.
  
     - opts: SurEauModelOptions object controlling the simulation:
  

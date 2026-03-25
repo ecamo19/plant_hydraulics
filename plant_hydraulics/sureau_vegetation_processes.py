@@ -640,9 +640,9 @@ def update_LAI_and_stocks(
     volumes and capacitances.
  
     This function is the **daily bookkeeper** of the canopy. It sits
-    between ``compute_pheno`` (which sets the phenological LAI target)
+    between `compute_pheno` (which sets the phenological LAI target)
     and the hourly solver (which needs water storage capacities to
-    solve the ODEs). Called once per day in ``run_sureau``:
+    solve the ODEs). Called once per day in `run_sureau`:
   
     The function performs three tasks in sequence:
  
@@ -661,7 +661,7 @@ def update_LAI_and_stocks(
        `update_capacitances` (Eqs. 42, 44), which needs the Q_sat
        values computed in step 2.
  
-    ``update_LAI_and_stocks`` is the daily inventory check, counting
+    `update_LAI_and_stocks` is the daily inventory check, counting
     how many leaves are actually working (some may have been destroyed
     by drought), and recalculating the water storage capacity based on 
     the current LAI.
@@ -674,7 +674,7 @@ def update_LAI_and_stocks(
         Read:
  
         - LAI_pheno: Phenological LAI target (m²/m²). Set by
-            ``compute_pheno``.
+            `compute_pheno`.
         - PLC_leaf: Percent loss of leaf hydraulic conductivity (%).
             Used for cavitation-induced defoliation.
  
@@ -692,7 +692,7 @@ def update_LAI_and_stocks(
         - Q_LSym_sat_L: Leaf symplasm water at saturation (L/m²).
         - Q_LSym_sat_mmol: Same, in mmol/m² ground.
         - Q_LSym_sat_mmol_per_LA: Same, in mmol/m² leaf area.
-            Feeds Eq. 42 in ``update_capacitances``.
+            Feeds Eq. 42 in `update_capacitances`.
         - Q_SSym_sat_L, Q_SSym_sat_mmol, Q_SSym_sat_mmol_per_LA:
             Same three units for stem symplasm.
         - Q_LApo_sat_L, Q_LApo_sat_mmol, Q_LApo_sat_mmol_per_LA:
@@ -737,7 +737,7 @@ def update_LAI_and_stocks(
         - apo_frac_stem: Apoplasmic fraction of stem water
             (dimensionless). α_SApo in Eq. 40.
  
-        Passed through to ``update_capacitances``:
+        Passed through to `update_capacitances`:
  
         - pi_full_turgor_leaf, pi_full_turgor_stem: Osmotic potential
             at full turgor π₀ (MPa).
@@ -1057,11 +1057,11 @@ def update_kplant(
  
         - k_RSApo_init: Maximum root-to-stem conductance per soil
             layer (mmol m⁻² s⁻¹ MPa⁻¹). Array. From
-            ``distribute_conductances`` (Eq. 17): K_max_j = RAI_j ×
+            `distribute_conductances` (Eq. 17): K_max_j = RAI_j ×
             K_R→SApo. Layers with more roots have higher values.
         - k_SLApo_init: Maximum stem-to-leaf apoplasmic conductance
             (mmol m⁻² s⁻¹ MPa⁻¹). Scalar. From
-            ``distribute_conductances``.
+            `distribute_conductances`.
  
     __Returns:__
  
@@ -1074,7 +1074,7 @@ def update_kplant(
       Eq. 14 (stem-to-leaf with embolism), Eq. 16 (root-to-stem
       with embolism), Eq. 20 (soil-to-stem series combination).
     - Eqs. 15, 17 are prerequisites computed elsewhere
-      (``compute_PLC``, ``distribute_conductances``).
+      (`compute_PLC`, `distribute_conductances`).
  
     __Equation-to-code mapping:__
  
@@ -1196,7 +1196,7 @@ def compute_interception(
  
     The output ``ppt_soil`` feeds directly into the precipitation term of 
     **Equation 10** (top soil layer water balance). The accumulated 
-    ``intercepted_water`` is drawn down by ``compute_evapo_intercepted``, 
+    ``intercepted_water`` is drawn down by `compute_evapo_intercepted`, 
     which evaporates it back to the atmosphere — this evaporation consumes 
     energy that would otherwise drive transpiration, so interception indirectly 
     reduces plant water loss.
@@ -1220,7 +1220,7 @@ def compute_interception(
     - state: SurEauPlantState object. The following fields are read:
  
         - canopy_storage_capacity: Maximum water the canopy can hold
-            (mm). Computed in ``update_LAI_and_stocks`` as
+            (mm). Computed in `update_LAI_and_stocks` as
             ``canopy_storage_param × LAI``. E.g. 1.8 mm for LAI = 4.5
             with param = 0.4 mm per LAI unit.
  
@@ -1236,7 +1236,7 @@ def compute_interception(
             on leaf surfaces (mm). Read to compute remaining capacity;
             written to update the total after this timestep.
             Accumulated across hourly timesteps within a day; reset
-            as it is evaporated by ``compute_evapo_intercepted``.
+            as it is evaporated by `compute_evapo_intercepted`.
  
         - ppt_soil: Rainfall reaching the soil surface this timestep
             (mm). Written. Feeds into Eq. 10 (top soil layer water
@@ -1249,12 +1249,6 @@ def compute_interception(
  
     - fluxes: Updated SurEauPlantFluxes with modified
         ``intercepted_water`` and ``ppt_soil``.
- 
-    __References:__
- 
-    - Ruffault et al. (2022), page 5601 (interception description),
-      Eq. 10 (top soil layer water balance, where ``ppt_soil``
-      appears as the precipitation input).
  
     __Logic flow:__
  
@@ -1385,7 +1379,7 @@ def compute_evapo_intercepted(
             climate forcing (Penman-Monteith or prescribed).
  
         - intercepted_water: Water currently stored on leaf surfaces
-            (mm). Accumulated by ``compute_interception`` during rain.
+            (mm). Accumulated by `compute_interception` during rain.
  
         Written:
  
@@ -1395,8 +1389,8 @@ def compute_evapo_intercepted(
  
         - ETP_r: Residual potential evapotranspiration after
             interception evaporation (mm). This is what drives
-            transpiration in ``compute_transpiration`` and
-            ``calculate_Ebound_Granier``. ETP_r = ETP −
+            transpiration in `compute_transpiration` and
+            `calculate_Ebound_Granier`. ETP_r = ETP −
             evaporation_intercepted.
  
         - intercepted_water: Updated after evaporation. Reduced by
@@ -1571,7 +1565,7 @@ def compute_transpiration(
         - g_crown: Crown aerodynamic conductance (Jarvis only).
         - gs_lim: Water-limited stomatal conductance (Jarvis only).
         - gs_bound: Light-limited stomatal conductance (Jarvis only).
-            Written by ``calculate_gs_jarvis`` (mutates fluxes).
+            Written by `calculate_gs_jarvis` (mutates fluxes).
         - g_canopy_bound: Unstressed canopy conductance (Jarvis only).
         - g_canopy_lim: Water-limited canopy conductance (Jarvis only).
  
@@ -1590,7 +1584,7 @@ def compute_transpiration(
         - P50_gs, slope_gs: Sigmoid stomatal regulation (Eq. 34).
  
     - clim: Climate snapshot dictionary with keys: ``T_air_mean``,
-        ``PAR``, ``potential_PAR``, ``WS``, ``RH_air_mean``, ``VPD``,
+        ``PAR``, `potential_PAR`, ``WS``, ``RH_air_mean``, ``VPD``,
         ``ETP``, ``ETP_veg`` (optional).
  
     - N_hours: Number of hours in this sub-daily timestep. Used by
@@ -1674,24 +1668,15 @@ def compute_transpiration(
  
     __Note on the Jarvis double-call to compute_T_leaf:__
  
-    The function calls ``compute_T_leaf`` twice in the Jarvis branch.
+    The function calls `compute_T_leaf` twice in the Jarvis branch.
     The first call (step 3) uses previous-timestep ``gs_lim`` and
     ``gmin`` to calculate leaf temperature. Steps 4–8 then update
     ``gmin`` and ``gs_lim`` using the freshly computed T_leaf and γ.
     The second call (step 10) recomputes T_leaf with these updated
-    values, closing the T_leaf ↔ gs feedback loop. One iteration
+    values, closing the T_leaf-gs feedback loop. One iteration
     (not iterating to convergence) is used, which is a reasonable
     approximation since the coupling is typically weak over a single
     sub-hourly timestep.
- 
-    __Note on ``calculate_gs_jarvis`` mutation pattern:__
- 
-    The call ``fluxes = calculate_gs_jarvis(fluxes, params, PAR)``
-    mutates ``fluxes.gs_bound`` in place and returns the same object.
-    The ``fluxes =`` assignment is technically redundant since the
-    dataclass is modified in-place. This is a pattern inherited from
-    the R codebase. A future cleanup could have it return ``gs_bound``
-    explicitly for better data-flow visibility at the call site.
  
     Parameters
     ----------
@@ -1868,7 +1853,7 @@ def compute_water_storage(
  
     - **Symplasm** (leaf and stem living cells): Water content is
       determined by the relative water content (RWC) from the
-      pressure-volume curve (**Eqs. 43–46** via ``compute_Rs``).
+      pressure-volume curve (**Eqs. 43–46** via `compute_Rs`).
       The sponge-like tissue releases water as ψ drops.
  
     - **Apoplasm** (leaf and stem xylem pipes): Water content is
@@ -1885,8 +1870,8 @@ def compute_water_storage(
     - **FMC_canopy**: Combined moisture of live + dead leaves.
       The most operationally relevant metric for fire prediction.
  
-    This is the **diagnostic counterpart** to ``update_capacitances``
-    — while ``update_capacitances`` computes the derivative dRWC/dψ
+    This is the **diagnostic counterpart** to `update_capacitances`
+    — while `update_capacitances` computes the derivative dRWC/dψ
     (how much water is released per unit ψ drop), this function
     computes the integral (how much water is currently present).
  
@@ -1903,13 +1888,13 @@ def compute_water_storage(
         - PLC_leaf: Percent loss of leaf hydraulic conductivity (%).
         - PLC_stem: Percent loss of stem hydraulic conductivity (%).
         - Q_LSym_sat_L: Leaf symplasm saturated water (L/m²).
-            From ``update_LAI_and_stocks`` (Eqs. 36, 38).
+            From `update_LAI_and_stocks` (Eqs. 36, 38).
         - Q_LApo_sat_L: Leaf apoplasm saturated water (L/m²).
-            From ``update_LAI_and_stocks`` (Eqs. 37, 38).
+            From `update_LAI_and_stocks` (Eqs. 37, 38).
         - Q_SSym_sat_L: Stem symplasm saturated water (L/m²).
-            From ``update_LAI_and_stocks`` (Eq. 39).
+            From `update_LAI_and_stocks` (Eq. 39).
         - Q_SApo_sat_L: Stem apoplasm saturated water (L/m²).
-            From ``update_LAI_and_stocks`` (Eq. 40).
+            From `update_LAI_and_stocks` (Eq. 40).
         - DM_live_canopy: Dry mass of living leaves (g/m²).
         - DM_dead_canopy: Dry mass of dead leaves (g/m²).
  
@@ -1928,7 +1913,7 @@ def compute_water_storage(
         - LFMC: Total live fuel moisture content (%). The key
             wildfire metric. Typically 40–150%.
         - DFMC: Dead fuel moisture content (%). From VPD
-            equilibrium via ``compute_DFMC``.
+            equilibrium via `compute_DFMC`.
         - FMC_canopy: Canopy fuel moisture content (%, live + dead).
  
     - params: SurEauVegetationParams object with the following
@@ -1947,7 +1932,7 @@ def compute_water_storage(
             compartment diagnostics.
  
     - VPD: Vapor pressure deficit (kPa). Drives dead fuel moisture
-        equilibrium via ``compute_DFMC``.
+        equilibrium via `compute_DFMC`.
  
     __Returns:__
  
