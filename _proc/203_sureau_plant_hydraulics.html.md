@@ -834,7 +834,7 @@ The output feeds directly into:
 - [`distribute_conductances`](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#distribute_conductances) → Eq. 17: per-layer root-to-stem
   conductance K_{Rj} = RAI_j × K_{R-SApo}.
 - The Gardner-Cowan soil-to-root geometry factor B_GC
-  ([`compute_soil_root_geometry`](https://ecamo19.github.io/plant_hydraulics/1_sureau_soil_params.html#compute_soil_root_geometry)), which depends on La and Lv
+  ([`compute_soil_root_geometry`](https://ecamo19.github.io/plant_hydraulics/sureau_soil_params.html#compute_soil_root_geometry)), which depends on La and Lv
   derived from the root distribution.
 
 __Parameters:__
@@ -970,7 +970,7 @@ geometric conversions described in the text surrounding Eq. 21:
        Lv_j = La_j / [ thickness_j × (1 − RFC_j/100) ]
 
 Both outputs feed into **Equation 21**,  the soil-to-root
-conductance via [`compute_soil_root_geometry`](https://ecamo19.github.io/plant_hydraulics/1_sureau_soil_params.html#compute_soil_root_geometry), which computes
+conductance via [`compute_soil_root_geometry`](https://ecamo19.github.io/plant_hydraulics/sureau_soil_params.html#compute_soil_root_geometry), which computes
 the Gardner-Cowan geometry factor B_GC:
 
     b    = 1 / √(π Lv_j)           (mean half-distance between roots)
@@ -991,7 +991,7 @@ __Parameters:__
 
     - layer_thickness: Thickness of each soil layer (m). NumPy
         array, e.g. ``np.array([0.2, 0.6, 1.2])``. Computed by
-        [`sureau_soil_params()`](https://ecamo19.github.io/plant_hydraulics/1_sureau_soil_params.html#sureau_soil_params) from ``soil_params.depth``.
+        [`sureau_soil_params()`](https://ecamo19.github.io/plant_hydraulics/sureau_soil_params.html#sureau_soil_params) from ``soil_params.depth``.
 
     - RFC: Rock fragment content of each soil layer (%). NumPy
         array, e.g. ``np.array([75.0, 75.0, 75.0])``. Reduces

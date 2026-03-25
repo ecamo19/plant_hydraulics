@@ -185,12 +185,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./1_sureau_soil_params.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">SurEau soil params</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./root_params.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Root params</span></a>
   </div>
@@ -271,6 +265,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="./0_leaf_fluxes.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Leaf fluxes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sureau_soil_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SurEau soil params</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -922,7 +922,7 @@ so the 0–20 cm layer captures less than half (29.4%), and the
 <ul>
 <li><a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_root_length"><code>compute_root_length</code></a> → Eqs. 17–18: per-layer root area RAI_j = RAI × r_j and root length density Lv.</li>
 <li><a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#distribute_conductances"><code>distribute_conductances</code></a> → Eq. 17: per-layer root-to-stem conductance K_{Rj} = RAI_j × K_{R-SApo}.</li>
-<li>The Gardner-Cowan soil-to-root geometry factor B_GC (<a href="https://ecamo19.github.io/plant_hydraulics/1_sureau_soil_params.html#compute_soil_root_geometry"><code>compute_soil_root_geometry</code></a>), which depends on La and Lv derived from the root distribution.</li>
+<li>The Gardner-Cowan soil-to-root geometry factor B_GC (<a href="https://ecamo19.github.io/plant_hydraulics/sureau_soil_params.html#compute_soil_root_geometry"><code>compute_soil_root_geometry</code></a>), which depends on La and Lv derived from the root distribution.</li>
 </ul>
 <p><strong>Parameters:</strong></p>
 <ul>
@@ -1014,7 +1014,7 @@ Layer 3 zeroed:    roots below 0.8 m reassigned to layer 2</code></pre>
 <li><p>Convert root length per soil area to root length per soil volume by dividing by the effective layer thickness (corrected for rock fragments, same correction as <strong>Eq. 23</strong>):</p>
 <pre><code>Lv_j = La_j / [ thickness_j × (1 − RFC_j/100) ]</code></pre></li>
 </ol>
-<p>Both outputs feed into <strong>Equation 21</strong>, the soil-to-root conductance via <a href="https://ecamo19.github.io/plant_hydraulics/1_sureau_soil_params.html#compute_soil_root_geometry"><code>compute_soil_root_geometry</code></a>, which computes the Gardner-Cowan geometry factor B_GC:</p>
+<p>Both outputs feed into <strong>Equation 21</strong>, the soil-to-root conductance via <a href="https://ecamo19.github.io/plant_hydraulics/sureau_soil_params.html#compute_soil_root_geometry"><code>compute_soil_root_geometry</code></a>, which computes the Gardner-Cowan geometry factor B_GC:</p>
 <pre><code>b    = 1 / √(π Lv_j)           (mean half-distance between roots)
 B_GC = 2π La_j / ln(b / r)     (geometry factor in Eq. 21)</code></pre>
 <p>La_j represents the total length of roots, obtained by dividing surface area by the circumference of one straw (2πr).</p>
@@ -1023,7 +1023,7 @@ B_GC = 2π La_j / ln(b / r)     (geometry factor in Eq. 21)</code></pre>
 <ul>
 <li><p>soil_params: SurEauSoilParams object with the following attributes:</p>
 <ul>
-<li><p>layer_thickness: Thickness of each soil layer (m). NumPy array, e.g.&nbsp;<code>np.array([0.2, 0.6, 1.2])</code>. Computed by <a href="https://ecamo19.github.io/plant_hydraulics/1_sureau_soil_params.html#sureau_soil_params"><code>sureau_soil_params()</code></a> from <code>soil_params.depth</code>.</p></li>
+<li><p>layer_thickness: Thickness of each soil layer (m). NumPy array, e.g.&nbsp;<code>np.array([0.2, 0.6, 1.2])</code>. Computed by <a href="https://ecamo19.github.io/plant_hydraulics/sureau_soil_params.html#sureau_soil_params"><code>sureau_soil_params()</code></a> from <code>soil_params.depth</code>.</p></li>
 <li><p>RFC: Rock fragment content of each soil layer (%). NumPy array, e.g.&nbsp;<code>np.array([75.0, 75.0, 75.0])</code>. Reduces the effective soil volume available for roots.</p></li>
 </ul></li>
 <li><p>veg_params: SurEauVegetationParams object with the following attributes:</p>

@@ -90,7 +90,7 @@ __Parameters:__
     for van Genuchten), theta_sat, theta_res (porosity, residual
     water), RFC (rock fragment content), and initial water content.
     Derived parameters (layer thickness, field capacity, etc.)
-    are computed internally by [`sureau_soil_params`](https://ecamo19.github.io/plant_hydraulics/1_sureau_soil_params.html#sureau_soil_params).
+    are computed internally by [`sureau_soil_params`](https://ecamo19.github.io/plant_hydraulics/sureau_soil_params.html#sureau_soil_params).
 
 - opts: SurEauModelOptions object controlling the simulation:
 

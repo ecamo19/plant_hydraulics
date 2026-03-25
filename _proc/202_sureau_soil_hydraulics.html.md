@@ -899,7 +899,7 @@ soil_deep = compute_soil_VG(soil_deep, soil_params)
 ::: {#4dafe200 .cell}
 
 ::: {.cell-output .cell-output-display}
-![](201_sureau_soil_hydraulics_files/figure-html/cell-28-output-1.png){}
+![](202_sureau_soil_hydraulics_files/figure-html/cell-28-output-1.png){}
 :::
 :::
 

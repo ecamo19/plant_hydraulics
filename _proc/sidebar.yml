@@ -5,7 +5,6 @@ website:
       - 100_parameter_classes.ipynb
       - 101_utils.ipynb
       - 110_0_soil_params.ipynb
-      - 110_1_sureau_soil_params.ipynb
       - 111_root_params.ipynb
       - 112_leaf_params.ipynb
       - 113_sureau_vegetation_params.ipynb
@@ -20,10 +19,11 @@ website:
       - 127_1_leaf_stomatal_medlyn.ipynb
       - 127_2_leaf_stomatal_profit_max.ipynb
       - 128_0_leaf_fluxes.ipynb
-      - 200_sureau_climate.ipynb
-      - 201_sureau_soil_hydraulics.ipynb
-      - 202_sureau_plant_hydraulics.ipynb
-      - 203_sureau_vegetation_processes.ipynb
+      - 200_sureau_soil_params.ipynb
+      - 201_sureau_climate.ipynb
+      - 202_sureau_soil_hydraulics.ipynb
+      - 203_sureau_plant_hydraulics.ipynb
+      - 204_sureau_vegetation_processes.ipynb
       - 210_sureau_object_initialization.ipynb
       - 211_sureau_solver.ipynb
       - 222_run_sureau.ipynb

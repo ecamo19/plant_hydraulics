@@ -185,12 +185,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./1_sureau_soil_params.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">SurEau soil params</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./root_params.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Root params</span></a>
   </div>
@@ -271,6 +265,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="./0_leaf_fluxes.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Leaf fluxes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sureau_soil_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SurEau soil params</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -417,7 +417,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>WS_mean: Daily mean wind speed (m/s).</li>
 </ul></li>
 <li><p>veg_params: SurEauVegetationParams object. Species-specific parameters including: LAI_max, LMA, LDMC (leaf traits); P50_VC_leaf/stem, slope_VC_leaf/stem (vulnerability curves); P12_gs, P88_gs (stomatal regulation); gmin20, TPhase_gmin, Q10_1/2_gmin (cuticular conductance); beta_root_profile or root_Z50/Z95 (root distribution); and many others. Derived parameters (root distribution, conductance partitioning, etc.) are computed internally by <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_params.html#sureau_vegetation_params"><code>sureau_vegetation_params</code></a>.</p></li>
-<li><p>soil_params: SurEauSoilParams object. Soil parameters including: depth (cumulative layer depths), texture parameters (alpha, n for van Genuchten), theta_sat, theta_res (porosity, residual water), RFC (rock fragment content), and initial water content. Derived parameters (layer thickness, field capacity, etc.) are computed internally by <a href="https://ecamo19.github.io/plant_hydraulics/1_sureau_soil_params.html#sureau_soil_params"><code>sureau_soil_params</code></a>.</p></li>
+<li><p>soil_params: SurEauSoilParams object. Soil parameters including: depth (cumulative layer depths), texture parameters (alpha, n for van Genuchten), theta_sat, theta_res (porosity, residual water), RFC (rock fragment content), and initial water content. Derived parameters (layer thickness, field capacity, etc.) are computed internally by <a href="https://ecamo19.github.io/plant_hydraulics/sureau_soil_params.html#sureau_soil_params"><code>sureau_soil_params</code></a>.</p></li>
 <li><p>opts: SurEauModelOptions object controlling the simulation:</p>
 <ul>
 <li>year_start, year_end: Simulation period.</li>
