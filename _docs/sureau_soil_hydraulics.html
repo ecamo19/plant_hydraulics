@@ -405,7 +405,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauSoil:</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Van Genuchten: transform soil moisture → water potential &amp; conductance.</em></p>
-<p>ANALOGY — The Sponge Squeeze: ─────────────────────────────</p>
+<p>ANALOGY — The Sponge Squeeze:</p>
 <p>Imagine each soil layer is a sponge sitting in a bucket.</p>
 <p>REW (Relative Extractable Water) tells you what fraction of the sponge’s usable capacity is still filled.</p>
 <p>REW = 1 means soaking wet, REW = 0 means only residual water trapped in the tiniest pores remains.</p>
@@ -544,7 +544,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    soil.REW_wp     [− whole profile]   → diagnostic
 </code></pre>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L127" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L126" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="compute_soil_campbell" class="level3">
 <h3 class="anchored" data-anchor-id="compute_soil_campbell">compute_soil_Campbell</h3>
@@ -584,7 +584,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   (how easily       (how tightly
    water flows)      water is held)</code></pre>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L172" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L171" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="compute_soil_conductance_and_psi" class="level3">
 <h3 class="anchored" data-anchor-id="compute_soil_conductance_and_psi">compute_soil_conductance_and_psi</h3>
@@ -595,7 +595,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Dispatch to VG or Campbell.</em></p>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L186" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L185" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="compute_infiltration" class="level3">
 <h3 class="anchored" data-anchor-id="compute_infiltration">compute_infiltration</h3>
@@ -605,7 +605,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauSoil:</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Infiltration through soil layers, then update psi/k.</em></p>
-<p>ANALOGY — Stacked Buckets: ────────────────────────── Picture 3 buckets stacked on top of each other, each with a small hole at the bottom.</p>
+<p>ANALOGY — Stacked Buckets:</p>
+<p>Picture 3 buckets stacked on top of each other, each with a small hole at the bottom.</p>
 <p>Phase 1 Percolation (slow drip): Before rain arrives, any bucket already above its “comfortable full” line (field capacity) slowly drips into the one below.</p>
 <p>The cst_infil parameter (0.7) means 70% of the excess drips per timestep, not everything at once, like a slow leak.</p>
 <p>Phase 2 Add rainfall: Pour the rain into the top bucket.</p>
@@ -633,7 +634,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   Save SWS, compute drainage,
   update ψ_soil and </code></pre>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L281" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L280" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="update_soil_water" class="level3">
 <h3 class="anchored" data-anchor-id="update_soil_water">update_soil_water</h3>
@@ -643,10 +644,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauSoil:</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Subtract transpiration flux from soil and update.</em></p>
-<p>ANALOGY — Roots are Straws:</p>
-<p>The plant’s roots act like straws stuck into each bucket. The transpiration flux tells you how many millimetres of water each straw sucked out during this timestep. We simply subtract that amount and then recompute the sponge’s grip (ψ) and permeability (k).</p>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L298" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L290" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="set_swc_to_field_capacity" class="level3">
 <h3 class="anchored" data-anchor-id="set_swc_to_field_capacity">set_SWC_to_field_capacity</h3>
@@ -659,7 +658,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>ANALOGY — Refilling the Sponge:</p>
 <p>After a long rainy spell, the soil drains freely until each layer reaches its “comfortable full” level — field capacity. This function is the equivalent of saying “pretend it just rained enough to fill the sponge back to its comfortable level.”</p>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L321" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L313" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="compute_evaporation" class="level3">
 <h3 class="anchored" data-anchor-id="compute_evaporation">compute_evaporation</h3>

@@ -15,8 +15,7 @@ def compute_soil_VG(soil: SurEauSoil, params: SurEauSoilParams) -> SurEauSoil:
     """Van Genuchten: transform soil moisture → water potential & conductance.
 
     ANALOGY — The Sponge Squeeze:
-    ─────────────────────────────
-
+    
     Imagine each soil layer is a sponge sitting in a bucket.
 
     REW (Relative Extractable Water) tells you what fraction of the sponge's
@@ -189,7 +188,7 @@ def compute_infiltration(
     """Infiltration through soil layers, then update psi/k.
 
     ANALOGY — Stacked Buckets:
-    ──────────────────────────
+   
     Picture 3 buckets stacked on top of each other, each with a small
     hole at the bottom.
 
@@ -282,13 +281,6 @@ def update_soil_water(
     soil: SurEauSoil, params: SurEauSoilParams, flux_evap
 ) -> SurEauSoil:
     """Subtract transpiration flux from soil and update.
-
-    ANALOGY — Roots are Straws:
-
-    The plant's roots act like straws stuck into each bucket. The
-    transpiration flux tells you how many millimetres of water each
-    straw sucked out during this timestep. We simply subtract that
-    amount and then recompute the sponge's grip (ψ) and permeability (k).
     """
     soil.soil_water_stock -= flux_evap
     soil = compute_soil_conductance_and_psi(soil, params)

@@ -101,15 +101,15 @@ def sureau_solver(
         - psi_LApo_cav, psi_SApo_cav: Historical minimum potentials
             (MPa). For cavitation flux (Eqs. 25–27).
         - k_LSym, k_SSym, k_SLApo: Plant conductances
-            (mmol m⁻² s⁻¹ MPa⁻¹). From ``update_kplant``.
+            (mmol m⁻² s⁻¹ MPa⁻¹). From `update_kplant`.
         - C_LSym, C_SSym, C_LApo, C_SApo: Capacitances
-            (mmol m⁻² MPa⁻¹). From ``update_capacitances``.
+            (mmol m⁻² MPa⁻¹). From `update_capacitances`.
         - PLC_leaf, PLC_stem: Current percent loss of conductivity
             (%). For computing cavitation conductances (Eq. 26).
         - Q_LApo_sat_mmol_per_LA, Q_SApo_sat_mmol_per_LA: Saturated
             apoplasm water (mmol/m² leaf). For Eqs. 25, 27.
         - k_soil_to_stem: Soil-to-stem conductances per layer
-            (mmol m⁻² s⁻¹ MPa⁻¹). From ``update_kplant`` (Eq. 20).
+            (mmol m⁻² s⁻¹ MPa⁻¹). From `update_kplant`(Eq. 20).
  
         Written:
  
@@ -156,8 +156,7 @@ def sureau_solver(
  
     - opt: SurEauComputationOptions object. Controls the solver:
  
-        - numerical_scheme: ``"Implicit"`` (default), ``"Semi-
-            Implicit"``, or ``"Explicit"``.
+        - numerical_scheme: ``"Implicit"`` (default), ``"Semi-Implicit"``, or ``"Explicit"``.
         - Lsym, Ssym: Scaling flags for symplasm capacitances
             (default 1.0). Set to 0 to make symplasm infinitely stiff.
         - CLapo, CTapo: Scaling flags for apoplasm capacitances.
@@ -252,11 +251,13 @@ def sureau_solver(
     and checking:
  
  
-        δ=0, solution ψ ≥ ψ^cav:  consistent ✓ (assumed off, confirmed off)
-        δ=0, solution ψ < ψ^cav:  inconsistent ✗ (assumed off, but should be on)
-        δ=1, solution ψ < ψ^cav:  consistent ✓ (assumed on, confirmed on)
-        δ=1, solution ψ ≥ ψ^cav:  inconsistent ✗ (assumed on, but the released
-                                   water "cushioned" the drop — shouldn't be on)
+    - δ=0, solution ψ ≥ ψ^cav:  consistent  (assumed off, confirmed off)
+    
+    - δ=0, solution ψ < ψ^cav:  inconsistent  (assumed off, but should be on)
+    
+    - δ=1, solution ψ < ψ^cav:  consistent  (assumed on, confirmed on)
+    
+    - δ=1, solution ψ ≥ ψ^cav:  inconsistent  (assumed on, but the released water "cushioned" the drop — shouldn't be on)
  
     The search space has 2 × 2 = 4 combinations for (δ_L, δ_S), plus one fallback. 
     When one mechanism is disabled (opt.Lcav=0 or opt.Scav=0), only the other 
