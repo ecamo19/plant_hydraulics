@@ -364,12 +364,117 @@ def SurEauVegetationParams(
 
 ```
 
-*Plant parameters — set once at initialisation.*
+*Plant parameters for SurEau-Ecos — set once at initialisation.*
+
+- __General__
+
+    - K:                    Light extinction parameter for Beer-Lambert canopy cover 
+    - transpiration_model:  Transpiration formulation: "Jarvis" (Eq. 29) or "Granier" 
+    - transpi_granier_a:    Granier transpiration quadratic coefficient for LAI (-)  [not in paper, model-specific]
+    - transpi_granier_b:    Granier transpiration linear coefficient for LAI (-)  [not in paper, model-specific]
+    - transpi_granier_c:    Granier transpiration constant term (-)  [not in paper, model-specific]
+    - gmin20:               Cuticular conductance at 20°C, gcuti20 (Table 1, mmol/m2leaf/s)
+    - TPhase_gmin:          Temperature for transition phase of gcuti, TPhase (Table 1, °C)
+    - Q10_1_gmin:           Temperature dependence of gcuti when T ≤ TPhase, Q10a (Table 1, -)
+    - Q10_2_gmin:           Temperature dependence of gcuti when T > TPhase, Q10b (Table 1, -)
+    - canopy_storage_param: Canopy water storage capacity per unit LAI, cws (Table 1, mm/LAI)
+    - k_plant_init:         Initial whole-plant hydraulic conductance KPlant (Eq. 13, mmol/m2leaf/s/MPa)
+    - PT_coeff:             Priestley-Taylor empirical coefficient α, typically 1.26 for open water (-)  [not in paper]
+
+- __Leaf__
+
+    - LAI_max:              Maximum leaf area index of the stand, LAImax (Table 1, m2leaf/m2soil)
+    - P50_VC_leaf:          Water potential causing 50% loss of leaf hydraulic conductance, ψ50,L (Table 1, Eq. 15, MPa)
+    - slope_VC_leaf:        Slope of rate of leaf embolism spread at ψ50,L, slopeL (Table 1, Eq. 15, %/MPa)
+    - epsilon_sym_leaf:     Modulus of elasticity of the leaf symplasm, εL (Table 1, Eq. 43, MPa)
+    - pi_full_turgor_leaf:  Osmotic potential at full turgor of the leaf symplasm, π0L (Table 1, Eq. 43, MPa)
+    - apo_frac_leaf:        Leaf apoplasmic fraction, αLApo (Table 1, Eqs. 36–37, -)
+    - sym_frac_leaf:        Leaf symplasmic fraction used in conductance partitioning (-) 
+    - LDMC:                 Leaf dry matter content, dry mass over saturated mass (Table 1, Eq. 38, mg/g)
+    - LMA:                  Leaf mass per area (Table 1, g/m2leaf)
+    - C_LApo_init:          Constant capacitance of the leaf apoplasm, CLApo (Table 1, Eq. 6, mmol/m2leaf/MPa)
+
+__Phenology__
+
+    - foliage:              Foliage type: "Evergreen" or "Deciduous" or "Forced" (Appendix A)
+    - nb_day_LAI:           Number of days from budburst to full canopy, controls RLAI (Appendix A, days)
+    - T_base:               Minimum temperature to start cumulating temperature for budburst, TD (Table 1, Appendix A, °C)
+    - F_crit:               Amount of forcing temperature to reach budburst, F* (Table 1, Eq. A2, °C)
+    - day_start:            Initial date of the forcing period for leaf phenology, t0 (Table 1, Eq. A2, DOY)
+    - day_start_forced:     Fixed budburst date for the "Forced" phenology model (DOY)  
+    - day_end_forced:       Fixed senescence date for the "Forced" phenology model (DOY) 
+    - defoliation:          Whether cavitation-induced leaf shedding is enabled (bool) 
+
+ __Stem__
+
+    - P50_VC_stem:          Water potential causing 50% loss of stem hydraulic conductance, ψ50,S (Table 1, Eq. 16, MPa)
+    - slope_VC_stem:        Slope of rate of stem embolism spread at ψ50,S, slopeS (Table 1, Eq. 16, %/MPa)
+    - gmin_S:               Stem cuticular conductance at reference temperature (mmol/m2leaf/s)  
+    - pi_full_turgor_stem:  Osmotic potential at full turgor of the stem symplasm, π0S (Table 1, Eq. 43, MPa)
+    - epsilon_sym_stem:     Modulus of elasticity of the stem symplasm, εS (Table 1, Eq. 43, MPa)
+    - vol_stem:             Volume of tissue of the stem (roots, trunk, branches), VS (Table 1, Eqs. 39–40, L/m2soil)
+    - apo_frac_stem:        Stem apoplasmic fraction of the wood water volume, αSApo (Table 1, Eq. 40, -)
+    - sym_frac_stem:        Stem symplasmic fraction of the wood water volume, αSSym (Table 1, Eq. 39, -)
+    - C_SApo_init:          Constant capacitance of the stem apoplasm, CSApo (Table 1, Eq. 7, mmol/m2leaf/MPa)
+    - k_SSym_init:          Conductance from the stem apoplasm to stem symplasm, KSSym (Table 1, Eq. 9, mmol/m2leaf/s/MPa)
+    - f_TRB_to_leaf:        Ratio converting stem surface area to leaf area basis for stem transpiration (-)  
+    - g_BL_stem:            Bark boundary layer conductance for stem transpiration (mmol/m2/s)  
+
+__Root__
+
+    - f_root_to_leaf:       Root-to-leaf area ratio, RaLa (Table 1, Eq. 18, -)
+    - root_radius:          Root diameter / 2, dR/2 (Table 1, Eq. 21, m)
+    - root_depth_max:       Maximum rooting depth (m). If None, defaults to deepest soil layer  
+    - root_distribution_model:  Root profile model: "BRP" for Jackson et al. 1996 (Eq. 19) or "LDR" for Schenk & Jackson 2002
+    - beta_root_profile:    Shape parameter for root distribution, β (Table 1, Eq. 19, -)
+    - root_Z50:             Depth above which 50% of roots are found, for LDR model (m)  
+    - root_Z95:             Depth above which 95% of roots are found, for LDR model (m)  
+
+- __Stomatal regulation__
+
+    - stomatal_reg_formulation:   Stomatal regulation model: "Sigmoid" (Eq. 34), "PiecewiseLinear", or "Turgor"
+    - P12_gs:               Water potential at 12% stomatal closure (MPa). Used to derive ψgs50 and slopegs  [derived parameter, see Table 1]
+    - P88_gs:               Water potential at 88% stomatal closure (MPa). Used to derive ψgs50 and slopegs  [derived parameter, see Table 1]
+    - psi_start_closing:    Water potential above which stomata are fully open, PiecewiseLinear model (MPa)  [not in paper]
+    - psi_close:            Water potential below which stomata are fully closed, PiecewiseLinear model (MPa)  [not in paper]
+    - turgor_pressure_at_gs_max:  Turgor pressure at which stomata are fully open, Turgor model (MPa)  [not in paper]
+
+- __Jarvis stomatal conductance__
+
+    - g_crown0:             Reference crown conductance, gcrown0 (Table 1, mmol/m2leaf/s)
+    - gs_max:               Maximum stomatal conductance, gstom_max (Table 1, Eq. 33, mmol/m2leaf/s)
+    - gs_night:             Minimum stomatal conductance at night, gstom_min (Table 1, mmol/m2leaf/s)
+    - jarvis_PAR:           Response of gstom to light, δ (Table 1, -)
+    - T_gs_sens:            Stomatal sensitivity to temperature, Tsens (Table 1, °C)
+    - T_gs_optim:           Temperature at maximal stomatal conductance, Toptim (Table 1, °C)
+
+- __Mortality__
+
+    - threshold_mortality:  PLC threshold defining hydraulic failure (%). default is 90%
+
+- __Derived (filled by sureau_vegetation_params)__
+
+    - psi_TLP_leaf:         Turgor loss point of the leaf, computed from π0L and εL (Eq. 43, MPa)
+    - psi_TLP_stem:         Turgor loss point of the stem, computed from π0S and εS (Eq. 43, MPa)
+    - P50_gs:               Water potential at 50% stomatal closure, ψgs50, derived as (P12_gs + P88_gs) / 2 (Table 1, Eq. 34, MPa)
+    - slope_gs:             Rate of decrease in stomatal conductance at ψgs50, slopegs, derived as 100 / (P12_gs − P88_gs) (Table 1, Eq. 34, %/MPa)
+    - root_distribution:    Normalized root fraction per soil layer rj (Eq. 19, -)
+    - La:                   Root length per soil area per layer (Eq. 21 context, m_root/m2soil)
+    - Lv:                   Root length density per soil volume per layer (Eq. 21 context, m_root/m3soil)
+    - k_SLApo_init:         Maximum conductance from stem apoplasm to leaf apoplasm, KSApo-LApo,max (Table 1, Eq. 14, mmol/m2leaf/s/MPa)
+    - k_RSApo_init:         Maximum conductance from root to stem apoplasm per layer, KR-SApo,max × rj (Table 1, Eqs. 16–17, mmol/m2leaf/s/MPa)
+    - k_LSym_init:          Conductance from leaf apoplasm to leaf symplasm, KLSym (Table 1, Eq. 8, mmol/m2leaf/s/MPa)
+
+- __Leaf morphology (energy balance)__
+
+    - leaf_size:            Characteristic leaf dimension for boundary layer calculation (mm)  [CPRM21, not in Ruffault et al. 2022 Table 1]
+    - leaf_angle:           Leaf angle from horizontal for radiation interception (degrees)  [CPRM21, not in Ruffault et al. 2022]
+    - turn_off_EB:          Skip leaf energy balance and use air temperature as leaf temperature (bool)
 
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L785){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1030){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauSoilParams
 
@@ -388,12 +493,43 @@ def SurEauSoilParams(
 
 ```
 
-*Soil parameters — set once at initialisation.*
+*Soil parameters for SurEau-Ecos — set once at initialisation.*
+
+- __Input parameters__
+
+    - depth:                  Cumulative depth of the bottom of each soil layer, zhj (Eq. 19, Sect. 2.2.2, m)
+    - RFC:                    Rock fragment content of each soil layer, rfcj (Table 1, Eq. 23, %)
+    - g_soil0:                Reference soil conductance to water vapor, gsoil0 (Table 1, Eq. 35, mmol/m2soil/s)
+    - offset_psoil:           Offset applied to computed soil water potential per layer (MPa)  [not in paper, calibration aid]
+    - psoil_at_field_capacity: Soil water potential at field capacity, used to derive θfc (Eq. 23 context, MPa)
+    - reset_SWC:              Whether to reset soil water content to field capacity at each year start (bool)  [not in paper, simulation option]
+    - water_soil_transfer:    Whether inter-layer water transfer (drainage) is enabled (bool)  [not in paper, simulation option]
+    - soil_evap:              Whether soil surface evaporation is enabled (bool)  [not in paper, simulation option]
+    - PTF:                    Pedotransfer function: "VG" for van Genuchten (Eq. 48) or "Campbell"
+    - Ksat:                   Soil hydraulic conductivity at saturation, ksat (Table 1, Eq. 21, mmol/m1soil/s/MPa)
+    - saturation_capacity:    Soil water content at saturation, θs (Table 1, Eq. 22, m3/m3)
+    - residual_capacity:      Residual soil water content, θr (Table 1, Eq. 22, m3/m3)
+    - alpha_vg:               Inverse of the air entry potential, α (Table 1, Eq. 48, MPa-1)
+    - n_vg:                   Pore size distribution index, n (Table 1, Eq. 48, -)
+    - I_vg:                   Shape parameter for the van Genuchten hydraulic conductivity equation, I (Table 1, Eq. 21, -)
+    - b_camp:                 Campbell "b" shape parameter (-)  
+    - psie_camp:              Campbell air-entry potential ψe (MPa)  
+
+- __Derived (filled by sureau_soil_params and compute_soil_root_geometry__
+
+    - n_layers:               Number of soil layers, derived from length of depth array (-)
+    - layer_thickness:        Thickness of each soil layer thj, derived from depth (Table 1, Eq. 23, m)
+    - m:                      Van Genuchten shape parameter, m = 1 − 1/n (Eq. 48, -)
+    - V_field_capacity:       Water height at field capacity per layer, derived from θfc and layer geometry (Eq. 23 context, mm)
+    - V_saturation_capacity:  Water height at saturation per layer, derived from θs and layer geometry (mm)
+    - V_residual_capacity:    Water height at residual content per layer, derived from θr and layer geometry (mm)
+    - V_wilting_point:        Water height at wilting point (−1.5 MPa) per layer (mm)
+    - B_GC:                   Gardner-Cowan geometry factor for soil-to-root conductance per layer, 2πLa/ln(b/r) (Eq. 21, -)
 
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L825){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1152){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauComputationOptions
 
@@ -407,12 +543,25 @@ def SurEauComputationOptions(
 
 ```
 
-*Numerical solver options.*
+*Numerical solver options for SurEau-Ecos.*
+
+Controls the numerical resolution scheme (Sect. 2.6, Appendix C)
+and the adaptive sub-stepping strategy used in run_sureau.
+
+- n_small_timesteps:  List of sub-timestep counts for adaptive stepping, e.g. [1, 2, 4, 8, 16]. The solver tries each in order until Δγ < 5% and ΔPLC < 1% per sub-step (Sect. 3, Table 2)
+- numerical_scheme:   ODE integration scheme: "Implicit" (Appendix C2, Eqs. C5–C18), "Semi-Implicit" (Appendix C3, Eqs. C19–C22), or "Explicit" (Sect. 2.6.1, Eqs. 49–50)
+- Lsym:               Scaling flag for leaf symplasm capacitance CLSym in the solver (1.0 = enabled, 0.0 = disabled). Multiplies CLSym in Eq. 8. Set to 0 for sensitivity experiments removing leaf symplasm buffering (Sect. 6.2)
+- Ssym:               Scaling flag for stem symplasm capacitance CSSym in the solver (1.0 = enabled, 0.0 = disabled). Multiplies CSSym in Eq. 9. Set to 0 for sensitivity experiments removing stem symplasm buffering (Sect. 6.2)
+- Eord:               Scaling flag for the transpiration linearization dE/dψ term (1.0 = enabled, 0.0 = disabled). Controls whether Eq. 60 correction is applied in the implicit scheme. Set to 0 for a first-order transpiration scheme
+- Lcav:               Enable (1) or disable (0) leaf cavitation water-release flux FcavL in Eq. 6 (Eqs. 24–25)
+- Scav:               Enable (1) or disable (0) stem cavitation water-release flux FcavS in Eq. 7 (Eqs. 24, 27)
+- CLapo:              Scaling flag for leaf apoplasm capacitance CLApo in the solver (1.0 = enabled, 0.0 = disabled). Multiplies CLApo in Eq. 6. Set to 0 for sensitivity experiments removing leaf apoplasm elastic storage (Sect. 6.2)
+- CTapo:              Scaling flag for stem apoplasm capacitance CSApo in the solver (1.0 = enabled, 0.0 = disabled). Multiplies CSApo in Eq. 7. Set to 0 for sensitivity experiments removing stem apoplasm elastic storage (Sect. 6.2)
 
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L840){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1198){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauModelOptions
 
@@ -428,7 +577,25 @@ def SurEauModelOptions(
 
 ```
 
-*Simulation configuration.*
+*Simulation configuration for SurEau-Ecos.*
+
+Controls the simulation period, site location, temporal resolution,
+climate processing options, and numerical solver settings.
+References are from Ruffault et al. (2022), Geosci. Model Dev.,
+15, 5593–5626, where applicable.
+
+- year_start:        First year of the simulation period (int)
+- year_end:          Last year of the simulation period (int)
+- latitude:          Site latitude for daylength and solar geometry calculations (°, Eq. 19 context, Appendix A)
+- longitude:         Site longitude (°)  [not used in current model equations; reserved for spatial applications as in Sect. 7]
+- elevation:         Site elevation above sea level (m). Used in the psychrometric constant for ETP computation  [not in paper, needed by pyet library]
+- output_resolution: Temporal resolution of output: "subdaily" for hourly results, "daily" for daily aggregation  
+- ETP_formulation:   Potential evapotranspiration method: "PT" for Priestley-Taylor or "PM" for Penman-Monteith. The paper uses Priestley-Taylor (Sect. 2.1, Fig. 1b)
+- Rn_formulation:    Net radiation estimation method: "Linacre" for the Linacre (1968) empirical formula 
+- constant_climate:  If True, use fixed daylength (equatorial) for all days, bypassing latitude-dependent solar geometry (bool)  [not in paper, diagnostic option]
+- print_progress:    If True, print year/day progress to console during simulation (bool)  
+- time_steps:        Array of hours defining the sub-daily temporal resolution. Default np.arange(24) gives hourly resolution. The paper describes sub-daily resolution from 0.01 to 1800 s depending on scheme (Sect. 2.1, Table 2)
+- comp_options:      SurEauComputationOptions object controlling the numerical solver (Sect. 2.6, Appendix C)
 
 
 ## State variables objects (mutated every timestep)
@@ -443,16 +610,15 @@ Design rationale (mirrors Bonan's Leaf → params, Flux → outputs):
 
 3) SurEauPlantDiagnostics: Solver quality metrics + derived outputs (fuel moisture) used for monitoring/logging.
 
-The three objects replace the single SurEauPlant dataclass.
 
-A thin SurEauPlant wrapper is provided at the bottom for backward-compatible attribute access during migration.
+
  
 
 ### State class: persists across timesteps 
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L860){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1260){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauPlantState
 
@@ -486,7 +652,7 @@ checkpoint.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L939){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1339){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauPlantFluxes
 
@@ -515,7 +681,7 @@ fills them in from SurEauPlantState + atmospheric forcing.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L984){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1422){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauPlantDiagnostics
 
@@ -538,7 +704,7 @@ back into the hydraulic solver.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1006){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1454){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauSoil
 
@@ -557,7 +723,7 @@ def SurEauSoil(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1022){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1470){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauClimate
 
@@ -578,7 +744,7 @@ def SurEauClimate(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1045){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1493){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauClimateHourly
 
