@@ -715,7 +715,7 @@ plt.show()
 ```
 
 ::: {.cell-output .cell-output-display}
-![](200_sureau_climate_files/figure-html/cell-19-output-1.png){}
+![](201_sureau_climate_files/figure-html/cell-19-output-1.png){}
 :::
 :::
 
@@ -784,7 +784,7 @@ plt.show()
 ```
 
 ::: {.cell-output .cell-output-display}
-![](200_sureau_climate_files/figure-html/cell-20-output-1.png){}
+![](201_sureau_climate_files/figure-html/cell-20-output-1.png){}
 :::
 :::
 
@@ -848,7 +848,7 @@ Remember to adjust the lat/lon
 :::
 
 ::: {.cell-output .cell-output-display}
-![](200_sureau_climate_files/figure-html/cell-21-output-2.png){}
+![](201_sureau_climate_files/figure-html/cell-21-output-2.png){}
 :::
 :::
 
