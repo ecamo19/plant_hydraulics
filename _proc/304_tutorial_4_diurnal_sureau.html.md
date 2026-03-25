@@ -27,26 +27,6 @@ from plant_hydraulics.parameter_classes import (
     SurEauModelOptions,
 )
 ```
-
-::: {.cell-output .cell-output-error}
-
-::: {.ansi-escaped-output}
-```{=html}
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">ModuleNotFoundError</span>                       Traceback (most recent call last)
-<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[2]</span><span class="ansi-green-fg">, line 1</span>
-<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">1</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span><span style="color:rgb(188,188,188)"> </span><span class="ansi-blue-fg ansi-bold">plant_hydraulics</span><span class="ansi-blue-fg ansi-bold">.</span><span class="ansi-blue-fg ansi-bold">run_sureau</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,135,0)">import</span> run_sureau
-<span class="ansi-green-fg">      2</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span><span style="color:rgb(188,188,188)"> </span><span class="ansi-blue-fg ansi-bold">plant_hydraulics</span><span class="ansi-blue-fg ansi-bold">.</span><span class="ansi-blue-fg ansi-bold">parameter_classes</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,135,0)">import</span> (
-<span class="ansi-green-fg">      3</span>     SurEauVegetationParams,
-<span class="ansi-green-fg">      4</span>     SurEauSoilParams,
-<span class="ansi-green-fg">      5</span>     SurEauModelOptions,
-<span class="ansi-green-fg">      6</span> )
-
-<span class="ansi-red-fg">ModuleNotFoundError</span>: No module named 'plant_hydraulics'</pre>
-```
-:::
-
-:::
 :::
 
 
