@@ -113,12 +113,10 @@ veg_params.Q10_2_gmin = 4.8
 ::: {#bedbf66e .cell}
 ``` {.python .cell-code}
 opts = SurEauModelOptions(
-    # Simulation period — must match years in the climate DataFrame
+    # Simulation period, must match years in the climate DataFrame
     year_start=1990,
     year_end=1990,
- 
-    # Site location — used for daylength and solar geometry
-    # 43.9°N = southern France (Montpellier area)
+
     latitude=43.9,
  
     # Elevation affects psychrometric constant in ETP calculation
@@ -140,7 +138,9 @@ results = run_sureau(
     veg_params=veg_params,
     soil_params=soil_params,
     opts=opts,
-    deep_water=False,  # Set True to keep deepest layer at field capacity
+    
+    # Set True to keep deepest layer at field capacity
+    deep_water=False,  
 )
 ```
 
