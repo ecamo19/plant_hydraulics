@@ -197,12 +197,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sureau_vegetation_params.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">SurEau vegetation params</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./soil_resistance.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Soil resistance</span></a>
   </div>
@@ -271,6 +265,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="./sureau_soil_params.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SurEau soil params</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sureau_vegetation_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SurEau vegetation params</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -467,6 +467,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    Leaf intercellular CO2 concentration (umol<span class="op">/</span>mol).</span>
 <span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Calculate leaf photosynthesis for a specified stomatal conductance,</em> then calculate Ci from the diffusion equation.</p>
+<p><strong>Phys 101:</strong></p>
+<ul>
+<li><p>Carboxilation rate: How many reactions (CO2 + RuBP -&gt; 3-PGA) happen per unit of leaf area per second.</p></li>
+<li><p>Vcmax: Maximum Carboxilation rate</p></li>
+</ul>
+<p>Meaning of Θ (aka the co-limitation curvature factor): Θ asks, when the plant transitions from being Rubisco-limited to light-limited, is that transition sharp (Θ near 1) or gradual (Θ near 0)?</p>
+<p>A sharp transition means one process dominates at any given moment. A gradual transition means both processes are always partially limiting simultaneously. The default value in the code is 0.98</p>
+<p><strong>The function</strong></p>
 <p>This routine uses a quadratic equation to solve for net photosynthesis (An). A general equation for C3 photosynthesis is:</p>
 <pre><code>     a*(Ci - Cp)
 An = ----------- - Rd

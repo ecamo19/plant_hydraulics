@@ -248,7 +248,7 @@ __Returns:__
 def arrhenius_function(
     tl, # Leaf Temperature (K)
     ha, # Activation Energy (J mol–1)
-):
+): # Scaling factor that equals 1.0 at 25°C, greater than 1.0 above 25°C, and less than 1.0 below 25°C.
 
 
 ```
@@ -300,7 +300,7 @@ for each_temperature in [10, 20, 30, 40]:
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L324){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L325){target="_blank" style="float:right; font-size:smaller"}
 
 ### inhibition_function
 
@@ -343,7 +343,7 @@ __Parameters:__
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L367){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L368){target="_blank" style="float:right; font-size:smaller"}
 
 ### brent_root
 
@@ -417,7 +417,7 @@ Input: bracket [a, b] where f(a) and f(b) have opposite signs
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L540){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L541){target="_blank" style="float:right; font-size:smaller"}
 
 ### time_to_float
 
@@ -433,7 +433,7 @@ def time_to_float(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L545){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L546){target="_blank" style="float:right; font-size:smaller"}
 
 ### diurnal_par
 
@@ -517,7 +517,7 @@ plt.show()
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L570){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L571){target="_blank" style="float:right; font-size:smaller"}
 
 ### diurnal_temperature
 
@@ -608,7 +608,7 @@ plt.show()
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L601){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L602){target="_blank" style="float:right; font-size:smaller"}
 
 ### diurnal_relhum
 
@@ -696,7 +696,7 @@ plt.show()
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L625){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L626){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_theta_at_psi_VG
 
@@ -745,7 +745,7 @@ where:
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L698){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L699){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_theta_at_psi_Campbell
 
@@ -788,7 +788,7 @@ convention (both *ψ_target* and *ψ_e* are negative / suction).
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L764){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L765){target="_blank" style="float:right; font-size:smaller"}
 
 ### flux_leaf_to_stand
 
@@ -806,7 +806,7 @@ def flux_leaf_to_stand(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L769){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L770){target="_blank" style="float:right; font-size:smaller"}
 
 ### flux_mm_to_mmol_m2leaf_s
 
@@ -824,7 +824,7 @@ def flux_mm_to_mmol_m2leaf_s(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L776){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L777){target="_blank" style="float:right; font-size:smaller"}
 
 ### convert_FtoV
 
@@ -844,7 +844,7 @@ def convert_FtoV(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L781){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L782){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_VPD
 
@@ -862,7 +862,7 @@ def compute_VPD(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L792){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L793){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_slope_sat
 
@@ -880,7 +880,7 @@ def compute_slope_sat(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L797){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L798){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_ETP_PT
 
@@ -898,7 +898,7 @@ def compute_ETP_PT(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L805){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L806){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_ETP_PM
 
@@ -918,7 +918,7 @@ def compute_ETP_PM(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L821){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L822){target="_blank" style="float:right; font-size:smaller"}
 
 ### Rg_MJ_to_Watt
 
@@ -936,7 +936,7 @@ def Rg_MJ_to_Watt(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L826){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L827){target="_blank" style="float:right; font-size:smaller"}
 
 ### Rg_Watt_to_PPFD
 
@@ -954,7 +954,7 @@ def Rg_Watt_to_PPFD(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L831){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L832){target="_blank" style="float:right; font-size:smaller"}
 
 ### declination
 
@@ -972,7 +972,7 @@ def declination(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L840){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L841){target="_blank" style="float:right; font-size:smaller"}
 
 ### potential_PAR
 
@@ -990,7 +990,7 @@ def potential_PAR(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L860){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L861){target="_blank" style="float:right; font-size:smaller"}
 
 ### daylength
 
@@ -1008,7 +1008,7 @@ def daylength(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L885){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L886){target="_blank" style="float:right; font-size:smaller"}
 
 ### radiation_diurnal_pattern
 
@@ -1026,7 +1026,7 @@ def radiation_diurnal_pattern(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L898){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L899){target="_blank" style="float:right; font-size:smaller"}
 
 ### temperature_diurnal
 
@@ -1044,7 +1044,7 @@ def temperature_diurnal(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L917){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L918){target="_blank" style="float:right; font-size:smaller"}
 
 ### rh_diurnal
 

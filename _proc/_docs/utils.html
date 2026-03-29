@@ -200,12 +200,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sureau_vegetation_params.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">SurEau vegetation params</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./soil_resistance.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Soil resistance</span></a>
   </div>
@@ -274,6 +268,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="./sureau_soil_params.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SurEau soil params</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sureau_vegetation_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SurEau vegetation params</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -593,7 +593,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> arrhenius_function(</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    tl, <span class="co"># Leaf Temperature (K)</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    ha, <span class="co"># Activation Energy (J mol–1)</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>): <span class="co"># Scaling factor that equals 1.0 at 25°C, greater than 1.0 above 25°C, and less than 1.0 below 25°C.</span></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Temperature response function used in <a href="https://ecamo19.github.io/plant_hydraulics/leaf_phosynthesis.html#leaf_photosynthesis"><code>leaf_photosynthesis()</code></a></em></p>
 <p>Follows Eq 11.34:</p>
@@ -623,7 +623,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L324" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L325" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 </section>
 <section id="inhibition_function" class="level3">
@@ -650,7 +650,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>fc : Overheat Protection (MISSING UNITS)</li>
 </ul>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L367" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L368" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="brent_root" class="level3">
 <h3 class="anchored" data-anchor-id="brent_root">brent_root</h3>
@@ -704,7 +704,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
                     ▼
             Return b as root</code></pre>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L540" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L541" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="time_to_float" class="level3">
 <h3 class="anchored" data-anchor-id="time_to_float">time_to_float</h3>
@@ -714,7 +714,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>):</span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L545" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L546" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="diurnal_par" class="level3">
 <h3 class="anchored" data-anchor-id="diurnal_par">diurnal_par</h3>
@@ -776,7 +776,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L570" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L571" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 </section>
 <section id="diurnal_temperature" class="level3">
@@ -836,7 +836,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L601" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L602" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 </section>
 <section id="diurnal_relhum" class="level3">
@@ -902,7 +902,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="soil-utilities" class="level2">
 <h2 class="anchored" data-anchor-id="soil-utilities">Soil utilities</h2>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L625" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L626" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="compute_theta_at_psi_vg" class="level3">
 <h3 class="anchored" data-anchor-id="compute_theta_at_psi_vg">compute_theta_at_psi_VG</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -932,7 +932,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>.. note:: In SurEau-Ecos, <em>PsiTarget</em> is supplied in <strong>MPa</strong> (positive suction convention) and is converted internally to the hPa (≡ cm H₂O) domain expected by the VG α parameter via multiplication by 10 000.</p>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L698" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L699" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="compute_theta_at_psi_campbell" class="level3">
 <h3 class="anchored" data-anchor-id="compute_theta_at_psi_campbell">compute_theta_at_psi_Campbell</h3>
@@ -960,7 +960,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="flux-conversions" class="level2">
 <h2 class="anchored" data-anchor-id="flux-conversions">Flux conversions</h2>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L764" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L765" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="flux_leaf_to_stand" class="level3">
 <h3 class="anchored" data-anchor-id="flux_leaf_to_stand">flux_leaf_to_stand</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -970,7 +970,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>mmol/m²leaf/s → mm/m²soil over dt hours.</em></p>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L769" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L770" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="flux_mm_to_mmol_m2leaf_s" class="level3">
 <h3 class="anchored" data-anchor-id="flux_mm_to_mmol_m2leaf_s">flux_mm_to_mmol_m2leaf_s</h3>
@@ -981,7 +981,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>mm/m²soil over dt hours → mmol/m²leaf/s.</em></p>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L776" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L777" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="convert_ftov" class="level3">
 <h3 class="anchored" data-anchor-id="convert_ftov">convert_FtoV</h3>
@@ -996,7 +996,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="climate-utilities" class="level2">
 <h2 class="anchored" data-anchor-id="climate-utilities">Climate utilities</h2>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L781" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L782" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="compute_vpd" class="level3">
 <h3 class="anchored" data-anchor-id="compute_vpd">compute_VPD</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -1006,7 +1006,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Compute VPD [kPa] from relative humidity [%] and temperature [°C].</em></p>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L792" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L793" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="compute_slope_sat" class="level3">
 <h3 class="anchored" data-anchor-id="compute_slope_sat">compute_slope_sat</h3>
@@ -1017,7 +1017,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Slope of saturation vapour pressure curve [kPa/°C].</em></p>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L797" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L798" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="compute_etp_pt" class="level3">
 <h3 class="anchored" data-anchor-id="compute_etp_pt">compute_ETP_PT</h3>
@@ -1028,7 +1028,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Priestley-Taylor PET [mm].</em></p>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L805" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L806" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="compute_etp_pm" class="level3">
 <h3 class="anchored" data-anchor-id="compute_etp_pm">compute_ETP_PM</h3>
@@ -1043,7 +1043,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="radiation-conversions" class="level2">
 <h2 class="anchored" data-anchor-id="radiation-conversions">Radiation conversions</h2>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L821" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L822" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="rg_mj_to_watt" class="level3">
 <h3 class="anchored" data-anchor-id="rg_mj_to_watt">Rg_MJ_to_Watt</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -1053,7 +1053,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>MJ → W/m² given N_hours.</em></p>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L826" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L827" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="rg_watt_to_ppfd" class="level3">
 <h3 class="anchored" data-anchor-id="rg_watt_to_ppfd">Rg_Watt_to_PPFD</h3>
@@ -1064,7 +1064,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>W/m² → µmol/m²/s PPFD.</em></p>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L831" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L832" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="declination" class="level3">
 <h3 class="anchored" data-anchor-id="declination">declination</h3>
@@ -1075,7 +1075,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Solar declination [rad].</em></p>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L840" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L841" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="potential_par" class="level3">
 <h3 class="anchored" data-anchor-id="potential_par">potential_PAR</h3>
@@ -1086,7 +1086,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Potential PAR [W/m²] at given hours, latitude, and DOY.</em></p>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L860" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L861" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="daylength" class="level3">
 <h3 class="anchored" data-anchor-id="daylength">daylength</h3>
@@ -1097,7 +1097,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Compute sunrise [h], sunset [h], daylength [h].</em></p>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L885" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L886" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="radiation_diurnal_pattern" class="level3">
 <h3 class="anchored" data-anchor-id="radiation_diurnal_pattern">radiation_diurnal_pattern</h3>
@@ -1108,7 +1108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Fractional radiation at time_sec from sunrise, given daylength in seconds.</em></p>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L898" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L899" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="temperature_diurnal" class="level3">
 <h3 class="anchored" data-anchor-id="temperature_diurnal">temperature_diurnal</h3>
@@ -1119,7 +1119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Sinusoidal temperature disaggregation (McMurtrie et al.&nbsp;1990).</em></p>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L917" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L918" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="rh_diurnal" class="level3">
 <h3 class="anchored" data-anchor-id="rh_diurnal">rh_diurnal</h3>

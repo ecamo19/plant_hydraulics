@@ -1390,7 +1390,7 @@ def compute_gmin(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1495){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1499){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_E_min
 
@@ -1410,7 +1410,7 @@ def compute_E_min(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1507){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1511){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_T_leaf
 
@@ -1987,7 +1987,7 @@ RH = 50%, gs = 100 mmol/m²/s, g_cuti = 4 mmol/m²/s):__
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1999){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L2003){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_DFMC
 

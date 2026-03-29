@@ -12,6 +12,23 @@ def leaf_ci_optimization(atmos: Atmos, leaf: Leaf, flux: Flux) -> Flux:
     """
     Calculate leaf photosynthesis for a specified stomatal conductance,
     then calculate Ci from the diffusion equation.
+    
+    __Phys 101:__ 
+    
+    - Carboxilation rate: How many reactions (CO2 + RuBP -> 3-PGA) happen per 
+    unit of leaf area per second.
+    
+    - Vcmax: Maximum Carboxilation rate
+    
+    Meaning of Θ (aka the co-limitation curvature factor): Θ asks, when the 
+    plant transitions from being Rubisco-limited to light-limited, is that 
+    transition sharp (Θ near 1) or gradual (Θ near 0)? 
+    
+    A sharp transition means one process dominates at any given moment. 
+    A gradual transition means both processes are always partially 
+    limiting simultaneously. The default value in the code is 0.98 
+    
+    __The function__
 
     This routine uses a quadratic equation to solve for net photosynthesis
     (An). A general equation for C3 photosynthesis is:
@@ -187,45 +204,60 @@ def leaf_ci_optimization(atmos: Atmos, leaf: Leaf, flux: Flux) -> Flux:
 
     # Gross assimilation rates --------------------------------------------------
     if leaf.c3psn == 1:
+        
         # C3: Rubisco-limited photosynthesis
         a0 = flux.vcmax
         e0 = 1.0
 
-        # (Eq. 11.28)
+        # km == d0: Mechaelis-Mentel constant pp 53.
+        # The term (1.0 + atmos.o2air / flux.ko) represents the competitive 
+        # inhibition of 02 over CO2. Rubisco can take either C02 and O2 molecules
+        # if it take more O2 molecules then VCMAX is reduced.
+        # Therefore do is the intercellular CO2 concentration at which 50% of 
+        # the carboxilation occurs adjusted for the o2 concentration 
         d0 = flux.kc * (1.0 + atmos.o2air / flux.ko)
 
         aquad = e0 / gleaf
         bquad = -(e0 * atmos.co2air + d0) - (a0 - e0 * flux.rd) / gleaf
         cquad = a0 * (atmos.co2air - flux.cp) - flux.rd * (e0 * atmos.co2air + d0)
 
+        # Solve the Θv² − (v1 + v2)v + v1v2 = 0 eq 4.19
         roots = np.roots([aquad, bquad, cquad])
 
+        # Carboxylation rate
         flux.ac = min(roots.real) + flux.rd
 
-        # C3: RuBP regeneration-limited photosynthesis
+        # C3: RuBP regeneration-limited photosynthesis Aj is the photosynthesis 
+        # rate when the light reactions are the bottleneck
         a0 = flux.je
         e0 = 4.0
         d0 = 8.0 * flux.cp
 
         aquad = e0 / gleaf
         bquad = -(e0 * atmos.co2air + d0) - (a0 - e0 * flux.rd) / gleaf
+        
         cquad = a0 * (atmos.co2air - flux.cp) - flux.rd * (e0 * atmos.co2air + d0)
-
+        
+        # Solve the Θv² − (v1 + v2)v + v1v2 = 0 eq 4.19
         roots = np.roots([aquad, bquad, cquad])
 
         # .real is used beacuse it can return Imaginary numbers (i.e sqrt(-2))
         # A quadratic equation a·x² + b·x + c = 0 has 3 coefficients
         # but only 2 roots.
+        # Aj is the photosynthesis rate when the light reactions are the 
+        # bottleneck
         flux.aj = min(roots.real) + flux.rd
 
         # C3: Product-limited photosynthesis
         flux.ap = 0.0
 
     else:
-        # C4: Rubisco-limited photosynthesis
+        # C4: Rubisco-limited photosynthesis (carboxylation rate)
         flux.ac = flux.vcmax
 
         # C4: RuBP-limited photosynthesis
+        # Aj is the photosynthesis rate when the light reactions are the 
+        # bottleneck
         flux.aj = leaf.qe_c4 * flux.apar
 
         # C4: PEP carboxylase-limited (CO2-limited)
@@ -233,42 +265,70 @@ def leaf_ci_optimization(atmos: Atmos, leaf: Leaf, flux: Flux) -> Flux:
 
     # Net assimilation as the minimum or co-limited rate ------------------------
     if leaf.colim == 1:
-        # First co-limit Ac and Aj. Ai is the intermediate co-limited
-        # photosynthesisrate found by solving the polynomial:
+        
+        # First co-limit Ac (carboxylation rate) and Aj (electron transport rate). 
+        # Ai is the intermediate co-limited photosynthesis rate found by 
+        # solving the polynomial:
         # aquad * Ai^2 + bquad * Ai + cquad = 0 for Ai.
+        
         # Correct solution is the smallest of the two roots.
 
-        # Co-limit Ac and Aj
+        # Co-limit Ac: limited by Rubisco (enzyme capacity, depends on 
+        # Vcmax and CO2) and Aj: limited by light (electron transport, depends 
+        # on J and light)
         if leaf.c3psn == 1:
+        
             aquad = leaf.colim_c3
+        
         else:
+            
             aquad = leaf.colim_c4a
+        
         bquad = -(flux.ac + flux.aj)
         cquad = flux.ac * flux.aj
+        
+        # Solve the Θv² − (v1 + v2)v + v1v2 = 0 eq 4.19 to find the limiting 
+        # factor
         roots = np.roots([aquad, bquad, cquad])
+        
+        # The co-limited rate is the smaller root. Law of minimum or Blackman 
+        # limiting response
         ai = min(roots.real)
 
-        # Now co-limit again using Ap, but only for C4 plants. Solve the
+        # Now co-limit again using Ap (PEP carboxylase-limited,
+        # but only for C4 plants. Solve the
         # polynomial: aquad*Ag^2 + bquad*Ag + cquad = 0 for Ag.
         # Correct solution is the smallest of the two roots. Ignore the
         # product-limited rate For C3 plants.
 
-        # Co-limit with Ap for C4 plants
+        # Co-limit with Ap (PEP carboxylase-limited) for C4 plants
         if leaf.c3psn == 0:
+        
             aquad = leaf.colim_c4b
             bquad = -(ai + flux.ap)
+            
+            # PEP carboxylase-limited (CO2-limited)
             cquad = ai * flux.ap
+            
+            # Solve the Θv² − (v1 + v2)v + v1v2 = 0 eq 4.19 to find the limiting 
+            # factor
             roots = np.roots([aquad, bquad, cquad])
+            
+            # Law of minimum or Blackman limiting response
             flux.ag = min(roots.real)
+        
         else:
             flux.ag = ai
 
     # No co-limitation
     else:
         if leaf.c3psn == 1:
+        
             # C3
             flux.ag = min(flux.ac, flux.aj)
+        
         else:
+        
             # C4
             flux.ag = min(flux.ac, flux.aj, flux.ap)
 

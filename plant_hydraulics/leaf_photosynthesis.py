@@ -248,24 +248,33 @@ def leaf_photosynthesis(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) 
             Leaf vapor pressure deficit at surface (Pa).
     """
 
-    # Adjust photosynthetic parameters for temperature --------------------------
-    # ft() = arrhenius_fucntion()
-    # fth() = inhibition_function()
+    # Adjust photosynthetic parameters for temperature 
+    # Matlab ft() == to arrhenius_fucntion()
+    # Matlab fth() == to inhibition_function()
 
+    # C3 temperature response ---------------------------------------------------
     if leaf.c3psn == 1:
-        # C3 temperature response
 
         # Rubisco kinetics Eq 11.34
         # Describe binding affinities that increase monotonically with
-        # temperature
+        # temperature. This model describes that at high temperature Rubisco
+        # becomes less effiecint at getting CO2 (HIGH Km)
+        
         # The parameters represent how hungry it is for CO2 (Kc), how distracted
         # it is by O2 (Ko), and the CO2 level at which photosynthesis and
         # photorespiration exactly cancel out (Γ*). Table 11.2 pp 173.
+        
+        # Kc is a concentration
+        # High Kc means it needs more substrate (CO2) to achive the 50%
         flux.kc = leaf.kc25 * arrhenius_function(tl=flux.tleaf, ha=leaf.kcha)
+        
+        # As Ko increases at high temperatures the ratio 02/ko gets smaller, 
+        # meaning that co2 is fixed more slightly easer
         flux.ko = leaf.ko25 * arrhenius_function(tl=flux.tleaf, ha=leaf.koha)
         flux.cp = leaf.cp25 * arrhenius_function(tl=flux.tleaf, ha=leaf.cpha)
 
         # Vcmax-peaked Arrhenius (Eq 11.35)
+        # Vcmax is a rate
         # Represent how fast Rubisco can work at full capacity
         t1 = arrhenius_function(tl=flux.tleaf, ha=leaf.vcmaxha)
         t2 = inhibition_function(flux.tleaf, leaf.vcmaxhd, leaf.vcmaxse, leaf.vcmaxc)
@@ -277,20 +286,30 @@ def leaf_photosynthesis(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) 
         # The electron transport chain is more thermally stable than Rubisco.
         t1 = arrhenius_function(tl=flux.tleaf, ha=leaf.jmaxha)
         t2 = inhibition_function(flux.tleaf, leaf.jmaxhd, leaf.jmaxse, leaf.jmaxc)
+        
+        # The product t1*t2 creates the peaked curve
+        # Eq 11.35
         flux.jmax = leaf.jmax25 * t1 * t2
 
-        # Rd-peaked Arrhenius (Equation 11.35 applied to Rd)
+        # Rd-peaked Arrhenius (Equation 11.35 applied to Rd) 
         # Even while photosynthesizing, the leaf burns some sugar for its own
         # energy needs. This cost also follows the peaked Arrhenius response.
         # Leaf respiration represent the leaf "maintenance cost"
+        
+        # Increase the rate up 
         t1 = arrhenius_function(tl=flux.tleaf, ha=leaf.rdha)
+        
+        # Bring the rate down at high temperatures
         t2 = inhibition_function(flux.tleaf, leaf.rdhd, leaf.rdse, leaf.rdc)
+        
+        # The product t1*t2 creates the peaked curve
         flux.rd = leaf.rd25 * t1 * t2
 
         flux.kp_c4 = 0.0
 
+    # C4 temperature response ---------------------------------------------------
     else:
-        # C4 temperature response
+        
         # Implementation of Equation (11.72) from the textbook. Instead of the
         # arrhenius function, C4 plants use a Q10 formulation with explicit
         # stress factors.
@@ -305,12 +324,14 @@ def leaf_photosynthesis(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) 
         # High-temperature stress: a penalty that kicks in above 40°C
         # (s1 = 0.3, s2 = 313.15 K)
         t3 = 1.0 + np.exp(0.3 * (flux.tleaf - (physcon.tfrz + 40)))
+        
         flux.vcmax = leaf.vcmax25 * t1 / (t2 * t3)
 
         # Respiration for C4 follows Equation (11.73) with high-temperature
         # stress above 55°C, and kp (the PEP carboxylase slope) follows
         # Equation (11.74) with a simple Q₁₀ = 2 and no stress factors.
         t3 = 1.0 + np.exp(1.3 * (flux.tleaf - (physcon.tfrz + 55)))
+        
         flux.rd = leaf.rd25 * t1 / t3
 
         flux.kp_c4 = leaf.kp25_c4 * t1
@@ -321,7 +342,7 @@ def leaf_photosynthesis(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) 
         flux.jmax = 0.0
         flux.je = 0.0
 
-    # Electron transport rate for C3 plants -------------------------------------
+    # Electron transport rate for C3 plants 
     # Solve the polynomial: aquad*Je^2 + bquad*Je + cquad = 0 for Je.
     # Correct solution is the smallest of the two roots.
     # This solves Equation (11.21)
@@ -336,7 +357,7 @@ def leaf_photosynthesis(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) 
         roots = np.roots([aquad, bquad, cquad])
         flux.je = min(roots.real)
 
-    # Photosythesis and Ci calculation ------------------------------------------
+    # Photosythesis and Ci calculation 
     # Calculate photosynthesis for a specified stomatal conductance
     # With all parameters temperature-adjusted and J calculated, calculate
     # photosynthesis and intercellular CO2
@@ -344,7 +365,7 @@ def leaf_photosynthesis(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) 
 
     flux = leaf_ci_optimization(atmos, leaf, flux)
 
-    # Relative humidity and vapor pressure at leaf surface ----------------------
+    # Relative humidity and vapor pressure at leaf surface 
     # This calculates the humidity right at the leaf surface — a weighted average
     # between the dry outside air (eair, pulled through the boundary layer with
     # conductance gbv) and the saturated air inside the leaf (esat, pushed out
@@ -357,7 +378,7 @@ def leaf_photosynthesis(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) 
     flux.hs = (flux.gbv * atmos.eair + flux.gs * esat) / ((flux.gbv + flux.gs) * esat)
     flux.vpd = max(esat - flux.hs * esat, 0.1)
 
-    # Diffusion equation error check --------------------------------------------
+    # Diffusion equation error check 
     # Compare with diffusion equation: An = (ca - ci) * gleaf
     an_err = (atmos.co2air - flux.ci) / (1.0 / flux.gbc + 1.6 / flux.gs)
     if flux.an > 0 and abs(flux.an - an_err) > 0.01:

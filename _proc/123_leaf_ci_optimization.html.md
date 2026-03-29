@@ -109,6 +109,23 @@ def leaf_ci_optimization(
 *Calculate leaf photosynthesis for a specified stomatal conductance,*
 then calculate Ci from the diffusion equation.
 
+__Phys 101:__ 
+
+- Carboxilation rate: How many reactions (CO2 + RuBP -> 3-PGA) happen per 
+unit of leaf area per second.
+
+- Vcmax: Maximum Carboxilation rate
+
+Meaning of Θ (aka the co-limitation curvature factor): Θ asks, when the 
+plant transitions from being Rubisco-limited to light-limited, is that 
+transition sharp (Θ near 1) or gradual (Θ near 0)? 
+
+A sharp transition means one process dominates at any given moment. 
+A gradual transition means both processes are always partially 
+limiting simultaneously. The default value in the code is 0.98 
+
+__The function__
+
 This routine uses a quadratic equation to solve for net photosynthesis
 (An). A general equation for C3 photosynthesis is:
 

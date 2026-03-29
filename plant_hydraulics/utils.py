@@ -314,6 +314,7 @@ def arrhenius_function(tl, ha):
     Returns
     -------
     fc: float
+        Scaling factor that equals 1.0 at 25°C, greater than 1.0 above 25°C, and less than 1.0 below 25°C.
 
     """
     return np.exp(
