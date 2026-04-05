@@ -191,8 +191,9 @@ Leaf surface gas exchange:
 *Calculate leaf photosynthesis for a specified stomatal conductance.*
 
 Temperature-adjust photosynthetic parameters using the Arrhenius function
-(Equation 11.34) and peaked Arrhenius function (Equations 11.35–11.36),
-calculate the electron transport rate (Equation 11.21), then compute
+(Equation 11.34) and peaked Arrhenius function (Equations 11.35–11.36).
+
+Calculate the electron transport rate (Equation 11.21), then compute
 gross and net photosynthesis and intercellular CO2 via
 `[`leaf_ci_optimization`](https://ecamo19.github.io/plant_hydraulics/leaf_ci_optimization.html#leaf_ci_optimization)`. This routine is used with the water-use
 efficiency (WUE) stomatal optimization.
@@ -322,8 +323,7 @@ from plant_hydraulics.parameter_classes import Params, PhysCon, Atmos, Leaf, Flu
 params = Params()
 physcon = PhysCon()
 
-# Base atmospheric conditions (these don't matter much for the
-# temperature response — we just need valid values)
+# Base atmospheric conditions 
 atmos = Atmos()
 
 atmos.patm = 101325.0
@@ -344,7 +344,7 @@ atmos.rhomol = atmos.patm / (physcon.rgas * atmos.tair)
 # J/mol/K
 atmos.cpair = 29.2
 
-# Base leaf — start from standard C3 parameters
+# Base leaf C3 parameters
 leaf_base = Leaf()
 leaf_base.c3psn = 1
 leaf_base = leaf_phys_params(params, physcon, leaf_base)
@@ -553,93 +553,6 @@ for each_temp in growth_temps:
 #### Figure 11.9
 
 ::: {#4cd059b2 .cell}
-``` {.python .cell-code}
-fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-
-# Panel (a): Ac-limited assimilation
-ax = axes[0, 0]
-for each_temp, color, label in zip(growth_temps, colors, labels):
-    ax.plot(
-        leaf_temperatures,
-        Ac_results[each_temp],
-        color=color,
-        linewidth=2,
-        label=f"each_temp = {label}",
-    )
-
-ax.set_xlabel("Leaf temperature (°C)", fontsize=12)
-ax.set_ylabel("Assimilation (µmol m⁻² s⁻¹)", fontsize=12)
-ax.set_title("(a) Ac — Rubisco-limited", fontsize=13)
-ax.legend(fontsize=11)
-ax.set_xlim(5, 45)
-ax.set_ylim(0, 20)
-ax.axhline(y=0, color="gray", linewidth=0.5)
-ax.text(
-    0.02, 0.95, "Ac", transform=ax.transAxes, fontsize=14, fontweight="bold", va="top"
-)
-
-# Panel (b): Aj-limited assimilation
-ax = axes[0, 1]
-for each_temp, color, label in zip(growth_temps, colors, labels):
-    ax.plot(
-        leaf_temperatures,
-        Aj_results[each_temp],
-        color=color,
-        linewidth=2,
-        label=f"each_temp = {label}",
-    )
-
-ax.set_xlabel("Leaf temperature (°C)", fontsize=12)
-ax.set_ylabel("Assimilation (µmol m⁻² s⁻¹)", fontsize=12)
-ax.set_title("(b) Aj — RuBP regeneration-limited", fontsize=13)
-ax.legend(fontsize=11)
-ax.set_xlim(5, 45)
-ax.set_ylim(0, 20)
-ax.axhline(y=0, color="gray", linewidth=0.5)
-ax.text(
-    0.02, 0.95, "Aj", transform=ax.transAxes, fontsize=14, fontweight="bold", va="top"
-)
-
-# Panel (c): Respiration — constant vs variable Q10
-ax = axes[1, 0]
-ax.plot(
-    leaf_temperatures,
-    Rd_constant_Q10,
-    color="black",
-    linewidth=2,
-    linestyle="--",
-    label="Constant Q₁₀ = 2",
-)
-ax.plot(
-    leaf_temperatures, Rd_variable_Q10, color="black", linewidth=2, label="Variable Q₁₀"
-)
-ax.set_xlabel("Leaf temperature (°C)", fontsize=12)
-ax.set_ylabel("Respiration (µmol m⁻² s⁻¹)", fontsize=12)
-ax.set_title("(c) Respiration — Q₁₀ comparison", fontsize=13)
-ax.legend(fontsize=11)
-ax.set_xlim(5, 45)
-ax.set_ylim(0, 4)
-
-# Panel (d): Respiration with acclimation
-ax = axes[1, 1]
-for each_temp, color, label in zip(growth_temps, colors, labels):
-    ax.plot(
-        leaf_temperatures,
-        Rd_acclimated[each_temp],
-        color=color,
-        linewidth=2,
-        label=f"each_temp = {label}",
-    )
-
-ax.set_xlabel("Leaf temperature (°C)", fontsize=12)
-ax.set_ylabel("Respiration (µmol m⁻² s⁻¹)", fontsize=12)
-ax.set_title("(d) Respiration with acclimation (Atkin et al. 2008)", fontsize=13)
-ax.legend(fontsize=11)
-ax.set_xlim(5, 45)
-ax.set_ylim(0, 4)
-
-plt.tight_layout()
-```
 
 ::: {.cell-output .cell-output-display}
 ![](124_leaf_phosynthesis_files/figure-html/cell-16-output-1.png){}

@@ -75,7 +75,7 @@ def leaf_stomatal_efficiency(
 
 ```
 
-*Stomatal water-use efficiency check and cavitation check to determine*
+*Stomatal water-use efficiency and cavitation check to determine*
 maximum gs.
 
 For the stomatal conductance gs_val, calculate photosynthesis and leaf

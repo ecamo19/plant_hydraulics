@@ -435,7 +435,7 @@ At gs = gs_val − delta    At gs = gs_val
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    physcon:PhysCon, atmos:Atmos, leaf:Leaf, flux:Flux, gs_val:<span class="bu">float</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="bu">tuple</span>:</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><em>Stomatal water-use efficiency check and cavitation check to determine</em> maximum gs.</p>
+<p><em>Stomatal water-use efficiency and cavitation check to determine</em> maximum gs.</p>
 <p>For the stomatal conductance gs_val, calculate photosynthesis and leaf water potential for an increase in stomatal conductance equal to “delta”.</p>
 <p>The returned value is positive if this increase produces a change in photosynthesis &gt; iota<em>vpd</em>delta or if the leaf water potential is &gt; minl_wp.</p>
 <p>The returned value is negative if the increase produces a change in photosynthesis &lt; iota<em>vpd</em>delta or if the leaf water potential is &lt; minl_wp.</p>
