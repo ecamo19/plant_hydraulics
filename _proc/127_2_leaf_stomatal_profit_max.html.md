@@ -28,14 +28,16 @@ def leaf_stomatal_profit_max(
 Algorithm:
 
 1. Sweep gs from g0 to gs_max (30 points).
+
 2. At each gs, compute the full leaf physics chain:
    boundary layer → energy balance → photosynthesis → water potential.
+
 3. Compute normalised GAIN = An/An_max and COST = vulnerability(ψ_leaf).
+
 4. PROFIT = GAIN - COST. Find the gs that maximises profit.
+
 5. Clamp to Medlyn gs (hydraulics can only reduce gs, never increase it).
+
 6. Recompute final fluxes at the optimal gs.
-
-
-#### Example leaf_stomatal_profit_max()
 
 

@@ -15,7 +15,7 @@ def leaf_stomatal_efficiency(
     physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux, gs_val: float
 ) -> tuple[Flux, float]:
     """
-    Stomatal water-use efficiency check and cavitation check to determine
+    Stomatal water-use efficiency and cavitation check to determine
     maximum gs.
 
     For the stomatal conductance gs_val, calculate photosynthesis and leaf
@@ -38,46 +38,52 @@ def leaf_stomatal_efficiency(
     # Calculate photosynthesis at two slightly different stomatal openings ------
 
     # Photosynthesis at lower gs (gs_val - delta)
-    # Calculate photosynthesis at lower gs (gs_val - delta), but first need leaf
+    # Calculate photosynthesis at gs_val - delta, but first need leaf
     # temperature for this gs
-    # gs2 - lower value for gs (mol H2O/m2/s)
-    # an2 - leaf photosynthesis at gs2 (umol CO2/m2/s)
+    
+    # gs2 =  lower value for gs (mol H2O/m2/s)
     gs2 = gs_val - delta
     flux.gs = gs2
     flux = leaf_temperature(physcon, atmos, leaf, flux)
     flux = leaf_photosynthesis(physcon, atmos, leaf, flux)
+    
+    # an2 = leaf photosynthesis at gs2 (umol CO2/m2/s)
     an2 = flux.an
 
-    # Photosynthesis at higher gs (gs_val)
-    # Calculate photosynthesis at higher gs (gs_val), but first need leaf
-    # temperature for this gs
+    # Photosynthesis at higher gs     
+    # Calculate photosynthesis at higher gs (gs_val)
+    
     # gs1 - higher value for gs (mol H2O/m2/s)
-    # an1 - leaf photosynthesis at gs1 (umol CO2/m2/s)
     gs1 = gs_val
     flux.gs = gs1
     flux = leaf_temperature(physcon, atmos, leaf, flux)
     flux = leaf_photosynthesis(physcon, atmos, leaf, flux)
+    
+    # an1 - leaf photosynthesis at gs1 (umol CO2/m2/s)
     an1 = flux.an
 
     # Efficiency check ----------------------------------------------------------
-    # Core of the water-use efficiency
-    #
-    # 1) (an1 - an2) -> This represents the extra carbon gained (µmol CO₂/m²/s)
-    # by opening stomata by a little bit (i.e delta)
+    
+    # 1) (an1 - an2) -> This represents the extra carbon gained by opening 
+    # stomata by a little bit (i.e delta)
     #
     # 2) (flux.vpd / atmos.patm) -> This converts stomatal conductance to an
     # actual water vapour flux (the drier the air, the more water you lose per
     # unit of stomatal opening)
     #
     # 3) (leaf.iota) -> Represents how much carbon the plant considers each mole
-    # of water to be "worth".
-    # For example A plant in a desert (water is scarce) would have a high iota,
-    # it demands a lot of carbon return for every drop of water.
+    # of water to be "worth". Units µmol CO2 / mol H2O. In the book, leaf.iota
+    # represents the lagrange multiplier
+    
+    # Examples:
+    # 
+    # A plant in a desert (water is scarce) would have a high iota, it demands a 
+    # lot of carbon return for every drop of water invested
     #
-    # On the other hand, a plant in a swamp (water is abundant) would have a
-    # low iota, it doesn't mind spending water freely.
+    # A plant in a rainforest (water is abundant) would have a low iota, it 
+    # doesn't mind spending water freely.
     #
-    # Overall -> The (leaf.iota * delta * (flux.vpd / atmos.patm)) represents
+    # Overall, The (leaf.iota * delta * (flux.vpd / atmos.patm)) represents
     # the water cost of that extra opening, expressed in "carbon-equivalent"
     #
     # Is wue < 0 when d(An)/d(gs) < iota * vpd?
@@ -97,14 +103,11 @@ def leaf_stomatal_efficiency(
     # When minpsi > 0: ψ_leaf is safely above the minimum
     # When minpsi < 0: ψ_leaf has dropped below the danger threshold →
     # "close stomata"
-
     flux = leaf_water_potential(physcon, leaf, flux)
     min_psi = flux.psi_leaf - leaf.minl_wp
 
     # Return the minimum of the two checks --------------------------------------
-    # Returns whichever check is more negative. This ensures the stomata close
-    # for either reason, inefficiency or danger. The plant is conservative:
-    # it obeys both limits simultaneously.
+    # Returns whichever check is more negative. 
     val = min(wue, min_psi)
 
     return flux, val

@@ -146,7 +146,7 @@ results = run_sureau(
 
 ::: {.cell-output .cell-output-stdout}
 ```
-Year 1990 complete. 
+Year 1990 Day   1Year 1990 complete. 
 ```
 :::
 :::
@@ -167,7 +167,7 @@ Year 1990 complete.
 
 ::: {.cell-output .cell-output-stderr}
 ```
-/tmp/ipykernel_31553/4151902588.py:43: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+/tmp/ipykernel_85532/4151902588.py:43: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
   ax.legend(fontsize=8)
 ```
 :::

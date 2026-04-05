@@ -388,34 +388,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    opt:SurEauComputationOptions, <span class="co"># Solver options: numerical scheme, scaling flags.</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauPlantState: <span class="co"># Updated state with potentials at time n+1 and updated PLC.</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><em>Time-integrate one small timestep dt [seconds] for the</em> four-compartment plant hydraulic system.</p>
-<p>This is the <strong>core ODE solver</strong> of the SurEau-Ecos model. It solves the four coupled water balance equations (<strong>Eqs. 6–9</strong>) for ψ at time n+1 in all four plant compartments:</p>
-<pre><code>Eq. 6:  C_LApo × dψ_LApo/dt
-        + K_SL(ψ_LApo − ψ_SApo)
-        + K_LSym(ψ_LApo − ψ_LSym)
-        − δ_L × K^cav_L × (ψ^cav_LApo − ψ_LApo) = 0
-
-Eq. 7:  C_SApo × dψ_SApo/dt
-        + K_SL(ψ_SApo − ψ_LApo)
-        + K_SSym(ψ_SApo − ψ_SSym)
-        + Σ K_soil(ψ_SApo − ψ_soil)
-        − δ_S × K^cav_S × (ψ^cav_SApo − ψ_SApo) = 0
-
-Eq. 8:  C_LSym × dψ_LSym/dt
-        + K_LSym(ψ_LSym − ψ_LApo)
-        + E_stom + E_cutiL = 0
-
-Eq. 9:  C_SSym × dψ_SSym/dt
-        + K_SSym(ψ_SSym − ψ_SApo)
-        + E_cutiS = 0</code></pre>
+<p><em>ODE solver for SurEau-Ecos</em></p>
+<p>Time-integrate one small timestep dt [seconds] for the four-compartment plant hydraulic system.</p>
+<p>This is the <strong>core ODE solver</strong> of the SurEau-Ecos model. It solves the four coupled water balance equations (<strong>Eqs. 6–9</strong>) for ψ at time n + 1 in all four plant compartments:</p>
+<p>Compartment 1 Leaf Apoplasm (Eq. 6): C_LApo × dψ_LApo/dt + K_SL(ψ_LApo − ψ_SApo) + K_LSym(ψ_LApo − ψ_LSym) − δ_L × K^cav_L × (ψ^cav_LApo − ψ_LApo) = 0</p>
+<p>Compartment 2 Stem Apoplasm (Eq. 7): C_SApo × dψ_SApo/dt + K_SL(ψ_SApo − ψ_LApo) + K_SSym(ψ_SApo − ψ_SSym) + Σ K_soil(ψ_SApo − ψ_soil) − δ_S × K^cav_S × (ψ^cav_SApo − ψ_SApo) = 0</p>
+<p>Compartment 3 Leaf Symplasm (Eq. 8): C_LSym × dψ_LSym/dt + K_LSym(ψ_LSym − ψ_LApo) + E_stom + E_cutiL = 0</p>
+<p>Compartment 4 Stem Symplasm (Eq. 9): C_SSym × dψ_SSym/dt + K_SSym(ψ_SSym − ψ_SApo) + E_cutiS = 0</p>
 <p>Three numerical schemes are available (Section 2.5, Appendix C):</p>
 <p><strong>Implicit</strong> (default, Appendix C2, Eqs. C5–C18):</p>
-<pre><code>Eliminates the symplasm unknowns analytically, reducing the 4×4 system 
-to a 2×2 in (ψ_LApo, ψ_SApo), then solves in closed form. 
-Unconditionally stable. Uses the transpiration linearization (**Eq. 60**) 
-to account for stomatal response within the timestep.</code></pre>
-<p><strong>Semi-Implicit</strong> (Appendix C3, Eqs. C19–C22): Holds neighbor potentials at time n and solves each compartment’s ODE analytically as an exponential relaxation (<strong>Eqs. 54–58</strong>). Unconditionally stable but decoupled — does not capture simultaneous inter-compartment coupling within one timestep.</p>
-<p><strong>Explicit</strong> (Section 2.5.1, Eqs. 49–50): Forward Euler. Simple but CFL-limited (<strong>Eq. 51</strong>): dt must satisfy dt ≤ C/(2 × max(K)). For the apoplasm (tiny C, large K), this forces dt &lt; ~10 ms.</p>
+<pre><code>The implicit scheme solves all four equations together by assuming 
+they're coupled.</code></pre>
+<p><strong>Semi-Implicit</strong> (Appendix C3, Eqs. C19–C22):</p>
+<pre><code>Holds neighbor potentials at time n and solves each compartment's ODE 
+analytically as an exponential relaxation (**Eqs. 54–58**).
+
+Unconditionally stable but decoupled — does not capture simultaneous 
+inter-compartment coupling within one timestep.</code></pre>
+<p><strong>Explicit</strong> (Section 2.5.1, Eqs. 49–50):</p>
+<pre><code>Forward Euler. Simple but CFL-limited (**Eq. 51**): dt must satisfy 
+dt ≤ C/(2 × max(K)). For the apoplasm (tiny C, large K), 
+this forces dt &lt; ~10 ms.</code></pre>
 <p>A <strong>cavitation self-consistency loop</strong> (Block 4–6): cavitation flux depends on ψ^{n+1} (unknown), but ψ^{n+1} depends on cavitation flux. The solver tries multiple (δ_L, δ_S) configurations and checks which is self-consistent with the solution.</p>
 <p>Physical analogy: Four interconnected water tanks with different “sponginess” (capacitance C). They’re connected by pipes (conductances K). Water is being sucked out of the leaf tanks (transpiration E). The solver figures out how the water levels (ψ) in all four tanks change over one small time interval.</p>
 <p><strong>Parameters:</strong></p>
@@ -609,38 +602,38 @@ psi_SSym_np1           ψ^{n+1}_SSym       Eq. C18
 alpha (semi-imp.)      η                  Eq. 57
 Psi_td (semi-imp.)     ψ̃                  Eq. 58</code></pre>
 <div id="fc7b6a79" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>state <span class="op">=</span> SurEauPlantState(</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    k_LSym<span class="op">=</span><span class="fl">0.1</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    k_SSym<span class="op">=</span><span class="fl">0.1</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    k_SLApo<span class="op">=</span><span class="fl">0.1</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    C_LSym<span class="op">=</span><span class="fl">0.01</span>,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    C_SSym<span class="op">=</span><span class="fl">0.01</span>,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    C_LApo<span class="op">=</span><span class="fl">0.01</span>,</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    C_SApo<span class="op">=</span><span class="fl">0.01</span>,</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    psi_LApo<span class="op">=-</span><span class="fl">0.5</span>,</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    psi_SApo<span class="op">=-</span><span class="fl">0.3</span>,</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    psi_LSym<span class="op">=-</span><span class="fl">0.8</span>,</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    psi_SSym<span class="op">=-</span><span class="fl">0.5</span>,</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    psi_LApo_cav<span class="op">=-</span><span class="fl">0.5</span>,</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    psi_SApo_cav<span class="op">=-</span><span class="fl">0.3</span>,</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    k_soil_to_stem<span class="op">=</span>np.array([<span class="fl">0.05</span>, <span class="fl">0.05</span>, <span class="fl">0.05</span>]),</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    Q_LApo_sat_mmol_per_LA<span class="op">=</span><span class="fl">1.0</span>,</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    Q_SApo_sat_mmol_per_LA<span class="op">=</span><span class="fl">1.0</span>,</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>state <span class="op">=</span> SurEauPlantState(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    k_LSym<span class="op">=</span><span class="fl">0.1</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    k_SSym<span class="op">=</span><span class="fl">0.1</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    k_SLApo<span class="op">=</span><span class="fl">0.1</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    C_LSym<span class="op">=</span><span class="fl">0.01</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    C_SSym<span class="op">=</span><span class="fl">0.01</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    C_LApo<span class="op">=</span><span class="fl">0.01</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    C_SApo<span class="op">=</span><span class="fl">0.01</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    psi_LApo<span class="op">=-</span><span class="fl">0.5</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    psi_SApo<span class="op">=-</span><span class="fl">0.3</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    psi_LSym<span class="op">=-</span><span class="fl">0.8</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    psi_SSym<span class="op">=-</span><span class="fl">0.5</span>,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    psi_LApo_cav<span class="op">=-</span><span class="fl">0.5</span>,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    psi_SApo_cav<span class="op">=-</span><span class="fl">0.3</span>,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    k_soil_to_stem<span class="op">=</span>np.array([<span class="fl">0.05</span>, <span class="fl">0.05</span>, <span class="fl">0.05</span>]),</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    Q_LApo_sat_mmol_per_LA<span class="op">=</span><span class="fl">1.0</span>,</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    Q_SApo_sat_mmol_per_LA<span class="op">=</span><span class="fl">1.0</span>,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="45e749ed" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sureau_solver(</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    state<span class="op">=</span>state,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    fluxes<span class="op">=</span>SurEauPlantFluxes(),</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    diag<span class="op">=</span>SurEauPlantDiagnostics(),</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    soil<span class="op">=</span>SurEauSoil(</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        psi_soil<span class="op">=</span>np.array([<span class="op">-</span><span class="fl">0.5</span>, <span class="op">-</span><span class="fl">0.5</span>, <span class="op">-</span><span class="fl">0.5</span>]),</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        k_soil<span class="op">=</span>np.array([<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>]),</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    params<span class="op">=</span>SurEauVegetationParams(),</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    dt<span class="op">=</span><span class="fl">0.01</span>,</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    opt<span class="op">=</span>SurEauComputationOptions(),</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sureau_solver(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    state<span class="op">=</span>state,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    fluxes<span class="op">=</span>SurEauPlantFluxes(),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    diag<span class="op">=</span>SurEauPlantDiagnostics(),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    soil<span class="op">=</span>SurEauSoil(</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        psi_soil<span class="op">=</span>np.array([<span class="op">-</span><span class="fl">0.5</span>, <span class="op">-</span><span class="fl">0.5</span>, <span class="op">-</span><span class="fl">0.5</span>]),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        k_soil<span class="op">=</span>np.array([<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>]),</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    params<span class="op">=</span>SurEauVegetationParams(),</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    dt<span class="op">=</span><span class="fl">0.01</span>,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    opt<span class="op">=</span>SurEauComputationOptions(),</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>SurEauPlantState(psi_LApo=np.float64(-0.5104418925604771), psi_SApo=np.float64(-0.35162617503840865), psi_LSym=np.float64(-0.7736765356873161), psi_SSym=np.float64(-0.4865114704580371), psi_LApo_cav=np.float64(-0.5104418925604771), psi_SApo_cav=np.float64(-0.35162617503840865), psi_all_soil=np.float64(-0.5), k_plant=0.0, k_LSym=0.1, k_SSym=0.1, k_RSApo=None, k_SLApo=0.1, k_soil_to_stem=array([0.05, 0.05, 0.05]), C_LSym=0.01, C_SSym=0.01, C_LApo=0.01, C_SApo=0.01, PLC_leaf=np.float64(0.09722358230675984), PLC_stem=np.float64(0.06643099597079465), LAI_pheno=0.0, LAI=0.0, canopy_storage_capacity=0.0, FCC=0.0, LAI_dead=0.0, sum_temperature=0.0, budburst_date=nan, Q_LApo_sat_mmol=0.0, Q_LApo_sat_L=0.0, Q_SApo_sat_mmol=0.0, Q_SApo_sat_L=0.0, Q_LSym_sat_mmol=0.0, Q_LSym_sat_L=0.0, Q_SSym_sat_mmol=0.0, Q_SSym_sat_L=0.0, Q_LApo_sat_mmol_per_LA=1.0, Q_SApo_sat_mmol_per_LA=1.0, Q_LSym_sat_mmol_per_LA=0.0, Q_SSym_sat_mmol_per_LA=0.0, Q_LApo_L=0.0, Q_SApo_L=0.0, Q_LSym_L=0.0, Q_SSym_L=0.0, DM_live_canopy=0.0, DM_dead_canopy=0.0)</code></pre>
 </div>

@@ -70,11 +70,16 @@ def leaf_stomatal_profit_max(
     Algorithm:
 
     1. Sweep gs from g0 to gs_max (30 points).
+    
     2. At each gs, compute the full leaf physics chain:
        boundary layer → energy balance → photosynthesis → water potential.
+    
     3. Compute normalised GAIN = An/An_max and COST = vulnerability(ψ_leaf).
+    
     4. PROFIT = GAIN - COST. Find the gs that maximises profit.
+    
     5. Clamp to Medlyn gs (hydraulics can only reduce gs, never increase it).
+    
     6. Recompute final fluxes at the optimal gs.
 
 
@@ -92,33 +97,26 @@ def leaf_stomatal_profit_max(
         With converged gs, An, Tleaf, psi_leaf, etc.
     """
 
+    # Set initial values --------------------------------------------------------
+    
     # Number of gs points in the sweep.
-    # WHY 30: Fine enough to locate the profit peak (typically broad),
-    # comparable computational cost to brent_root (~10 iters × 2 evals
-    # × 4 functions ≈ 80 function calls vs 30 × 3 = 90 here).
     n_points = 50
 
     # Vulnerability curve shape from leaf parameters
     a_psi = leaf.a_psi
 
-    # gs sweep range
     # Minimum conductance (e.g., 0.01)
     gs_min = leaf.g0
 
     # Practical upper limit
     gs_max = 0.8
+    
+    # Define arrays results -----------------------------------------------------
+    
+    # Create an array of evenly spaced numbers of size n_points that goes from
+    # gs_min to gs_max
     gs_values = np.linspace(gs_min, gs_max, n_points)
-
-    # Boundary layer conductances (independent of gs, computed once) ------------
-    flux = leaf_boundary_layer(physcon, atmos, leaf, flux)
-
-    # Sweep gs. Compute full physics at each point ------------------------------
-
-    # At each gs, we compute:
-    #   - Tleaf (energy balance — stomata affect transpirational cooling)
-    #   - An, cs, VPD (photosynthesis — gs controls CO₂ supply)
-    #   - ψ_leaf (hydraulics — transpiration rate sets the water demand)
-
+    
     # Net photosynthesis (µmol CO₂/m²/s)
     an_arr = np.zeros(n_points)
 
@@ -130,12 +128,25 @@ def leaf_stomatal_profit_max(
 
     # CO₂ at leaf surface (µmol/mol)
     cs_arr = np.zeros(n_points)
+    
+    # Profits array 
+    profit_arr = np.zeros(n_points)
+    
+    # Boundary layer conductances (independent of gs, computed once) ------------
+    flux = leaf_boundary_layer(physcon, atmos, leaf, flux)
+    
+    # Try many values of gs and compute full physics at each point --------------
 
+    # At each gs, we compute:
+    #   - Tleaf (energy balance)
+    #   - An, cs, VPD (photosynthesis)
+    #   - ψ_leaf (hydraulics — transpiration rate sets the water demand)
     for each_iteration, gs_trial in enumerate(gs_values):
+        
         flux.gs = gs_trial
 
         # Energy balance: wider stomata → more transpiration → cooler leaf
-        # Example: gs=0.05 → Tleaf≈35°C, gs=0.40 → Tleaf≈31°C
+        # Example: gs=0.05 → Tleaf≈35°C, gs=0.40 → Tleaf = 31°C
         flux = leaf_temperature(physcon, atmos, leaf, flux)
 
         # Photosynthesis: more CO₂ in (higher gs) → more carbon fixation
@@ -146,57 +157,60 @@ def leaf_stomatal_profit_max(
         # This is the link between gas exchange and hydraulic risk
         flux = leaf_water_potential(physcon, leaf, flux)
 
+        # Save results
         an_arr[each_iteration] = flux.an
         psi_arr[each_iteration] = flux.psi_leaf
         vpd_arr[each_iteration] = flux.vpd
         cs_arr[each_iteration] = flux.cs
 
-    # Compute normalised GAIN and COST, then PROFIT -----------------------------
+    # Safety checks -------------------------------------------------------------
 
-    # Maximum An across the sweep — used to normalise gain to [0, 1]
-    # WHY normalise: So that GAIN and COST are on the same scale (both 0-1)
-    # and can be meaningfully subtracted to form PROFIT.
+    # Get maximum of An. 
     an_max = np.max(an_arr)
+    
+    # Safety check: If no positive photosynthesis at any gs then dark or extreme 
+    # stress. Set gs value to minimum conductance and compute everything again 
+    # and STOP
     if an_max <= 0:
-        # No positive photosynthesis at any gs — dark or extreme stress.
-        # Set to minimum conductance.
+        
         flux.gs = leaf.g0
         flux = leaf_boundary_layer(physcon, atmos, leaf, flux)
         flux = leaf_temperature(physcon, atmos, leaf, flux)
         flux = leaf_photosynthesis(physcon, atmos, leaf, flux)
         flux = leaf_water_potential(physcon, leaf, flux)
+        
         return flux
 
-    # Safety check: if even the lowest gs produces ψ_leaf below minl_wp,
+    # Safety hydraulic check: if even the lowest gs produces ψ_leaf below minl_wp,
     # the soil is so dry that NO stomatal opening is safe. Fall back to g0.
-    # WHY: At very dry soil (e.g., 30% saturation on loam), psi_soil itself
-    # may be more negative than minl_wp. In that case, the profit curve
-    # becomes unreliable because every point has high hydraulic cost, and
-    # the "profit maximum" might land at an absurdly high gs (where
-    # the gain curve is highest but the cost is uniformly near 1.0).
+    # If the first calculation is below minl_wp then all the following are even 
+    # worse, no need get the min(psi_arr) 
     if psi_arr[0] < leaf.minl_wp:
+        
         # Even at minimum gs, ψ_leaf is below cavitation threshold.
-        # Use minimum conductance — the plant is in severe drought stress.
+        # Use minimum conductance
         flux.gs = leaf.g0
         flux = leaf_boundary_layer(physcon, atmos, leaf, flux)
         flux = leaf_temperature(physcon, atmos, leaf, flux)
         flux = leaf_photosynthesis(physcon, atmos, leaf, flux)
         flux = leaf_water_potential(physcon, leaf, flux)
+        
         return flux
 
-    profit_arr = np.zeros(n_points)
-
+    # Compute gain, cost and profit ---------------------------------------------
+    # If all safety checks passed then compute gain, cost and profit
+    
+    # Calculate profits
     for each_point in range(n_points):
+        
         # GAIN: normalised carbon acquisition
         # Low gs: An is low → gain low (CO₂ starved)
         # High gs: An saturates → gain approaches 1.0
-        # The gain curve is CONCAVE (diminishing returns)
         gain = max(an_arr[each_point] / an_max, 0.0)
 
         # COST: normalised hydraulic risk
         # Low gs: ψ_leaf near zero → cost near zero (safe plumbing)
         # High gs: ψ_leaf very negative → cost approaches 1.0 (cavitation risk)
-        # The cost curve is CONVEX (accelerating risk)
         cost = _hydraulic_cost(psi_arr[each_point], leaf.psi_50, a_psi)
 
         # PROFIT = GAIN − COST
@@ -220,13 +234,15 @@ def leaf_stomatal_profit_max(
             profit_arr[each_point] = -999.0
 
     # Find the gs that maximises profit -----------------------------------------
+    # In other words find the gs values where GAIN - COST is largest. 
+    # This is the peak of the profit curve in figure 4.6 where dF/dx = 0
     max_profit = np.argmax(profit_arr)
     gs_profit = gs_values[max_profit]
 
     # Compute the Medlyn gs at the profit-optimal conditions --------------------
-    # The Medlyn equation predicts what gs "should" be based on An, cs, VPD.
-    # WHY clamp: The profit framework might suggest higher gs than Medlyn
-    # if hydraulic cost is still low. We take min(profit_gs, medlyn_gs) so
+    
+    # The profit framework might suggest higher gs than Medlyn
+    # if hydraulic cost is still low. I take min(profit_gs, medlyn_gs) so
     # that hydraulics can only REDUCE gs below Medlyn, never increase it.
     # Under well-watered conditions: gs = Medlyn (hydraulics don't bind)
     # Under drought: gs < Medlyn (hydraulics pull gs down smoothly)
@@ -235,9 +251,10 @@ def leaf_stomatal_profit_max(
     cs_opt = cs_arr[max_profit]
     vpd_opt = vpd_arr[max_profit]
 
-    # Convert Pa → kPa, floor at 0.1
+    # Convert Pa to kPa, floor at 0.1
     vpd_kpa = max(vpd_opt / 1000.0, 0.1)
 
+    # Medlyn model
     if an_opt > 0 and cs_opt > 0:
         gs_medlyn = (
             leaf.g0 + 1.6 * (1.0 + leaf.g1_medlyn / np.sqrt(vpd_kpa)) * an_opt / cs_opt
@@ -245,9 +262,11 @@ def leaf_stomatal_profit_max(
     else:
         gs_medlyn = leaf.g0
 
-    # Take the more conservative of the two
+    # Take the more conservative of the two gs_profit vrs gs_medlyn
     gs_final = min(gs_profit, gs_medlyn)
-    gs_final = max(gs_final, leaf.g0)  # Never below g0
+    
+    # Never below g0
+    gs_final = max(gs_final, leaf.g0)  
 
     # Compute final fluxes at the optimal gs ------------------------------------
     flux.gs = gs_final

@@ -25,48 +25,51 @@ def sureau_solver(
 
 ```
 
-*Time-integrate one small timestep dt [seconds] for the*
+*ODE solver for SurEau-Ecos*
+
+Time-integrate one small timestep dt [seconds] for the
 four-compartment plant hydraulic system.
 
 This is the **core ODE solver** of the SurEau-Ecos model. It
 solves the four coupled water balance equations (**Eqs. 6–9**)
-for ψ at time n+1 in all four plant compartments:
+for ψ at time n + 1 in all four plant compartments:
 
-    Eq. 6:  C_LApo × dψ_LApo/dt
-            + K_SL(ψ_LApo − ψ_SApo)
-            + K_LSym(ψ_LApo − ψ_LSym)
-            − δ_L × K^cav_L × (ψ^cav_LApo − ψ_LApo) = 0
+Compartment 1 Leaf Apoplasm (Eq. 6):  C_LApo × dψ_LApo/dt
+                                      + K_SL(ψ_LApo − ψ_SApo)
+                                      + K_LSym(ψ_LApo − ψ_LSym)
+                                      − δ_L × K^cav_L × (ψ^cav_LApo − ψ_LApo) = 0
 
-    Eq. 7:  C_SApo × dψ_SApo/dt
-            + K_SL(ψ_SApo − ψ_LApo)
-            + K_SSym(ψ_SApo − ψ_SSym)
-            + Σ K_soil(ψ_SApo − ψ_soil)
-            − δ_S × K^cav_S × (ψ^cav_SApo − ψ_SApo) = 0
+Compartment 2 Stem Apoplasm (Eq. 7):  C_SApo × dψ_SApo/dt
+                                      + K_SL(ψ_SApo − ψ_LApo)
+                                      + K_SSym(ψ_SApo − ψ_SSym)
+                                      + Σ K_soil(ψ_SApo − ψ_soil)
+                                      − δ_S × K^cav_S × (ψ^cav_SApo − ψ_SApo) = 0
 
-    Eq. 8:  C_LSym × dψ_LSym/dt
-            + K_LSym(ψ_LSym − ψ_LApo)
-            + E_stom + E_cutiL = 0
+Compartment 3 Leaf Symplasm (Eq. 8):  C_LSym × dψ_LSym/dt
+                                      + K_LSym(ψ_LSym − ψ_LApo)
+                                      + E_stom + E_cutiL = 0
 
-    Eq. 9:  C_SSym × dψ_SSym/dt
-            + K_SSym(ψ_SSym − ψ_SApo)
-            + E_cutiS = 0
+Compartment 4  Stem Symplasm (Eq. 9):  C_SSym × dψ_SSym/dt
+                                       + K_SSym(ψ_SSym − ψ_SApo)
+                                       + E_cutiS = 0
 
 Three numerical schemes are available (Section 2.5, Appendix C):
 
 **Implicit** (default, Appendix C2, Eqs. C5–C18):
 
-    Eliminates the symplasm unknowns analytically, reducing the 4×4 system 
-    to a 2×2 in (ψ_LApo, ψ_SApo), then solves in closed form. 
-    Unconditionally stable. Uses the transpiration linearization (**Eq. 60**) 
-    to account for stomatal response within the timestep.
+    The implicit scheme solves all four equations together by assuming 
+    they're coupled.
 
 **Semi-Implicit** (Appendix C3, Eqs. C19–C22):
+
     Holds neighbor potentials at time n and solves each compartment's ODE 
-    analytically as an exponential relaxation (**Eqs. 54–58**). 
+    analytically as an exponential relaxation (**Eqs. 54–58**).
+
     Unconditionally stable but decoupled — does not capture simultaneous 
     inter-compartment coupling within one timestep.
 
 **Explicit** (Section 2.5.1, Eqs. 49–50):
+
     Forward Euler. Simple but CFL-limited (**Eq. 51**): dt must satisfy 
     dt ≤ C/(2 × max(K)). For the apoplasm (tiny C, large K), 
     this forces dt < ~10 ms.

@@ -219,11 +219,11 @@ def leaf_water_potential(physcon, leaf, flux):
 
     # Transpiration demand ------------------------------------------------------
     e_mmol = flux.etflx * 1000.0  # mol/m²/s → mmol/m²/s
-    y0 = flux.psi_leaf  # ψ_leaf from previous timestep
-    # print(f"[DEBUG] e_mmol={e_mmol}, y0={y0}, etflx={flux.etflx}")
-
+    
+    # ψ_leaf from previous timestep. Used as inital water potential
+    y0 = flux.psi_leaf 
+    
     # Stage 1: compute equilibrium target ψ_eq ----------------------------------
-
     use_supply_curve = (
         hasattr(leaf, "vc_b")
         and hasattr(leaf, "vc_c")
@@ -231,14 +231,14 @@ def leaf_water_potential(physcon, leaf, flux):
         and leaf.vc_c > 0
     )
 
-    # print(f"[DEBUG] use_supply_curve={use_supply_curve}")
-
+    # Mode A: supply-curve inversion (Sperry 2017) ------------------------------
     if use_supply_curve:
-        # Mode A: supply-curve inversion (Sperry 2017)
+        
         # ψ_eq = ψ_leaf that would result in E_supply = e_mmol at steady state
         psi_leaf = _psi_from_supply(
             e_mmol,
             flux.psi_soil,
+            
             # k_max [mmol/m²/s/MPa]
             leaf.gplant,
             leaf.vc_b,
@@ -246,36 +246,38 @@ def leaf_water_potential(physcon, leaf, flux):
             leaf.minl_wp,
         )
 
+    # Mode B: Ohm's law (Bonan WUE / Medlyn) ------------------------------------
     else:
-        # Mode B: Ohm's law (original — unchanged for WUE / Medlyn)
+        
         # Gravitational head: ρgh converted to MPa (0.01 MPa per 1 m height)
         # Head of pressure (MPa/m)
-        # Add 0.01 MPa per meter of height
-        # potential energy by unit of weight
-
+        # head == potential energy by unit of weight
+        # Add 0.01 MPa per meter of height  potential energy by unit of weight
         head = physcon.denh2o * physcon.grav * 1e-06
 
-        # Steady state model --------------------------------------------------------
+        # Steady state water potential calculation
 
-        # Term (flux.etflx / flux.lsc)
+        # Term (flux.etflx / flux.lsc)0
         # This is Ohm's law for water flow. The transpiration rate flux.etflx
         # mol H₂O/m²/s) is the "current," and flux.lsc is the leaf-specific
-        # conductance — how easily water flows through the entire soil-to-leaf
-        # pathway (the "pipe width"). The factor 1000 converts mol to mmol for unit
-        # consistency with LSC.
+        # conductance, how easily water flows through the entire soil-to-leaf
+        # pathway (the "pipe width"). 
 
-        # psi_eq represents what psi_leaf would be if the system reached
-        # equilibrium (meaning inflow = outflow therefore steady state)
-        # soil supply, minus the gravitational cost, minus the transpiration drawdown.
-        # head = potential energy by unit of weight
-        # target_a = flux.psi_soil - head * flux.height - 1000.0 * flux.etflx / flux.lsc
-
+        # soil supply - 
+        # the energy cost of lifting water (the taller the tree the higher 
+        # the cost) - 
+        # the transpiration drawdown.
+        
+        # Term psi_eq represents what psi_leaf would be if the system reached
+        # equilibrium (meaning inflow = outflow therefore steady state). In other
+        # words psi_eq represents the wp at which the leaf would settle at a 
+        # given infinite timeat the current transpiration rate 
         psi_eq = flux.psi_soil - head * flux.height - 1000.0 * flux.etflx / flux.lsc
 
-        # Stage 2: Incorporate capacitance dynamics (Bonan Eq. 13.11) -----------
+        # Incorporate capacitance dynamics (Bonan Eq. 13.11) 
 
-        # Capacitance can be thought of as the amount of water that can be extracted
-        # per unit change in water potential.
+        # Capacitance can be thought of as the amount of water that can be 
+        # extracted per unit change in water potential.
 
         # TODO: Check units of capaciatance and flux.lsc in book
         # leaf.capac (mmol H2O / m2 /MPa)
@@ -287,37 +289,37 @@ def leaf_water_potential(physcon, leaf, flux):
         # A large capacitance (big spongy trunk that stores lots of water) means
         # large tau_b
 
-        # A small capacitance (thin herbaceous stem with no storage) means small
-        # tau_b, and the leaf tracks the steady-state target almost instantaneously.
+        # A small capacitance means small tau_b, and the leaf tracks the 
+        # steady-state target almost instantaneously.
 
         # tau_b it is the ratio that determines the respose time for the
         # change in water potential
 
-        # τ = C / k_eff   [seconds]
+        # τ = C / k_eff  [seconds]
+        
         # Use flux.lsc as the effective conductance for the RC time constant.
-
-        # flux.lsc is in mmol/m²/s/MPa; leaf.capac in mol/m²/Pa.
-
-        # Convert capac to mmol/m²/MPa: × 1000 (mol→mmol) × 1e6 (Pa→MPa) / 1e6 = × 1000
-
-        # Actually: 1 mol/m²/Pa = 1000 mmol/m²/Pa = 1000e6 mmol/m²/MPa — too large
-
-        # leaf.capac is typically stored in mol/m²/Pa in Bonan's framework, so:
-        #   capac [mol/m²/Pa] × 1e6 [Pa/MPa] × 1e3 [mol→mmol] is wrong
-        #   correct: capac [mol/m²/Pa] × (1e6 Pa/MPa) gives [mol/m²/MPa]
-        #            × 1000 gives [mmol/m²/MPa]
-
-        # But lsc is [mmol/m²/s/MPa], so τ = capac_mmol_per_MPa / lsc [s]
-        #
-        # Bonan uses: tau_b = leaf.capac / flux.lsc
-        # with capac in [mol/m²/Pa] and lsc in [mmol/m²/s/MPa].
-
-        # This matches if we treat the unit ratio as giving seconds directly
-        # (both scaled consistently within Bonan's framework).
         tau_b = leaf.capac / flux.lsc
 
-        # Eq 13.11 --------------------------------------------------------------
+        # Eq 13.11 same as Eq 4.24.
+        # dy is the intengral of the ODE dψ/dt = (psi_eq − ψ) / τ
+        
+        # dψ/dt = (psi_eq − ψ) / τ 
+        #           ↓
+        #      Integrates to:
+        #           ↓
+        # ψ(t) = psi_eq + (y0 − psi_eq) × exp(−dt/τ)
+        #           ↓
+        #     Which rearranges to:
+        #           ↓
+        #  ψ(t) − y0 = (psi_eq − y0) × (1 − exp(−dt/τ))
+        
+        # the right hand side is dy
+        
+        # dy represents how much does the wp move torward the target psi_eq at 
+        # this time step
         dy = (psi_eq - y0) * (1.0 - np.exp(-flux.dt / tau_b))
+        
+        # Actuall water potential calculation
         psi_leaf = y0 + dy
 
     # print(f"[DEBUG] psi_leaf={psi_leaf}")

@@ -389,18 +389,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><em>Stomatal conductance via Medlyn + profit-maximisation.</em></p>
 <p>Algorithm:</p>
 <ol type="1">
-<li>Sweep gs from g0 to gs_max (30 points).</li>
-<li>At each gs, compute the full leaf physics chain: boundary layer → energy balance → photosynthesis → water potential.</li>
-<li>Compute normalised GAIN = An/An_max and COST = vulnerability(ψ_leaf).</li>
-<li>PROFIT = GAIN - COST. Find the gs that maximises profit.</li>
-<li>Clamp to Medlyn gs (hydraulics can only reduce gs, never increase it).</li>
-<li>Recompute final fluxes at the optimal gs.</li>
+<li><p>Sweep gs from g0 to gs_max (30 points).</p></li>
+<li><p>At each gs, compute the full leaf physics chain: boundary layer → energy balance → photosynthesis → water potential.</p></li>
+<li><p>Compute normalised GAIN = An/An_max and COST = vulnerability(ψ_leaf).</p></li>
+<li><p>PROFIT = GAIN - COST. Find the gs that maximises profit.</p></li>
+<li><p>Clamp to Medlyn gs (hydraulics can only reduce gs, never increase it).</p></li>
+<li><p>Recompute final fluxes at the optimal gs.</p></li>
 </ol>
-<section id="example-leaf_stomatal_profit_max" class="level4">
-<h4 class="anchored" data-anchor-id="example-leaf_stomatal_profit_max">Example leaf_stomatal_profit_max()</h4>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

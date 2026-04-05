@@ -15,8 +15,9 @@ def leaf_photosynthesis(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) 
     Calculate leaf photosynthesis for a specified stomatal conductance.
 
     Temperature-adjust photosynthetic parameters using the Arrhenius function
-    (Equation 11.34) and peaked Arrhenius function (Equations 11.35–11.36),
-    calculate the electron transport rate (Equation 11.21), then compute
+    (Equation 11.34) and peaked Arrhenius function (Equations 11.35–11.36).
+    
+    Calculate the electron transport rate (Equation 11.21), then compute
     gross and net photosynthesis and intercellular CO2 via
     ``leaf_ci_optimization``. This routine is used with the water-use
     efficiency (WUE) stomatal optimization.
@@ -264,7 +265,7 @@ def leaf_photosynthesis(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) 
         # it is by O2 (Ko), and the CO2 level at which photosynthesis and
         # photorespiration exactly cancel out (Γ*). Table 11.2 pp 173.
         
-        # Kc is a concentration
+        # Remember Kc is a concentration
         # High Kc means it needs more substrate (CO2) to achive the 50%
         flux.kc = leaf.kc25 * arrhenius_function(tl=flux.tleaf, ha=leaf.kcha)
         
@@ -273,25 +274,23 @@ def leaf_photosynthesis(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) 
         flux.ko = leaf.ko25 * arrhenius_function(tl=flux.tleaf, ha=leaf.koha)
         flux.cp = leaf.cp25 * arrhenius_function(tl=flux.tleaf, ha=leaf.cpha)
 
-        # Vcmax-peaked Arrhenius (Eq 11.35)
-        # Vcmax is a rate
+        # Maximum Carboxilation rate (Vcmax) peaked Arrhenius (Eq 11.35)
         # Represent how fast Rubisco can work at full capacity
         t1 = arrhenius_function(tl=flux.tleaf, ha=leaf.vcmaxha)
         t2 = inhibition_function(flux.tleaf, leaf.vcmaxhd, leaf.vcmaxse, leaf.vcmaxc)
         flux.vcmax = leaf.vcmax25 * t1 * t2
 
-        # Jmax-peaked Arrhenius (Eq 11.35)
+        # Electron transport rate (Jmax) peaked Arrhenius (Eq 11.35)
         # Jmax has a lower activation energy than Vcmax (43,540 vs 65,330 J/mol
         # from Table 11.2), meaning it's less sensitive to warming.
         # The electron transport chain is more thermally stable than Rubisco.
         t1 = arrhenius_function(tl=flux.tleaf, ha=leaf.jmaxha)
         t2 = inhibition_function(flux.tleaf, leaf.jmaxhd, leaf.jmaxse, leaf.jmaxc)
         
-        # The product t1*t2 creates the peaked curve
-        # Eq 11.35
+        # Eq 11.35. The product t1*t2 creates the peaked curve
         flux.jmax = leaf.jmax25 * t1 * t2
 
-        # Rd-peaked Arrhenius (Equation 11.35 applied to Rd) 
+        # Respiration (Rd) peaked Arrhenius (Equation 11.35 applied to Rd) 
         # Even while photosynthesizing, the leaf burns some sugar for its own
         # energy needs. This cost also follows the peaked Arrhenius response.
         # Leaf respiration represent the leaf "maintenance cost"
@@ -310,9 +309,9 @@ def leaf_photosynthesis(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) 
     # C4 temperature response ---------------------------------------------------
     else:
         
-        # Implementation of Equation (11.72) from the textbook. Instead of the
-        # arrhenius function, C4 plants use a Q10 formulation with explicit
-        # stress factors.
+        # Implementation of Equation (11.72) from the textbook. 
+        # Instead of the arrhenius function, C4 plants use a Q10 formulation 
+        # with explicit stress factors.
 
         # Q10 = 2: the basic "warmer = faster" effect (rate doubles every 10°C)
         t1 = 2.0 ** ((flux.tleaf - (physcon.tfrz + 25)) / 10.0)
@@ -329,7 +328,7 @@ def leaf_photosynthesis(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) 
 
         # Respiration for C4 follows Equation (11.73) with high-temperature
         # stress above 55°C, and kp (the PEP carboxylase slope) follows
-        # Equation (11.74) with a simple Q₁₀ = 2 and no stress factors.
+        # Equation (11.74) with Q10 = 2 and no stress factors.
         t3 = 1.0 + np.exp(1.3 * (flux.tleaf - (physcon.tfrz + 55)))
         
         flux.rd = leaf.rd25 * t1 / t3
@@ -357,30 +356,28 @@ def leaf_photosynthesis(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) 
         roots = np.roots([aquad, bquad, cquad])
         flux.je = min(roots.real)
 
-    # Photosythesis and Ci calculation 
+    # Photosythesis and Ci calculation ------------------------------------------
     # Calculate photosynthesis for a specified stomatal conductance
     # With all parameters temperature-adjusted and J calculated, calculate
     # photosynthesis and intercellular CO2
-    # Quadratic solution of Equation 11.78).
-
     flux = leaf_ci_optimization(atmos, leaf, flux)
 
-    # Relative humidity and vapor pressure at leaf surface 
-    # This calculates the humidity right at the leaf surface — a weighted average
+    # Relative humidity and vapor pressure at leaf surface ----------------------
+    # This calculates the humidity right at the leaf surface, a weighted average
     # between the dry outside air (eair, pulled through the boundary layer with
     # conductance gbv) and the saturated air inside the leaf (esat, pushed out
     # through stomata with conductance gs).
 
     # The vapor pressure deficit (VPD) at the leaf surface is important because
     # it feeds back into stomatal conductance models
-
     esat, desat = satvap(flux.tleaf - physcon.tfrz)
     flux.hs = (flux.gbv * atmos.eair + flux.gs * esat) / ((flux.gbv + flux.gs) * esat)
     flux.vpd = max(esat - flux.hs * esat, 0.1)
 
-    # Diffusion equation error check 
+    # Diffusion equation error check --------------------------------------------
     # Compare with diffusion equation: An = (ca - ci) * gleaf
     an_err = (atmos.co2air - flux.ci) / (1.0 / flux.gbc + 1.6 / flux.gs)
+    
     if flux.an > 0 and abs(flux.an - an_err) > 0.01:
         print(f"An = {flux.an:15.4f}")
         print(f"An_err = {an_err:15.4f}")
