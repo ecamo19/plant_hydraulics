@@ -143,27 +143,36 @@ def leaf_temperature(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) -> 
         esat, desat = satvap(flux.tleaf - physcon.tfrz)
 
         # Leaf conductance for water vapor (mol H2O/m2/s)
-        # (Eq.10.8)
+        # (Eq.10.8). This is same as equation 7.7
         gleaf = flux.gs * flux.gbv / (flux.gs + flux.gbv)
 
         # Emitted longwave radiation (W/m2) and temperature derivative (W/m2/K)
         # (Eq.10.2)
         flux.lwrad = 2.0 * leaf.emiss * physcon.sigma * flux.tleaf**4
+        
+        # Derivative
         dlwrad = 8.0 * leaf.emiss * physcon.sigma * flux.tleaf**3
 
         # Sensible heat flux (W/m2) and temperature derivative (W/m2/K)
         # (Eq 10.5)
         flux.shflx = 2.0 * atmos.cpair * (flux.tleaf - atmos.tair) * flux.gbh
+        
+        # Derivative
         dshflx = 2.0 * atmos.cpair * flux.gbh
 
         # Latent heat flux (W/m2) and temperature derivative (W/m2/K)
-        # (Eq.10.6)
+        # (Eq.10.6). Same as equation 7.6. 
+        # flux.lhflx =  conversion factor * humity difference * total conductance
         flux.lhflx = lambda_val / atmos.patm * (esat - atmos.eair) * gleaf
+        
+        # Derivative
         dlhflx = lambda_val / atmos.patm * desat * gleaf
 
         # Energy balance residual (W/m2) and temperature derivative (W/m2/K)
         # (Eq. 10.13)
         f0 = flux.qa - flux.lwrad - flux.shflx - flux.lhflx
+        
+        # Derivative
         df0 = -dlwrad - dshflx - dlhflx
 
         # Change in leaf temperature

@@ -1295,12 +1295,13 @@ Regulation factor             γ = clamp(P / P_at_gs_max, 0, 1)
 <span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="bu">float</span>:</span>
 <span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Minimal transpiration from cuticular/boundary layer/crown conductances.</em></p>
+<p>SurEau models a whole tree canopy. After water vapor passes through the stomata and the leaf boundary layer, it’s still inside the crown, surrounded by other leaves and branches. It needs to travel out of the crown to reach the open atmosphere above</p>
 </section>
 </section>
 <section id="leaf-energy-balance" class="level2">
 <h2 class="anchored" data-anchor-id="leaf-energy-balance">Leaf energy balance</h2>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1511" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1518" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="compute_t_leaf" class="level3">
 <h3 class="anchored" data-anchor-id="compute_t_leaf">compute_T_leaf</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -1765,7 +1766,7 @@ With stomata closed (gs = 0, g_cuti = 4 only):
 <section id="dead-fuel-moisture" class="level2">
 <h2 class="anchored" data-anchor-id="dead-fuel-moisture">Dead fuel moisture</h2>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L2003" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L2010" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="compute_dfmc" class="level3">
 <h3 class="anchored" data-anchor-id="compute_dfmc">compute_DFMC</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a></span>

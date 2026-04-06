@@ -1405,12 +1405,17 @@ def compute_E_min(
 
 *Minimal transpiration from cuticular/boundary layer/crown conductances.*
 
+SurEau models a whole tree canopy. After water vapor passes through the
+stomata and the leaf boundary layer, it's still inside the crown,
+surrounded by other leaves and branches. 
+It needs to travel out of the crown to reach the open atmosphere above
+
 
 ## Leaf energy balance
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1511){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L1518){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_T_leaf
 
@@ -1987,7 +1992,7 @@ RH = 50%, gs = 100 mmol/m²/s, g_cuti = 4 mmol/m²/s):__
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L2003){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L2010){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_DFMC
 

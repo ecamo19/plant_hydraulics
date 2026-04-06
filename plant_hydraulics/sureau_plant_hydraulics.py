@@ -1503,7 +1503,14 @@ def compute_E_min(
     VPD: float,
     P_atm: float = 101.3,
 ) -> float:
-    """Minimal transpiration from cuticular/boundary layer/crown conductances."""
+    """Minimal transpiration from cuticular/boundary layer/crown conductances.
+    
+    SurEau models a whole tree canopy. After water vapor passes through the
+    stomata and the leaf boundary layer, it's still inside the crown,
+    surrounded by other leaves and branches. 
+    It needs to travel out of the crown to reach the open atmosphere above
+
+    """
     return VPD / P_atm / (1.0 / gmin + 1.0 / g_BL + 1.0 / g_crown)
 
 
