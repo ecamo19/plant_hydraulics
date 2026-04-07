@@ -156,8 +156,17 @@ def compute_Rn_and_ETP(
         )
 
     # Compute ETP ---------------------------------------------------------------
+    # This is used as a starting point
+    
+    # Compared to the Penman-Monteith equation (7.36) the Priestley Taylor 
+    # equation drops the wind (through gac), the stomatal control (through gc)
+    # and humidity (VPD) and replaces them with alpha.
+    
     if opts.ETP_formulation == "PT":
-        # clim.ETP = compute_ETP_PT(clim.T_air_mean, clim.net_radiation, params.PT_coeff)
+        
+        # Original line in R code: 
+        # clim.ETP = compute_ETP_PT(clim.T_air_mean, clim.net_radiation, 
+        #                            params.PT_coeff)
         clim.ETP = pyet.priestley_taylor(
             pd.Series([clim.T_air_mean]),
             rn=pd.Series([clim.net_radiation]),
