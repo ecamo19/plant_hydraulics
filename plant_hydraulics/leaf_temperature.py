@@ -113,8 +113,7 @@ def leaf_temperature(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) -> 
     # Latent heat of vaporization (J/mol)
     lambda_val = latvap(atmos.tair - physcon.tfrz, physcon.mmh2o)
 
-    # Newton-Raphson iteration until leaf energy balance is less than
-    # f0_max or to niter_max iterations
+    # Variable to keep the count 
     niter = 0
 
     # Maximum number of iterations
@@ -129,6 +128,8 @@ def leaf_temperature(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) -> 
     # Newton-Raphson approach ---------------------------------------------------
     # While energy balance residual is larger than ~0, keep looping
     # By definition (Eq 10.13) the energy balance should be 0
+    # Newton-Raphson iteration until leaf energy balance is less than
+    # f0_max or to niter_max iterationss
     while abs(f0) > f0_max:
         niter += 1
 
@@ -146,43 +147,50 @@ def leaf_temperature(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) -> 
         # (Eq.10.8). This is same as equation 7.7
         gleaf = flux.gs * flux.gbv / (flux.gs + flux.gbv)
 
-        # Emitted longwave radiation (W/m2) and temperature derivative (W/m2/K)
+        # Emitted longwave radiation (W/m2)
         # (Eq.10.2)
         flux.lwrad = 2.0 * leaf.emiss * physcon.sigma * flux.tleaf**4
         
-        # Derivative
+        # Temperature derivative (W/m2/K)
         dlwrad = 8.0 * leaf.emiss * physcon.sigma * flux.tleaf**3
 
-        # Sensible heat flux (W/m2) and temperature derivative (W/m2/K)
+        # Sensible heat flux (W/m2)  
         # (Eq 10.5)
         flux.shflx = 2.0 * atmos.cpair * (flux.tleaf - atmos.tair) * flux.gbh
         
-        # Derivative
+        # Temperature derivative (W/m2/K)
         dshflx = 2.0 * atmos.cpair * flux.gbh
 
-        # Latent heat flux (W/m2) and temperature derivative (W/m2/K)
-        # (Eq.10.6). Same as equation 7.6. 
+        # Latent heat flux (W/m2) 
+        # (Eq.10.6). Same as equation 7.6 
         # flux.lhflx =  conversion factor * humity difference * total conductance
         flux.lhflx = lambda_val / atmos.patm * (esat - atmos.eair) * gleaf
         
-        # Derivative
+        # Temperature derivative (W/m2/K)
         dlhflx = lambda_val / atmos.patm * desat * gleaf
 
-        # Energy balance residual (W/m2) and temperature derivative (W/m2/K)
+        # Energy balance residual at the leaf level (W/m2). This a version of 
+        # equation 7.13 without the soil heat flux 
+        
+        # f0 indicates how far off the energy balance is 
         # (Eq. 10.13)
         f0 = flux.qa - flux.lwrad - flux.shflx - flux.lhflx
         
-        # Derivative
+        # Temperature derivatives (W/m2/K). df0 is how sensitive the energy 
+        # balance is to temperature changes.
+        # If df0 is large, this indicates the energy balance is very sensitive to 
+        # temperature changes, so a small temperature change should be applied.
         df0 = -dlwrad - dshflx - dlhflx
 
-        # Change in leaf temperature
-        # (Eq 10.14)
+        # Newton-Rapson correction
+        # This tells you exactly how much to adjust the temperature
+        # Eq 10.14 == Eq 7.16  
         dtleaf = -f0 / df0
 
         # Update leaf temperature
         flux.tleaf = flux.tleaf + dtleaf
 
-    # Net radiation
+    # Calculate net radiation after leaving the loop ----------------------------
     flux.rnet = flux.qa - flux.lwrad
 
     # Error check ---------------------------------------------------------------

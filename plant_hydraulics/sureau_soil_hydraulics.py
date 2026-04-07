@@ -12,47 +12,45 @@ from .parameter_classes import SurEauSoil, SurEauSoilParams
 
 # %% ../nbs/203_sureau_soil_hydraulics.ipynb #856e4dfc
 def compute_soil_VG(soil: SurEauSoil, params: SurEauSoilParams) -> SurEauSoil:
-    """Van Genuchten: transform soil moisture → water potential & conductance.
-
-    ANALOGY — The Sponge Squeeze:
+    """Transform soil moisture to water potential and conductance using Van Genuchten
     
     Imagine each soil layer is a sponge sitting in a bucket.
 
-    REW (Relative Extractable Water) tells you what fraction of the sponge's
+    REW (Relative Extractables Water) tells you what fraction of the sponge's
     usable capacity is still filled.
 
-    REW = 1 means soaking wet, REW = 0 means only residual water trapped in the
-    tiniest pores remains.
+    REW = 1 means soaking wet 
+    
+    REW = 0 means only residual water trapped in the tiniest pores remains.
 
     k_soil (hydraulic conductance) tells you how fast water can flow through
     that sponge. A wet sponge lets water through easily; a nearly dry one barely
     lets anything pass.
 
-    psi_soil (water potential) tells you how hard the sponge is gripping its
-    remaining water. A wet sponge barely holds on (ψ ≈ 0); a dry sponge clings
-    to the last drops with enormous force (ψ << 0).
+    psi_soil (water potential) tells you how hard the sponge is holding its
+    remaining water. A wet sponge barely holds on (ψ close to 0); a dry sponge 
+    clings to the last drops with enormous force (ψ << 0).
 
     Equations implemented:
-      REW      = (stock - residual) / (saturation - residual)     [Eq. 22]
+      REW      = (stock - residual) / (saturation - residual)  [Eq. 22]
       k_soil   = Ksat × B_GC × REW^I × (1-(1-REW^(1/m))^m)²    [Eq. 21 variant]
       psi_soil = -((1/REW)^(1/m) - 1)^(1/n) / (α × 10000)      [Eq. 48]
     """
 
     # Eq 22 ---------------------------------------------------------------------
     # Eq 22 determines how much water there is in the soil
-    # Van Genuchten to generate hourly forcings from daily
-    # climatic variables equivalent of what Bonan does with the Clapp-Hornberger
-    # power
-    # law.
+    # Van Genuchten formulation to generate hourly soil forcings from daily
+    # climatic variables.
 
-    # V_saturation_capacity = How much water the soil can hold
-    # V_residual_capacity = How much water is trapped in the soil that roots
-    # can't acess
+    # V_saturation_capacity indicates how much water the soil can hold
+    # V_residual_capacity indicates how much water is trapped in the soil that 
+    # roots can't acess
     max_water = params.V_saturation_capacity - params.V_residual_capacity
 
-    # eff_water = how much usable water remains = current − residual
+    # eff_water indicates how much usable water remains 
     eff_water = soil.soil_water_stock - params.V_residual_capacity
 
+    # REW only counts the usable water
     # Ratio: 0 means "dry soil" (only residual left), 1 means "soil fully
     # saturated" The np.clip prevents REW from hitting exactly 0 (which would
     # cause division-by-zero in the next steps) or exceeding 1.
@@ -88,21 +86,21 @@ def compute_soil_VG(soil: SurEauSoil, params: SurEauSoilParams) -> SurEauSoil:
     # params.Ksat: the saturated hydraulic conductivity
 
     # params.B_GC: the Gardner-Cowan scaling factor from Equation 21 in the paper.
-    # This accounts for root geometry — how close the roots are packed and how
+    # This accounts for root geometry, how close the roots are packed and how
     # thick the soil layer is.
-    # More roots packed closer together = shorter flow path from soil to
-    # root = higher conductance.
+    # More roots packed closer together equals shorter flow path from soil to
+    # root therefore a higher conductance.
     soil.k_soil = 1000 * params.Ksat * params.B_GC * k_temp
 
     # Calculate Soil water potential --------------------------------------------
     # Equation 48 from the paper
     # Imagine squeezing water out of a sponge. When the sponge is soaking wet
-    # (REW ≈ 1), you barely need to squeeze — water drips out easily.
+    # (REW ≈ 1), you barely need to squeeze, water drips out easily.
     # The "suction" the sponge exerts on its remaining water is almost zero
     # (ψ ≈ 0). As you squeeze out more water (REW decreasing), the remaining
     # water is held more and more tightly in the smallest pores. You need to
     # squeeze harder and harder (ψ becomes more negative). When the sponge is
-    # nearly dry (REW → 0), ψ → −∞ (the last drops are held with enormous force).
+    # nearly dry (REW → 0), ψ → −∞.
 
     soil.psi_soil = (
         -(((1 / REW) ** (1 / params.m) - 1) ** (1 / params.n_vg))
@@ -313,20 +311,19 @@ def set_SWC_to_field_capacity(
 def compute_evaporation(
     soil: SurEauSoil, params: SurEauSoilParams, T_air, RH_air, N_hours
 ) -> SurEauSoil:
-    """Soil surface evaporation (Equation 35).
-
-    ANALOGY — Drying the Top of the Sponge:
-
-    Only the TOP bucket loses water to the atmosphere directly.  How fast
+    """Soil surface evaporation 
+    
+    Equation 35: E_soil = g_soil0 × REW₁ × VPD / P_atm
+    
+    Only the TOP bucket loses water to the atmosphere directly. How fast
     it dries depends on:
+    
       - How dry the air is (VPD — the "thirst" of the atmosphere)
       - How wet the top layer still is (REW₁ — a self-limiting brake)
       - How breathable the soil surface is (g_soil0)
 
     On a hot dry day with wet topsoil: evaporation is high.
     On a humid day with dry topsoil: evaporation is negligible.
-
-    Equation 35: E_soil = g_soil0 × REW₁ × VPD / P_atm
     """
 
     # Define Soil temperature ---------------------------------------------------
@@ -334,10 +331,9 @@ def compute_evaporation(
     # Important because VPD depends on temperature. The saturation vapor
     # pressure at the soil surface (which drives evaporation) is set by the soil
     # temperature, not the air temperature.
-
     T_soil = 0.6009 * T_air + 3.59
 
-    # Compute VPD soil ----------------------------------------------------------
+    # Compute soil VPD ----------------------------------------------------------
     # Computed at the soil temperature
     VPD_soil = compute_VPD(RH_air, T_soil)
 
@@ -352,16 +348,17 @@ def compute_evaporation(
         # Equation 35: E_soil = g_soil0 × REW₁ × VPD / P_atm
 
         # g_soil0 (mmol/m²_soil/s): the maximum soil conductance to water vapor.
-        # Think of it as how "breathable" the soil surface is when fully wet. A
-        # sandy soil with big pores has higher g_soil0 than a clay with tiny
-        # pores.
+        # Keep in mind that a sandy soil with big pores has higher g_soil0 than 
+        # a clay with tiny pores.
 
         # REW: Relative extractable water of the first soil layer only. This
         # scales conductance down as the topsoil dries.
+        
         # When REW=1 (wet), the full conductance is available.
+        
         # When REW=0.1 (dry), only 10% remains.
-        # This is the key feedback: as the top layer dries,
-        # it self-limits its own evaporation rate.
+        
+        # As the top layer dries, it self-limits its own evaporation rate.
 
         # VPD_soil / 101.3: Driving force for evaporation (VPD in kPa) divided by
         # atmospheric pressure (101.3 kPa). This ratio converts the conductance
@@ -383,16 +380,14 @@ def compute_evaporation(
         E_ETP = ETP_mmol_s * soil.REW[0]
 
         # Take the minimum of both limits
-        # The physics: Evaporation cannot exceed either constraint. Two scenarios:
-
-        # Humid, cloudy day with wet soil: VPD is low (air already moist), so
-        # E_VPD is small even though ETP might be moderate.
-        # VPD is the bottleneck. Therefore E_soil = E_VPD
-
-        # Sunny, dry day with dry soil: Plenty of energy and dry air, but the
-        # topsoil has little water left (low REW). Both E_VPD and E_ETP are
-        # already scaled by REW, but the VPD-driven rate may still exceed what
-        # the energy budget allows.Therefore E_soil = min of the two.
+        
+        # The soil only can dry as fast as the more restrive of the two allows.
+        # For example:
+        # On a sunny, dry day: both limits are high -> high E_soil.
+        # On a sunny, humid day: E_VPD is the bottleneck, air can't take more 
+        # water.
+        # On a cloudy, dry day: E_ETP is the bottleneck, not enough energy to 
+        # vaporize the water in the soil.
         E_soil = min(E_VPD, E_ETP)
 
         # Convert instantaneous rate to water depth

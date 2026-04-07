@@ -1793,7 +1793,7 @@ def compute_T_leaf(
         Vapor pressure deficit at the leaf surface (kPa), corrected
         for leaf temperature and water activity.
     """
-    # Extract data --------------------------------------------------------------
+    # Extract data from SurEau objects ------------------------------------------
     
     # Extract from climate dict 
     T_air = clim["T_air_mean"]
@@ -1815,7 +1815,6 @@ def compute_T_leaf(
     transpiration_model = veg_params.transpiration_model
     turn_off_EB = veg_params.turn_off_EB
     
-
     # Constants and unit conversions --------------------------------------------
         
     # Convert PAR (photosynthetically active radiation, µmol/m²/s) back to 
@@ -1845,14 +1844,21 @@ def compute_T_leaf(
 
     # Saturation vapor pressure at air temperature (kPa), using the Tetens 
     # equation.
+    # Esat indicates the maximum possible contribution of water molecules to 
+    # the total air pressure at a given temperature
     esat = a_coef * np.exp(b_coef * T_air / (T_air + z_coef))
     
     # Actual vapor pressure (kPa) from relative humidity.
     ea = esat * RH / 100
     
-    # Slope of the saturation vapor pressure curve
-    # This slope is critical in the Penman-Monteith framework, it determines how 
-    # much of the available energy goes into evaporation versus heating
+    # Slope of the saturation vapor pressure curve. 
+    # Obtained by differantiating with respect to temperature the saturation 
+    # vapor pressure equation (above esat, aka Tetens equation)
+    
+    # This slope used in the Penman-Monteith framework. It determines how 
+    # much of the available energy goes into evaporation versus heating.
+    # In other words is the rate of change at which saturation vapor pressure 
+    # changes per degree of temp change.
     s = esat * b_coef * z_coef / (T_air + z_coef) ** 2
     
     # Atmospheric emissivity ε_air for incoming longwave radiation. This uses the 
@@ -2003,7 +2009,9 @@ def compute_T_leaf(
     
     # Skip the energy balance? --------------------------------------------------
     if turn_off_EB:
+    
         return T_air, g_bl, VPD_leaf
+    
     return T_leaf, g_bl, VPD_leaf
 
 # %% ../nbs/204_sureau_plant_hydraulics.ipynb #b4db467e
