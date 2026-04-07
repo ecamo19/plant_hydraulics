@@ -25,28 +25,27 @@ def compute_soil_VG(
 
 ```
 
-*Van Genuchten: transform soil moisture → water potential & conductance.*
-
-ANALOGY — The Sponge Squeeze:
+*Transform soil moisture to water potential and conductance using Van Genuchten*
 
 Imagine each soil layer is a sponge sitting in a bucket.
 
-REW (Relative Extractable Water) tells you what fraction of the sponge's
+REW (Relative Extractables Water) tells you what fraction of the sponge's
 usable capacity is still filled.
 
-REW = 1 means soaking wet, REW = 0 means only residual water trapped in the
-tiniest pores remains.
+REW = 1 means soaking wet 
+
+REW = 0 means only residual water trapped in the tiniest pores remains.
 
 k_soil (hydraulic conductance) tells you how fast water can flow through
 that sponge. A wet sponge lets water through easily; a nearly dry one barely
 lets anything pass.
 
-psi_soil (water potential) tells you how hard the sponge is gripping its
-remaining water. A wet sponge barely holds on (ψ ≈ 0); a dry sponge clings
-to the last drops with enormous force (ψ << 0).
+psi_soil (water potential) tells you how hard the sponge is holding its
+remaining water. A wet sponge barely holds on (ψ close to 0); a dry sponge 
+clings to the last drops with enormous force (ψ << 0).
 
 Equations implemented:
-  REW      = (stock - residual) / (saturation - residual)     [Eq. 22]
+  REW      = (stock - residual) / (saturation - residual)  [Eq. 22]
   k_soil   = Ksat × B_GC × REW^I × (1-(1-REW^(1/m))^m)²    [Eq. 21 variant]
   psi_soil = -((1/REW)^(1/m) - 1)^(1/n) / (α × 10000)      [Eq. 48]
 
@@ -187,7 +186,7 @@ Equations implemented:
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L126){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L124){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_soil_Campbell
 
@@ -240,7 +239,7 @@ Transform soil moisture into water potential and k conductance
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L171){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L169){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_soil_conductance_and_psi
 
@@ -258,7 +257,7 @@ def compute_soil_conductance_and_psi(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L185){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L183){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_infiltration
 
@@ -321,7 +320,7 @@ Previous timestep's soil water
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L280){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L278){target="_blank" style="float:right; font-size:smaller"}
 
 ### update_soil_water
 
@@ -339,7 +338,7 @@ def update_soil_water(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L290){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L288){target="_blank" style="float:right; font-size:smaller"}
 
 ### set_SWC_to_field_capacity
 
@@ -364,7 +363,7 @@ the sponge back to its comfortable level."
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L313){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L311){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_evaporation
 
@@ -377,20 +376,19 @@ def compute_evaporation(
 
 ```
 
-*Soil surface evaporation (Equation 35).*
+*Soil surface evaporation *
 
-ANALOGY — Drying the Top of the Sponge:
+Equation 35: E_soil = g_soil0 × REW₁ × VPD / P_atm
 
-Only the TOP bucket loses water to the atmosphere directly.  How fast
+Only the TOP bucket loses water to the atmosphere directly. How fast
 it dries depends on:
+
   - How dry the air is (VPD — the "thirst" of the atmosphere)
   - How wet the top layer still is (REW₁ — a self-limiting brake)
   - How breathable the soil surface is (g_soil0)
 
 On a hot dry day with wet topsoil: evaporation is high.
 On a humid day with dry topsoil: evaporation is negligible.
-
-Equation 35: E_soil = g_soil0 × REW₁ × VPD / P_atm
 
 
 ```

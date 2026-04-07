@@ -229,7 +229,7 @@ Physics notes:
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_climate.py#L173){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_climate.py#L182){target="_blank" style="float:right; font-size:smaller"}
 
 ### new_climate_hourly
 
@@ -247,7 +247,7 @@ def new_climate_hourly(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_climate.py#L338){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_climate.py#L347){target="_blank" style="float:right; font-size:smaller"}
 
 ### interpolate_climate_hourly
 
@@ -265,7 +265,7 @@ def interpolate_climate_hourly(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_climate.py#L356){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_climate.py#L365){target="_blank" style="float:right; font-size:smaller"}
 
 ### get_hourly_snapshot
 

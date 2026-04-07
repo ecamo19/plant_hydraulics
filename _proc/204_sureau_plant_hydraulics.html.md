@@ -1470,12 +1470,12 @@ at low water potentials (the Kelvin equation correction).This
 correction is critical for accurately computing residual
 transpiration under extreme drought.
 
-Physical analogy: The leaf is a wet surface sitting in a breeze.
+Analogy: The leaf is a wet surface sitting in a breeze.
 Radiation heats it up; transpiration cools it down. The energy
 balance finds the temperature at which these effects balance.
 A leaf with open stomata (low r_st) is like a wet towel in the
-wind — much cooler than the air. A leaf with closed stomata
-(high r_st) is like a dry rock — warmer than the air because it
+wind, much cooler than the air. A leaf with closed stomata
+(high r_st) is like a dry rock, warmer than the air because it
 can only cool by convection and longwave emission.
 
 __Parameters:__
@@ -1992,7 +1992,7 @@ RH = 50%, gs = 100 mmol/m²/s, g_cuti = 4 mmol/m²/s):__
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L2010){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L2029){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_DFMC
 

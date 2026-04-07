@@ -1714,6 +1714,7 @@ def compute_transpiration(
         # This is the "unstressed" transpiration, what the canopy would transpire 
         # if stomata were fully open
         ETP_veg = clim.get("ETP_veg", clim["ETP"])
+        
         fluxes.E_bound = calculate_Ebound_Granier(ETP_veg, state.LAI, N_hours, params)
         
         # Residual conductance
@@ -1725,8 +1726,10 @@ def compute_transpiration(
         fluxes.E_min_S = params.f_TRB_to_leaf * params.gmin_S * fluxes.leaf_VPD / 101.3
 
         # Compute γ (the stomatal regulation factor, 0 to 1)(Eq. 34) and the
-        # dγ/dψ 
+        # derivative dγ/dψ 
         rf, rfp = compute_regul_fact(state.psi_LSym, params)
+        
+        # Save derivative dγ/dψ 
         fluxes.regul_fact = rf
         
         # Water-limited transpiration and solver derivative
@@ -1771,8 +1774,10 @@ def compute_transpiration(
             )
             
             # Compute γ (the stomatal regulation factor, 0 to 1)(Eq. 34) and the
-            # dγ/dψ 
+            # derivative dγ/dψ 
             rf, rfp = compute_regul_fact(state.psi_LSym, params)
+            
+            # Save derivative dγ/dψ 
             fluxes.regul_fact = rf
 
             # Unstressed stomatal conductance (light-dependent)
@@ -1807,7 +1812,7 @@ def compute_transpiration(
             # Transpiration derivative for implicit solver 
             gs_lim_prime = fluxes.gs_bound * rfp
             
-            # for avoiding zero division
+            # For avoiding zero division
             dbxmin = 1e-100
             
             denom = (

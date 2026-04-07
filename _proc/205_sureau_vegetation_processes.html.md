@@ -1347,7 +1347,7 @@ sub-hourly timestep.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L1841){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L1846){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_water_storage
 

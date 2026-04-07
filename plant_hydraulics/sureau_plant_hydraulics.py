@@ -1565,12 +1565,12 @@ def compute_T_leaf(
     correction is critical for accurately computing residual
     transpiration under extreme drought.
  
-    Physical analogy: The leaf is a wet surface sitting in a breeze.
+    Analogy: The leaf is a wet surface sitting in a breeze.
     Radiation heats it up; transpiration cools it down. The energy
     balance finds the temperature at which these effects balance.
     A leaf with open stomata (low r_st) is like a wet towel in the
-    wind — much cooler than the air. A leaf with closed stomata
-    (high r_st) is like a dry rock — warmer than the air because it
+    wind, much cooler than the air. A leaf with closed stomata
+    (high r_st) is like a dry rock, warmer than the air because it
     can only cool by convection and longwave emission.
  
     __Parameters:__
@@ -1793,6 +1793,9 @@ def compute_T_leaf(
         Vapor pressure deficit at the leaf surface (kPa), corrected
         for leaf temperature and water activity.
     """
+    # Chain of actions ----------------------------------------------------------
+    # compute_T_leaf → Use linearized Penman-Monteith → get T_leaf and leaf_VPD
+    
     # Extract data from SurEau objects ------------------------------------------
     
     # Extract from climate dict 
@@ -1939,38 +1942,46 @@ def compute_T_leaf(
         rst = 1.0 / max(g, 1e-10) * 1000 * 40 if g > 0 else 9999.99
 
     # Penman-Monteith temperature solution --------------------------------------
-    # Weights the "aerodynamic" contribution against the "radiative" 
-    # contribution. When stomata are wide open (rst small), γ* is small and 
-    # transpirational cooling dominates. 
-    # When stomata are closed (rst huge), γ* is large and the leaf heats up.
+    # Modified psychrometric constant (ym) that takes into account stomatal 
+    # resistance for delta_T calculations. This avoids the Newton-Rapson loop
+    
+    # Terms
+    # gamma_psy =  psychrometric constant
+    # rst = stomatal resistance
+    # rblr = combined boundary layer + radiative resistance
+    
+    # When stomata are wide open (rst small), ym is small and transpirational 
+    # cooling dominates. 
+    # When stomata are closed (rst huge), ym is large and the leaf heats up.
     ym = gamma_psy * (rst / rblr)
     
     # Leaf-to-air temperature difference ----------------------------------------
+    
     # Linearized Penman-Monteith solution for leaf temperature:
     
-    #               γ* × Rni × r_blr / (ρ·cp)  −  VPD
+    #               ym × Rni × r_blr / (ρ·cp)  −  VPD
     # delta_T  =  ──────────────────────────────────────
-    #                         Δ  +  γ*
+    #                         s  +  ym
     
-    # The term γ* × Rni × r_blr / (ρ·cp) represents the heating effect of 
+    # The term ym × Rni × r_blr / (ρ·cp) represents the heating effect of 
     # absorbed radiation. 
     # More radiation + higher stomatal resistance (closed stomata) = more heating.
 
-    # The term −VPD represents the cooling effect of transpiration. 
+    # The term (−VPD) represents the cooling effect of transpiration. 
     # Drier air (higher VPD) = more cooling.
     
-    # The term Δ + γ* represents the combined sensitivity of the system. 
-    # Δ (slope of saturation curve) controls how much a temperature 
+    # The term s + ym represents the combined sensitivity of the system. 
+    # s (slope of saturation curve) controls how much a temperature 
     # rise increases evaporative demand.
     
-    # When stomata are open: γ* is small, VPD dominates the numerator, 
+    # When stomata are open: ym is small, VPD dominates the numerator, 
     # δT is negative (leaf cooler than air).
 
-    # When stomata are closed: γ* is huge, the Rni term dominates, 
+    # When stomata are closed: ym is huge, the Rni term dominates, 
     # δT is positive (leaf warmer than air).
     delta_T = (ym * Rni * rblr / (rho * Cp) - VPDx) / (s + ym)
     
-    # leaf temperature in °C 
+    # Compute leaf temperature in °C 
     T_leaf = T_air + delta_T
 
     # Leaf VPD calculation ------------------------------------------------------

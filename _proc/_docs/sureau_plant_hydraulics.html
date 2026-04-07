@@ -1325,7 +1325,7 @@ Regulation factor             γ = clamp(P / P_at_gs_max, 0, 1)
 <li>VPD is the air vapor pressure deficit (kPa).</li>
 </ul>
 <p>The function also computes the <strong>leaf VPD</strong>, the actual driving force for transpiration, which accounts for both the elevated leaf temperature (raising e_sat) and the reduced water activity at low water potentials (the Kelvin equation correction).This correction is critical for accurately computing residual transpiration under extreme drought.</p>
-<p>Physical analogy: The leaf is a wet surface sitting in a breeze. Radiation heats it up; transpiration cools it down. The energy balance finds the temperature at which these effects balance. A leaf with open stomata (low r_st) is like a wet towel in the wind — much cooler than the air. A leaf with closed stomata (high r_st) is like a dry rock — warmer than the air because it can only cool by convection and longwave emission.</p>
+<p>Analogy: The leaf is a wet surface sitting in a breeze. Radiation heats it up; transpiration cools it down. The energy balance finds the temperature at which these effects balance. A leaf with open stomata (low r_st) is like a wet towel in the wind, much cooler than the air. A leaf with closed stomata (high r_st) is like a dry rock, warmer than the air because it can only cool by convection and longwave emission.</p>
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><p>T_air: Air temperature (°C).</p></li>
@@ -1766,7 +1766,7 @@ With stomata closed (gs = 0, g_cuti = 4 only):
 <section id="dead-fuel-moisture" class="level2">
 <h2 class="anchored" data-anchor-id="dead-fuel-moisture">Dead fuel moisture</h2>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L2010" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_plant_hydraulics.py#L2029" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="compute_dfmc" class="level3">
 <h3 class="anchored" data-anchor-id="compute_dfmc">compute_DFMC</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a></span>
