@@ -40,7 +40,8 @@ def compute_soil_VG(soil: SurEauSoil, params: SurEauSoilParams) -> SurEauSoil:
     # Eq 22 ---------------------------------------------------------------------
     # Eq 22 determines how much water there is in the soil
     # Van Genuchten formulation to generate hourly soil forcings from daily
-    # climatic variables.
+    # climatic variables. Same as equation 8.8 in Bonan Book but called effective
+    # saturation
 
     # V_saturation_capacity indicates how much water the soil can hold
     # V_residual_capacity indicates how much water is trapped in the soil that 
@@ -52,7 +53,9 @@ def compute_soil_VG(soil: SurEauSoil, params: SurEauSoilParams) -> SurEauSoil:
 
     # REW only counts the usable water
     # Ratio: 0 means "dry soil" (only residual left), 1 means "soil fully
-    # saturated" The np.clip prevents REW from hitting exactly 0 (which would
+    # saturated" 
+    
+    # The np.clip prevents REW from hitting exactly 0 (which would
     # cause division-by-zero in the next steps) or exceeding 1.
     REW = np.clip(eff_water / max_water, 0.0001, 1.0)
     soil.REW = REW
@@ -81,6 +84,8 @@ def compute_soil_VG(soil: SurEauSoil, params: SurEauSoilParams) -> SurEauSoil:
     # When REW → 0: this term → 0.
 
     # k_temp is a relative conductance (0 to 1)
+    # Equation in table 8.2: K = Ksat × Se^(1/2) × [1 − (1 − Se^(1/m))^m]^2
+    # Here I_vg is used instead of 1/2
     k_temp = REW**params.I_vg * (1 - (1 - REW ** (1 / params.m)) ** params.m) ** 2
 
     # params.Ksat: the saturated hydraulic conductivity
@@ -93,15 +98,25 @@ def compute_soil_VG(soil: SurEauSoil, params: SurEauSoilParams) -> SurEauSoil:
     soil.k_soil = 1000 * params.Ksat * params.B_GC * k_temp
 
     # Calculate Soil water potential --------------------------------------------
-    # Equation 48 from the paper
-    # Imagine squeezing water out of a sponge. When the sponge is soaking wet
-    # (REW ≈ 1), you barely need to squeeze, water drips out easily.
-    # The "suction" the sponge exerts on its remaining water is almost zero
-    # (ψ ≈ 0). As you squeeze out more water (REW decreasing), the remaining
+    # Soil water potential and Soil matric potential are maso-menos the same. 
+    # The concept of water potentials involves the osmotic plus gravitational 
+    # plus pressure, while matric potential involves capillary and adsorptive
+    # forces
+    
+    # Equation 48 from the paper. 
+    # van Genuchten equation inverted == Se = [1 + (α|ψ|)^n]^(-m). See table 8.2
+    
+    # Imagine squeezing water out of a sponge. 
+    # When the sponge is soaking wet (REW = 1), you barely need to squeeze, 
+    # water drips out easily.The "suction" the sponge 
+    # exerts on its remaining water is almost zero (psi_soil formula = 0). 
+    # As you squeeze out more water (REW decreasing), the remaining
     # water is held more and more tightly in the smallest pores. You need to
     # squeeze harder and harder (ψ becomes more negative). When the sponge is
     # nearly dry (REW → 0), ψ → −∞.
-
+    
+    # soil.psi_soil AKA matric potential
+    # alpha_vg and n_vg depend on soil texture
     soil.psi_soil = (
         -(((1 / REW) ** (1 / params.m) - 1) ** (1 / params.n_vg))
         / params.alpha_vg

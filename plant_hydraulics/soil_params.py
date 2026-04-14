@@ -123,10 +123,13 @@ def soil_params(soil: Soil) -> Soil:
     soil.rootfr = []
     z2 = 0.0
     for each_soil_layer in range(soil.nlevsoi):
+        
         if each_soil_layer == 0:
+            
             # Cumulative depth from the soil surface in centimeters
             z2 = soil.dz[each_soil_layer] * 100.0
             soil.rootfr.append(1.0 - beta_param**z2)
+        
         else:
             z1 = z2
             z2 = z1 + soil.dz[each_soil_layer] * 100.0

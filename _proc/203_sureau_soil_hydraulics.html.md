@@ -10,6 +10,33 @@ title: SurEau soil hydraulics
 The overall goal of SurEau soil hydraulics is calculate the soil water potential 
 and soil water conductivity given the amount of water (mm) available
 
+Soils 101:
+
++ Soil bulk density marbles analogy:
+ 
+    Imagine a box filled with marbles.
+
+    __Particle density__ = mass of marbles / volume of marbles alone (ignores gaps)
+    
+    __Bulk density__ = mass of marbles / volume of the whole box (including gaps 
+    between marbles)
+
+    Bulk density tells how compacted the soil is. A compacted clay has high 
+    bulk density (less pore space, harder for roots). A loose sandy loam has 
+    lower bulk density (more pore space, better drainage and root growth).
+
++ Matric potential: Suction that binds water to the soil. Succion is weak when 
+  soil is saturated. The relationship between soil matric potential and 
+  Volumetric water content is non-linear. This relationship is called soil 
+  retention curve 
+
++ Hydraulic Head (AKA Total potential): Is the matric potential plus the 
+  gravitational pull and is defined as the work per unit weight required to move
+  and amount of water at some elevation 
+
++ Hydraulic Conductivity: Rate of water flow for a unit gradient in potential. 
+  Coductivity decreases sharply as soil becomes drier. 
+
 ---
 
 [source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L14){target="_blank" style="float:right; font-size:smaller"}
@@ -186,7 +213,7 @@ Equations implemented:
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L124){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L139){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_soil_Campbell
 
@@ -239,7 +266,7 @@ Transform soil moisture into water potential and k conductance
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L169){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L184){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_soil_conductance_and_psi
 
@@ -257,7 +284,7 @@ def compute_soil_conductance_and_psi(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L183){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L198){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_infiltration
 
@@ -320,7 +347,7 @@ Previous timestep's soil water
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L278){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L293){target="_blank" style="float:right; font-size:smaller"}
 
 ### update_soil_water
 
@@ -338,7 +365,7 @@ def update_soil_water(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L288){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L303){target="_blank" style="float:right; font-size:smaller"}
 
 ### set_SWC_to_field_capacity
 
@@ -363,7 +390,7 @@ the sponge back to its comfortable level."
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L311){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L326){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_evaporation
 

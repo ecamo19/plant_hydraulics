@@ -208,5 +208,6 @@ __marimo__/
 
 .DS_Store
 backup_data
+*.pdf
 
 **.sync-conflict**
