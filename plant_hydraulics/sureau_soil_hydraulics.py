@@ -200,30 +200,39 @@ def compute_infiltration(
 ) -> SurEauSoil:
     """Infiltration through soil layers, then update psi/k.
 
-    ANALOGY — Stacked Buckets:
-   
+    Sureau uses a bucket model, each layer fills up to field capacity. 
+    So water above field capacity drain downward at a fraction 
+    (described by cst_infil). Layes fill sequencially no matter how dry the 
+    soil started or how intense the rainfall is. There's no 
+    K-dependent infiltration cap.
+    
+    However in real life, a intense storm on dry soil produces lots of runoff. 
+    SurEau will instead infiltrate everything (up to total profile capacity) 
+    and predict more soil moisture than actually occurs.
+    
     Picture 3 buckets stacked on top of each other, each with a small
     hole at the bottom.
 
-    Phase 1 Percolation (slow drip):
-      Before rain arrives, any bucket already above its "comfortable full"
-      line (field capacity) slowly drips into the one below.
+    - Phase 1 Percolation (slow drip):
+        Before rain arrives, any bucket already above its "comfortable full"
+        line (field capacity) slowly drips into the one below.
 
-      The cst_infil parameter (0.7) means 70% of the excess drips per
-      timestep, not everything at once, like a slow leak.
+        The cst_infil parameter (0.7) means 70% of the excess drips per
+        timestep, not everything at once, like a slow leak.
 
-    Phase 2 Add rainfall:
-      Pour the rain into the top bucket.
+    - Phase 2 Add rainfall:
+        Pour the rain into the top bucket.
 
-    Phase 3 Surcharge (overflow):
-      If any bucket is now above its absolute maximum (saturation), the
-      excess instantly spills into the bucket below.  The bottom bucket's
-      overflow becomes deep drainage — water lost from the system.
+    - Phase 3 Surcharge (overflow):
+        If any bucket is now above its absolute maximum (saturation), the
+        excess instantly spills into the bucket below.  The bottom bucket's
+        overflow becomes deep drainage, water lost from the system.
     """
-
+    
+    # Get the number of layers --------------------------------------------------
     n = params.n_layers
 
-    # IMPORTANT: .copy() to not mutate original
+    # IMPORTANT: .copy() used to not mutate original params ---------------------
     SWS = soil.soil_water_stock.copy()
     percolation = np.zeros(n)
     surcharge = np.zeros(n)
@@ -237,8 +246,10 @@ def compute_infiltration(
 
     # Loop through each soil layer from top to bottom.
     for each_layer_i in range(n):
+        
         # If the water in this layer exceeds field capacity...
         if SWS[each_layer_i] > params.V_field_capacity[each_layer_i]:
+            
             # The cst_infil parameter smooths the drainage.
             # It prevents all excess water from vanishing instantly.
             # Think of it as the sponge releasing 70% of its drip-water per
@@ -256,11 +267,10 @@ def compute_infiltration(
             #
             # If it's the bottom layer, the water just accumulates in
             # percolation [n-1] and will become deep drainage later.
-
             if each_layer_i < n - 1:
                 SWS[each_layer_i + 1] += percolation[each_layer_i]
 
-    # Add precipitation to top layer
+    # Add precipitation to top layer --------------------------------------------
     SWS[0] += ppt_soil
 
     # Surcharge -----------------------------------------------------------------
@@ -268,8 +278,10 @@ def compute_infiltration(
 
     # Loop through each soil layer from top to bottom.
     for each_layer_i in range(n):
-        # If the water exceeds saturation capacity..
+        
+        # If the water exceeds saturation capacity...
         if SWS[each_layer_i] > params.V_saturation_capacity[each_layer_i]:
+            
             # Calculate the overflow, all excess water
             surcharge[each_layer_i] = (
                 SWS[each_layer_i] - params.V_saturation_capacity[each_layer_i]
@@ -296,6 +308,7 @@ def update_soil_water(
     """Subtract transpiration flux from soil and update.
     """
     soil.soil_water_stock -= flux_evap
+    
     soil = compute_soil_conductance_and_psi(soil, params)
     return soil
 

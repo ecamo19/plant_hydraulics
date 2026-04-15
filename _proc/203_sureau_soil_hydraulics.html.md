@@ -37,6 +37,11 @@ Soils 101:
 + Hydraulic Conductivity: Rate of water flow for a unit gradient in potential. 
   Coductivity decreases sharply as soil becomes drier. 
 
++ Hydraulic redistribution: Process by which roots move water upward and downward
+  in the soil
+
+  
+
 ---
 
 [source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L14){target="_blank" style="float:right; font-size:smaller"}
@@ -299,25 +304,33 @@ def compute_infiltration(
 
 *Infiltration through soil layers, then update psi/k.*
 
-ANALOGY — Stacked Buckets:
+Sureau uses a bucket model, each layer fills up to field capacity. 
+So water above field capacity drain downward at a fraction 
+(described by cst_infil). Layes fill sequencially no matter how dry the 
+soil started or how intense the rainfall is. There's no 
+K-dependent infiltration cap.
+
+However in real life, a intense storm on dry soil produces lots of runoff. 
+SurEau will instead infiltrate everything (up to total profile capacity) 
+and predict more soil moisture than actually occurs.
 
 Picture 3 buckets stacked on top of each other, each with a small
 hole at the bottom.
 
-Phase 1 Percolation (slow drip):
-  Before rain arrives, any bucket already above its "comfortable full"
-  line (field capacity) slowly drips into the one below.
+- Phase 1 Percolation (slow drip):
+    Before rain arrives, any bucket already above its "comfortable full"
+    line (field capacity) slowly drips into the one below.
 
-  The cst_infil parameter (0.7) means 70% of the excess drips per
-  timestep, not everything at once, like a slow leak.
+    The cst_infil parameter (0.7) means 70% of the excess drips per
+    timestep, not everything at once, like a slow leak.
 
-Phase 2 Add rainfall:
-  Pour the rain into the top bucket.
+- Phase 2 Add rainfall:
+    Pour the rain into the top bucket.
 
-Phase 3 Surcharge (overflow):
-  If any bucket is now above its absolute maximum (saturation), the
-  excess instantly spills into the bucket below.  The bottom bucket's
-  overflow becomes deep drainage — water lost from the system.
+- Phase 3 Surcharge (overflow):
+    If any bucket is now above its absolute maximum (saturation), the
+    excess instantly spills into the bucket below.  The bottom bucket's
+    overflow becomes deep drainage, water lost from the system.
 
 
 ```
@@ -347,7 +360,7 @@ Previous timestep's soil water
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L293){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L305){target="_blank" style="float:right; font-size:smaller"}
 
 ### update_soil_water
 
@@ -365,7 +378,7 @@ def update_soil_water(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L303){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L316){target="_blank" style="float:right; font-size:smaller"}
 
 ### set_SWC_to_field_capacity
 
@@ -390,7 +403,7 @@ the sponge back to its comfortable level."
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L326){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_hydraulics.py#L339){target="_blank" style="float:right; font-size:smaller"}
 
 ### compute_evaporation
 

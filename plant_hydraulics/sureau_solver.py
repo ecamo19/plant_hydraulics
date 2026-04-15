@@ -537,7 +537,7 @@ def sureau_solver(
             ) / (K_SL + K_LSym + dL * K_L_Cav + dbxmin)
             psi_LApo_np1 = alpha * psi_LApo_n + (1 - alpha) * Psi_td
 
-            #Equation C20: exponential relaxation for ψ_SApo. The stem has more 
+            # Equation C20: exponential relaxation for ψ_SApo. The stem has more 
             # neighbors (leaf apoplasm, stem symplasm, three soil layers, 
             # cavitation reservoir), all of which contribute to ψ̃.
             k_sts = np.sum(state.k_soil_to_stem)
@@ -574,6 +574,12 @@ def sureau_solver(
                 K_SL * (psi_LApo_n - psi_SApo_n)
                 + K_SSym * (psi_SSym_n - psi_SApo_n)
                 + dS * K_S_Cav * max(psi_SApo_cav - psi_SApo_n, 0)
+                
+                # Equantion 10-12
+                # Water flows from each soil layer into the stem if psi_soil >
+                # psi_sapo.
+                
+                # This describes the total water leaving the soil 
                 + np.sum(state.k_soil_to_stem * (soil.psi_soil - psi_SApo_n))
             )
 
@@ -655,7 +661,8 @@ def sureau_solver(
     )
     if psiref < state.psi_LApo_cav:
         state.psi_LApo_cav = psiref
-        state.PLC_leaf = compute_PLC(psiref, params.slope_VC_leaf, params.P50_VC_leaf)
+        state.PLC_leaf = compute_PLC(psiref, params.slope_VC_leaf, 
+                                     params.P50_VC_leaf)
 
     # Update state: stem cavitation (Eq 15) -------------------------------------
     psiref = (
@@ -665,7 +672,8 @@ def sureau_solver(
     )
     if psiref < state.psi_SApo_cav:
         state.psi_SApo_cav = psiref
-        state.PLC_stem = compute_PLC(psiref, params.slope_VC_stem, params.P50_VC_stem)
+        state.PLC_stem = compute_PLC(psiref, params.slope_VC_stem, 
+                                     params.P50_VC_stem)
 
     # Update state: weighted soil potential -------------------------------------
     k_sts_sum = np.sum(state.k_soil_to_stem)
