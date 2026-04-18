@@ -1,6 +1,7 @@
 ---
-description: Compendium of plant hydraulics and stomatals models meant to accompany
-  the [Climate Change and Terrestrial Ecosystem Modeling book](https://www.cambridge.org/core/books/climate-change-and-terrestrial-ecosystem-modeling/7D31B7BC519E3E892EFDC01F0B54F701)
+description: Compendium of plant hydraulics and stomatal models meant to accompany
+  the processes described in the [Climate Change and Terrestrial Ecosystem Modeling
+  book](https://www.cambridge.org/core/books/climate-change-and-terrestrial-ecosystem-modeling/7D31B7BC519E3E892EFDC01F0B54F701)
   by Gordon Bonan
 output-file: index.html
 title: plant_hydraulics
