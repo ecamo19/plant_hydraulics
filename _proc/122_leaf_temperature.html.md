@@ -99,8 +99,13 @@ def leaf_temperature(
 
 *Calculate leaf temperature and energy fluxes.*
 
-Solve the leaf energy balance using Newton-Raphson iteration to find the
-temperature that balances radiative forcing against longwave emission,
+The leaf temperature model implemented here is a steady state 
+meaning that Rn - H - λE = 0. This implies that the leaf temperature is 
+always in equilibrium with its environment, so there is no thermal lag. In
+other words, this model assumes no heat storage. 
+
+The leaf energy balance is solved by using Newton-Raphson iteration to find 
+the temperature that balances radiative forcing against longwave emission,
 sensible heat flux, and latent heat flux.
 
 __Parameters:__

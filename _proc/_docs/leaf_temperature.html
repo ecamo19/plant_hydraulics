@@ -459,7 +459,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    Leaf transpiration flux (mol H2O<span class="op">/</span>m2 leaf<span class="op">/</span>s).</span>
 <span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Calculate leaf temperature and energy fluxes.</em></p>
-<p>Solve the leaf energy balance using Newton-Raphson iteration to find the temperature that balances radiative forcing against longwave emission, sensible heat flux, and latent heat flux.</p>
+<p>The leaf temperature model implemented here is a steady state meaning that Rn - H - λE = 0. This implies that the leaf temperature is always in equilibrium with its environment, so there is no thermal lag. In other words, this model assumes no heat storage.</p>
+<p>The leaf energy balance is solved by using Newton-Raphson iteration to find the temperature that balances radiative forcing against longwave emission, sensible heat flux, and latent heat flux.</p>
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><p>PhysCon: Physical constants</p>

@@ -12,8 +12,13 @@ def leaf_temperature(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) -> 
     """
     Calculate leaf temperature and energy fluxes.
 
-    Solve the leaf energy balance using Newton-Raphson iteration to find the
-    temperature that balances radiative forcing against longwave emission,
+    The leaf temperature model implemented here is a steady state 
+    meaning that Rn - H - λE = 0. This implies that the leaf temperature is 
+    always in equilibrium with its environment, so there is no thermal lag. In
+    other words, this model assumes no heat storage. 
+    
+    The leaf energy balance is solved by using Newton-Raphson iteration to find 
+    the temperature that balances radiative forcing against longwave emission,
     sensible heat flux, and latent heat flux.
 
     __Parameters:__
@@ -158,22 +163,26 @@ def leaf_temperature(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) -> 
 
         # Calculate emitted longwave radiation (W/m2)
         # (Eq.10.2).
-        
         # Here the 2 indicates that radiation is emitted from both sides of the
-        # leaf
+        # leaf. Term 2*εl*σ*Tl^4 in equation 10.2
         flux.lwrad = 2.0 * leaf.emiss * physcon.sigma * flux.tleaf**4
         
         # Calculate temperature derivative (W/m2/K)
+        # Eq 10.15
         dlwrad = 8.0 * leaf.emiss * physcon.sigma * flux.tleaf**3
 
-        # Calculate sensible heat flux (W/m2)  
+        # Calculate sensible heat flux (W/m2). This follows Fick's Law 
+        # Term H(Tl) in equation 10.2 
         # (Eq 10.5)
+        # Here the 2 indicates that heat is transfered from both sides of the
+        # leaf
         flux.shflx = 2.0 * atmos.cpair * (flux.tleaf - atmos.tair) * flux.gbh
         
         # Calculate temperature derivative (W/m2/K)
         dshflx = 2.0 * atmos.cpair * flux.gbh
 
-        # Calculate latent heat flux (W/m2) 
+        # Calculate latent heat flux (W/m2)
+        # Term λE(Tl) in equation 10.2  
         # (Eq.10.6). Same as equation 7.6 
         # flux.lhflx =  conversion factor * humity difference * total conductance
         flux.lhflx = lambda_val / atmos.patm * (esat - atmos.eair) * gleaf
@@ -185,7 +194,8 @@ def leaf_temperature(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) -> 
         # equation 7.13 without the soil heat flux 
         
         # f0 indicates how far off the energy balance is 
-        # (Eq. 10.13)
+        # (Eq. 10.13).
+        # qa is calcualted by the function calc_radiative_forcing_qa()
         f0 = flux.qa - flux.lwrad - flux.shflx - flux.lhflx
         
         # Temperature derivatives (W/m2/K). 
