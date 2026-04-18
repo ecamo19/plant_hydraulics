@@ -546,7 +546,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    colim_c3:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, colim_c4a:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, colim_c4b:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, qe_c4:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, kp25_c4:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    dleaf:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, emiss:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, rho:<span class="bu">list</span><span class="op">=&lt;</span>factory<span class="op">&gt;</span>, tau:<span class="bu">list</span><span class="op">=&lt;</span>factory<span class="op">&gt;</span>, iota:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, capac:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    minl_wp:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, gplant:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, stomatal_model:Literal<span class="op">=</span><span class="st">'optimization'</span>, g0:<span class="bu">float</span><span class="op">=</span><span class="fl">0.01</span>, g1_medlyn:<span class="bu">float</span><span class="op">=</span><span class="fl">4.0</span>,</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    a_psi:<span class="bu">float</span><span class="op">=</span><span class="fl">4.0</span>, psi_50:<span class="bu">float</span><span class="op">=-</span><span class="fl">2.5</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    a_psi:<span class="bu">float</span><span class="op">=</span><span class="fl">4.0</span>, psi_50:<span class="bu">float</span><span class="op">=-</span><span class="fl">2.5</span>, stomata_distribution:Literal<span class="op">=</span><span class="dv">1</span></span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="va">None</span>:</span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Object holding Leaf physiological and structural parameters</em></p>
@@ -594,9 +594,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>stomatal_model: Stomatal model to use “optimization”, “medlyn” or “profit_max”</li>
 <li>a_psi: Parameter that controls the steepness of this curve in the “profit_max” model</li>
 <li>psi_50: Water potential at 50% loss of conductance (MPa). Always &lt; 0.</li>
+<li>stomata_distribution: 1 (hypostomatous) or 2 (amphistomatous)</li>
 </ul>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L468" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L472" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="flux" class="level3">
 <h3 class="anchored" data-anchor-id="flux">Flux</h3>
@@ -684,7 +685,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="parameters-objects-set-once-read-many" class="level2">
 <h2 class="anchored" data-anchor-id="parameters-objects-set-once-read-many">Parameters objects (set once, read many)</h2>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L672" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L676" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="sureauvegetationparams" class="level3">
 <h3 class="anchored" data-anchor-id="sureauvegetationparams">SurEauVegetationParams</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -823,7 +824,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 </ul>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1030" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1034" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureausoilparams" class="level3">
 <h3 class="anchored" data-anchor-id="sureausoilparams">SurEauSoilParams</h3>
@@ -874,7 +875,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 </ul>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1152" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1156" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureaucomputationoptions" class="level3">
 <h3 class="anchored" data-anchor-id="sureaucomputationoptions">SurEauComputationOptions</h3>
@@ -898,7 +899,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>CTapo: Scaling flag for stem apoplasm capacitance CSApo in the solver (1.0 = enabled, 0.0 = disabled). Multiplies CSApo in Eq. 7. Set to 0 for sensitivity experiments removing stem apoplasm elastic storage (Sect. 6.2)</li>
 </ul>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1198" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1202" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureaumodeloptions" class="level3">
 <h3 class="anchored" data-anchor-id="sureaumodeloptions">SurEauModelOptions</h3>
@@ -942,7 +943,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="state-class-persists-across-timesteps" class="level3">
 <h3 class="anchored" data-anchor-id="state-class-persists-across-timesteps">State class: persists across timesteps</h3>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1260" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1264" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureauplantstate" class="level3">
 <h3 class="anchored" data-anchor-id="sureauplantstate">SurEauPlantState</h3>
@@ -1040,7 +1041,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="fluxes-class-recomputed-every-sub-timestep" class="level3">
 <h3 class="anchored" data-anchor-id="fluxes-class-recomputed-every-sub-timestep">Fluxes class: recomputed every (sub-)timestep</h3>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1500" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1504" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureauplantfluxes" class="level3">
 <h3 class="anchored" data-anchor-id="sureauplantfluxes">SurEauPlantFluxes</h3>
@@ -1102,7 +1103,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="diagnostics-class-solver-quality-derived-monitoring-outputs-class" class="level3">
 <h3 class="anchored" data-anchor-id="diagnostics-class-solver-quality-derived-monitoring-outputs-class">Diagnostics class: solver quality + derived monitoring outputs class</h3>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1631" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1635" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureauplantdiagnostics" class="level3">
 <h3 class="anchored" data-anchor-id="sureauplantdiagnostics">SurEauPlantDiagnostics</h3>
@@ -1116,7 +1117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><em>Solver diagnostics and derived fire/moisture outputs.</em></p>
 <p>Used for logging, quality control, and post-processing — never fed back into the hydraulic solver.</p>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1663" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1667" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureausoil" class="level3">
 <h3 class="anchored" data-anchor-id="sureausoil">SurEauSoil</h3>
@@ -1146,7 +1147,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 </ul>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1697" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1701" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureauclimate" class="level3">
 <h3 class="anchored" data-anchor-id="sureauclimate">SurEauClimate</h3>
@@ -1202,7 +1203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 </ul>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1763" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1767" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureauclimatehourly" class="level3">
 <h3 class="anchored" data-anchor-id="sureauclimatehourly">SurEauClimateHourly</h3>

@@ -69,6 +69,8 @@ def leaf_temperature(
     Leaf emissivity (-).
 - tleaf : float
     Leaf temperature (K). Used as initial guess on input
+- stomata_distribution : int 
+     1 (hypostomatous) or 2 (amphistomatous) 
     flux:Flux, # Flux variables with the following inputs:
 - gbh : float
     Leaf boundary layer conductance for heat (mol/m2 leaf/s).
@@ -120,6 +122,7 @@ __Parameters:__
 
     - emiss: Leaf emissivity (-).
     - tleaf: Leaf temperature (K). Used as initial guess on input
+    - stomata_distribution: 1 (hypostomatous) or 2 (amphistomatous) 
 
 - Flux: variables with the following inputs:
 

@@ -35,6 +35,7 @@ def leaf_temperature(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) -> 
 
         - emiss: Leaf emissivity (-).
         - tleaf: Leaf temperature (K). Used as initial guess on input
+        - stomata_distribution: 1 (hypostomatous) or 2 (amphistomatous) 
 
     - Flux: variables with the following inputs:
 
@@ -80,6 +81,8 @@ def leaf_temperature(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) -> 
             Leaf emissivity (-).
         - tleaf : float
             Leaf temperature (K). Used as initial guess on input
+        - stomata_distribution : int 
+             1 (hypostomatous) or 2 (amphistomatous) 
 
     flux : Flux
         Flux variables with the following inputs:
@@ -150,8 +153,8 @@ def leaf_temperature(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) -> 
         esat, desat = satvap(flux.tleaf - physcon.tfrz)
 
         # Calculate leaf conductance for water vapor (mol H2O/m2/s)
-        # (Eq.10.8). This is same as equation 7.7
-        gleaf = flux.gs * flux.gbv / (flux.gs + flux.gbv)
+        # (Eq.10.8, 10.9). This is same as equation 7.7
+        gleaf = leaf.stomata_distribution * flux.gs * flux.gbv / (flux.gs + flux.gbv)
 
         # Calculate emitted longwave radiation (W/m2)
         # (Eq.10.2).

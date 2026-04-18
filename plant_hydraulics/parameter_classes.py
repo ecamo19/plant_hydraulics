@@ -277,6 +277,7 @@ class Leaf:
     - stomatal_model: Stomatal model to use "optimization", "medlyn" or "profit_max"
     - a_psi: Parameter that controls the steepness of this curve in the "profit_max" model
     - psi_50: Water potential at 50% loss of conductance (MPa). Always < 0.
+    - stomata_distribution: 1 (hypostomatous) or 2 (amphistomatous) 
     """
 
     # Photosynthetic pathway: 1 = C3, 0 = C4
@@ -462,6 +463,9 @@ class Leaf:
     #
     # Note: Only used when stomatal_model = "profit_max".
     psi_50: float = -2.5
+    
+    # stomata_distribution: 1 hypostomatous and 2 amphistomatous
+    stomata_distribution: Literal[1, 2] = 1
 
 # %% ../nbs/100_parameter_classes.ipynb #b992728a
 @dataclass

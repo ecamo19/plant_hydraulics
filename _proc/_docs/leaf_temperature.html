@@ -433,29 +433,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    Leaf emissivity (<span class="op">-</span>).</span>
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> tleaf : <span class="bu">float</span></span>
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    Leaf temperature (K). Used <span class="im">as</span> initial guess on <span class="bu">input</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    flux:Flux, <span class="co"># Flux variables with the following inputs:</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> gbh : <span class="bu">float</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    Leaf boundary layer conductance <span class="cf">for</span> heat (mol<span class="op">/</span>m2 leaf<span class="op">/</span>s).</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> gbv : <span class="bu">float</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    Leaf boundary layer conductance <span class="cf">for</span> H2O (mol H2O<span class="op">/</span>m2 leaf<span class="op">/</span>s).</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> gs : <span class="bu">float</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    Leaf stomatal conductance (mol H2O<span class="op">/</span>m2 leaf<span class="op">/</span>s).</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> qa : <span class="bu">float</span></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    Leaf radiative forcing (W<span class="op">/</span>m2 leaf).</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>Flux: <span class="co"># Updated flux object with the following attributes:</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> tleaf : <span class="bu">float</span></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    Leaf temperature (K). Updated to energy<span class="op">-</span>balance solution on output.</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> rnet : <span class="bu">float</span></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    Leaf net radiation (W<span class="op">/</span>m2 leaf).</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> lwrad : <span class="bu">float</span></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    Longwave radiation emitted <span class="im">from</span> leaf (W<span class="op">/</span>m2 leaf).</span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> shflx : <span class="bu">float</span></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    Leaf sensible heat flux (W<span class="op">/</span>m2 leaf).</span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> lhflx : <span class="bu">float</span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    Leaf latent heat flux (W<span class="op">/</span>m2 leaf).</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> etflx : <span class="bu">float</span></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    Leaf transpiration flux (mol H2O<span class="op">/</span>m2 leaf<span class="op">/</span>s).</span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> stomata_distribution : <span class="bu">int</span> </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>     <span class="dv">1</span> (hypostomatous) <span class="kw">or</span> <span class="dv">2</span> (amphistomatous) </span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    flux:Flux, <span class="co"># Flux variables with the following inputs:</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> gbh : <span class="bu">float</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    Leaf boundary layer conductance <span class="cf">for</span> heat (mol<span class="op">/</span>m2 leaf<span class="op">/</span>s).</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> gbv : <span class="bu">float</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    Leaf boundary layer conductance <span class="cf">for</span> H2O (mol H2O<span class="op">/</span>m2 leaf<span class="op">/</span>s).</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> gs : <span class="bu">float</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    Leaf stomatal conductance (mol H2O<span class="op">/</span>m2 leaf<span class="op">/</span>s).</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> qa : <span class="bu">float</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    Leaf radiative forcing (W<span class="op">/</span>m2 leaf).</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>Flux: <span class="co"># Updated flux object with the following attributes:</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> tleaf : <span class="bu">float</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    Leaf temperature (K). Updated to energy<span class="op">-</span>balance solution on output.</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> rnet : <span class="bu">float</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    Leaf net radiation (W<span class="op">/</span>m2 leaf).</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> lwrad : <span class="bu">float</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    Longwave radiation emitted <span class="im">from</span> leaf (W<span class="op">/</span>m2 leaf).</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> shflx : <span class="bu">float</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    Leaf sensible heat flux (W<span class="op">/</span>m2 leaf).</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> lhflx : <span class="bu">float</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    Leaf latent heat flux (W<span class="op">/</span>m2 leaf).</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> etflx : <span class="bu">float</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    Leaf transpiration flux (mol H2O<span class="op">/</span>m2 leaf<span class="op">/</span>s).</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Calculate leaf temperature and energy fluxes.</em></p>
 <p>Solve the leaf energy balance using Newton-Raphson iteration to find the temperature that balances radiative forcing against longwave emission, sensible heat flux, and latent heat flux.</p>
 <p><strong>Parameters:</strong></p>
@@ -477,6 +479,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>emiss: Leaf emissivity (-).</li>
 <li>tleaf: Leaf temperature (K). Used as initial guess on input</li>
+<li>stomata_distribution: 1 (hypostomatous) or 2 (amphistomatous)</li>
 </ul></li>
 <li><p>Flux: variables with the following inputs:</p>
 <ul>

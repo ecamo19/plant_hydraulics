@@ -187,7 +187,7 @@ def Leaf(
     colim_c3:float=0.0, colim_c4a:float=0.0, colim_c4b:float=0.0, qe_c4:float=0.0, kp25_c4:float=0.0,
     dleaf:float=0.0, emiss:float=0.0, rho:list=<factory>, tau:list=<factory>, iota:float=0.0, capac:float=0.0,
     minl_wp:float=0.0, gplant:float=0.0, stomatal_model:Literal='optimization', g0:float=0.01, g1_medlyn:float=4.0,
-    a_psi:float=4.0, psi_50:float=-2.5
+    a_psi:float=4.0, psi_50:float=-2.5, stomata_distribution:Literal=1
 )->None:
 
 
@@ -238,11 +238,12 @@ def Leaf(
 - stomatal_model: Stomatal model to use "optimization", "medlyn" or "profit_max"
 - a_psi: Parameter that controls the steepness of this curve in the "profit_max" model
 - psi_50: Water potential at 50% loss of conductance (MPa). Always < 0.
+- stomata_distribution: 1 (hypostomatous) or 2 (amphistomatous)
 
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L468){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L472){target="_blank" style="float:right; font-size:smaller"}
 
 ### Flux
 
@@ -334,7 +335,7 @@ def Flux(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L672){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L676){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauVegetationParams
 
@@ -474,7 +475,7 @@ def SurEauVegetationParams(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1030){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1034){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauSoilParams
 
@@ -529,7 +530,7 @@ def SurEauSoilParams(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1152){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1156){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauComputationOptions
 
@@ -561,7 +562,7 @@ and the adaptive sub-stepping strategy used in run_sureau.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1198){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1202){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauModelOptions
 
@@ -618,7 +619,7 @@ Design rationale (mirrors Bonan's Leaf → params, Flux → outputs):
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1260){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1264){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauPlantState
 
@@ -726,7 +727,7 @@ Geosci. Model Dev., 15, 5593–5626.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1500){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1504){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauPlantFluxes
 
@@ -794,7 +795,7 @@ fills them in from SurEauPlantState + atmospheric forcing.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1631){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1635){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauPlantDiagnostics
 
@@ -817,7 +818,7 @@ back into the hydraulic solver.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1663){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1667){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauSoil
 
@@ -854,7 +855,7 @@ back into the hydraulic solver.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1697){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1701){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauClimate
 
@@ -917,7 +918,7 @@ simulation.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1763){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1767){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauClimateHourly
 
