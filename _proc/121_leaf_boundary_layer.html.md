@@ -57,8 +57,17 @@ def leaf_boundary_layer(
 
 *Calculate leaf boundary layer conductances.*
 
-The boundary layer regulates transfer if heat, water vapor and CO2 between
-the ambient air and the leaf surface 
+Leaf physiology 101:
+
+- The boundary layer: Thin layer that regulates the transfer of heat, water 
+vapor and CO2 between the leaf surface and the atmosphere. Thinner boundary 
+layers associated with small leaves have on avarage higher conductances. 
+
+Keep in mind that dessert plants might cool themselves by sensible heat. 
+Small leaves produce thin boundary layers, which causes high conductance of 
+heat thorught the boundary layer (high gbh) and high heat conduction. 
+Therefore it could be said that sensible heat and not transpiration cool the 
+leaves in desserts.    
 
 __Parameters:__
 

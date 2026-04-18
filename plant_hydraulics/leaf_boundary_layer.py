@@ -11,8 +11,17 @@ def leaf_boundary_layer(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) 
     """
     Calculate leaf boundary layer conductances.
     
-    The boundary layer regulates transfer if heat, water vapor and CO2 between
-    the ambient air and the leaf surface 
+    Leaf physiology 101:
+    
+    - The boundary layer: Thin layer that regulates the transfer of heat, water 
+    vapor and CO2 between the leaf surface and the atmosphere. Thinner boundary 
+    layers associated with small leaves have on avarage higher conductances. 
+    
+    Keep in mind that dessert plants might cool themselves by sensible heat. 
+    Small leaves produce thin boundary layers, which causes high conductance of 
+    heat thorught the boundary layer (high gbh) and high heat conduction. 
+    Therefore it could be said that sensible heat and not transpiration cool the 
+    leaves in desserts.    
 
     __Parameters:__
 
@@ -119,6 +128,11 @@ def leaf_boundary_layer(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) 
     # Molecular diffusivity, CO2 (m2/s)
     Dc = physcon.Dc0 * fac
 
+    # Empirical correction factor. Necessary because leaves are not flat and 
+    # rectangular plates
+    
+    b1 = 1.5
+    
     # Dimensionless numbers -----------------------------------------------------
 
     # Reynolds number
@@ -141,12 +155,10 @@ def leaf_boundary_layer(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) 
         / (atmos.tair * visc * visc)
     )
 
-    # Empirical correction factor
-    b1 = 1.5
-
     # Nusselt number (Nu) and Sherwood numbers (H2O: Shv, CO2: Shc) -------------
 
-    # Forced convection - laminar flow
+    # Forced convection
+    # Eq 10.33
     Nu_lam = b1 * 0.66 * Pr ** (0.33) * Re ** (0.5)
     Shv_lam = b1 * 0.66 * Scv ** (0.33) * Re ** (0.5)
     Shc_lam = b1 * 0.66 * Scc ** (0.33) * Re ** (0.5)
@@ -172,8 +184,14 @@ def leaf_boundary_layer(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) 
     Shc = Shc_forced + Shc_free
 
     # Boundary layer conductances (m/s) -----------------------------------------
+    
+    # Heat
     flux.gbh = Dh * Nu / leaf.dleaf
+    
+    # Water vapour
     flux.gbv = Dv * Shv / leaf.dleaf
+    
+    # CO2
     flux.gbc = Dc * Shc / leaf.dleaf
 
     # Convert conductance (m/s) to (mol/m2/s) -----------------------------------
