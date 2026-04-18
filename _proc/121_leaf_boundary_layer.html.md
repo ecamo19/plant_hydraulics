@@ -57,6 +57,9 @@ def leaf_boundary_layer(
 
 *Calculate leaf boundary layer conductances.*
 
+The boundary layer regulates transfer if heat, water vapor and CO2 between
+the ambient air and the leaf surface 
+
 __Parameters:__
 
 - PhysCon: Physical constants

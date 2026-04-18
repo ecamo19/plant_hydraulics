@@ -10,6 +10,9 @@ from .parameter_classes import PhysCon, Atmos, Leaf, Flux
 def leaf_boundary_layer(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) -> Flux:
     """
     Calculate leaf boundary layer conductances.
+    
+    The boundary layer regulates transfer if heat, water vapor and CO2 between
+    the ambient air and the leaf surface 
 
     __Parameters:__
 
@@ -99,6 +102,8 @@ def leaf_boundary_layer(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) 
             Leaf boundary layer conductance for CO2 (mol CO2/m2 leaf/s).
     """
 
+    # Constants -----------------------------------------------------------------
+    
     # Adjust diffusivity for temperature and pressure
     fac = 101325.0 / atmos.patm * (atmos.tair / physcon.tfrz) ** 1.81
 
@@ -173,13 +178,13 @@ def leaf_boundary_layer(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) 
 
     # Convert conductance (m/s) to (mol/m2/s) -----------------------------------
 
-    # how easily heat passes through (controls whether the leaf can cool itself)
+    # How easily heat passes through (controls whether the leaf can cool itself)
     flux.gbh *= atmos.rhomol
 
-    # how easily water vapor passes through (controls transpiration)
+    # How easily water vapor passes through (controls transpiration)
     flux.gbv *= atmos.rhomol
 
-    # how easily CO₂ passes through (controls photosynthesis)
+    # How easily CO2 passes through (controls photosynthesis)
     flux.gbc *= atmos.rhomol
 
     return flux

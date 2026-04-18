@@ -110,6 +110,8 @@ def leaf_temperature(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) -> 
             Leaf transpiration flux (mol H2O/m2 leaf/s).
     """
 
+    # Constants -----------------------------------------------------------------
+    
     # Latent heat of vaporization (J/mol)
     lambda_val = latvap(atmos.tair - physcon.tfrz, physcon.mmh2o)
 
@@ -126,47 +128,54 @@ def leaf_temperature(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) -> 
     f0 = f0_max + 1.0
 
     # Newton-Raphson approach ---------------------------------------------------
-    # While energy balance residual is larger than ~0, keep looping
     # By definition (Eq 10.13) the energy balance should be 0
-    # Newton-Raphson iteration until leaf energy balance is less than
-    # f0_max or to niter_max iterationss
+    # Newton-Raphson approach: Loop until leaf energy balance is less than
+    # f0_max or to niter_max iterations is reached
+    
+    # While energy balance residual is larger than ~0, keep looping...
     while abs(f0) > f0_max:
+        
+        # Count the number of iterationes 
         niter += 1
 
-        # Raise error if  iterations larger than 100
+        # Raise error if  iterations larger than 100 ----------------------------
         if niter > niter_max:
             raise RuntimeError(
                 f"leaf_temperature: failed to converge after {niter_max} iterations. "
                 f"f0 = {f0:.6e}, tleaf = {flux.tleaf:.4f} K"
             )
 
-        # Saturation vapor pressure (Pa) and temperature derivative (Pa/K)
+        # Calculate saturation vapor pressure (Pa) and temperature derivative 
+        # (Pa/K)
         esat, desat = satvap(flux.tleaf - physcon.tfrz)
 
-        # Leaf conductance for water vapor (mol H2O/m2/s)
+        # Calculate leaf conductance for water vapor (mol H2O/m2/s)
         # (Eq.10.8). This is same as equation 7.7
         gleaf = flux.gs * flux.gbv / (flux.gs + flux.gbv)
 
-        # Emitted longwave radiation (W/m2)
-        # (Eq.10.2)
+        # Calculate emitted longwave radiation (W/m2)
+        # (Eq.10.2).
+        
+        # Here the 2 indicates that radiation is emitted from both sides of the
+        # leaf
         flux.lwrad = 2.0 * leaf.emiss * physcon.sigma * flux.tleaf**4
         
-        # Temperature derivative (W/m2/K)
+        # Calculate temperature derivative (W/m2/K)
         dlwrad = 8.0 * leaf.emiss * physcon.sigma * flux.tleaf**3
 
-        # Sensible heat flux (W/m2)  
+        # Calculate sensible heat flux (W/m2)  
         # (Eq 10.5)
         flux.shflx = 2.0 * atmos.cpair * (flux.tleaf - atmos.tair) * flux.gbh
         
-        # Temperature derivative (W/m2/K)
+        # Calculate temperature derivative (W/m2/K)
         dshflx = 2.0 * atmos.cpair * flux.gbh
 
-        # Latent heat flux (W/m2) 
+        # Calculate latent heat flux (W/m2) 
         # (Eq.10.6). Same as equation 7.6 
         # flux.lhflx =  conversion factor * humity difference * total conductance
         flux.lhflx = lambda_val / atmos.patm * (esat - atmos.eair) * gleaf
         
-        # Temperature derivative (W/m2/K)
+        # Calculate temperature derivative (W/m2/K)
         dlhflx = lambda_val / atmos.patm * desat * gleaf
 
         # Energy balance residual at the leaf level (W/m2). This a version of 
@@ -176,14 +185,15 @@ def leaf_temperature(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) -> 
         # (Eq. 10.13)
         f0 = flux.qa - flux.lwrad - flux.shflx - flux.lhflx
         
-        # Temperature derivatives (W/m2/K). df0 is how sensitive the energy 
-        # balance is to temperature changes.
+        # Temperature derivatives (W/m2/K). 
+        # df0 indicates how sensitive the energy balance is to temperature 
+        # changes.
         # If df0 is large, this indicates the energy balance is very sensitive to 
         # temperature changes, so a small temperature change should be applied.
         df0 = -dlwrad - dshflx - dlhflx
 
         # Newton-Rapson correction
-        # This tells you exactly how much to adjust the temperature
+        # This indicates how much to adjust the temperature
         # Eq 10.14 == Eq 7.16  
         dtleaf = -f0 / df0
 
@@ -203,7 +213,7 @@ def leaf_temperature(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) -> 
         print(f"lh = {flux.lhflx:15.3f}")
         raise RuntimeError("leaf_temperature: energy balance not closed")
 
-    # Water vapor flux: W/m2 -> mol H2O/m2/s
+    # Convert water vapor flux from W/m2 to mol H2O/m2/s ------------------------
     flux.etflx = flux.lhflx / lambda_val
 
     return flux
