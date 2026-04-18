@@ -48,7 +48,7 @@ Input: ψ_soil (soil water supply)
                     ▼
             Return ψ_leaf_new
                     │
-          (used by StomataEfficiency
+          (used by stomatal_efficiency
            to check: ψ_leaf > ψ_min ?)
 ```
 

@@ -263,10 +263,9 @@ def leaf_water_potential(physcon, leaf, flux):
         # conductance, how easily water flows through the entire soil-to-leaf
         # pathway (the "pipe width"). 
 
-        # soil supply - 
-        # the energy cost of lifting water (the taller the tree the higher 
-        # the cost) - 
-        # the transpiration drawdown.
+        # soil supply minus the energy cost of lifting water 
+        # (the taller the tree the higher the cost) minus the transpiration 
+        # drawdown.
         
         # Term psi_eq represents what psi_leaf would be if the system reached
         # equilibrium (meaning inflow = outflow therefore steady state). In other
