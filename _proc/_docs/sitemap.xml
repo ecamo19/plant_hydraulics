@@ -2,122 +2,122 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://ecamo19.github.io/plant_hydraulics/2_leaf_stomatal_profit_max.html</loc>
-    <lastmod>2026-04-18T05:15:06.137Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/run_sureau.html</loc>
-    <lastmod>2026-04-18T05:15:06.095Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/utils.html</loc>
-    <lastmod>2026-04-18T05:15:06.007Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html</loc>
-    <lastmod>2026-04-18T05:15:05.939Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html</loc>
-    <lastmod>2026-04-18T05:15:05.915Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/tutorial_1_basic_run.html</loc>
-    <lastmod>2026-04-18T05:15:05.905Z</lastmod>
+    <lastmod>2026-04-18T05:29:11.370Z</lastmod>
   </url>
   <url>
     <loc>https://ecamo19.github.io/plant_hydraulics/sureau_climate.html</loc>
-    <lastmod>2026-04-18T05:15:05.884Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/tutorial_3_profit_max_validation.html</loc>
-    <lastmod>2026-04-18T05:15:05.777Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_params.html</loc>
-    <lastmod>2026-04-18T05:15:05.747Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/sureau_object_initialization.html</loc>
-    <lastmod>2026-04-18T05:15:05.650Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/leaf_ci_optimization.html</loc>
-    <lastmod>2026-04-18T05:15:05.609Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/leaf_params.html</loc>
-    <lastmod>2026-04-18T05:15:05.566Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/leaf_temperature.html</loc>
-    <lastmod>2026-04-18T05:15:05.550Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/0_soil_params.html</loc>
-    <lastmod>2026-04-18T05:15:05.260Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/root_params.html</loc>
-    <lastmod>2026-04-18T05:15:05.205Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/soil_resistance.html</loc>
-    <lastmod>2026-04-18T05:15:05.248Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/parameter_classes.html</loc>
-    <lastmod>2026-04-18T05:15:05.262Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/sureau_soil_params.html</loc>
-    <lastmod>2026-04-18T05:15:05.564Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/leaf_phosynthesis.html</loc>
-    <lastmod>2026-04-18T05:15:05.585Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/leaf_water_potential.html</loc>
-    <lastmod>2026-04-18T05:15:05.644Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/tutorial_2_gs_models.html</loc>
-    <lastmod>2026-04-18T05:15:05.717Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/sureau_solver.html</loc>
-    <lastmod>2026-04-18T05:15:05.769Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/leaf_boundary_layer.html</loc>
-    <lastmod>2026-04-18T05:15:05.780Z</lastmod>
+    <lastmod>2026-04-18T05:29:10.928Z</lastmod>
   </url>
   <url>
     <loc>https://ecamo19.github.io/plant_hydraulics/0_leaf_fluxes.html</loc>
-    <lastmod>2026-04-18T05:15:05.890Z</lastmod>
+    <lastmod>2026-04-18T05:29:10.885Z</lastmod>
   </url>
   <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/tutorial_4_diurnal_sureau.html</loc>
-    <lastmod>2026-04-18T05:15:05.908Z</lastmod>
+    <loc>https://ecamo19.github.io/plant_hydraulics/run_sureau.html</loc>
+    <lastmod>2026-04-18T05:29:10.842Z</lastmod>
   </url>
   <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/sureau_soil_hydraulics.html</loc>
-    <lastmod>2026-04-18T05:15:05.938Z</lastmod>
+    <loc>https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html</loc>
+    <lastmod>2026-04-18T05:29:10.823Z</lastmod>
   </url>
   <url>
     <loc>https://ecamo19.github.io/plant_hydraulics/0_leaf_stomatal_optimization.html</loc>
-    <lastmod>2026-04-18T05:15:05.975Z</lastmod>
+    <lastmod>2026-04-18T05:29:10.790Z</lastmod>
   </url>
   <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/1_leaf_stomatal_medlyn.html</loc>
-    <lastmod>2026-04-18T05:15:06.066Z</lastmod>
+    <loc>https://ecamo19.github.io/plant_hydraulics/tutorial_4_diurnal_sureau.html</loc>
+    <lastmod>2026-04-18T05:29:10.768Z</lastmod>
   </url>
   <url>
-    <loc>https://ecamo19.github.io/plant_hydraulics/leaf_stomatal_efficiency.html</loc>
-    <lastmod>2026-04-18T05:15:06.095Z</lastmod>
+    <loc>https://ecamo19.github.io/plant_hydraulics/tutorial_2_gs_models.html</loc>
+    <lastmod>2026-04-18T05:29:10.741Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ecamo19.github.io/plant_hydraulics/tutorial_1_basic_run.html</loc>
+    <lastmod>2026-04-18T05:29:10.712Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ecamo19.github.io/plant_hydraulics/0_soil_params.html</loc>
+    <lastmod>2026-04-18T05:29:10.664Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ecamo19.github.io/plant_hydraulics/soil_resistance.html</loc>
+    <lastmod>2026-04-18T05:29:10.652Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ecamo19.github.io/plant_hydraulics/sureau_soil_hydraulics.html</loc>
+    <lastmod>2026-04-18T05:29:10.552Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ecamo19.github.io/plant_hydraulics/sureau_soil_params.html</loc>
+    <lastmod>2026-04-18T05:29:10.497Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ecamo19.github.io/plant_hydraulics/leaf_ci_optimization.html</loc>
+    <lastmod>2026-04-18T05:29:10.222Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ecamo19.github.io/plant_hydraulics/leaf_params.html</loc>
+    <lastmod>2026-04-18T05:29:10.168Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ecamo19.github.io/plant_hydraulics/parameter_classes.html</loc>
+    <lastmod>2026-04-18T05:29:10.165Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ecamo19.github.io/plant_hydraulics/root_params.html</loc>
+    <lastmod>2026-04-18T05:29:10.187Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ecamo19.github.io/plant_hydraulics/leaf_boundary_layer.html</loc>
+    <lastmod>2026-04-18T05:29:10.239Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ecamo19.github.io/plant_hydraulics/utils.html</loc>
+    <lastmod>2026-04-18T05:29:10.547Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ecamo19.github.io/plant_hydraulics/leaf_temperature.html</loc>
+    <lastmod>2026-04-18T05:29:10.578Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ecamo19.github.io/plant_hydraulics/sureau_solver.html</loc>
+    <lastmod>2026-04-18T05:29:10.657Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html</loc>
+    <lastmod>2026-04-18T05:29:10.687Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ecamo19.github.io/plant_hydraulics/sureau_object_initialization.html</loc>
+    <lastmod>2026-04-18T05:29:10.715Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ecamo19.github.io/plant_hydraulics/leaf_phosynthesis.html</loc>
+    <lastmod>2026-04-18T05:29:10.765Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_params.html</loc>
+    <lastmod>2026-04-18T05:29:10.780Z</lastmod>
   </url>
   <url>
     <loc>https://ecamo19.github.io/plant_hydraulics/index.html</loc>
-    <lastmod>2026-04-18T05:15:05.824Z</lastmod>
+    <lastmod>2026-04-18T05:29:10.794Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ecamo19.github.io/plant_hydraulics/tutorial_3_profit_max_validation.html</loc>
+    <lastmod>2026-04-18T05:29:10.827Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ecamo19.github.io/plant_hydraulics/leaf_water_potential.html</loc>
+    <lastmod>2026-04-18T05:29:10.860Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ecamo19.github.io/plant_hydraulics/leaf_stomatal_efficiency.html</loc>
+    <lastmod>2026-04-18T05:29:10.910Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ecamo19.github.io/plant_hydraulics/1_leaf_stomatal_medlyn.html</loc>
+    <lastmod>2026-04-18T05:29:10.980Z</lastmod>
   </url>
 </urlset>
