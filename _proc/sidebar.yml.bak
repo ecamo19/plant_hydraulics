@@ -1,0 +1,33 @@
+website:
+  sidebar:
+    contents:
+      - index.ipynb
+      - 100_parameter_classes.ipynb
+      - 101_utils.ipynb
+      - 110_0_soil_params.ipynb
+      - 111_root_params.ipynb
+      - 112_leaf_params.ipynb
+      - 120_soil_resistance.ipynb
+      - 121_leaf_boundary_layer.ipynb
+      - 122_leaf_temperature.ipynb
+      - 123_leaf_ci_optimization.ipynb
+      - 124_leaf_phosynthesis.ipynb
+      - 125_leaf_water_potential.ipynb
+      - 126_leaf_stomatal_efficiency.ipynb
+      - 127_0_leaf_stomatal_optimization.ipynb
+      - 127_1_leaf_stomatal_medlyn.ipynb
+      - 127_2_leaf_stomatal_profit_max.ipynb
+      - 128_0_leaf_fluxes.ipynb
+      - 200_sureau_soil_params.ipynb
+      - 201_sureau_vegetation_params.ipynb
+      - 202_sureau_climate.ipynb
+      - 203_sureau_soil_hydraulics.ipynb
+      - 204_sureau_plant_hydraulics.ipynb
+      - 205_sureau_vegetation_processes.ipynb
+      - 210_sureau_object_initialization.ipynb
+      - 211_sureau_solver.ipynb
+      - 222_run_sureau.ipynb
+      - 300_tutorial_1_basic_run.ipynb
+      - 301_tutorial_2_gs_models.ipynb
+      - 303_tutorial_3_profit_max_validation.ipynb
+      - 304_tutorial_4_diurnal_sureau.ipynb
