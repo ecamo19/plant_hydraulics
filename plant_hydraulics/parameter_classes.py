@@ -679,7 +679,7 @@ class SurEauVegetationParams:
     - __General__
 
         - K:                    Light extinction parameter for Beer-Lambert canopy cover 
-        - transpiration_model:  Transpiration formulation: "Jarvis" (Eq. 29) or "Granier" 
+        - transpiration_model:  Transpiration formulation: "Jarvis" (Eq. 29), "Granier" or 'Medlyn' 
         - transpi_granier_a:    Granier transpiration quadratic coefficient for LAI (-)  [not in paper, model-specific]
         - transpi_granier_b:    Granier transpiration linear coefficient for LAI (-)  [not in paper, model-specific]
         - transpi_granier_c:    Granier transpiration constant term (-)  [not in paper, model-specific]
@@ -703,6 +703,14 @@ class SurEauVegetationParams:
         - LDMC:                 Leaf dry matter content, dry mass over saturated mass (Table 1, Eq. 38, mg/g)
         - LMA:                  Leaf mass per area (Table 1, g/m2leaf)
         - C_LApo_init:          Constant capacitance of the leaf apoplasm, CLApo (Table 1, Eq. 6, mmol/m2leaf/MPa)
+        
+        - Vcmax25:              Maximum carboxylation rate (umol/m2/s)
+        - Jmax25:               Maximum electron transport rate (umol/m2/s)
+        - Rd25:                 Leaf respiration rate (umol CO2/m2 leaf/s)
+        - kc25:                 Michaelis-Menten constant for CO2 (umol/mol)
+        - ko25:                 Michaelis-Menten constant for O2 (mmol/mol)
+        - cp25:                 CO2 compensation point (umol/mol)
+        
 
     - __Phenology__
 
