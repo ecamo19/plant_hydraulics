@@ -347,8 +347,13 @@ def SurEauVegetationParams(
     Q10_2_gmin:float=4.8, canopy_storage_param:float=1.5, k_plant_init:float=0.62, PT_coeff:float=1.14,
     LAI_max:float=4.5, P50_VC_leaf:float=-3.4, slope_VC_leaf:float=60.0, epsilon_sym_leaf:float=10.0,
     pi_full_turgor_leaf:float=-2.1, apo_frac_leaf:float=0.4, sym_frac_leaf:float=0.4, LDMC:float=570.0,
-    LMA:float=106.0, C_LApo_init:float=1e-05, foliage:str='Evergreen', nb_day_LAI:int=21, T_base:float=3.0,
-    F_crit:float=450.0, day_start:int=55, day_start_forced:int=40, day_end_forced:int=220, defoliation:bool=False,
+    LMA:float=106.0, C_LApo_init:float=1e-05, Vcmax25:float=60.0, Jmax25:float=100.2, Rd25:float=0.9,
+    kc25:float=404.9, ko25:float=278.4, cp25:float=42.75, kcha:float=79430.0, koha:float=36380.0, cpha:float=37830.0,
+    vcmaxha:float=65330.0, jmaxha:float=43540.0, rdha:float=46390.0, vcmaxhd:float=150000.0, jmaxhd:float=150000.0,
+    rdhd:float=150000.0, vcmaxse:float=490.0, jmaxse:float=490.0, rdse:float=490.0, phi_psii:float=0.85,
+    theta_j:float=0.9, colim_c3:float=0.98, g0_medlyn:float=10.0, g1_medlyn:float=4.45, CO2_air:float=415.0,
+    O2_air:float=209.0, foliage:str='Evergreen', nb_day_LAI:int=21, T_base:float=3.0, F_crit:float=450.0,
+    day_start:int=55, day_start_forced:int=40, day_end_forced:int=220, defoliation:bool=False,
     P50_VC_stem:float=-3.4, slope_VC_stem:float=60.0, gmin_S:float=3.0, pi_full_turgor_stem:float=-2.1,
     epsilon_sym_stem:float=10.0, vol_stem:float=40.0, apo_frac_stem:float=0.4, sym_frac_stem:float=0.2,
     C_SApo_init:float=2e-05, k_SSym_init:float=0.26, f_TRB_to_leaf:float=0.8, g_BL_stem:float=2000.0,
@@ -370,7 +375,7 @@ def SurEauVegetationParams(
 - __General__
 
     - K:                    Light extinction parameter for Beer-Lambert canopy cover 
-    - transpiration_model:  Transpiration formulation: "Jarvis" (Eq. 29) or "Granier" 
+    - transpiration_model:  Transpiration formulation: "Jarvis" (Eq. 29), "Granier" or 'Medlyn' 
     - transpi_granier_a:    Granier transpiration quadratic coefficient for LAI (-)  [not in paper, model-specific]
     - transpi_granier_b:    Granier transpiration linear coefficient for LAI (-)  [not in paper, model-specific]
     - transpi_granier_c:    Granier transpiration constant term (-)  [not in paper, model-specific]
@@ -394,6 +399,37 @@ def SurEauVegetationParams(
     - LDMC:                 Leaf dry matter content, dry mass over saturated mass (Table 1, Eq. 38, mg/g)
     - LMA:                  Leaf mass per area (Table 1, g/m2leaf)
     - C_LApo_init:          Constant capacitance of the leaf apoplasm, CLApo (Table 1, Eq. 6, mmol/m2leaf/MPa)
+
+    - Vcmax25:              Max carboxylation at 25C (umol/m2/s)
+    - Jmax25:               Max electron transport at 25C (= 1.67 * Vcmax25)
+    - Rd25:                 Leaf respiration at 25C (= 0.015 * Vcmax25)
+    - kc25:                 Michaelis-Menten for CO2 at 25C (umol/mol)
+    - ko25:                 Michaelis-Menten for O2 at 25C (mmol/mol)
+    - cp25:                 CO2 compensation point at 25C (umol/mol)
+
+    - kcha:                 Activation energy for kc25 (J/mol)
+    - koha:                 Activation energy for ko25 (J/mol)
+    - cpha:                 Activation energy for compensation point (J/mol)
+    - vcmaxha:              Activation energy for VCMAX (J/mol)
+    - jmaxha:               Activation energy for JMAX (J/mol)
+    - rdha:                 Activation energy for respiration (J/mol)
+
+    - vcmaxhd:              Deactivation energy for VCMAX (J/mol)
+    - jmaxhd:               Deactivation energy for JMAX (J/mol)    
+    - rdhd:                 Deactivation energy for respiration (J/mol)
+
+    - vcmaxse:              Entropy term for VCMAX (J/mol/K)
+    - jmaxse:               Entropy term for JMAX  (J/mol/K)
+    - rdse:                 Entropy term for respiration (J/mol/K)
+
+    - phi_psii:             Quantum yield of PSII
+    - theta_j:              Curvature of the light-limited transition
+    - colim_c3:             C3 co-limitation curvature
+
+    - g0_medlyn:            Residual conductance (mmol H2O/m2/s)
+    - g1_medlyn:            Slope (kPa^0.5)
+    - CO2_air:              Atmospheric CO2 (umol/mol)
+    - O2_air:               Atmospheric O2 (mmol/mol)
 
 - __Phenology__
 
@@ -475,7 +511,7 @@ def SurEauVegetationParams(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1034){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1135){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauSoilParams
 
@@ -530,7 +566,7 @@ def SurEauSoilParams(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1156){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1257){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauComputationOptions
 
@@ -562,7 +598,7 @@ and the adaptive sub-stepping strategy used in run_sureau.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1202){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1303){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauModelOptions
 
@@ -619,7 +655,7 @@ Design rationale (mirrors Bonan's Leaf → params, Flux → outputs):
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1264){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1365){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauPlantState
 
@@ -727,7 +763,7 @@ Geosci. Model Dev., 15, 5593–5626.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1504){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1605){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauPlantFluxes
 
@@ -740,7 +776,7 @@ def SurEauPlantFluxes(
     flux_soil_to_stem_mm:Union=None, transpiration_mm:float=0.0, E_min_mm:float=0.0, E_min_S_mm:float=0.0,
     sum_flux_soil_to_stem:float=0.0, ppt_soil:float=0.0, intercepted_water:float=0.0,
     evaporation_intercepted:float=0.0, ETP_r:float=0.0, ETP:float=0.0, leaf_temperature:float=nan,
-    leaf_VPD:float=0.0
+    leaf_VPD:float=0.0, An:float=0.0, ci:float=0.0, cs:float=0.0
 )->None:
 
 
@@ -790,12 +826,18 @@ fills them in from SurEauPlantState + atmospheric forcing.
     - leaf_temperature:  Leaf temperature TL, solved from the leaf surface energy budget (°C). Drives cuticular conductance (Eqs. 31–32) and leaf VPD (CPRM21, Cochard et al. 2021)
     - leaf_VPD:          Vapor pressure deficit at the leaf surface, VPDL, accounting for leaf temperature and Kelvin equation correction at ψLSym (Eq. 29 context, kPa). Drives all transpiration calculations
 
+- __Photosynthesis__ 
+
+    - An: Net photosynthesis (umol CO2/m2/s)
+    - ci: Intercellular CO2 (umol/mol)
+    - cs: Leaf-surface CO2 (umol/mol)
+
 
 ### Diagnostics class: solver quality + derived monitoring outputs class
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1635){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1753){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauPlantDiagnostics
 
@@ -818,7 +860,7 @@ back into the hydraulic solver.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1667){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1785){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauSoil
 
@@ -855,7 +897,7 @@ back into the hydraulic solver.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1701){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1819){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauClimate
 
@@ -918,7 +960,7 @@ simulation.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1767){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1885){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauClimateHourly
 

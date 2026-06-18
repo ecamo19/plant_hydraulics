@@ -704,14 +704,37 @@ class SurEauVegetationParams:
         - LMA:                  Leaf mass per area (Table 1, g/m2leaf)
         - C_LApo_init:          Constant capacitance of the leaf apoplasm, CLApo (Table 1, Eq. 6, mmol/m2leaf/MPa)
         
-        - Vcmax25:              Maximum carboxylation rate (umol/m2/s)
-        - Jmax25:               Maximum electron transport rate (umol/m2/s)
-        - Rd25:                 Leaf respiration rate (umol CO2/m2 leaf/s)
-        - kc25:                 Michaelis-Menten constant for CO2 (umol/mol)
-        - ko25:                 Michaelis-Menten constant for O2 (mmol/mol)
-        - cp25:                 CO2 compensation point (umol/mol)
+        - Vcmax25:              Max carboxylation at 25C (umol/m2/s)
+        - Jmax25:               Max electron transport at 25C (= 1.67 * Vcmax25)
+        - Rd25:                 Leaf respiration at 25C (= 0.015 * Vcmax25)
+        - kc25:                 Michaelis-Menten for CO2 at 25C (umol/mol)
+        - ko25:                 Michaelis-Menten for O2 at 25C (mmol/mol)
+        - cp25:                 CO2 compensation point at 25C (umol/mol)
         
-
+        - kcha:                 Activation energy for kc25 (J/mol)
+        - koha:                 Activation energy for ko25 (J/mol)
+        - cpha:                 Activation energy for compensation point (J/mol)
+        - vcmaxha:              Activation energy for VCMAX (J/mol)
+        - jmaxha:               Activation energy for JMAX (J/mol)
+        - rdha:                 Activation energy for respiration (J/mol)
+        
+        - vcmaxhd:              Deactivation energy for VCMAX (J/mol)
+        - jmaxhd:               Deactivation energy for JMAX (J/mol)    
+        - rdhd:                 Deactivation energy for respiration (J/mol)
+        
+        - vcmaxse:              Entropy term for VCMAX (J/mol/K)
+        - jmaxse:               Entropy term for JMAX  (J/mol/K)
+        - rdse:                 Entropy term for respiration (J/mol/K)
+        
+        - phi_psii:             Quantum yield of PSII
+        - theta_j:              Curvature of the light-limited transition
+        - colim_c3:             C3 co-limitation curvature
+        
+        - g0_medlyn:            Residual conductance (mmol H2O/m2/s)
+        - g1_medlyn:            Slope (kPa^0.5)
+        - CO2_air:              Atmospheric CO2 (umol/mol)
+        - O2_air:               Atmospheric O2 (mmol/mol)
+        
     - __Phenology__
 
         - foliage:              Foliage type: "Evergreen" or "Deciduous" or "Forced" (Appendix A)
@@ -860,6 +883,76 @@ class SurEauVegetationParams:
     
     # Constant capacitance of the leaf apoplasm
     C_LApo_init: float = 1e-5
+    
+    # Photosynthesis used only when transpiration_model == "Medlyn" -------------
+    
+    # Max carboxylation at 25C (umol/m2/s)
+    Vcmax25: float = 60.0 
+    
+    # Max electron transport at 25C (= 1.67 * Vcmax25)       
+    Jmax25: float = 100.2        
+    
+    # Leaf respiration at 25C (= 0.015 * Vcmax25)
+    Rd25: float = 0.9
+    
+    # Michaelis-Menten for CO2 at 25C (umol/mol)            
+    kc25: float = 404.9
+    
+    # Michaelis-Menten for O2 at 25C (mmol/mol)          
+    ko25: float = 278.4
+    
+    # CO2 compensation point at 25C (umol/mol)          
+    cp25: float = 42.75
+    
+    # Activation energies (J/mol)          
+    kcha: float = 79430.0        
+    
+    koha: float = 36380.0
+    
+    cpha: float = 37830.0
+    
+    vcmaxha: float = 65330.0
+    
+    jmaxha: float = 43540.0
+    
+    rdha: float = 46390.0
+    
+    # Deactivation energies (J/mol)
+    vcmaxhd: float = 150000.0    
+    
+    jmaxhd: float = 150000.0
+    
+    rdhd: float = 150000.0
+    
+    # Entropy terms (J/mol/K)
+    vcmaxse: float = 490.0       
+    
+    jmaxse: float = 490.0
+    
+    rdse: float = 490.0
+    
+    # Quantum yield of PSII
+    phi_psii: float = 0.85      
+   
+    # Curvature of the light-limited transition 
+    theta_j: float = 0.90
+    
+    # C3 co-limitation curvature        
+    colim_c3: float = 0.98       
+
+    # Stomatal parameters -------------------------------------------------------
+    
+    # Residual conductance (mmol H2O/m2/s)
+    g0_medlyn: float = 10.0      
+    
+    # Slope (kPa^0.5)
+    g1_medlyn: float = 4.45
+    
+    # Atmospheric CO2 (umol/mol)      
+    CO2_air: float = 415.0 
+    
+    # Atmospheric O2 (mmol/mol)      
+    O2_air: float = 209.0        
     
     # Phenology -----------------------------------------------------------------
     
@@ -1553,6 +1646,12 @@ class SurEauPlantFluxes:
 
         - leaf_temperature:  Leaf temperature TL, solved from the leaf surface energy budget (°C). Drives cuticular conductance (Eqs. 31–32) and leaf VPD (CPRM21, Cochard et al. 2021)
         - leaf_VPD:          Vapor pressure deficit at the leaf surface, VPDL, accounting for leaf temperature and Kelvin equation correction at ψLSym (Eq. 29 context, kPa). Drives all transpiration calculations
+    
+    - __Photosynthesis__ 
+     
+        - An: Net photosynthesis (umol CO2/m2/s)
+        - ci: Intercellular CO2 (umol/mol)
+        - cs: Leaf-surface CO2 (umol/mol)
     """
 
     # Stomatal / canopy conductance ---------------------------------------------
@@ -1637,6 +1736,17 @@ class SurEauPlantFluxes:
     # Leaf energy balance -------------------------------------------------------
     leaf_temperature: float = np.nan
     leaf_VPD: float = 0.0
+    
+    # Photosynthesis  -----------------------------------------------------------
+    
+    # Net photosynthesis (umol CO2/m2/s)
+    An: float = 0.0
+    
+    # Intercellular CO2 (umol/mol)
+    ci: float = 0.0
+    
+    # Leaf-surface CO2 (umol/mol)
+    cs: float = 0.0
 
 # %% ../nbs/100_parameter_classes.ipynb #3bf55fd6
 @dataclass

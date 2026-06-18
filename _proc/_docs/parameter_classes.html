@@ -293,6 +293,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./sureau_photosynthesis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SurEau photosynthesis</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./sureau_vegetation_processes.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SurEau vegetation processes</span></a>
   </div>
@@ -695,27 +701,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    Q10_2_gmin:<span class="bu">float</span><span class="op">=</span><span class="fl">4.8</span>, canopy_storage_param:<span class="bu">float</span><span class="op">=</span><span class="fl">1.5</span>, k_plant_init:<span class="bu">float</span><span class="op">=</span><span class="fl">0.62</span>, PT_coeff:<span class="bu">float</span><span class="op">=</span><span class="fl">1.14</span>,</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    LAI_max:<span class="bu">float</span><span class="op">=</span><span class="fl">4.5</span>, P50_VC_leaf:<span class="bu">float</span><span class="op">=-</span><span class="fl">3.4</span>, slope_VC_leaf:<span class="bu">float</span><span class="op">=</span><span class="fl">60.0</span>, epsilon_sym_leaf:<span class="bu">float</span><span class="op">=</span><span class="fl">10.0</span>,</span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    pi_full_turgor_leaf:<span class="bu">float</span><span class="op">=-</span><span class="fl">2.1</span>, apo_frac_leaf:<span class="bu">float</span><span class="op">=</span><span class="fl">0.4</span>, sym_frac_leaf:<span class="bu">float</span><span class="op">=</span><span class="fl">0.4</span>, LDMC:<span class="bu">float</span><span class="op">=</span><span class="fl">570.0</span>,</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    LMA:<span class="bu">float</span><span class="op">=</span><span class="fl">106.0</span>, C_LApo_init:<span class="bu">float</span><span class="op">=</span><span class="fl">1e-05</span>, foliage:<span class="bu">str</span><span class="op">=</span><span class="st">'Evergreen'</span>, nb_day_LAI:<span class="bu">int</span><span class="op">=</span><span class="dv">21</span>, T_base:<span class="bu">float</span><span class="op">=</span><span class="fl">3.0</span>,</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    F_crit:<span class="bu">float</span><span class="op">=</span><span class="fl">450.0</span>, day_start:<span class="bu">int</span><span class="op">=</span><span class="dv">55</span>, day_start_forced:<span class="bu">int</span><span class="op">=</span><span class="dv">40</span>, day_end_forced:<span class="bu">int</span><span class="op">=</span><span class="dv">220</span>, defoliation:<span class="bu">bool</span><span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    P50_VC_stem:<span class="bu">float</span><span class="op">=-</span><span class="fl">3.4</span>, slope_VC_stem:<span class="bu">float</span><span class="op">=</span><span class="fl">60.0</span>, gmin_S:<span class="bu">float</span><span class="op">=</span><span class="fl">3.0</span>, pi_full_turgor_stem:<span class="bu">float</span><span class="op">=-</span><span class="fl">2.1</span>,</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    epsilon_sym_stem:<span class="bu">float</span><span class="op">=</span><span class="fl">10.0</span>, vol_stem:<span class="bu">float</span><span class="op">=</span><span class="fl">40.0</span>, apo_frac_stem:<span class="bu">float</span><span class="op">=</span><span class="fl">0.4</span>, sym_frac_stem:<span class="bu">float</span><span class="op">=</span><span class="fl">0.2</span>,</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    C_SApo_init:<span class="bu">float</span><span class="op">=</span><span class="fl">2e-05</span>, k_SSym_init:<span class="bu">float</span><span class="op">=</span><span class="fl">0.26</span>, f_TRB_to_leaf:<span class="bu">float</span><span class="op">=</span><span class="fl">0.8</span>, g_BL_stem:<span class="bu">float</span><span class="op">=</span><span class="fl">2000.0</span>,</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    f_root_to_leaf:<span class="bu">float</span><span class="op">=</span><span class="fl">1.0</span>, root_radius:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0002</span>, root_depth_max:Union<span class="op">=</span><span class="va">None</span>, root_distribution_model:<span class="bu">str</span><span class="op">=</span><span class="st">'BRP'</span>,</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    beta_root_profile:<span class="bu">float</span><span class="op">=</span><span class="fl">0.97</span>, root_Z50:Union<span class="op">=</span><span class="va">None</span>, root_Z95:Union<span class="op">=</span><span class="va">None</span>, stomatal_reg_formulation:<span class="bu">str</span><span class="op">=</span><span class="st">'Sigmoid'</span>,</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    P12_gs:<span class="bu">float</span><span class="op">=-</span><span class="fl">2.07</span>, P88_gs:<span class="bu">float</span><span class="op">=-</span><span class="fl">2.62</span>, psi_start_closing:<span class="bu">float</span><span class="op">=-</span><span class="fl">0.5</span>, psi_close:<span class="bu">float</span><span class="op">=-</span><span class="fl">2.0</span>,</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    turgor_pressure_at_gs_max:<span class="bu">float</span><span class="op">=</span><span class="fl">2.0</span>, g_crown0:<span class="bu">float</span><span class="op">=</span><span class="fl">45.0</span>, gs_max:<span class="bu">float</span><span class="op">=</span><span class="fl">200.0</span>, gs_night:<span class="bu">float</span><span class="op">=</span><span class="fl">20.0</span>,</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    jarvis_PAR:<span class="bu">float</span><span class="op">=</span><span class="fl">0.006</span>, T_gs_sens:<span class="bu">float</span><span class="op">=</span><span class="fl">17.0</span>, T_gs_optim:<span class="bu">float</span><span class="op">=</span><span class="fl">25.0</span>, threshold_mortality:<span class="bu">float</span><span class="op">=</span><span class="fl">90.0</span>,</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    psi_TLP_leaf:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, psi_TLP_stem:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, P50_gs:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, slope_gs:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    root_distribution:Union<span class="op">=</span><span class="va">None</span>, La:Union<span class="op">=</span><span class="va">None</span>, Lv:Union<span class="op">=</span><span class="va">None</span>, k_SLApo_init:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, k_RSApo_init:Union<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    k_LSym_init:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, leaf_size:<span class="bu">float</span><span class="op">=</span><span class="fl">50.0</span>, leaf_angle:<span class="bu">float</span><span class="op">=</span><span class="fl">45.0</span>, turn_off_EB:<span class="bu">bool</span><span class="op">=</span><span class="va">False</span></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="va">None</span>:</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    LMA:<span class="bu">float</span><span class="op">=</span><span class="fl">106.0</span>, C_LApo_init:<span class="bu">float</span><span class="op">=</span><span class="fl">1e-05</span>, Vcmax25:<span class="bu">float</span><span class="op">=</span><span class="fl">60.0</span>, Jmax25:<span class="bu">float</span><span class="op">=</span><span class="fl">100.2</span>, Rd25:<span class="bu">float</span><span class="op">=</span><span class="fl">0.9</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    kc25:<span class="bu">float</span><span class="op">=</span><span class="fl">404.9</span>, ko25:<span class="bu">float</span><span class="op">=</span><span class="fl">278.4</span>, cp25:<span class="bu">float</span><span class="op">=</span><span class="fl">42.75</span>, kcha:<span class="bu">float</span><span class="op">=</span><span class="fl">79430.0</span>, koha:<span class="bu">float</span><span class="op">=</span><span class="fl">36380.0</span>, cpha:<span class="bu">float</span><span class="op">=</span><span class="fl">37830.0</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    vcmaxha:<span class="bu">float</span><span class="op">=</span><span class="fl">65330.0</span>, jmaxha:<span class="bu">float</span><span class="op">=</span><span class="fl">43540.0</span>, rdha:<span class="bu">float</span><span class="op">=</span><span class="fl">46390.0</span>, vcmaxhd:<span class="bu">float</span><span class="op">=</span><span class="fl">150000.0</span>, jmaxhd:<span class="bu">float</span><span class="op">=</span><span class="fl">150000.0</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    rdhd:<span class="bu">float</span><span class="op">=</span><span class="fl">150000.0</span>, vcmaxse:<span class="bu">float</span><span class="op">=</span><span class="fl">490.0</span>, jmaxse:<span class="bu">float</span><span class="op">=</span><span class="fl">490.0</span>, rdse:<span class="bu">float</span><span class="op">=</span><span class="fl">490.0</span>, phi_psii:<span class="bu">float</span><span class="op">=</span><span class="fl">0.85</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    theta_j:<span class="bu">float</span><span class="op">=</span><span class="fl">0.9</span>, colim_c3:<span class="bu">float</span><span class="op">=</span><span class="fl">0.98</span>, g0_medlyn:<span class="bu">float</span><span class="op">=</span><span class="fl">10.0</span>, g1_medlyn:<span class="bu">float</span><span class="op">=</span><span class="fl">4.45</span>, CO2_air:<span class="bu">float</span><span class="op">=</span><span class="fl">415.0</span>,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    O2_air:<span class="bu">float</span><span class="op">=</span><span class="fl">209.0</span>, foliage:<span class="bu">str</span><span class="op">=</span><span class="st">'Evergreen'</span>, nb_day_LAI:<span class="bu">int</span><span class="op">=</span><span class="dv">21</span>, T_base:<span class="bu">float</span><span class="op">=</span><span class="fl">3.0</span>, F_crit:<span class="bu">float</span><span class="op">=</span><span class="fl">450.0</span>,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    day_start:<span class="bu">int</span><span class="op">=</span><span class="dv">55</span>, day_start_forced:<span class="bu">int</span><span class="op">=</span><span class="dv">40</span>, day_end_forced:<span class="bu">int</span><span class="op">=</span><span class="dv">220</span>, defoliation:<span class="bu">bool</span><span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    P50_VC_stem:<span class="bu">float</span><span class="op">=-</span><span class="fl">3.4</span>, slope_VC_stem:<span class="bu">float</span><span class="op">=</span><span class="fl">60.0</span>, gmin_S:<span class="bu">float</span><span class="op">=</span><span class="fl">3.0</span>, pi_full_turgor_stem:<span class="bu">float</span><span class="op">=-</span><span class="fl">2.1</span>,</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    epsilon_sym_stem:<span class="bu">float</span><span class="op">=</span><span class="fl">10.0</span>, vol_stem:<span class="bu">float</span><span class="op">=</span><span class="fl">40.0</span>, apo_frac_stem:<span class="bu">float</span><span class="op">=</span><span class="fl">0.4</span>, sym_frac_stem:<span class="bu">float</span><span class="op">=</span><span class="fl">0.2</span>,</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    C_SApo_init:<span class="bu">float</span><span class="op">=</span><span class="fl">2e-05</span>, k_SSym_init:<span class="bu">float</span><span class="op">=</span><span class="fl">0.26</span>, f_TRB_to_leaf:<span class="bu">float</span><span class="op">=</span><span class="fl">0.8</span>, g_BL_stem:<span class="bu">float</span><span class="op">=</span><span class="fl">2000.0</span>,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    f_root_to_leaf:<span class="bu">float</span><span class="op">=</span><span class="fl">1.0</span>, root_radius:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0002</span>, root_depth_max:Union<span class="op">=</span><span class="va">None</span>, root_distribution_model:<span class="bu">str</span><span class="op">=</span><span class="st">'BRP'</span>,</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    beta_root_profile:<span class="bu">float</span><span class="op">=</span><span class="fl">0.97</span>, root_Z50:Union<span class="op">=</span><span class="va">None</span>, root_Z95:Union<span class="op">=</span><span class="va">None</span>, stomatal_reg_formulation:<span class="bu">str</span><span class="op">=</span><span class="st">'Sigmoid'</span>,</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    P12_gs:<span class="bu">float</span><span class="op">=-</span><span class="fl">2.07</span>, P88_gs:<span class="bu">float</span><span class="op">=-</span><span class="fl">2.62</span>, psi_start_closing:<span class="bu">float</span><span class="op">=-</span><span class="fl">0.5</span>, psi_close:<span class="bu">float</span><span class="op">=-</span><span class="fl">2.0</span>,</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    turgor_pressure_at_gs_max:<span class="bu">float</span><span class="op">=</span><span class="fl">2.0</span>, g_crown0:<span class="bu">float</span><span class="op">=</span><span class="fl">45.0</span>, gs_max:<span class="bu">float</span><span class="op">=</span><span class="fl">200.0</span>, gs_night:<span class="bu">float</span><span class="op">=</span><span class="fl">20.0</span>,</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    jarvis_PAR:<span class="bu">float</span><span class="op">=</span><span class="fl">0.006</span>, T_gs_sens:<span class="bu">float</span><span class="op">=</span><span class="fl">17.0</span>, T_gs_optim:<span class="bu">float</span><span class="op">=</span><span class="fl">25.0</span>, threshold_mortality:<span class="bu">float</span><span class="op">=</span><span class="fl">90.0</span>,</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    psi_TLP_leaf:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, psi_TLP_stem:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, P50_gs:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, slope_gs:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    root_distribution:Union<span class="op">=</span><span class="va">None</span>, La:Union<span class="op">=</span><span class="va">None</span>, Lv:Union<span class="op">=</span><span class="va">None</span>, k_SLApo_init:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, k_RSApo_init:Union<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    k_LSym_init:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, leaf_size:<span class="bu">float</span><span class="op">=</span><span class="fl">50.0</span>, leaf_angle:<span class="bu">float</span><span class="op">=</span><span class="fl">45.0</span>, turn_off_EB:<span class="bu">bool</span><span class="op">=</span><span class="va">False</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="va">None</span>:</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Plant parameters for SurEau-Ecos — set once at initialisation.</em></p>
 <ul>
 <li><p><strong>General</strong></p>
 <ul>
 <li>K: Light extinction parameter for Beer-Lambert canopy cover</li>
-<li>transpiration_model: Transpiration formulation: “Jarvis” (Eq. 29) or “Granier”</li>
+<li>transpiration_model: Transpiration formulation: “Jarvis” (Eq. 29), “Granier” or ‘Medlyn’</li>
 <li>transpi_granier_a: Granier transpiration quadratic coefficient for LAI (-) [not in paper, model-specific]</li>
 <li>transpi_granier_b: Granier transpiration linear coefficient for LAI (-) [not in paper, model-specific]</li>
 <li>transpi_granier_c: Granier transpiration constant term (-) [not in paper, model-specific]</li>
@@ -729,16 +740,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 <li><p><strong>Leaf</strong></p>
 <ul>
-<li>LAI_max: Maximum leaf area index of the stand, LAImax (Table 1, m2leaf/m2soil)</li>
-<li>P50_VC_leaf: Water potential causing 50% loss of leaf hydraulic conductance, ψ50,L (Table 1, Eq. 15, MPa)</li>
-<li>slope_VC_leaf: Slope of rate of leaf embolism spread at ψ50,L, slopeL (Table 1, Eq. 15, %/MPa)</li>
-<li>epsilon_sym_leaf: Modulus of elasticity of the leaf symplasm, εL (Table 1, Eq. 43, MPa)</li>
-<li>pi_full_turgor_leaf: Osmotic potential at full turgor of the leaf symplasm, π0L (Table 1, Eq. 43, MPa)</li>
-<li>apo_frac_leaf: Leaf apoplasmic fraction, αLApo (Table 1, Eqs. 36–37, -)</li>
-<li>sym_frac_leaf: Leaf symplasmic fraction used in conductance partitioning (-)</li>
-<li>LDMC: Leaf dry matter content, dry mass over saturated mass (Table 1, Eq. 38, mg/g)</li>
-<li>LMA: Leaf mass per area (Table 1, g/m2leaf)</li>
-<li>C_LApo_init: Constant capacitance of the leaf apoplasm, CLApo (Table 1, Eq. 6, mmol/m2leaf/MPa)</li>
+<li><p>LAI_max: Maximum leaf area index of the stand, LAImax (Table 1, m2leaf/m2soil)</p></li>
+<li><p>P50_VC_leaf: Water potential causing 50% loss of leaf hydraulic conductance, ψ50,L (Table 1, Eq. 15, MPa)</p></li>
+<li><p>slope_VC_leaf: Slope of rate of leaf embolism spread at ψ50,L, slopeL (Table 1, Eq. 15, %/MPa)</p></li>
+<li><p>epsilon_sym_leaf: Modulus of elasticity of the leaf symplasm, εL (Table 1, Eq. 43, MPa)</p></li>
+<li><p>pi_full_turgor_leaf: Osmotic potential at full turgor of the leaf symplasm, π0L (Table 1, Eq. 43, MPa)</p></li>
+<li><p>apo_frac_leaf: Leaf apoplasmic fraction, αLApo (Table 1, Eqs. 36–37, -)</p></li>
+<li><p>sym_frac_leaf: Leaf symplasmic fraction used in conductance partitioning (-)</p></li>
+<li><p>LDMC: Leaf dry matter content, dry mass over saturated mass (Table 1, Eq. 38, mg/g)</p></li>
+<li><p>LMA: Leaf mass per area (Table 1, g/m2leaf)</p></li>
+<li><p>C_LApo_init: Constant capacitance of the leaf apoplasm, CLApo (Table 1, Eq. 6, mmol/m2leaf/MPa)</p></li>
+<li><p>Vcmax25: Max carboxylation at 25C (umol/m2/s)</p></li>
+<li><p>Jmax25: Max electron transport at 25C (= 1.67 * Vcmax25)</p></li>
+<li><p>Rd25: Leaf respiration at 25C (= 0.015 * Vcmax25)</p></li>
+<li><p>kc25: Michaelis-Menten for CO2 at 25C (umol/mol)</p></li>
+<li><p>ko25: Michaelis-Menten for O2 at 25C (mmol/mol)</p></li>
+<li><p>cp25: CO2 compensation point at 25C (umol/mol)</p></li>
+<li><p>kcha: Activation energy for kc25 (J/mol)</p></li>
+<li><p>koha: Activation energy for ko25 (J/mol)</p></li>
+<li><p>cpha: Activation energy for compensation point (J/mol)</p></li>
+<li><p>vcmaxha: Activation energy for VCMAX (J/mol)</p></li>
+<li><p>jmaxha: Activation energy for JMAX (J/mol)</p></li>
+<li><p>rdha: Activation energy for respiration (J/mol)</p></li>
+<li><p>vcmaxhd: Deactivation energy for VCMAX (J/mol)</p></li>
+<li><p>jmaxhd: Deactivation energy for JMAX (J/mol)<br>
+</p></li>
+<li><p>rdhd: Deactivation energy for respiration (J/mol)</p></li>
+<li><p>vcmaxse: Entropy term for VCMAX (J/mol/K)</p></li>
+<li><p>jmaxse: Entropy term for JMAX (J/mol/K)</p></li>
+<li><p>rdse: Entropy term for respiration (J/mol/K)</p></li>
+<li><p>phi_psii: Quantum yield of PSII</p></li>
+<li><p>theta_j: Curvature of the light-limited transition</p></li>
+<li><p>colim_c3: C3 co-limitation curvature</p></li>
+<li><p>g0_medlyn: Residual conductance (mmol H2O/m2/s)</p></li>
+<li><p>g1_medlyn: Slope (kPa^0.5)</p></li>
+<li><p>CO2_air: Atmospheric CO2 (umol/mol)</p></li>
+<li><p>O2_air: Atmospheric O2 (mmol/mol)</p></li>
 </ul></li>
 <li><p><strong>Phenology</strong></p>
 <ul>
@@ -824,7 +861,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 </ul>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1034" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1135" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureausoilparams" class="level3">
 <h3 class="anchored" data-anchor-id="sureausoilparams">SurEauSoilParams</h3>
@@ -875,7 +912,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 </ul>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1156" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1257" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureaucomputationoptions" class="level3">
 <h3 class="anchored" data-anchor-id="sureaucomputationoptions">SurEauComputationOptions</h3>
@@ -899,7 +936,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>CTapo: Scaling flag for stem apoplasm capacitance CSApo in the solver (1.0 = enabled, 0.0 = disabled). Multiplies CSApo in Eq. 7. Set to 0 for sensitivity experiments removing stem apoplasm elastic storage (Sect. 6.2)</li>
 </ul>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1202" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1303" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureaumodeloptions" class="level3">
 <h3 class="anchored" data-anchor-id="sureaumodeloptions">SurEauModelOptions</h3>
@@ -943,7 +980,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="state-class-persists-across-timesteps" class="level3">
 <h3 class="anchored" data-anchor-id="state-class-persists-across-timesteps">State class: persists across timesteps</h3>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1264" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1365" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureauplantstate" class="level3">
 <h3 class="anchored" data-anchor-id="sureauplantstate">SurEauPlantState</h3>
@@ -1041,7 +1078,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="fluxes-class-recomputed-every-sub-timestep" class="level3">
 <h3 class="anchored" data-anchor-id="fluxes-class-recomputed-every-sub-timestep">Fluxes class: recomputed every (sub-)timestep</h3>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1504" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1605" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureauplantfluxes" class="level3">
 <h3 class="anchored" data-anchor-id="sureauplantfluxes">SurEauPlantFluxes</h3>
@@ -1053,7 +1090,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    flux_soil_to_stem_mm:Union<span class="op">=</span><span class="va">None</span>, transpiration_mm:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, E_min_mm:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, E_min_S_mm:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    sum_flux_soil_to_stem:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, ppt_soil:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, intercepted_water:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>,</span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    evaporation_intercepted:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, ETP_r:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, ETP:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, leaf_temperature:<span class="bu">float</span><span class="op">=</span>nan,</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    leaf_VPD:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    leaf_VPD:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, An:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, ci:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span>, cs:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span></span>
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="va">None</span>:</span>
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Instantaneous fluxes and conductances for SurEau-Ecos — computed from state + forcing.</em></p>
@@ -1098,12 +1135,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>leaf_temperature: Leaf temperature TL, solved from the leaf surface energy budget (°C). Drives cuticular conductance (Eqs. 31–32) and leaf VPD (CPRM21, Cochard et al.&nbsp;2021)</li>
 <li>leaf_VPD: Vapor pressure deficit at the leaf surface, VPDL, accounting for leaf temperature and Kelvin equation correction at ψLSym (Eq. 29 context, kPa). Drives all transpiration calculations</li>
 </ul></li>
+<li><p><strong>Photosynthesis</strong></p>
+<ul>
+<li>An: Net photosynthesis (umol CO2/m2/s)</li>
+<li>ci: Intercellular CO2 (umol/mol)</li>
+<li>cs: Leaf-surface CO2 (umol/mol)</li>
+</ul></li>
 </ul>
 </section>
 <section id="diagnostics-class-solver-quality-derived-monitoring-outputs-class" class="level3">
 <h3 class="anchored" data-anchor-id="diagnostics-class-solver-quality-derived-monitoring-outputs-class">Diagnostics class: solver quality + derived monitoring outputs class</h3>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1635" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1753" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureauplantdiagnostics" class="level3">
 <h3 class="anchored" data-anchor-id="sureauplantdiagnostics">SurEauPlantDiagnostics</h3>
@@ -1117,7 +1160,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><em>Solver diagnostics and derived fire/moisture outputs.</em></p>
 <p>Used for logging, quality control, and post-processing — never fed back into the hydraulic solver.</p>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1667" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1785" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureausoil" class="level3">
 <h3 class="anchored" data-anchor-id="sureausoil">SurEauSoil</h3>
@@ -1147,7 +1190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 </ul>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1701" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1819" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureauclimate" class="level3">
 <h3 class="anchored" data-anchor-id="sureauclimate">SurEauClimate</h3>
@@ -1203,7 +1246,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 </ul>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1767" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1885" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureauclimatehourly" class="level3">
 <h3 class="anchored" data-anchor-id="sureauclimatehourly">SurEauClimateHourly</h3>

@@ -23,7 +23,8 @@ website:
       - 202_sureau_climate.ipynb
       - 203_sureau_soil_hydraulics.ipynb
       - 204_sureau_plant_hydraulics.ipynb
-      - 205_sureau_vegetation_processes.ipynb
+      - 205_sureau_photosynthesis.ipynb
+      - 206_sureau_vegetation_processes.ipynb
       - 210_sureau_object_initialization.ipynb
       - 211_sureau_solver.ipynb
       - 222_run_sureau.ipynb
