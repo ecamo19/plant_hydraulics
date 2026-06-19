@@ -6,6 +6,7 @@ __all__ = ['compute_pheno', 'update_capacitances', 'update_LAI_and_stocks', 'upd
 
 # %% ../nbs/206_sureau_vegetation_processes.ipynb #5d006c0a
 import numpy as np
+
 from plant_hydraulics.parameter_classes import (
     SurEauPlantState,
     SurEauPlantFluxes,
@@ -25,6 +26,8 @@ from plant_hydraulics.sureau_plant_hydraulics import (
     calculate_gs_jarvis,
     calculate_Ebound_Granier,
 )
+
+from .sureau_photosynthesis import calculate_gs_medlyn
 
 # %% ../nbs/206_sureau_vegetation_processes.ipynb #bd3a4dd1
 def compute_pheno(
@@ -1829,7 +1832,76 @@ def compute_transpiration(
             fluxes.g_BL = g_bl
             fluxes.leaf_VPD = leaf_VPD
             
-        # Deciduous tree in winter (no leaves)    
+    # Medlyn transpiration ------------------------------------------------------
+    elif params.transpiration_model == "Medlyn":
+
+        # Crown aerodynamic conductance + stem cuticular transpiration
+        fluxes.g_crown = compute_g_crown(params.g_crown0, clim["WS"])
+        fluxes.E_min_S = params.f_TRB_to_leaf * compute_E_min(
+            params.gmin_S, 2000, fluxes.g_crown, clim["VPD"]
+        )
+
+        # Check if the tree has leaves
+        if state.LAI_pheno > 0:
+
+            # Bootstrap the leaf energy balance with the previous-step gs/gmin
+            T_leaf, g_bl, leaf_VPD = compute_T_leaf(state, fluxes, params, clim)
+            fluxes.leaf_temperature = T_leaf
+            fluxes.g_BL = g_bl
+            fluxes.leaf_VPD = leaf_VPD
+
+            # Residual conductance and transpiration
+            fluxes.gmin = compute_gmin(fluxes, params)
+            fluxes.E_min = compute_E_min(
+                fluxes.gmin, fluxes.g_BL, fluxes.g_crown, fluxes.leaf_VPD
+            )
+
+            # Hydraulic regulation factor gamma(psi_LSym) same to Jarvis
+            rf, rfp = compute_regul_fact(state.psi_LSym, params)
+            fluxes.regul_fact = rf
+
+            # Medlyn model
+            fluxes = calculate_gs_medlyn(fluxes, params, clim)
+
+            # Unstressed canopy conductance and transpiration (Eq. 29)
+            fluxes.g_canopy_bound = 1 / (
+                1 / fluxes.g_crown + 1 / fluxes.gs_bound + 1 / fluxes.g_BL
+            )
+            fluxes.E_bound = fluxes.g_canopy_bound * fluxes.leaf_VPD / 101.3
+
+            # Water-limited stomatal conductance (Eq. 33)
+            fluxes.gs_lim = fluxes.gs_bound * rf
+
+            # Water-limited canopy transpiration
+            if fluxes.gs_lim > 0:
+                fluxes.g_canopy_lim = 1 / (
+                    1 / fluxes.g_crown + 1 / fluxes.gs_lim + 1 / fluxes.g_BL
+                )
+            else:
+                fluxes.g_canopy_lim = 0.0
+            fluxes.E_lim = fluxes.g_canopy_lim * fluxes.leaf_VPD / 101.3
+
+            # Transpiration derivative dE/dpsi for the implicit solver (Eq. 60).
+            # gs_bound is psi-independent within the step, 
+            # same expression as the Jarvis branch.
+            gs_lim_prime = fluxes.gs_bound * rfp
+            dbxmin = 1e-100
+            denom = (
+                fluxes.gs_lim
+                * (1 + fluxes.gs_lim * (1 / fluxes.g_crown + 1 / fluxes.g_BL))
+                + dbxmin
+            )
+            fluxes.E_prime = fluxes.E_lim * gs_lim_prime / denom
+
+            # Recompute leaf temperature with the updated gs 
+            # (close the T_leaf-gs loop)
+            T_leaf, g_bl, leaf_VPD = compute_T_leaf(state, fluxes, params, clim)
+            fluxes.leaf_temperature = T_leaf
+            fluxes.g_BL = g_bl
+            fluxes.leaf_VPD = leaf_VPD
+        
+            
+        # Deciduous tree in winter (no leaves) ----------------------------------    
         else:
             fluxes.leaf_temperature = np.nan
             fluxes.gmin = 0.0
