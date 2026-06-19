@@ -5,13 +5,18 @@ name = "plant_hydraulics"
 platforms = ["linux-64", "win-64", "osx-arm64", "osx-64"]
 version = "0.1.0"
 
+#insulate the project so ~/.local can never leak in again
+[activation.env]
+PYTHONNOUSERSITE = "1"
+
+
 [dependencies]
 ruff = ">=0.12.9,<0.13"
 nbdev = "=3"
 quarto = ">=1.7.33,<2"
 python = ">=3.13"
 jupyterlab = ">=4.4.6,<5"
-fastcore = ">=1.8.7,<2"
+fastcore = ">=1.13"
 shortuuid = ">=1.0.13,<2"
 ipykernel = ">=7.1.0,<8"
 pip = ">=25.2,<26"
@@ -34,3 +39,4 @@ scipy = ">=1.17.1,<2"
 
 [pypi-dependencies]
 jupyterlab-quarto = ">=0.3.5, <0.4"
+
