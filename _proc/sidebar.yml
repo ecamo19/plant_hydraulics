@@ -32,3 +32,4 @@ website:
       - 301_tutorial_2_gs_models.ipynb
       - 303_tutorial_3_profit_max_validation.ipynb
       - 304_tutorial_4_diurnal_sureau.ipynb
+      - 305_tutorial_sureau_medlyn.ipynb
