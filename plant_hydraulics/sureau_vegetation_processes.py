@@ -1577,7 +1577,7 @@ def compute_transpiration(
     - params: SurEauVegetationParams object with the following
         attributes:
  
-        - transpiration_model: ``"Granier"`` or ``"Jarvis"``.
+        - transpiration_model: ``"Granier"`` ``"Jarvis"`` or ``"Medlyn"``
         - gmin20: Cuticular conductance at 20°C (mmol/m²/s).
         - TPhase_gmin: Phase transition temperature (°C). Eqs. 31–32.
         - Q10_1_gmin: Q10 below T_Phase. Eq. 31.
@@ -1907,6 +1907,7 @@ def compute_transpiration(
         else:
             fluxes.leaf_temperature = np.nan
             fluxes.gmin = 0.0
+            fluxes.An = 0.0
             fluxes.E_min = 0.0
             fluxes.gs_lim = 0.0
             fluxes.E_prime = 0.0

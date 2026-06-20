@@ -1803,10 +1803,10 @@ class SurEauPlantDiagnostics:
     # dead fuel moisture content
     DFMC: float = 0.0
     
-    # live fuel MC — apoplasm fraction  
+    # live fuel MC apoplasm fraction  
     LFMC_apo: float = 0.0
     
-    # live fuel MC — symplasm fraction  
+    # live fuel MC symplasm fraction  
     LFMC_symp: float = 0.0
     
     # live fuel moisture content (total)  

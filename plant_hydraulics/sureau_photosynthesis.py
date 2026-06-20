@@ -85,11 +85,7 @@ def solve_coupled_medlyn_fvcb(T_leaf, PAR, VPD, params):
     cs     : Leaf-surface CO₂ [µmol mol⁻¹] (= Ca; no boundary layer).
     gs_mol : Stomatal conductance to H₂O [mol m⁻² s⁻¹].
     """
-    # Normalization function ----------------------------------------------------
-    def _fth25(hd, se):
-        return 1.0 + np.exp((se * T0 - hd) / (PhysCon.rgas * T0))
     
-
     # Constants -----------------------------------------------------------------
     # Kelvin (utils expect K)
     tl = T_leaf + PhysCon.tfrz
@@ -97,6 +93,13 @@ def solve_coupled_medlyn_fvcb(T_leaf, PAR, VPD, params):
     # plantecophys Patm correction                       
     pcor = params.Patm_photo / 100.0                 
 
+    T0 = PhysCon.tfrz + 25.0
+    
+    # Normalization function 
+    def _fth25(hd, se):
+        return 1.0 + np.exp((se * T0 - hd) / (PhysCon.rgas * T0))
+    
+    
     # Michaelis–Menten and Γ* (monotonic Arrhenius)
     Kc = params.kc25 * arrhenius_function(tl, params.kcha)
     Ko = params.ko25 * arrhenius_function(tl, params.koha)
@@ -104,9 +107,7 @@ def solve_coupled_medlyn_fvcb(T_leaf, PAR, VPD, params):
     Oi = params.O2_air * pcor
     Km = Kc * (1.0 + Oi / Ko)
 
-    # Vcmax / Jmax / Rd (peaked Arrhenius), normalised to 1 at 25 °C
-    T0 = PhysCon.tfrz + 25.0
-    
+    # Vcmax / Jmax / Rd (peaked Arrhenius), normalised to 1 at 25 °C    
     if params.vcmaxhd > 0:                          
         Vcmax = params.vcmax25 * arrhenius_function(tl, params.vcmaxha) \
             * inhibition_function(tl, params.vcmaxhd, params.vcmaxse,
@@ -179,7 +180,7 @@ def calculate_gs_medlyn(
     applied by compute_transpiration) is what turns it into the water-limited 
     gs_lim, so this routine has no knowledge of psi.
 
-    Medlyn (Eq. 11):  gs = g0 + 1.6 (1 + g1/sqrt(D)) * An / cs
+    Medlyn (Eq. 11):  gs = g0 + 1.57 (1 + g1/sqrt(D)) * An / ca
     
     Reads  fluxes.leaf_temperature [°C], fluxes.leaf_VPD [kPa], clim["PAR"]
     [µmol m⁻² s⁻¹].  Writes fluxes.gs_bound [mmol H₂O m⁻² s⁻¹], An, ci, cs.
