@@ -33,6 +33,7 @@ matplotlib = ">=3.10.8,<4"
 itables = ">=2.7.0,<3"
 pyet = ">=1.4.0,<2"
 scipy = ">=1.17.1,<2"
+plotnine = ">=0.15.7,<0.16"
 
 
 [tasks]

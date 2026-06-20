@@ -289,64 +289,64 @@ class Leaf:
     colim: int = 1
 
     # Maximum carboxylation rate at 25C (umol/m2/s)
-    vcmax25: float = 0.0
-
-    # Maximum electron transport rate at 25C (umol/m2/s)
-    jmax25: float = 0.0
-
-    # Leaf respiration rate at 25C (umol CO2/m2/s)
-    rd25: float = 0.0
-
-    # Michaelis-Menten constant for CO2 at 25C (umol/mol)
-    kc25: float = 0.0
-
-    # Michaelis-Menten constant for O2 at 25C (mmol/mol)
-    ko25: float = 0.0
-
-    # CO2 compensation point at 25C (umol/mol)
-    cp25: float = 0.0
-
-    # Activation energy for Kc (J/mol)
-    kcha: float = 0.0
-
-    # Activation energy for Ko (J/mol)
-    koha: float = 0.0
-
-    # Activation energy for Cp (J/mol)
-    cpha: float = 0.0
-
-    # Activation energy for Vcmax (J/mol)
-    vcmaxha: float = 0.0
-
-    # Activation energy for Jmax (J/mol)
-    jmaxha: float = 0.0
-
-    # Activation energy for Rd (J/mol)
-    rdha: float = 0.0
-
-    # Deactivation energy for Vcmax (J/mol)
-    vcmaxhd: float = 0.0
-
-    # Deactivation energy for Jmax (J/mol)
-    jmaxhd: float = 0.0
-
-    # Deactivation energy for Rd (J/mol)
-    rdhd: float = 0.0
-
-    # Entropy term for Vcmax (J/mol/K)
-    vcmaxse: float = 0.0
-
-    # Entropy term for Jmax (J/mol/K)
-    jmaxse: float = 0.0
-
-    # Entropy term for Rd (J/mol/K)
-    rdse: float = 0.0
-
+    vcmax25: float = 50
+    
+    # Activation energy for Vcmax (aka EaV) (J/mol)
+    vcmaxha: float = 58550.0 
+    
+    # Deactivation energy for Vcmax (aka EdVC) (J/mol)
+    vcmaxhd: float = 200000.0
+    
+    # Entropy term for Vcmax (aka ΔSv) (J/mol/K)
+    vcmaxse: float = 629.26
+    
     # Vcmax scaling factor for high temperature inhibition
     vcmaxc: float = 0.0
 
+    # Maximum electron transport rate at 25C (umol/m2/s)
+    jmax25: float = 100
+    
+    # Activation energy for Jmax (aka EaJ) (J/mol)
+    jmaxha: float = 29680.0
+
+    # Deactivation energy for Jmax (aka EdVJ) (J/mol)
+    jmaxhd: float = 200000.0 
+    
+    # Entropy term for Jmax (aka ΔSj) (J/mol/K)
+    jmaxse: float = 631.88
+    
     # Jmax scaling factor for high temperature inhibition
     jmaxc: float = 0.0
+
+    # Leaf respiration rate at 25C (umol CO2/m2/s)
+    rd25: float = 0.9
+    
+    # Activation energy for Rd (J/mol)
+    rdha: float = 46390.0  
+
+    # Deactivation energy for Rd (J/mol)
+    rdhd: float = 150000.0
+
+    # Entropy term for Rd (J/mol/K)
+    rdse: float = 490.0
+
+    # Michaelis-Menten constant for CO2 at 25C (umol/mol)
+    kc25: float = 404.9
+
+    # Activation energy for Kc (J/mol)
+    kcha: float = 79430.0
+
+    # Activation energy for Ko (J/mol)
+    koha: float = 36380.0
+
+    # Michaelis-Menten constant for O2 at 25C (mmol/mol)
+    ko25: float = 278.4 
+
+    # CO2 compensation point at 25C (umol/mol)
+    cp25: float = 42.75
+
+    # Activation energy for Cp (J/mol)
+    cpha: float = 37830.0
 
     # Rd scaling factor for high temperature inhibition
     rdc: float = 0.0
@@ -816,11 +816,17 @@ class SurEauVegetationParams:
     """
 
     # General -------------------------------------------------------------------
+    
+    # Atmosphere 
+    
+    # kPa; plantecophys Patm (Γ*/Km correction only)
+    Patm_photo: float = 100.0    
+
     # Light extinction parameter for Beer-Lambert canopy cover
     K: float = 0.5
     
-    # Transpiration formulation: "Jarvis" (Eq. 29) or "Granier"
-    transpiration_model: str = "Jarvis"
+    # Transpiration formulation: "Jarvis" (Eq. 29), "Granier" or "Medlyn"
+    transpiration_model: str = "Medlyn"
     
     # Granier transpiration quadratic coefficient for LAI (-)
     transpi_granier_a: float = -0.006
@@ -841,7 +847,7 @@ class SurEauVegetationParams:
     Q10_1_gmin: float = 1.2
     
     #  Temperature dependence of gcuti when T > TPhase
-    Q10_2_gmin: float = 4.8
+    Q10_2_gmin: float = 3.0
     
     # Canopy water storage capacity per unit LAI
     canopy_storage_param: float = 1.5
@@ -888,73 +894,100 @@ class SurEauVegetationParams:
     
     # Photosynthesis used only when transpiration_model == "Medlyn" -------------
     
-    # Max carboxylation at 25C (umol/m2/s)
-    Vcmax25: float = 60.0 
+    # Maximum carboxylation rate at 25C (umol/m2/s)
+    vcmax25: float = 50.0
     
-    # Max electron transport at 25C (= 1.67 * Vcmax25)       
-    Jmax25: float = 100.2        
+    # Activation energy for Vcmax (aka EaV) (J/mol)
+    vcmaxha: float = 58550.0 
     
-    # Leaf respiration at 25C (= 0.015 * Vcmax25)
-    Rd25: float = 0.9
+    # Deactivation energy for Vcmax (aka EdVC) (J/mol)
+    vcmaxhd: float = 200000.0
     
-    # Michaelis-Menten for CO2 at 25C (umol/mol)            
-    kc25: float = 404.9
+    # Entropy term for Vcmax (aka ΔSv) (J/mol/K)
+    vcmaxse: float = 629.26
     
-    # Michaelis-Menten for O2 at 25C (mmol/mol)          
-    ko25: float = 278.4
-    
-    # CO2 compensation point at 25C (umol/mol)          
-    cp25: float = 42.75
-    
-    # Activation energies (J/mol)          
-    kcha: float = 79430.0        
-    
-    koha: float = 36380.0
-    
-    cpha: float = 37830.0
-    
-    vcmaxha: float = 65330.0
-    
-    jmaxha: float = 43540.0
-    
-    rdha: float = 46390.0
-    
-    # Deactivation energies (J/mol)
-    vcmaxhd: float = 150000.0    
-    
-    jmaxhd: float = 150000.0
-    
-    rdhd: float = 150000.0
-    
-    # Entropy terms (J/mol/K)
-    vcmaxse: float = 490.0       
-    
-    jmaxse: float = 490.0
-    
-    rdse: float = 490.0
-    
-    # Quantum yield of PSII
-    phi_psii: float = 0.85      
-   
-    # Curvature of the light-limited transition 
-    theta_j: float = 0.90
-    
-    # C3 co-limitation curvature        
-    colim_c3: float = 0.98       
+    # Vcmax scaling factor for high temperature inhibition
+    vcmaxc: float = 0.0
 
+    # Maximum electron transport rate at 25C (umol/m2/s)
+    jmax25: float = 100.0
+    
+    # Activation energy for Jmax (aka EaJ) (J/mol)
+    jmaxha: float = 29680.0
+
+    # Deactivation energy for Jmax (aka EdVJ) (J/mol)
+    jmaxhd: float = 200000.0 
+    
+    # Entropy term for Jmax (aka ΔSj) (J/mol/K)
+    jmaxse: float = 631.88
+    
+    # Jmax scaling factor for high temperature inhibition
+    jmaxc: float = 0.0
+
+    # Leaf respiration rate at 25C (umol CO2/m2/s)
+    rd25: float = 0.9
+    
+    # Activation energy for Rd (J/mol)
+    rdha: float = 46390.0  
+
+    # Deactivation energy for Rd (J/mol)
+    rdhd: float = 150000.0
+
+    # Entropy term for Rd (J/mol/K)
+    rdse: float = 490.0
+
+    # Michaelis-Menten constant for CO2 at 25C (umol/mol)
+    kc25: float = 404.9
+
+    # Activation energy for Kc (J/mol)
+    kcha: float = 79430.0
+
+    # Activation energy for Ko (J/mol)
+    koha: float = 36380.0
+
+    # Michaelis-Menten constant for O2 at 25C (mmol/mol)
+    ko25: float = 278.4 
+
+    # CO2 compensation point at 25C (umol/mol)
+    cp25: float = 42.75
+
+    # Activation energy for Cp (J/mol)
+    cpha: float = 37830.0
+
+    # Rd scaling factor for high temperature inhibition
+    rdc: float = 0.0
+ 
+    # C3 co-limitation curvature        
+    colim_c3: float = 0.9999      
+    
+    # quantum yield of e⁻ transport on INCIDENT PAR
+    alpha_j: float = 0.24
+    
+    # curvature of light limitation        
+    theta_j: float = 0.85        
+    
     # Stomatal parameters -------------------------------------------------------
     
-    # Residual conductance (mmol H2O/m2/s)
-    g0_medlyn: float = 10.0      
+    # Residual conductance (mol H2O/m2/s)
+    g0_medlyn: float = 0.0      
     
     # Slope (kPa^0.5)
-    g1_medlyn: float = 4.45
+    g1_medlyn: float = 4.0 
+    
+    # VPD exponent: VPD^(1−gk); 0.5 ⇒ 1/√D
+    gk_medlyn: float = 0.5
+    
+    # kPa floor on VPD       
+    vpdmin:    float = 0.5
+    
+    # H₂O/CO₂ diffusivity ratio       
+    GCtoGW:    float = 1.57      
     
     # Atmospheric CO2 (umol/mol)      
     CO2_air: float = 415.0 
     
     # Atmospheric O2 (mmol/mol)      
-    O2_air: float = 209.0        
+    O2_air: float = 210.0        
     
     # Phenology -----------------------------------------------------------------
     
@@ -1129,7 +1162,7 @@ class SurEauVegetationParams:
     leaf_angle: float = 45.0       
     
     # Skip energy balance (diagnostic)
-    turn_off_EB: bool = False       
+    turn_off_EB: bool = False 
     
 
 # %% ../nbs/100_parameter_classes.ipynb #889c6cb7
