@@ -86,6 +86,11 @@ def _collect_timestep(state, fluxes, diag, soil, clim, year, doy,
         
         # From FLUXES (instantaneous, recomputed each step) ---------------------
         "gs_lim": fluxes.gs_lim,
+        "gmin": fluxes.gmin,
+        "gmin_S": fluxes.gmin_S,
+        "g_BL": fluxes.g_BL,           
+        "g_crown": fluxes.g_crown,
+        "leaf_VPD": fluxes.leaf_VPD,
         "E_lim": fluxes.E_lim,
         "E_min": fluxes.E_min,
         "E_bound": fluxes.E_bound,
