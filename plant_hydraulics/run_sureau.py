@@ -56,7 +56,8 @@ from .sureau_plant_hydraulics import compute_regul_fact
 from .sureau_vegetation_params import sureau_vegetation_params
 
 # %% ../nbs/222_run_sureau.ipynb #8424e1c7
-def _collect_timestep(state, fluxes, diag, soil, clim, year, doy):
+def _collect_timestep(state, fluxes, diag, soil, clim, year, doy,  
+                      veg_params:SurEauVegetationParams):
     """Collect key variables into a dict for DataFrame construction.
  
     Pulls from the correct object for each variable:
@@ -64,7 +65,7 @@ def _collect_timestep(state, fluxes, diag, soil, clim, year, doy):
         fluxes → transpiration rates, stomatal conductance, leaf temperature
         diag   → fuel moisture content, solver quality metrics
     """
-    return {
+    row = {
         "year": year,
         "doy": doy,
         "time": clim.get("time", np.nan),
@@ -72,7 +73,7 @@ def _collect_timestep(state, fluxes, diag, soil, clim, year, doy):
         "VPD": clim.get("VPD", np.nan),
         "PAR": clim.get("PAR", np.nan),
         
-        # From STATE (persistent, carried forward) ------------------------------
+        # From STATE ------------------------------------------------------------
         "psi_LApo": state.psi_LApo,
         "psi_SApo": state.psi_SApo,
         "psi_LSym": state.psi_LSym,
@@ -102,6 +103,23 @@ def _collect_timestep(state, fluxes, diag, soil, clim, year, doy):
         "soil_evaporation": soil.evaporation,
         "drainage": soil.drainage,
     }
+    
+    # Photosynthesis variables, only returned with Medlyn model ------------------
+    if veg_params.transpiration_model == "Medlyn":
+        
+        # net photosynthesis (umol CO2/m2/s)
+        row["An"] = fluxes.An             
+        
+        # intercellular CO2 (umol/mol)
+        row["ci"] = fluxes.ci
+        
+        # leaf-surface CO2 (umol/mol)              
+        row["cs"] = fluxes.cs
+        
+        # raw, unregulated Medlyn gs (mmol/m2/s)              
+        row["gs_bound"] = fluxes.gs_bound  
+
+    return row
  
 
 # %% ../nbs/222_run_sureau.ipynb #0b55fe63
@@ -632,7 +650,8 @@ def run_sureau(
 
                 # Collect results -----------------------------------------------
                 results.append(_collect_timestep(
-                    state, fluxes, diag, soil, snap_next, each_YEAR, each_DAY
+                    state, fluxes, diag, soil, snap_next, each_YEAR, each_DAY,
+                    veg_params
                 ))
 
                 # Check mortality
