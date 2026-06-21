@@ -144,26 +144,10 @@ soil_params = SurEauSoilParams()
 
 SurEau takes daily climatic data and then creates a hourly dataset 
 
-::: {#138dbcf3 .cell}
-``` {.python .cell-code}
-print(climate_df[["DATE", "DOY"]].to_string())
-```
-
-::: {.cell-output .cell-output-stdout}
-```
-         DATE  DOY
-0  2016-10-31  305
-1  2016-11-01  306
-2  2016-11-02  307
-3  2016-11-03  308
-```
-:::
-:::
-
-
 ::: {#1f8aa1e4 .cell}
 ``` {.python .cell-code}
 climate_df = load_example_data("sureau_medlyn_daily_climate.csv", sep=",")
+#climate_df["DATE"] = pd.to_datetime(climate_df["DATE"], format="%d/%m/%Y").dt.strftime("%Y-%m-%d")
 html_str = to_html_datatable(climate_df)
 display(HTML(html_str))
 ```
@@ -171,7 +155,7 @@ display(HTML(html_str))
 ::: {.cell-output .cell-output-display}
 ```{=html}
 <!--| quarto-html-table-processing: none -->
-<table id="itables_3330c966_7dc6_483d_8b38_2e7bfa56eb9a">
+<table id="itables_82411997_a3f9_440a_91b3_c572e244b3c5">
   <tbody>
     <tr>
       <td style="vertical-align:middle; text-align:left"><a href=https://mwouts.github.io/itables/><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -274,7 +258,7 @@ width="64" viewBox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.5.5/dt_bundle.js';
 
-    document.querySelectorAll("#itables_3330c966_7dc6_483d_8b38_2e7bfa56eb9a:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_82411997_a3f9_440a_91b3_c572e244b3c5:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -534,21 +518,33 @@ plt.tight_layout(rect=[0, 0, 1, 0.96])
 ::: {.cell-output .cell-output-stdout}
 ```
   Plotting DOY 209 (July 28, 1990)
-  Hours available: 24
-  Min ψ_LSym this day: -2.503 MPa
-  Min regul_fact: 0.241
+  Hours available: 0
+  Min ψ_LSym this day: nan MPa
+  Min regul_fact: nan
 ```
 :::
 
-::: {.cell-output .cell-output-stderr}
-```
-/tmp/ipykernel_85532/4151902588.py:43: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
-  ax.legend(fontsize=8)
+::: {.cell-output .cell-output-error}
+
+::: {.ansi-escaped-output}
+```{=html}
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[10]</span><span class="ansi-green-fg">, line 25</span>
+<span class="ansi-green-fg">     22</span>     ax.axvspan(<span class="ansi-green-fg">20</span>, <span class="ansi-green-fg">24</span>, alpha=<span class="ansi-green-fg">0.08</span>, color=<span class="ansi-yellow-fg">'</span><span class="ansi-yellow-fg">gray</span><span class="ansi-yellow-fg">'</span>)
+<span class="ansi-green-fg">     24</span> <span style="font-style:italic;color:rgb(95,135,135)"># ── Create the figure ────────────────────────────────────────────────────</span>
+<span class="ansi-green-fg">---&gt; </span><span class="ansi-green-fg">25</span> fig, axes = <span class="ansi-yellow-bg">plt</span>.subplots(<span class="ansi-green-fg">4</span>, <span class="ansi-green-fg">2</span>, figsize=(<span class="ansi-green-fg">14</span>, <span class="ansi-green-fg">16</span>))
+<span class="ansi-green-fg">     26</span> fig.suptitle(<span class="ansi-yellow-fg">'</span><span class="ansi-yellow-fg">SurEau-Ecos: 4-Compartment Diurnal Hydraulic Simulation</span><span style="font-weight:bold;color:rgb(175,95,0)">\n</span><span class="ansi-yellow-fg">'</span>
+<span class="ansi-green-fg">     27</span>              <span class="ansi-yellow-fg">f</span><span class="ansi-yellow-fg">'</span><span class="ansi-yellow-fg">DOY </span><span style="font-weight:bold;color:rgb(175,95,135)">{</span>target_doy<span style="font-weight:bold;color:rgb(175,95,135)">}</span><span class="ansi-yellow-fg">'</span>,
+<span class="ansi-green-fg">     28</span>              fontsize=<span class="ansi-green-fg">14</span>, fontweight=<span class="ansi-yellow-fg">'</span><span class="ansi-yellow-fg">bold</span><span class="ansi-yellow-fg">'</span>, y=<span class="ansi-green-fg">0.99</span>)
+<span class="ansi-green-fg">     30</span> <span style="font-style:italic;color:rgb(95,135,135)"># ── (A) Stomatal Conductance ─────────────────────────────────────────────</span>
+<span class="ansi-green-fg">     31</span> <span style="font-style:italic;color:rgb(95,135,135)"># Shows gs_lim (water-limited, solid) vs gs_bound/γ (unstressed, dashed).</span>
+<span class="ansi-green-fg">     32</span> <span style="font-style:italic;color:rgb(95,135,135)"># The gap between curves = water stress cost.</span>
+
+<span class="ansi-red-fg">NameError</span>: name 'plt' is not defined</pre>
 ```
 :::
 
-::: {.cell-output .cell-output-display}
-![](305_tutorial_sureau_medlyn_files/figure-html/cell-12-output-3.png){}
 :::
 :::
 

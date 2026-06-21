@@ -408,10 +408,12 @@ def run_sureau(
 
     # Main 
     # Year loop -----------------------------------------------------------------
-    parsed_dates = climate_df["DATE"].apply(lambda d: parser.parse(d, dayfirst=True))
     climate_df = climate_df.copy()
-    climate_df["_year"] = parsed_dates.apply(lambda d: d.year)
-    climate_df["_doy"] = parsed_dates.apply(lambda d: d.timetuple().tm_yday)
+    parsed = pd.to_datetime(climate_df["DATE"], format="ISO8601")   
+    climate_df["DATE"]  = parsed.dt.strftime("%Y-%m-%d")         
+    climate_df["_year"] = parsed.dt.year
+    climate_df["_doy"]  = parsed.dt.dayofyear
+    
     
     for each_YEAR in range(opts.year_start, opts.year_end + 1):
         
@@ -438,7 +440,7 @@ def run_sureau(
             if opts.print_progress:
                 
                 # Progress indicator 
-                print(f"\rYear {each_YEAR} Day {each_DAY:3d}", end="", flush=True)
+                print(f"\rYear {each_YEAR} Day {each_DAY:3d}\n", end=" ", flush=True)
 
             # Daily climate
             clim_day = new_climate_day(climate_df, date_str)
@@ -519,6 +521,7 @@ def run_sureau(
 
                     # Inner sub-timestep loop -----------------------------------
                     for its in range(nts):
+                        
                         p = (its + 0.5) / nts
                         snap = interpolate_climate_hourly(snap_curr, snap_next, p)
                         snap["ETP_veg"] = snap.get("ETP_veg", snap["ETP"] * frac_veg)

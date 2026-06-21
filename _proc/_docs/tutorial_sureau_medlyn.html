@@ -115,10 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="Tutorial 5: SurEau-Medlyn Basic run – plant_hydraulics">
-<meta property="og:image" content="https://ecamo19.github.io/plant_hydraulics/305_tutorial_sureau_medlyn_files/figure-html/cell-12-output-3.png">
 <meta property="og:site_name" content="plant_hydraulics">
-<meta property="og:image:height" content="1589">
-<meta property="og:image:width" content="1390">
 </head>
 
 <body class="nav-sidebar floating nav-fixed quarto-light">
@@ -515,23 +512,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="climate" class="level2">
 <h2 class="anchored" data-anchor-id="climate">Climate</h2>
 <p>SurEau takes daily climatic data and then creates a hourly dataset</p>
-<div id="138dbcf3" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(climate_df[[<span class="st">"DATE"</span>, <span class="st">"DOY"</span>]].to_string())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>         DATE  DOY
-0  2016-10-31  305
-1  2016-11-01  306
-2  2016-11-02  307
-3  2016-11-03  308</code></pre>
-</div>
-</div>
 <div id="1f8aa1e4" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>climate_df <span class="op">=</span> load_example_data(<span class="st">"sureau_medlyn_daily_climate.csv"</span>, sep<span class="op">=</span><span class="st">","</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>html_str <span class="op">=</span> to_html_datatable(climate_df)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>display(HTML(html_str))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>climate_df <span class="op">=</span> load_example_data(<span class="st">"sureau_medlyn_daily_climate.csv"</span>, sep<span class="op">=</span><span class="st">","</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#climate_df["DATE"] = pd.to_datetime(climate_df["DATE"], format="%d/%m/%Y").dt.strftime("%Y-%m-%d")</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>html_str <span class="op">=</span> to_html_datatable(climate_df)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>display(HTML(html_str))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_3330c966_7dc6_483d_8b38_2e7bfa56eb9a">
+<table id="itables_82411997_a3f9_440a_91b3_c572e244b3c5">
   <tbody>
     <tr>
       <td style="vertical-align:middle; text-align:left"><a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
@@ -601,7 +589,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.5.5/dt_bundle.js';
 
-    document.querySelectorAll("#itables_3330c966_7dc6_483d_8b38_2e7bfa56eb9a:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_82411997_a3f9_440a_91b3_c572e244b3c5:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -624,35 +612,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="explore-climatic-data" class="level3">
 <h3 class="anchored" data-anchor-id="explore-climatic-data">Explore climatic data</h3>
 <div id="4ea0b3df" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>hourly_data_from_daily <span class="op">=</span> []</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> each_day <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(climate_df)):</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get date </span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    date_str <span class="op">=</span> <span class="bu">str</span>(climate_df.iloc[each_day][<span class="st">"DATE"</span>])              </span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>   </span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate climate for that day</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    clim <span class="op">=</span> new_climate_day(climate_df, date_str)</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute PET for that day</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    clim <span class="op">=</span> compute_Rn_and_ETP(clim, veg_params, opts)</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create hourly climate from daily conditions     </span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    ch   <span class="op">=</span> new_climate_hourly(clim, opts, veg_params)    </span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Show data in ch</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print("ch.__dict__ keys:", list(vars(ch).keys()))</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Put everything into frame that works for Sureau</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    hourly_data_from_daily.append(pd.DataFrame({</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Doy"</span>:    <span class="bu">int</span>(climate_df.iloc[each_day][<span class="st">"DOY"</span>]),</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">"hour"</span>:   np.asarray(ch.time, <span class="bu">float</span>),</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">"RG"</span>:     np.asarray(ch.RG, <span class="bu">float</span>), </span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">"RH"</span>:     np.asarray(ch.RH_air_mean, <span class="bu">float</span>),           </span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">"PAR_d"</span>:  np.asarray(ch.PAR, <span class="bu">float</span>),</span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Tair_d"</span>: np.asarray(ch.T_air_mean, <span class="bu">float</span>),</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">"VPD_d"</span>:  np.asarray(ch.VPD, <span class="bu">float</span>),</span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    }))</span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>hourly_data_from_daily <span class="op">=</span> pd.concat(hourly_data_from_daily, ignore_index<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>hourly_data_from_daily <span class="op">=</span> []</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> each_day <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(climate_df)):</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get date </span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    date_str <span class="op">=</span> <span class="bu">str</span>(climate_df.iloc[each_day][<span class="st">"DATE"</span>])              </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate climate for that day</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    clim <span class="op">=</span> new_climate_day(climate_df, date_str)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute PET for that day</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    clim <span class="op">=</span> compute_Rn_and_ETP(clim, veg_params, opts)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create hourly climate from daily conditions     </span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    ch   <span class="op">=</span> new_climate_hourly(clim, opts, veg_params)    </span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Show data in ch</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print("ch.__dict__ keys:", list(vars(ch).keys()))</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Put everything into frame that works for Sureau</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    hourly_data_from_daily.append(pd.DataFrame({</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Doy"</span>:    <span class="bu">int</span>(climate_df.iloc[each_day][<span class="st">"DOY"</span>]),</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">"hour"</span>:   np.asarray(ch.time, <span class="bu">float</span>),</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">"RG"</span>:     np.asarray(ch.RG, <span class="bu">float</span>), </span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">"RH"</span>:     np.asarray(ch.RH_air_mean, <span class="bu">float</span>),           </span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">"PAR_d"</span>:  np.asarray(ch.PAR, <span class="bu">float</span>),</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Tair_d"</span>: np.asarray(ch.T_air_mean, <span class="bu">float</span>),</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">"VPD_d"</span>:  np.asarray(ch.VPD, <span class="bu">float</span>),</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    }))</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>hourly_data_from_daily <span class="op">=</span> pd.concat(hourly_data_from_daily, ignore_index<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>ETP_formulation is PM
 Remember to adjust the lat/lon
@@ -669,15 +657,15 @@ Remember to adjust the lat/lon</code></pre>
 <section id="run-the-model" class="level2">
 <h2 class="anchored" data-anchor-id="run-the-model">Run the model</h2>
 <div id="bc1401ed" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> run_sureau(</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    climate_df<span class="op">=</span>climate_df,</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    veg_params<span class="op">=</span>veg_params,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    soil_params<span class="op">=</span>soil_params,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    opts<span class="op">=</span>opts,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set True to keep deepest layer at field capacity</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    deep_water<span class="op">=</span><span class="va">True</span>,  </span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> run_sureau(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    climate_df<span class="op">=</span>climate_df,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    veg_params<span class="op">=</span>veg_params,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    soil_params<span class="op">=</span>soil_params,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    opts<span class="op">=</span>opts,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set True to keep deepest layer at field capacity</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    deep_water<span class="op">=</span><span class="va">True</span>,  </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Year 2016 Day 305ETP_formulation is PM
 Remember to adjust the lat/lon
@@ -694,168 +682,175 @@ Year 2016 complete. </code></pre>
 <section id="plot-results" class="level2">
 <h2 class="anchored" data-anchor-id="plot-results">Plot results</h2>
 <div id="1771f210" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>target_doy <span class="op">=</span> <span class="dv">209</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>day <span class="op">=</span> results[results[<span class="st">"doy"</span>] <span class="op">==</span> target_doy].copy()</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>hours <span class="op">=</span> day[<span class="st">"time"</span>].values</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  Plotting DOY </span><span class="sc">{</span>target_doy<span class="sc">}</span><span class="ss"> (July 28, 1990)"</span>)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  Hours available: </span><span class="sc">{</span><span class="bu">len</span>(hours)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  Min ψ_LSym this day: </span><span class="sc">{</span>day[<span class="st">'psi_LSym'</span>]<span class="sc">.</span><span class="bu">min</span>()<span class="sc">:.3f}</span><span class="ss"> MPa"</span>)</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  Min regul_fact: </span><span class="sc">{</span>day[<span class="st">'regul_fact'</span>]<span class="sc">.</span><span class="bu">min</span>()<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Colour scheme ────────────────────────────────────────────────────────</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>c_LSym <span class="op">=</span> <span class="st">'#2196F3'</span>   <span class="co"># blue — leaf symplasm (living cells)</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>c_LApo <span class="op">=</span> <span class="st">'#64B5F6'</span>   <span class="co"># light blue — leaf apoplasm (xylem pipes)</span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>c_SApo <span class="op">=</span> <span class="st">'#FF7043'</span>   <span class="co"># orange — stem apoplasm (trunk pipes)</span></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>c_SSym <span class="op">=</span> <span class="st">'#FFAB91'</span>   <span class="co"># light orange — stem symplasm (trunk storage)</span></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>c_total <span class="op">=</span> <span class="st">'#1B5E20'</span>  <span class="co"># dark green — total / canopy-level</span></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> shade_night(ax):</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Gray shading for nighttime hours (before sunrise, after sunset)."""</span></span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    ax.axvspan(<span class="dv">0</span>, <span class="dv">6</span>, alpha<span class="op">=</span><span class="fl">0.08</span>, color<span class="op">=</span><span class="st">'gray'</span>)</span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    ax.axvspan(<span class="dv">20</span>, <span class="dv">24</span>, alpha<span class="op">=</span><span class="fl">0.08</span>, color<span class="op">=</span><span class="st">'gray'</span>)</span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Create the figure ────────────────────────────────────────────────────</span></span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">4</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">16</span>))</span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'SurEau-Ecos: 4-Compartment Diurnal Hydraulic Simulation</span><span class="ch">\n</span><span class="st">'</span></span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>             <span class="ss">f'DOY </span><span class="sc">{</span>target_doy<span class="sc">}</span><span class="ss">'</span>,</span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, y<span class="op">=</span><span class="fl">0.99</span>)</span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a><span class="co"># ── (A) Stomatal Conductance ─────────────────────────────────────────────</span></span>
-<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Shows gs_lim (water-limited, solid) vs gs_bound/γ (unstressed, dashed).</span></span>
-<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a><span class="co"># The gap between curves = water stress cost.</span></span>
-<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">0</span>, <span class="dv">0</span>]</span>
-<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>gs_regulated <span class="op">=</span> day[<span class="st">'gs_lim'</span>].values</span>
-<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a><span class="co">#gs_unstressed = gs_regulated / (day['regul_fact'].values + 1e-10)</span></span>
-<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a><span class="co">#ax.fill_between(hours, gs_regulated, gs_unstressed, alpha=0.15, color=c_total)</span></span>
-<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, gs_regulated, color<span class="op">=</span>c_total, lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a><span class="co">#ax.plot(hours, gs_unstressed, color=c_total, lw=1, ls='--', alpha=0.5,</span></span>
-<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a><span class="co">#        label='gs (unstressed)')</span></span>
-<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>shade_night(ax)</span>
-<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'gs [mmol m⁻² s⁻¹]'</span>)</span>
-<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'(A) Stomatal Conductance'</span>)</span>
-<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>ax.legend(fontsize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="dv">24</span>)</span>
-<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a><span class="co"># ── (B) Stomatal Regulation Factor ───────────────────────────────────────</span></span>
-<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a><span class="co"># γ = 1 → stomata fully open. γ = 0 → fully closed.</span></span>
-<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Driven by the sigmoid (Eq. 34) applied to ψ_LSym.</span></span>
-<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">0</span>, <span class="dv">1</span>]</span>
-<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, day[<span class="st">'regul_fact'</span>].values, color<span class="op">=</span><span class="st">'#7B1FA2'</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a>shade_night(ax)</span>
-<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'γ [-]'</span>)</span>
-<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'(B) Stomatal Regulation Factor (1=open, 0=closed)'</span>)</span>
-<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="op">-</span><span class="fl">0.05</span>, <span class="fl">1.05</span>)</span>
-<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="dv">24</span>)</span>
-<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a><span class="co"># ── (C) Leaf Temperature ────────────────────────────────────────────────</span></span>
-<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a><span class="co"># T_leaf &gt; T_air when stomata close (less transpirational cooling).</span></span>
-<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Energy balance: Penman-Monteith linearization (compute_T_leaf).</span></span>
-<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">1</span>, <span class="dv">0</span>]</span>
-<span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, day[<span class="st">'leaf_temperature'</span>].values, color<span class="op">=</span><span class="st">'#E65100'</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'T_leaf'</span>)</span>
-<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, day[<span class="st">'T_air'</span>].values, color<span class="op">=</span><span class="st">'gray'</span>, lw<span class="op">=</span><span class="fl">1.5</span>, ls<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'T_air'</span>)</span>
-<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a>shade_night(ax)</span>
-<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Temperature [°C]'</span>)</span>
-<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'(C) Leaf Temperature'</span>)</span>
-<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a>ax.legend(fontsize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="dv">24</span>)</span>
-<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a><span class="co"># ── (D) Dynamic Whole-Plant Conductance ──────────────────────────────────</span></span>
-<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a><span class="co"># K_plant = 1/(1/Σk_root + 1/k_stem-leaf + 1/k_leaf-sym) (Eq. 13).</span></span>
-<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a><span class="co"># Decreases as PLC increases from cavitation.</span></span>
-<span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">1</span>, <span class="dv">1</span>]</span>
-<span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, day[<span class="st">'k_plant'</span>].values, color<span class="op">=</span>c_total, lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb14-72"><a href="#cb14-72" aria-hidden="true" tabindex="-1"></a>shade_night(ax)</span>
-<span id="cb14-73"><a href="#cb14-73" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'K_plant [mmol m⁻² s⁻¹ MPa⁻¹]'</span>)</span>
-<span id="cb14-74"><a href="#cb14-74" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'(D) Dynamic Whole-Plant Conductance'</span>)</span>
-<span id="cb14-75"><a href="#cb14-75" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">0.95</span>, <span class="fl">0.05</span>, <span class="ss">f'K_init = </span><span class="sc">{</span>veg_params<span class="sc">.</span>k_plant_init<span class="sc">}</span><span class="ss">'</span>,</span>
-<span id="cb14-76"><a href="#cb14-76" aria-hidden="true" tabindex="-1"></a>        transform<span class="op">=</span>ax.transAxes, ha<span class="op">=</span><span class="st">'right'</span>, fontsize<span class="op">=</span><span class="dv">9</span>,</span>
-<span id="cb14-77"><a href="#cb14-77" aria-hidden="true" tabindex="-1"></a>        bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">'round'</span>, facecolor<span class="op">=</span><span class="st">'wheat'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>))</span>
-<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="dv">24</span>)</span>
-<span id="cb14-79"><a href="#cb14-79" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb14-80"><a href="#cb14-80" aria-hidden="true" tabindex="-1"></a><span class="co"># ── (E) Transpiration: Stomatal + Cuticular ──────────────────────────────</span></span>
-<span id="cb14-81"><a href="#cb14-81" aria-hidden="true" tabindex="-1"></a><span class="co"># E_total = E_lim (stomatal, green) + E_min (cuticular, orange).</span></span>
-<span id="cb14-82"><a href="#cb14-82" aria-hidden="true" tabindex="-1"></a><span class="co"># Cuticular transpiration is the "unstoppable leak" that drives mortality.</span></span>
-<span id="cb14-83"><a href="#cb14-83" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">2</span>, <span class="dv">0</span>]</span>
-<span id="cb14-84"><a href="#cb14-84" aria-hidden="true" tabindex="-1"></a>E_cuticular <span class="op">=</span> day[<span class="st">'E_min'</span>].values</span>
-<span id="cb14-85"><a href="#cb14-85" aria-hidden="true" tabindex="-1"></a>E_total <span class="op">=</span> day[<span class="st">'E_lim'</span>].values <span class="op">+</span> E_cuticular</span>
-<span id="cb14-86"><a href="#cb14-86" aria-hidden="true" tabindex="-1"></a>ax.fill_between(hours, <span class="dv">0</span>, E_cuticular, alpha<span class="op">=</span><span class="fl">0.4</span>, color<span class="op">=</span><span class="st">'#FFB74D'</span>, label<span class="op">=</span><span class="st">'E_cuticular'</span>)</span>
-<span id="cb14-87"><a href="#cb14-87" aria-hidden="true" tabindex="-1"></a>ax.fill_between(hours, E_cuticular, E_total, alpha<span class="op">=</span><span class="fl">0.4</span>, color<span class="op">=</span><span class="st">'#66BB6A'</span>, label<span class="op">=</span><span class="st">'E_stomatal'</span>)</span>
-<span id="cb14-88"><a href="#cb14-88" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, E_total, color<span class="op">=</span>c_total, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'E_total'</span>)</span>
-<span id="cb14-89"><a href="#cb14-89" aria-hidden="true" tabindex="-1"></a>shade_night(ax)</span>
-<span id="cb14-90"><a href="#cb14-90" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'E [mmol m⁻² s⁻¹]'</span>)</span>
-<span id="cb14-91"><a href="#cb14-91" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'(E) Transpiration: Stomatal + Cuticular'</span>)</span>
-<span id="cb14-92"><a href="#cb14-92" aria-hidden="true" tabindex="-1"></a>ax.legend(fontsize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb14-93"><a href="#cb14-93" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="dv">24</span>)</span>
-<span id="cb14-94"><a href="#cb14-94" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb14-95"><a href="#cb14-95" aria-hidden="true" tabindex="-1"></a><span class="co"># ── (F) Water Potentials — 4 Compartments ────────────────────────────────</span></span>
-<span id="cb14-96"><a href="#cb14-96" aria-hidden="true" tabindex="-1"></a><span class="co"># The heart of SurEau: 4 interconnected water tanks.</span></span>
-<span id="cb14-97"><a href="#cb14-97" aria-hidden="true" tabindex="-1"></a><span class="co">#   ψ_LSym (blue) — leaf living cells. Drops most (transpiration pulls here).</span></span>
-<span id="cb14-98"><a href="#cb14-98" aria-hidden="true" tabindex="-1"></a><span class="co">#   ψ_LApo (light blue) — leaf xylem pipes. Follows ψ_LSym closely.</span></span>
-<span id="cb14-99"><a href="#cb14-99" aria-hidden="true" tabindex="-1"></a><span class="co">#   ψ_SApo (orange) — stem pipes. Drops less (buffered by stem storage).</span></span>
-<span id="cb14-100"><a href="#cb14-100" aria-hidden="true" tabindex="-1"></a><span class="co">#   ψ_SSym (light orange) — stem storage. Most buffered of all.</span></span>
-<span id="cb14-101"><a href="#cb14-101" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">2</span>, <span class="dv">1</span>]</span>
-<span id="cb14-102"><a href="#cb14-102" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, day[<span class="st">'psi_LSym'</span>].values, color<span class="op">=</span>c_LSym, lw<span class="op">=</span><span class="dv">2</span>,</span>
-<span id="cb14-103"><a href="#cb14-103" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="st">'ψ_LSym (leaf living)'</span>)</span>
-<span id="cb14-104"><a href="#cb14-104" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, day[<span class="st">'psi_LApo'</span>].values, color<span class="op">=</span>c_LApo, lw<span class="op">=</span><span class="fl">1.5</span>, ls<span class="op">=</span><span class="st">'--'</span>,</span>
-<span id="cb14-105"><a href="#cb14-105" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="st">'ψ_LApo (leaf pipes)'</span>)</span>
-<span id="cb14-106"><a href="#cb14-106" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, day[<span class="st">'psi_SApo'</span>].values, color<span class="op">=</span>c_SApo, lw<span class="op">=</span><span class="fl">1.5</span>, ls<span class="op">=</span><span class="st">'--'</span>,</span>
-<span id="cb14-107"><a href="#cb14-107" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="st">'ψ_SApo (stem pipes)'</span>)</span>
-<span id="cb14-108"><a href="#cb14-108" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, day[<span class="st">'psi_SSym'</span>].values, color<span class="op">=</span>c_SSym, lw<span class="op">=</span><span class="dv">1</span>, ls<span class="op">=</span><span class="st">':'</span>,</span>
-<span id="cb14-109"><a href="#cb14-109" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="st">'ψ_SSym (stem storage)'</span>)</span>
-<span id="cb14-110"><a href="#cb14-110" aria-hidden="true" tabindex="-1"></a><span class="co"># Mark P50_gs (midpoint of stomatal closure)</span></span>
-<span id="cb14-111"><a href="#cb14-111" aria-hidden="true" tabindex="-1"></a>P50_gs <span class="op">=</span> (veg_params.P12_gs <span class="op">+</span> veg_params.P88_gs) <span class="op">/</span> <span class="dv">2</span></span>
-<span id="cb14-112"><a href="#cb14-112" aria-hidden="true" tabindex="-1"></a>ax.axhline(P50_gs, color<span class="op">=</span><span class="st">'gray'</span>, ls<span class="op">=</span><span class="st">':'</span>, lw<span class="op">=</span><span class="fl">0.8</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb14-113"><a href="#cb14-113" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">24.2</span>, P50_gs, <span class="ss">f'P50_gs = </span><span class="sc">{</span>P50_gs<span class="sc">:.1f}</span><span class="ss">'</span>, fontsize<span class="op">=</span><span class="dv">7</span>, va<span class="op">=</span><span class="st">'center'</span>)</span>
-<span id="cb14-114"><a href="#cb14-114" aria-hidden="true" tabindex="-1"></a>shade_night(ax)</span>
-<span id="cb14-115"><a href="#cb14-115" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'ψ [MPa]'</span>)</span>
-<span id="cb14-116"><a href="#cb14-116" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'(F) Water Potentials — 4 Compartments'</span>)</span>
-<span id="cb14-117"><a href="#cb14-117" aria-hidden="true" tabindex="-1"></a>ax.legend(fontsize<span class="op">=</span><span class="dv">7</span>, loc<span class="op">=</span><span class="st">'lower left'</span>)</span>
-<span id="cb14-118"><a href="#cb14-118" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="dv">24</span>)</span>
-<span id="cb14-119"><a href="#cb14-119" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb14-120"><a href="#cb14-120" aria-hidden="true" tabindex="-1"></a><span class="co"># ── (G) Leaf-to-Air VPD ─────────────────────────────────────────────────</span></span>
-<span id="cb14-121"><a href="#cb14-121" aria-hidden="true" tabindex="-1"></a><span class="co"># The driving force for transpiration. Includes Kelvin equation</span></span>
-<span id="cb14-122"><a href="#cb14-122" aria-hidden="true" tabindex="-1"></a><span class="co"># correction for reduced water activity at negative ψ.</span></span>
-<span id="cb14-123"><a href="#cb14-123" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">3</span>, <span class="dv">0</span>]</span>
-<span id="cb14-124"><a href="#cb14-124" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, day[<span class="st">'VPD'</span>].values, color<span class="op">=</span><span class="st">'#C62828'</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb14-125"><a href="#cb14-125" aria-hidden="true" tabindex="-1"></a>shade_night(ax)</span>
-<span id="cb14-126"><a href="#cb14-126" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'VPD_leaf [kPa]'</span>)</span>
-<span id="cb14-127"><a href="#cb14-127" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'(G) Leaf-to-Air VPD'</span>)</span>
-<span id="cb14-128"><a href="#cb14-128" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Hour of day'</span>)</span>
-<span id="cb14-129"><a href="#cb14-129" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="dv">24</span>)</span>
-<span id="cb14-130"><a href="#cb14-130" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb14-131"><a href="#cb14-131" aria-hidden="true" tabindex="-1"></a><span class="co"># ── (H) Percent Loss of Conductivity ────────────────────────────────────</span></span>
-<span id="cb14-132"><a href="#cb14-132" aria-hidden="true" tabindex="-1"></a><span class="co"># PLC from the sigmoidal vulnerability curve (Eq. 15).</span></span>
-<span id="cb14-133"><a href="#cb14-133" aria-hidden="true" tabindex="-1"></a><span class="co"># Irreversible: once pipes burst, they stay broken.</span></span>
-<span id="cb14-134"><a href="#cb14-134" aria-hidden="true" tabindex="-1"></a><span class="co"># Low PLC (~2%) here because ψ_LApo stays well above P50_VC (-3.4 MPa).</span></span>
-<span id="cb14-135"><a href="#cb14-135" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">3</span>, <span class="dv">1</span>]</span>
-<span id="cb14-136"><a href="#cb14-136" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, day[<span class="st">'PLC_leaf'</span>].values, color<span class="op">=</span>c_LSym, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'PLC_Leaf'</span>)</span>
-<span id="cb14-137"><a href="#cb14-137" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, day[<span class="st">'PLC_stem'</span>].values, color<span class="op">=</span>c_SApo, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'PLC_Stem'</span>)</span>
-<span id="cb14-138"><a href="#cb14-138" aria-hidden="true" tabindex="-1"></a>ax.axhline(<span class="dv">50</span>, color<span class="op">=</span><span class="st">'gray'</span>, ls<span class="op">=</span><span class="st">':'</span>, lw<span class="op">=</span><span class="fl">0.8</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'50% PLC'</span>)</span>
-<span id="cb14-139"><a href="#cb14-139" aria-hidden="true" tabindex="-1"></a>shade_night(ax)</span>
-<span id="cb14-140"><a href="#cb14-140" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'PLC [%]'</span>)</span>
-<span id="cb14-141"><a href="#cb14-141" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'(H) Percent Loss of Conductivity'</span>)</span>
-<span id="cb14-142"><a href="#cb14-142" aria-hidden="true" tabindex="-1"></a>ax.legend(fontsize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb14-143"><a href="#cb14-143" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="op">-</span><span class="dv">2</span>, <span class="dv">105</span>)</span>
-<span id="cb14-144"><a href="#cb14-144" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Hour of day'</span>)</span>
-<span id="cb14-145"><a href="#cb14-145" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="dv">24</span>)</span>
-<span id="cb14-146"><a href="#cb14-146" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb14-147"><a href="#cb14-147" aria-hidden="true" tabindex="-1"></a>plt.tight_layout(rect<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.96</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>target_doy <span class="op">=</span> <span class="dv">209</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>day <span class="op">=</span> results[results[<span class="st">"doy"</span>] <span class="op">==</span> target_doy].copy()</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>hours <span class="op">=</span> day[<span class="st">"time"</span>].values</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  Plotting DOY </span><span class="sc">{</span>target_doy<span class="sc">}</span><span class="ss"> (July 28, 1990)"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  Hours available: </span><span class="sc">{</span><span class="bu">len</span>(hours)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  Min ψ_LSym this day: </span><span class="sc">{</span>day[<span class="st">'psi_LSym'</span>]<span class="sc">.</span><span class="bu">min</span>()<span class="sc">:.3f}</span><span class="ss"> MPa"</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  Min regul_fact: </span><span class="sc">{</span>day[<span class="st">'regul_fact'</span>]<span class="sc">.</span><span class="bu">min</span>()<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Colour scheme ────────────────────────────────────────────────────────</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>c_LSym <span class="op">=</span> <span class="st">'#2196F3'</span>   <span class="co"># blue — leaf symplasm (living cells)</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>c_LApo <span class="op">=</span> <span class="st">'#64B5F6'</span>   <span class="co"># light blue — leaf apoplasm (xylem pipes)</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>c_SApo <span class="op">=</span> <span class="st">'#FF7043'</span>   <span class="co"># orange — stem apoplasm (trunk pipes)</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>c_SSym <span class="op">=</span> <span class="st">'#FFAB91'</span>   <span class="co"># light orange — stem symplasm (trunk storage)</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>c_total <span class="op">=</span> <span class="st">'#1B5E20'</span>  <span class="co"># dark green — total / canopy-level</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> shade_night(ax):</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Gray shading for nighttime hours (before sunrise, after sunset)."""</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    ax.axvspan(<span class="dv">0</span>, <span class="dv">6</span>, alpha<span class="op">=</span><span class="fl">0.08</span>, color<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    ax.axvspan(<span class="dv">20</span>, <span class="dv">24</span>, alpha<span class="op">=</span><span class="fl">0.08</span>, color<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="co"># ── Create the figure ────────────────────────────────────────────────────</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">4</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">16</span>))</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">'SurEau-Ecos: 4-Compartment Diurnal Hydraulic Simulation</span><span class="ch">\n</span><span class="st">'</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>             <span class="ss">f'DOY </span><span class="sc">{</span>target_doy<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, y<span class="op">=</span><span class="fl">0.99</span>)</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="co"># ── (A) Stomatal Conductance ─────────────────────────────────────────────</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Shows gs_lim (water-limited, solid) vs gs_bound/γ (unstressed, dashed).</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="co"># The gap between curves = water stress cost.</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">0</span>, <span class="dv">0</span>]</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>gs_regulated <span class="op">=</span> day[<span class="st">'gs_lim'</span>].values</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a><span class="co">#gs_unstressed = gs_regulated / (day['regul_fact'].values + 1e-10)</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a><span class="co">#ax.fill_between(hours, gs_regulated, gs_unstressed, alpha=0.15, color=c_total)</span></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, gs_regulated, color<span class="op">=</span>c_total, lw<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a><span class="co">#ax.plot(hours, gs_unstressed, color=c_total, lw=1, ls='--', alpha=0.5,</span></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a><span class="co">#        label='gs (unstressed)')</span></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>shade_night(ax)</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'gs [mmol m⁻² s⁻¹]'</span>)</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'(A) Stomatal Conductance'</span>)</span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>ax.legend(fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="dv">24</span>)</span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="co"># ── (B) Stomatal Regulation Factor ───────────────────────────────────────</span></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a><span class="co"># γ = 1 → stomata fully open. γ = 0 → fully closed.</span></span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Driven by the sigmoid (Eq. 34) applied to ψ_LSym.</span></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">0</span>, <span class="dv">1</span>]</span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, day[<span class="st">'regul_fact'</span>].values, color<span class="op">=</span><span class="st">'#7B1FA2'</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>shade_night(ax)</span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'γ [-]'</span>)</span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'(B) Stomatal Regulation Factor (1=open, 0=closed)'</span>)</span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="op">-</span><span class="fl">0.05</span>, <span class="fl">1.05</span>)</span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="dv">24</span>)</span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a><span class="co"># ── (C) Leaf Temperature ────────────────────────────────────────────────</span></span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a><span class="co"># T_leaf &gt; T_air when stomata close (less transpirational cooling).</span></span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Energy balance: Penman-Monteith linearization (compute_T_leaf).</span></span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">1</span>, <span class="dv">0</span>]</span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, day[<span class="st">'leaf_temperature'</span>].values, color<span class="op">=</span><span class="st">'#E65100'</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'T_leaf'</span>)</span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, day[<span class="st">'T_air'</span>].values, color<span class="op">=</span><span class="st">'gray'</span>, lw<span class="op">=</span><span class="fl">1.5</span>, ls<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'T_air'</span>)</span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>shade_night(ax)</span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Temperature [°C]'</span>)</span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'(C) Leaf Temperature'</span>)</span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>ax.legend(fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="dv">24</span>)</span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a><span class="co"># ── (D) Dynamic Whole-Plant Conductance ──────────────────────────────────</span></span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a><span class="co"># K_plant = 1/(1/Σk_root + 1/k_stem-leaf + 1/k_leaf-sym) (Eq. 13).</span></span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a><span class="co"># Decreases as PLC increases from cavitation.</span></span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">1</span>, <span class="dv">1</span>]</span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, day[<span class="st">'k_plant'</span>].values, color<span class="op">=</span>c_total, lw<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>shade_night(ax)</span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'K_plant [mmol m⁻² s⁻¹ MPa⁻¹]'</span>)</span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'(D) Dynamic Whole-Plant Conductance'</span>)</span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">0.95</span>, <span class="fl">0.05</span>, <span class="ss">f'K_init = </span><span class="sc">{</span>veg_params<span class="sc">.</span>k_plant_init<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a>        transform<span class="op">=</span>ax.transAxes, ha<span class="op">=</span><span class="st">'right'</span>, fontsize<span class="op">=</span><span class="dv">9</span>,</span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a>        bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">'round'</span>, facecolor<span class="op">=</span><span class="st">'wheat'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>))</span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="dv">24</span>)</span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a><span class="co"># ── (E) Transpiration: Stomatal + Cuticular ──────────────────────────────</span></span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a><span class="co"># E_total = E_lim (stomatal, green) + E_min (cuticular, orange).</span></span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a><span class="co"># Cuticular transpiration is the "unstoppable leak" that drives mortality.</span></span>
+<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">2</span>, <span class="dv">0</span>]</span>
+<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a>E_cuticular <span class="op">=</span> day[<span class="st">'E_min'</span>].values</span>
+<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a>E_total <span class="op">=</span> day[<span class="st">'E_lim'</span>].values <span class="op">+</span> E_cuticular</span>
+<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a>ax.fill_between(hours, <span class="dv">0</span>, E_cuticular, alpha<span class="op">=</span><span class="fl">0.4</span>, color<span class="op">=</span><span class="st">'#FFB74D'</span>, label<span class="op">=</span><span class="st">'E_cuticular'</span>)</span>
+<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a>ax.fill_between(hours, E_cuticular, E_total, alpha<span class="op">=</span><span class="fl">0.4</span>, color<span class="op">=</span><span class="st">'#66BB6A'</span>, label<span class="op">=</span><span class="st">'E_stomatal'</span>)</span>
+<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, E_total, color<span class="op">=</span>c_total, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'E_total'</span>)</span>
+<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a>shade_night(ax)</span>
+<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'E [mmol m⁻² s⁻¹]'</span>)</span>
+<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'(E) Transpiration: Stomatal + Cuticular'</span>)</span>
+<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a>ax.legend(fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="dv">24</span>)</span>
+<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a><span class="co"># ── (F) Water Potentials — 4 Compartments ────────────────────────────────</span></span>
+<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a><span class="co"># The heart of SurEau: 4 interconnected water tanks.</span></span>
+<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a><span class="co">#   ψ_LSym (blue) — leaf living cells. Drops most (transpiration pulls here).</span></span>
+<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a><span class="co">#   ψ_LApo (light blue) — leaf xylem pipes. Follows ψ_LSym closely.</span></span>
+<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a><span class="co">#   ψ_SApo (orange) — stem pipes. Drops less (buffered by stem storage).</span></span>
+<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a><span class="co">#   ψ_SSym (light orange) — stem storage. Most buffered of all.</span></span>
+<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">2</span>, <span class="dv">1</span>]</span>
+<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, day[<span class="st">'psi_LSym'</span>].values, color<span class="op">=</span>c_LSym, lw<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="st">'ψ_LSym (leaf living)'</span>)</span>
+<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, day[<span class="st">'psi_LApo'</span>].values, color<span class="op">=</span>c_LApo, lw<span class="op">=</span><span class="fl">1.5</span>, ls<span class="op">=</span><span class="st">'--'</span>,</span>
+<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="st">'ψ_LApo (leaf pipes)'</span>)</span>
+<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, day[<span class="st">'psi_SApo'</span>].values, color<span class="op">=</span>c_SApo, lw<span class="op">=</span><span class="fl">1.5</span>, ls<span class="op">=</span><span class="st">'--'</span>,</span>
+<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="st">'ψ_SApo (stem pipes)'</span>)</span>
+<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, day[<span class="st">'psi_SSym'</span>].values, color<span class="op">=</span>c_SSym, lw<span class="op">=</span><span class="dv">1</span>, ls<span class="op">=</span><span class="st">':'</span>,</span>
+<span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="st">'ψ_SSym (stem storage)'</span>)</span>
+<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a><span class="co"># Mark P50_gs (midpoint of stomatal closure)</span></span>
+<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a>P50_gs <span class="op">=</span> (veg_params.P12_gs <span class="op">+</span> veg_params.P88_gs) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a>ax.axhline(P50_gs, color<span class="op">=</span><span class="st">'gray'</span>, ls<span class="op">=</span><span class="st">':'</span>, lw<span class="op">=</span><span class="fl">0.8</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">24.2</span>, P50_gs, <span class="ss">f'P50_gs = </span><span class="sc">{</span>P50_gs<span class="sc">:.1f}</span><span class="ss">'</span>, fontsize<span class="op">=</span><span class="dv">7</span>, va<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a>shade_night(ax)</span>
+<span id="cb12-115"><a href="#cb12-115" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'ψ [MPa]'</span>)</span>
+<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'(F) Water Potentials — 4 Compartments'</span>)</span>
+<span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a>ax.legend(fontsize<span class="op">=</span><span class="dv">7</span>, loc<span class="op">=</span><span class="st">'lower left'</span>)</span>
+<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="dv">24</span>)</span>
+<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a><span class="co"># ── (G) Leaf-to-Air VPD ─────────────────────────────────────────────────</span></span>
+<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a><span class="co"># The driving force for transpiration. Includes Kelvin equation</span></span>
+<span id="cb12-122"><a href="#cb12-122" aria-hidden="true" tabindex="-1"></a><span class="co"># correction for reduced water activity at negative ψ.</span></span>
+<span id="cb12-123"><a href="#cb12-123" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">3</span>, <span class="dv">0</span>]</span>
+<span id="cb12-124"><a href="#cb12-124" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, day[<span class="st">'VPD'</span>].values, color<span class="op">=</span><span class="st">'#C62828'</span>, lw<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a>shade_night(ax)</span>
+<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'VPD_leaf [kPa]'</span>)</span>
+<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'(G) Leaf-to-Air VPD'</span>)</span>
+<span id="cb12-128"><a href="#cb12-128" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Hour of day'</span>)</span>
+<span id="cb12-129"><a href="#cb12-129" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="dv">24</span>)</span>
+<span id="cb12-130"><a href="#cb12-130" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb12-131"><a href="#cb12-131" aria-hidden="true" tabindex="-1"></a><span class="co"># ── (H) Percent Loss of Conductivity ────────────────────────────────────</span></span>
+<span id="cb12-132"><a href="#cb12-132" aria-hidden="true" tabindex="-1"></a><span class="co"># PLC from the sigmoidal vulnerability curve (Eq. 15).</span></span>
+<span id="cb12-133"><a href="#cb12-133" aria-hidden="true" tabindex="-1"></a><span class="co"># Irreversible: once pipes burst, they stay broken.</span></span>
+<span id="cb12-134"><a href="#cb12-134" aria-hidden="true" tabindex="-1"></a><span class="co"># Low PLC (~2%) here because ψ_LApo stays well above P50_VC (-3.4 MPa).</span></span>
+<span id="cb12-135"><a href="#cb12-135" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">3</span>, <span class="dv">1</span>]</span>
+<span id="cb12-136"><a href="#cb12-136" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, day[<span class="st">'PLC_leaf'</span>].values, color<span class="op">=</span>c_LSym, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'PLC_Leaf'</span>)</span>
+<span id="cb12-137"><a href="#cb12-137" aria-hidden="true" tabindex="-1"></a>ax.plot(hours, day[<span class="st">'PLC_stem'</span>].values, color<span class="op">=</span>c_SApo, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'PLC_Stem'</span>)</span>
+<span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a>ax.axhline(<span class="dv">50</span>, color<span class="op">=</span><span class="st">'gray'</span>, ls<span class="op">=</span><span class="st">':'</span>, lw<span class="op">=</span><span class="fl">0.8</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'50% PLC'</span>)</span>
+<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a>shade_night(ax)</span>
+<span id="cb12-140"><a href="#cb12-140" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'PLC [%]'</span>)</span>
+<span id="cb12-141"><a href="#cb12-141" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'(H) Percent Loss of Conductivity'</span>)</span>
+<span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a>ax.legend(fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="op">-</span><span class="dv">2</span>, <span class="dv">105</span>)</span>
+<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Hour of day'</span>)</span>
+<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="dv">24</span>)</span>
+<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb12-147"><a href="#cb12-147" aria-hidden="true" tabindex="-1"></a>plt.tight_layout(rect<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.96</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Plotting DOY 209 (July 28, 1990)
-  Hours available: 24
-  Min ψ_LSym this day: -2.503 MPa
-  Min regul_fact: 0.241</code></pre>
+  Hours available: 0
+  Min ψ_LSym this day: nan MPa
+  Min regul_fact: nan</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_85532/4151902588.py:43: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
-  ax.legend(fontsize=8)</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="305_tutorial_sureau_medlyn_files/figure-html/cell-12-output-3.png" class="img-fluid figure-img"></p>
-</figure>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[10]</span><span class="ansi-green-fg">, line 25</span>
+<span class="ansi-green-fg">     22</span>     ax.axvspan(<span class="ansi-green-fg">20</span>, <span class="ansi-green-fg">24</span>, alpha=<span class="ansi-green-fg">0.08</span>, color=<span class="ansi-yellow-fg">'</span><span class="ansi-yellow-fg">gray</span><span class="ansi-yellow-fg">'</span>)
+<span class="ansi-green-fg">     24</span> <span style="font-style:italic;color:rgb(95,135,135)"># ── Create the figure ────────────────────────────────────────────────────</span>
+<span class="ansi-green-fg">---&gt; </span><span class="ansi-green-fg">25</span> fig, axes = <span class="ansi-yellow-bg">plt</span>.subplots(<span class="ansi-green-fg">4</span>, <span class="ansi-green-fg">2</span>, figsize=(<span class="ansi-green-fg">14</span>, <span class="ansi-green-fg">16</span>))
+<span class="ansi-green-fg">     26</span> fig.suptitle(<span class="ansi-yellow-fg">'</span><span class="ansi-yellow-fg">SurEau-Ecos: 4-Compartment Diurnal Hydraulic Simulation</span><span style="font-weight:bold;color:rgb(175,95,0)">\n</span><span class="ansi-yellow-fg">'</span>
+<span class="ansi-green-fg">     27</span>              <span class="ansi-yellow-fg">f</span><span class="ansi-yellow-fg">'</span><span class="ansi-yellow-fg">DOY </span><span style="font-weight:bold;color:rgb(175,95,135)">{</span>target_doy<span style="font-weight:bold;color:rgb(175,95,135)">}</span><span class="ansi-yellow-fg">'</span>,
+<span class="ansi-green-fg">     28</span>              fontsize=<span class="ansi-green-fg">14</span>, fontweight=<span class="ansi-yellow-fg">'</span><span class="ansi-yellow-fg">bold</span><span class="ansi-yellow-fg">'</span>, y=<span class="ansi-green-fg">0.99</span>)
+<span class="ansi-green-fg">     30</span> <span style="font-style:italic;color:rgb(95,135,135)"># ── (A) Stomatal Conductance ─────────────────────────────────────────────</span>
+<span class="ansi-green-fg">     31</span> <span style="font-style:italic;color:rgb(95,135,135)"># Shows gs_lim (water-limited, solid) vs gs_bound/γ (unstressed, dashed).</span>
+<span class="ansi-green-fg">     32</span> <span style="font-style:italic;color:rgb(95,135,135)"># The gap between curves = water stress cost.</span>
+
+<span class="ansi-red-fg">NameError</span>: name 'plt' is not defined</pre>
 </div>
 </div>
 </div>
