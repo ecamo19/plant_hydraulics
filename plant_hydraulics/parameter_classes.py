@@ -903,7 +903,7 @@ class SurEauVegetationParams:
     # Deactivation energy for Vcmax (aka EdVC) (J/mol)
     vcmaxhd: float = 200000.0
     
-    # Entropy term for Vcmax (aka ΔSv) (J/mol/K)
+    # Entropy term for Vcmax (aka delsC) (J/mol/K)
     vcmaxse: float = 629.26
     
     # Vcmax scaling factor for high temperature inhibition
@@ -918,7 +918,7 @@ class SurEauVegetationParams:
     # Deactivation energy for Jmax (aka EdVJ) (J/mol)
     jmaxhd: float = 200000.0 
     
-    # Entropy term for Jmax (aka ΔSj) (J/mol/K)
+    # Entropy term for Jmax (aka delsJ) (J/mol/K)
     jmaxse: float = 631.88
     
     # Jmax scaling factor for high temperature inhibition

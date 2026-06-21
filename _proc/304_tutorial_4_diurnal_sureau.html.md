@@ -13,6 +13,7 @@ title: 'Tutorial 4: SurEau Basic run'
 ``` {.python .cell-code}
 import copy
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 ```
 :::
@@ -44,6 +45,9 @@ from plant_hydraulics.utils import (
 ::: {#1f8aa1e4 .cell}
 ``` {.python .cell-code}
 climate_df = load_example_data("climat_example.csv", sep=";")
+
+# Transform date to ISO date
+climate_df["DATE"] = pd.to_datetime(climate_df["DATE"], format="%d/%m/%Y").dt.strftime("%Y-%m-%d")
 ```
 :::
 
@@ -146,7 +150,7 @@ results = run_sureau(
 
 ::: {.cell-output .cell-output-stdout}
 ```
-Year 1990 Day   1Year 1990 complete. 
+Year 1990 complete. 
 ```
 :::
 :::
@@ -160,14 +164,14 @@ Year 1990 Day   1Year 1990 complete.
 ```
   Plotting DOY 209 (July 28, 1990)
   Hours available: 24
-  Min ψ_LSym this day: -2.503 MPa
-  Min regul_fact: 0.241
+  Min ψ_LSym this day: -2.517 MPa
+  Min regul_fact: 0.222
 ```
 :::
 
 ::: {.cell-output .cell-output-stderr}
 ```
-/tmp/ipykernel_85532/4151902588.py:43: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+/tmp/ipykernel_86636/4151902588.py:43: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
   ax.legend(fontsize=8)
 ```
 :::

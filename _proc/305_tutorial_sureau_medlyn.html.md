@@ -43,16 +43,19 @@ from plant_hydraulics.utils import (
 ``` {.python .cell-code}
 # Model options
 opts = SurEauModelOptions(
+    
     # Richmond
     latitude=-33.5996,
+    
     # ← metres above sea level
     elevation = 24,
-    # ° E
-    #longitude=3.8,
+    
     # net radiation model: "Linacre" (only option currently)
     Rn_formulation="Linacre",
+    
     # PET model: "PT" (Priestley-Taylor) or "PM" (Penman-Monteith)
     ETP_formulation="PM",
+    
     # True → forces a fixed doy=116 (sunny day template)
     constant_climate = False,
     # which hours to output (0–23 → full day)
@@ -86,16 +89,19 @@ veg_params.foliage = "Evergreen"
 veg_params.transpiration_model = "Medlyn"
 
 # Params from Drake 
-veg_params.Vcmax25 = 34
+veg_params.vcmax25 = 34
 veg_params.vcmaxha = 51780
 veg_params.vcmaxhd = 2e5
-veg_params.Jmax25 = 60
+veg_params.vcmaxse = 640
+
+veg_params.jmax25 = 60
 veg_params.jmaxha = 21640
 veg_params.jmaxhd = 2e5
+veg_params.jmaxse = 633
+
 veg_params.g1_medlyn = 2.9
 veg_params.g0_medlyn = 0.003
 
-veg_params. =
 
 # ψ at 50% loss of leaf conductance (MPa) 
 veg_params.P50_VC_leaf = -3.4
@@ -130,9 +136,6 @@ veg_params.Q10_2_gmin = 4.8
 ::: {#3789b8ee .cell}
 ``` {.python .cell-code}
 soil_params = SurEauSoilParams()
-
-soil_params.depth = np.array([0.2, 0.8, 2.0])
-soil_params.RFC = np.array([75, 75, 75])
 ```
 :::
 
@@ -140,6 +143,23 @@ soil_params.RFC = np.array([75, 75, 75])
 ## Climate
 
 SurEau takes daily climatic data and then creates a hourly dataset 
+
+::: {#138dbcf3 .cell}
+``` {.python .cell-code}
+print(climate_df[["DATE", "DOY"]].to_string())
+```
+
+::: {.cell-output .cell-output-stdout}
+```
+         DATE  DOY
+0  2016-10-31  305
+1  2016-11-01  306
+2  2016-11-02  307
+3  2016-11-03  308
+```
+:::
+:::
+
 
 ::: {#1f8aa1e4 .cell}
 ``` {.python .cell-code}
@@ -151,7 +171,7 @@ display(HTML(html_str))
 ::: {.cell-output .cell-output-display}
 ```{=html}
 <!--| quarto-html-table-processing: none -->
-<table id="itables_1c717d93_0dc6_4e56_88ea_c9b54bb14d06">
+<table id="itables_3330c966_7dc6_483d_8b38_2e7bfa56eb9a">
   <tbody>
     <tr>
       <td style="vertical-align:middle; text-align:left"><a href=https://mwouts.github.io/itables/><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -254,7 +274,7 @@ width="64" viewBox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.5.5/dt_bundle.js';
 
-    document.querySelectorAll("#itables_1c717d93_0dc6_4e56_88ea_c9b54bb14d06:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_3330c966_7dc6_483d_8b38_2e7bfa56eb9a:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -311,6 +331,19 @@ for each_day in range(len(climate_df)):
     }))
 hourly_data_from_daily = pd.concat(hourly_data_from_daily, ignore_index=True)
 ```
+
+::: {.cell-output .cell-output-stdout}
+```
+ETP_formulation is PM
+Remember to adjust the lat/lon
+ETP_formulation is PM
+Remember to adjust the lat/lon
+ETP_formulation is PM
+Remember to adjust the lat/lon
+ETP_formulation is PM
+Remember to adjust the lat/lon
+```
+:::
 :::
 
 
@@ -325,13 +358,21 @@ results = run_sureau(
     opts=opts,
     
     # Set True to keep deepest layer at field capacity
-    deep_water=False,  
+    deep_water=True,  
 )
 ```
 
 ::: {.cell-output .cell-output-stdout}
 ```
-Year 1990 Day   1Year 1990 complete. 
+Year 2016 Day 305ETP_formulation is PM
+Remember to adjust the lat/lon
+Year 2016 Day  11ETP_formulation is PM
+Remember to adjust the lat/lon
+Year 2016 Day  42ETP_formulation is PM
+Remember to adjust the lat/lon
+Year 2016 Day  71ETP_formulation is PM
+Remember to adjust the lat/lon
+Year 2016 complete. 
 ```
 :::
 :::
@@ -507,7 +548,7 @@ plt.tight_layout(rect=[0, 0, 1, 0.96])
 :::
 
 ::: {.cell-output .cell-output-display}
-![](305_tutorial_sureau_medlyn_files/figure-html/cell-11-output-3.png){}
+![](305_tutorial_sureau_medlyn_files/figure-html/cell-12-output-3.png){}
 :::
 :::
 

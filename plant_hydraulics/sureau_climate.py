@@ -9,7 +9,6 @@ __all__ = ['new_climate_day', 'compute_Rn_and_ETP', 'new_climate_hourly', 'inter
 import pyet
 import numpy as np
 import pandas as pd
-from dateutil import parser
 import matplotlib.pyplot as plt
 from plant_hydraulics.parameter_classes import (
     SurEauClimate,
@@ -52,8 +51,8 @@ def new_climate_day(climate_df: pd.DataFrame, date: int) -> SurEauClimate:
 
     """
 
-    # Normalize the input date to a datetime object, regardless of format
-    parsed_date = parser.parse(date)
+    # Parse the ISO date string (YYYY-MM-DD)
+    parsed_date = pd.to_datetime(date, format="ISO8601")   
 
     # Initialize class climate --------------------------------------------------
     clim = SurEauClimate()
