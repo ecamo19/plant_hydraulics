@@ -1,5 +1,5 @@
 ---
-output-file: 0_soil_params.html
+output-file: soil_params.html
 title: Soil params
 
 ---
