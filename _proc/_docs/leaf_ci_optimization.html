@@ -420,71 +420,69 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/leaf_ci_optimization.py#L13" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="leaf_ci_optimization" class="level3">
 <h3 class="anchored" data-anchor-id="leaf_ci_optimization">leaf_ci_optimization</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> leaf_ci_optimization(</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    atmos:Atmos, <span class="co"># Atmospheric forcing variables:</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> o2air : <span class="bu">float</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    Atmospheric O2 concentration (mmol<span class="op">/</span>mol).</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> co2air : <span class="bu">float</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    Atmospheric CO2 concentration (umol<span class="op">/</span>mol).</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    leaf:Leaf, <span class="co"># Leaf physiological parameters:</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> c3psn : <span class="bu">int</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    Photosynthetic pathway: <span class="dv">1</span> <span class="op">=</span> C3, <span class="dv">0</span> <span class="op">=</span> C4 plant.</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> colim : <span class="bu">int</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    Photosynthesis co<span class="op">-</span>limitation: <span class="dv">0</span> <span class="op">=</span> no, <span class="dv">1</span> <span class="op">=</span> yes.</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> colim_c3 : <span class="bu">float</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    Empirical curvature parameter <span class="cf">for</span> C3 co<span class="op">-</span>limitation (<span class="op">-</span>).</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> colim_c4a : <span class="bu">float</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    Empirical curvature parameter <span class="cf">for</span> C4 co<span class="op">-</span>limitation (<span class="op">-</span>).</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> colim_c4b : <span class="bu">float</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    Empirical curvature parameter <span class="cf">for</span> C4 co<span class="op">-</span>limitation (<span class="op">-</span>).</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> qe_c4 : <span class="bu">float</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    C4 quantum <span class="cf">yield</span> (mol CO2 <span class="op">/</span> mol photons).</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    flux:Flux, <span class="co"># Flux variables with the following inputs:</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> vcmax : <span class="bu">float</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    Maximum carboxylation rate (umol<span class="op">/</span>m2<span class="op">/</span>s).</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> cp : <span class="bu">float</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    CO2 compensation point (umol<span class="op">/</span>mol).</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> kc : <span class="bu">float</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    Michaelis<span class="op">-</span>Menten constant <span class="cf">for</span> CO2 (umol<span class="op">/</span>mol).</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> ko : <span class="bu">float</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    Michaelis<span class="op">-</span>Menten constant <span class="cf">for</span> O2 (mmol<span class="op">/</span>mol).</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> je : <span class="bu">float</span></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    Electron transport rate (umol<span class="op">/</span>m2<span class="op">/</span>s).</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> kp_c4 : <span class="bu">float</span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    C4 initial slope of CO2 response curve (mol<span class="op">/</span>m2<span class="op">/</span>s).</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> gs : <span class="bu">float</span></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    Leaf stomatal conductance (mol H2O<span class="op">/</span>m2 leaf<span class="op">/</span>s).</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> gbc : <span class="bu">float</span></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    Leaf boundary layer conductance <span class="cf">for</span> CO2 (mol CO2<span class="op">/</span>m2 leaf<span class="op">/</span>s).</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> apar : <span class="bu">float</span></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    Leaf absorbed PAR (umol photon<span class="op">/</span>m2 leaf<span class="op">/</span>s).</span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> rd : <span class="bu">float</span></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    Leaf respiration rate (umol CO2<span class="op">/</span>m2 leaf<span class="op">/</span>s).</span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>Flux: <span class="co"># Updated flux object with the following attributes:</span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> ac : <span class="bu">float</span></span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    Rubisco<span class="op">-</span>limited gross photosynthesis (umol CO2<span class="op">/</span>m2 leaf<span class="op">/</span>s).</span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> aj : <span class="bu">float</span></span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    RuBP regeneration<span class="op">-</span>limited gross photosynthesis (umol CO2<span class="op">/</span>m2 leaf<span class="op">/</span>s).</span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> ap : <span class="bu">float</span></span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    Product<span class="op">-</span>limited (C3) <span class="kw">or</span> CO2<span class="op">-</span>limited (C4) gross photosynthesis</span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    (umol CO2<span class="op">/</span>m2 leaf<span class="op">/</span>s).</span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> ag : <span class="bu">float</span></span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    Leaf gross photosynthesis (umol CO2<span class="op">/</span>m2 leaf<span class="op">/</span>s).</span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> an : <span class="bu">float</span></span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>    Leaf net photosynthesis (umol CO2<span class="op">/</span>m2 leaf<span class="op">/</span>s).</span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> cs : <span class="bu">float</span></span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    Leaf surface CO2 concentration (umol<span class="op">/</span>mol).</span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> ci : <span class="bu">float</span></span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    Leaf intercellular CO2 concentration (umol<span class="op">/</span>mol).</span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> leaf_ci_optimization(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    atmos:Atmos, <span class="co"># Atmospheric forcing variables:</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - o2air : float</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Atmospheric O2 concentration (mmol/mol).</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - co2air : float</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Atmospheric CO2 concentration (umol/mol).</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    leaf:Leaf, <span class="co"># Leaf physiological parameters:</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - c3psn : int</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Photosynthetic pathway: 1 = C3, 0 = C4 plant.</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - colim : int</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Photosynthesis co-limitation: 0 = no, 1 = yes.</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - colim_c3 : float</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Empirical curvature parameter for C3 co-limitation (-).</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - colim_c4a : float</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Empirical curvature parameter for C4 co-limitation (-).</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - colim_c4b : float</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Empirical curvature parameter for C4 co-limitation (-).</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - qe_c4 : float</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     C4 quantum yield (mol CO2 / mol photons).</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    flux:Flux, <span class="co"># Flux variables with the following inputs:</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - vcmax : float</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Maximum carboxylation rate (umol/m2/s).</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - cp : float</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     CO2 compensation point (umol/mol).</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - kc : float</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Michaelis-Menten constant for CO2 (umol/mol).</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - ko : float</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Michaelis-Menten constant for O2 (mmol/mol).</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - je : float</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Electron transport rate (umol/m2/s).</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - kp_c4 : float</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     C4 initial slope of CO2 response curve (mol/m2/s).</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - gs : float</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Leaf stomatal conductance (mol H2O/m2 leaf/s).</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - gbc : float</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Leaf boundary layer conductance for CO2 (mol CO2/m2 leaf/s).</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - apar : float</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Leaf absorbed PAR (umol photon/m2 leaf/s).</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - rd : float</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Leaf respiration rate (umol CO2/m2 leaf/s).</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>Flux: <span class="co"># Updated flux object with the following attributes:</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> ac : <span class="bu">float</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    Rubisco<span class="op">-</span>limited gross photosynthesis (umol CO2<span class="op">/</span>m2 leaf<span class="op">/</span>s).</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> aj : <span class="bu">float</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    RuBP regeneration<span class="op">-</span>limited gross photosynthesis (umol CO2<span class="op">/</span>m2 leaf<span class="op">/</span>s).</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> ap : <span class="bu">float</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    Product<span class="op">-</span>limited (C3) <span class="kw">or</span> CO2<span class="op">-</span>limited (C4) gross photosynthesis</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    (umol CO2<span class="op">/</span>m2 leaf<span class="op">/</span>s).</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> ag : <span class="bu">float</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    Leaf gross photosynthesis (umol CO2<span class="op">/</span>m2 leaf<span class="op">/</span>s).</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> an : <span class="bu">float</span></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    Leaf net photosynthesis (umol CO2<span class="op">/</span>m2 leaf<span class="op">/</span>s).</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> cs : <span class="bu">float</span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    Leaf surface CO2 concentration (umol<span class="op">/</span>mol).</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> ci : <span class="bu">float</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>    Leaf intercellular CO2 concentration (umol<span class="op">/</span>mol).</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Calculate leaf photosynthesis for a specified stomatal conductance,</em> then calculate Ci from the diffusion equation.</p>
-<p><strong>Phys 101:</strong></p>
+<p><strong>Plant Phys 101:</strong></p>
 <ul>
 <li><p>Carboxilation rate: How many reactions (CO2 + RuBP -&gt; 3-PGA) happen per unit of leaf area per second.</p></li>
 <li><p>Vcmax: Maximum Carboxilation rate</p></li>
 </ul>
-<p>Meaning of Θ (aka the co-limitation curvature factor): Θ asks, when the plant transitions from being Rubisco-limited to light-limited, is that transition sharp (Θ near 1) or gradual (Θ near 0)?</p>
+<p>Meaning of Θ (aka the co-limitation curvature factor): Θ asks, when the plant transition from being Rubisco-limited to light-limited, is that transition sharp (Θ near 1) or gradual (Θ near 0)?</p>
 <p>A sharp transition means one process dominates at any given moment. A gradual transition means both processes are always partially limiting simultaneously. The default value in the code is 0.98</p>
 <p><strong>The function</strong></p>
 <p>This routine uses a quadratic equation to solve for net photosynthesis (An). A general equation for C3 photosynthesis is:</p>

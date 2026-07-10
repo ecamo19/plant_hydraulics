@@ -14,13 +14,10 @@ title: Leaf stomatal profit-max
 ### leaf_stomatal_profit_max
 
 ```python
-
 def leaf_stomatal_profit_max(
     physcon:PhysCon, atmos:Atmos, leaf:Leaf, # Must have: g0, g1_medlyn, minl_wp, a_psi.
     flux:Flux
 )->Flux: # With converged gs, An, Tleaf, psi_leaf, etc.
-
-
 ```
 
 *Stomatal conductance via Medlyn + profit-maximisation.*

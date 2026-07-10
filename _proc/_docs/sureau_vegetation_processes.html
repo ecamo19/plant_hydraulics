@@ -422,38 +422,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L35" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="compute_pheno" class="level3">
 <h3 class="anchored" data-anchor-id="compute_pheno">compute_pheno</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_pheno(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    state:SurEauPlantState, <span class="co"># Plant state object. The following fields are read/written:</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># - LAI_pheno : float</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#    Current phenological LAI (m²/m²). Written.</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># - LAI : float</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#    Current actual LAI (m²/m²). Read during senescence.</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># - sum_temperature : float</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#    Cumulative forcing temperature (°C). Read/written.</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># - budburst_date : float</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#    Day of year of budburst (int or NaN). Read/written.</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    params:SurEauVegetationParams, <span class="co"># Vegetation parameters. Relevant attributes:</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># - foliage : str</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#    ``"Evergreen"``, ``"Deciduous"``, or ``"Forced"``.</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># - LAI_max : float</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#    Maximum leaf area index (m²/m²).</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># - T_base : float</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">#    Minimum temperature for forcing accumulation (°C).</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># - F_crit : float</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#    Cumulative forcing threshold for budburst (°C).</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># - day_start : int</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">#    First DOY for temperature accumulation.</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># - nb_day_LAI : int</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">#    Days from budburst to full canopy.</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># - day_start_forced : int</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">#    Fixed budburst DOY for Forced model.</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"># - day_end_forced : int</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co">#    Fixed senescence DOY for Forced model.</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    temperature:<span class="bu">float</span>, <span class="co"># Daily mean air temperature (°C).</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    DOY:<span class="bu">int</span>, <span class="co"># Day of year (1–365).</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauPlantState: <span class="co"># Updated plant state with modified ``LAI_pheno``,``sum_temperature``, ``budburst_date``.</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_pheno(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    state:SurEauPlantState, <span class="co"># Plant state object. The following fields are read/written:</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># # - LAI_pheno : float</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># #    Current phenological LAI (m²/m²). Written.</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># # - LAI : float</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># #    Current actual LAI (m²/m²). Read during senescence.</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># # - sum_temperature : float</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># #    Cumulative forcing temperature (°C). Read/written.</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># # - budburst_date : float</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># #    Day of year of budburst (int or NaN). Read/written.</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    params:SurEauVegetationParams, <span class="co"># Vegetation parameters. Relevant attributes:</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># # - foliage : str</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># #    ``"Evergreen"``, ``"Deciduous"``, or ``"Forced"``.</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># # - LAI_max : float</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># #    Maximum leaf area index (m²/m²).</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># # - T_base : float</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># #    Minimum temperature for forcing accumulation (°C).</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># # - F_crit : float</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># #    Cumulative forcing threshold for budburst (°C).</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># # - day_start : int</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># #    First DOY for temperature accumulation.</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># # - nb_day_LAI : int</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># #    Days from budburst to full canopy.</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># # - day_start_forced : int</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># #    Fixed budburst DOY for Forced model.</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># # - day_end_forced : int</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># #    Fixed senescence DOY for Forced model.</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    temperature:<span class="bu">float</span>, <span class="co"># Daily mean air temperature (°C).</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    DOY:<span class="bu">int</span>, <span class="co"># Day of year (1–365).</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauPlantState: <span class="co"># Updated plant state with modified ``LAI_pheno``,``sum_temperature``, ``budburst_date``.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Update the phenological leaf area fraction (LAI_pheno) based on</em> the seasonal cycle of leaf growth and loss.</p>
 <p>Implements the leaf phenology module described in <strong>Appendix A</strong> of Ruffault et al.&nbsp;(2022). The function controls ∅ (the phenological fraction, 0 to 1) which feeds into <strong>Equation A1</strong>:</p>
 <pre><code>LAI = ∅ × LAI_max</code></pre>
@@ -552,20 +550,18 @@ DOY 301: LAI_pheno ≈ 0 (fully bare after 21 days)</code></pre>
 <p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L309" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="update_capacitances" class="level3">
 <h3 class="anchored" data-anchor-id="update_capacitances">update_capacitances</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_capacitances(</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    state:SurEauPlantState, <span class="co"># Plant state object. </span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    params:SurEauVegetationParams, <span class="co"># Vegetation parameters. Relevant attributes:</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># - pi_full_turgor_leaf, pi_full_turgor_stem : float</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">#    Osmotic potential at full turgor π₀ (MPa).</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># - epsilon_sym_leaf, epsilon_sym_stem : float</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="co">#   Bulk elastic modulus ε (MPa).</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># - psi_TLP_leaf, psi_TLP_stem : float</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="co">#    Turgor loss point (MPa).</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># - C_LApo_init, C_SApo_init : float</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">#    Constant apoplasm capacitances (mmol m⁻² MPa⁻¹).</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauPlantState: <span class="co"># Updated plant state with modified capacitances.</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_capacitances(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    state:SurEauPlantState, <span class="co"># Plant state object. </span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    params:SurEauVegetationParams, <span class="co"># Vegetation parameters. Relevant attributes:</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">#         # - pi_full_turgor_leaf, pi_full_turgor_stem : float</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#         #    Osmotic potential at full turgor π₀ (MPa).</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#         # - epsilon_sym_leaf, epsilon_sym_stem : float</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#         #   Bulk elastic modulus ε (MPa).</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#         # - psi_TLP_leaf, psi_TLP_stem : float</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">#         #    Turgor loss point (MPa).</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">#         # - C_LApo_init, C_SApo_init : float</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#         #    Constant apoplasm capacitances (mmol m⁻² MPa⁻¹).</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauPlantState: <span class="co"># Updated plant state with modified capacitances.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Update symplasmic and apoplasmic capacitances for all four plant</em> compartments.</p>
 <p>Capacitance C answers the question: “If the water potential drops by a small amount dψ, how much water is released (dW)?” It is the core of <strong>Equation 3</strong> (C = dQ/dψ) and enters the water balance ODEs <strong>Equations 6–9</strong> as the coefficient on dψ/dt:</p>
 <pre><code>Eq. 6:  C_LApo × dψ_LApo/dt = fluxes  (leaf apoplasm)
@@ -713,12 +709,10 @@ Below TLP (ψ = −4.0 MPa):
 <p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L638" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="update_lai_and_stocks" class="level3">
 <h3 class="anchored" data-anchor-id="update_lai_and_stocks">update_LAI_and_stocks</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_LAI_and_stocks(</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    state:SurEauPlantState, <span class="co"># Plant state object. </span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    params:SurEauVegetationParams, <span class="co"># Vegetation parameters object. </span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauPlantState: <span class="co"># Updated plant state with all LAI-dependent fields recalculated.</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_LAI_and_stocks(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    state:SurEauPlantState, <span class="co"># Plant state object. </span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    params:SurEauVegetationParams, <span class="co"># Vegetation parameters object. </span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauPlantState: <span class="co"># Updated plant state with all LAI-dependent fields recalculated.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Update actual LAI from phenology and cavitation-induced</em> defoliation, then recompute all LAI-dependent water storage volumes and capacitances.</p>
 <p>This function is the <strong>daily bookkeeper</strong> of the canopy. It sits between <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#compute_pheno"><code>compute_pheno</code></a> (which sets the phenological LAI target) and the hourly solver (which needs water storage capacities to solve the ODEs). Called once per day in <a href="https://ecamo19.github.io/plant_hydraulics/run_sureau.html#run_sureau"><code>run_sureau</code></a>:</p>
 <p>The function performs three tasks in sequence:</p>
@@ -733,7 +727,7 @@ Below TLP (ψ = −4.0 MPa):
 <li><p>state: SurEauPlantState object. The following fields are read and/or written:</p>
 <p>Read:</p>
 <ul>
-<li>LAI_pheno: Phenological LAI target (m²/m²). Set by <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#compute_pheno"><code>compute_pheno</code></a>.</li>
+<li>LAI_pheno: Phenological LAI target (m²/m²). Set by <code>compute_pheno</code>.</li>
 <li>PLC_leaf: Percent loss of leaf hydraulic conductivity (%). Used for cavitation-induced defoliation.</li>
 </ul>
 <p>Written (LAI and canopy properties):</p>
@@ -749,12 +743,12 @@ Below TLP (ψ = −4.0 MPa):
 <ul>
 <li>Q_LSym_sat_L: Leaf symplasm water at saturation (L/m²).</li>
 <li>Q_LSym_sat_mmol: Same, in mmol/m² ground.</li>
-<li>Q_LSym_sat_mmol_per_LA: Same, in mmol/m² leaf area. Feeds Eq. 42 in <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_capacitances"><code>update_capacitances</code></a>.</li>
+<li>Q_LSym_sat_mmol_per_LA: Same, in mmol/m² leaf area. Feeds Eq. 42 in <code>update_capacitances</code>.</li>
 <li>Q_SSym_sat_L, Q_SSym_sat_mmol, Q_SSym_sat_mmol_per_LA: Same three units for stem symplasm.</li>
 <li>Q_LApo_sat_L, Q_LApo_sat_mmol, Q_LApo_sat_mmol_per_LA: Same three units for leaf apoplasm.</li>
 <li>Q_SApo_sat_L, Q_SApo_sat_mmol, Q_SApo_sat_mmol_per_LA: Same three units for stem apoplasm.</li>
 </ul>
-<p>Written (capacitances, via <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_capacitances"><code>update_capacitances</code></a>):</p>
+<p>Written (capacitances, via <code>update_capacitances</code>):</p>
 <ul>
 <li>C_LSym, C_SSym, C_LApo, C_SApo: Capacitances for all four compartments (mmol m⁻² MPa⁻¹).</li>
 </ul></li>
@@ -780,7 +774,7 @@ Below TLP (ψ = −4.0 MPa):
 <li>sym_frac_stem: Symplasmic fraction of stem water (dimensionless). α_SSym in Eq. 39.</li>
 <li>apo_frac_stem: Apoplasmic fraction of stem water (dimensionless). α_SApo in Eq. 40.</li>
 </ul>
-<p>Passed through to <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_capacitances"><code>update_capacitances</code></a>:</p>
+<p>Passed through to <code>update_capacitances</code>:</p>
 <ul>
 <li>pi_full_turgor_leaf, pi_full_turgor_stem: Osmotic potential at full turgor π₀ (MPa).</li>
 <li>epsilon_sym_leaf, epsilon_sym_stem: Bulk elastic modulus ε (MPa).</li>
@@ -901,12 +895,10 @@ water reserve, buying time during drought.</code></pre>
 <p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L984" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="update_kplant" class="level3">
 <h3 class="anchored" data-anchor-id="update_kplant">update_kplant</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_kplant(</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    state:SurEauPlantState, <span class="co"># Updated plant state with modified conductances.</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    soil:SurEauSoil, params:SurEauVegetationParams, <span class="co"># Vegetation parameters. </span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauPlantState:</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_kplant(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    state:SurEauPlantState, <span class="co"># Updated plant state with modified conductances.</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    soil:SurEauSoil, params:SurEauVegetationParams, <span class="co"># Vegetation parameters. </span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauPlantState:</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Update plant hydraulic conductances accounting for cavitation and</em> soil-to-root series resistance.</p>
 <p>Implements <strong>Equations 13, 14, 16, and 20</strong> of Ruffault et al. (2022). These equations define the “pipe sizes” that control how easily water flows from soil to roots to stem to leaves. Cavitation progressively narrows the pipes as water potential drops, so this function is called every sub-daily timestep.</p>
 <p>The plant is modeled as three pipe segments in series:</p>
@@ -943,8 +935,8 @@ Total: k_plant = 1/(1/Σk_RSApo + 1/k_SLApo + 1/k_LSym)  (Eq. 13)</code></pre>
 </ul></li>
 <li><p>params: SurEauVegetationParams object with the following attributes:</p>
 <ul>
-<li>k_RSApo_init: Maximum root-to-stem conductance per soil layer (mmol m⁻² s⁻¹ MPa⁻¹). Array. From <a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#distribute_conductances"><code>distribute_conductances</code></a> (Eq. 17): K_max_j = RAI_j × K_R→SApo. Layers with more roots have higher values.</li>
-<li>k_SLApo_init: Maximum stem-to-leaf apoplasmic conductance (mmol m⁻² s⁻¹ MPa⁻¹). Scalar. From <a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#distribute_conductances"><code>distribute_conductances</code></a>.</li>
+<li>k_RSApo_init: Maximum root-to-stem conductance per soil layer (mmol m⁻² s⁻¹ MPa⁻¹). Array. From <code>distribute_conductances</code> (Eq. 17): K_max_j = RAI_j × K_R→SApo. Layers with more roots have higher values.</li>
+<li>k_SLApo_init: Maximum stem-to-leaf apoplasmic conductance (mmol m⁻² s⁻¹ MPa⁻¹). Scalar. From <code>distribute_conductances</code>.</li>
 </ul></li>
 </ul>
 <p><strong>Returns:</strong></p>
@@ -1022,13 +1014,11 @@ Step 4 — Eq. 13 (total plant conductance):
 <p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L1186" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="compute_interception" class="level3">
 <h3 class="anchored" data-anchor-id="compute_interception">compute_interception</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_interception(</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    state:SurEauPlantState, <span class="co"># Plant state object. </span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    fluxes:SurEauPlantFluxes, <span class="co"># Plant fluxes object. </span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    ppt:<span class="bu">float</span>, <span class="co"># Hourly precipitation (mm).</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauPlantFluxes: <span class="co"># Updated fluxes with ``intercepted_water`` and ``ppt_soil`` set for this timestep.</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_interception(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    state:SurEauPlantState, <span class="co"># Plant state object. </span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    fluxes:SurEauPlantFluxes, <span class="co"># Plant fluxes object. </span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    ppt:<span class="bu">float</span>, <span class="co"># Hourly precipitation (mm).</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauPlantFluxes: <span class="co"># Updated fluxes with ``intercepted_water`` and ``ppt_soil`` set for this timestep.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Partition hourly rainfall into canopy interception and throughfall</em> to soil.</p>
 <p>Implements a simple bucket model for canopy rainfall interception, described on page 5601 of Ruffault et al.&nbsp;(2022). The canopy is treated as a reservoir with finite capacity (set by LAI in <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks"><code>update_LAI_and_stocks</code></a>). Each hour, a fraction of rainfall proportional to the fractional canopy cover (FCC) lands on leaves; the rest falls through gaps. Once the reservoir is full, all additional rainfall passes through to the soil.</p>
 <p>The output <code>ppt_soil</code> feeds directly into the precipitation term of <strong>Equation 10</strong> (top soil layer water balance). The accumulated <code>intercepted_water</code> is drawn down by <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#compute_evapo_intercepted"><code>compute_evapo_intercepted</code></a>, which evaporates it back to the atmosphere — this evaporation consumes energy that would otherwise drive transpiration, so interception indirectly reduces plant water loss.</p>
@@ -1039,12 +1029,12 @@ Step 4 — Eq. 13 (total plant conductance):
 <ul>
 <li><p>state: SurEauPlantState object. The following fields are read:</p>
 <ul>
-<li><p>canopy_storage_capacity: Maximum water the canopy can hold (mm). Computed in <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks"><code>update_LAI_and_stocks</code></a> as <code>canopy_storage_param × LAI</code>. E.g. 1.8 mm for LAI = 4.5 with param = 0.4 mm per LAI unit.</p></li>
+<li><p>canopy_storage_capacity: Maximum water the canopy can hold (mm). Computed in <code>update_LAI_and_stocks</code> as <code>canopy_storage_param × LAI</code>. E.g. 1.8 mm for LAI = 4.5 with param = 0.4 mm per LAI unit.</p></li>
 <li><p>FCC: Fractional canopy cover (dimensionless, 0–1). From the Beer-Lambert law: <code>1 − exp(−K × LAI)</code>. Determines what fraction of rainfall hits the canopy vs.&nbsp;falls through gaps.</p></li>
 </ul></li>
 <li><p>fluxes: SurEauPlantFluxes object. The following fields are read and written:</p>
 <ul>
-<li><p>intercepted_water: Running total of water currently stored on leaf surfaces (mm). Read to compute remaining capacity; written to update the total after this timestep. Accumulated across hourly timesteps within a day; reset as it is evaporated by <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#compute_evapo_intercepted"><code>compute_evapo_intercepted</code></a>.</p></li>
+<li><p>intercepted_water: Running total of water currently stored on leaf surfaces (mm). Read to compute remaining capacity; written to update the total after this timestep. Accumulated across hourly timesteps within a day; reset as it is evaporated by <code>compute_evapo_intercepted</code>.</p></li>
 <li><p>ppt_soil: Rainfall reaching the soil surface this timestep (mm). Written. Feeds into Eq. 10 (top soil layer water balance).</p></li>
 </ul></li>
 <li><p>ppt: Hourly precipitation (mm). The raw rainfall before canopy interception.</p></li>
@@ -1111,11 +1101,9 @@ Water balance check across all 4 hours:
 </section>
 <section id="compute_evapo_intercepted" class="level3">
 <h3 class="anchored" data-anchor-id="compute_evapo_intercepted">compute_evapo_intercepted</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_evapo_intercepted(</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    fluxes:SurEauPlantFluxes, <span class="co"># Plant fluxes object. </span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauPlantFluxes: <span class="co"># Updated fluxes with ``evaporation_intercepted``, ``ETP_r``, and ``intercepted_water`` set for this timestep.</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_evapo_intercepted(</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    fluxes:SurEauPlantFluxes, <span class="co"># Plant fluxes object. </span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauPlantFluxes: <span class="co"># Updated fluxes with ``evaporation_intercepted``, ``ETP_r``, and ``intercepted_water`` set for this timestep.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Evaporate intercepted water from the canopy using available</em> atmospheric demand, and compute the residual ETP available for transpiration.</p>
 <p>Intercepted water (free water sitting on leaf surfaces from rainfall) gets <strong>first priority</strong> on the atmospheric evaporative demand (ETP). Only the leftover demand (ETP_r) is available to drive transpiration through the plant (Eqs. 28–34). Two active cases are handled:</p>
 <p><strong>Case 1 — Demand exceeds intercepted water</strong> (ETP ≥ intercepted): All intercepted water evaporates. The canopy dries completely. The residual ETP (ETP_r = ETP − intercepted) is passed to the transpiration calculations.</p>
@@ -1126,12 +1114,12 @@ Water balance check across all 4 hours:
 <p>Read:</p>
 <ul>
 <li><p>ETP: Potential evapotranspiration this timestep (mm). The total atmospheric evaporative demand. Comes from climate forcing (Penman-Monteith or prescribed).</p></li>
-<li><p>intercepted_water: Water currently stored on leaf surfaces (mm). Accumulated by <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#compute_interception"><code>compute_interception</code></a> during rain.</p></li>
+<li><p>intercepted_water: Water currently stored on leaf surfaces (mm). Accumulated by <code>compute_interception</code> during rain.</p></li>
 </ul>
 <p>Written:</p>
 <ul>
 <li><p>evaporation_intercepted: Water evaporated from leaf surfaces this timestep (mm). Always ≤ min(ETP, intercepted_water).</p></li>
-<li><p>ETP_r: Residual potential evapotranspiration after interception evaporation (mm). This is what drives transpiration in <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#compute_transpiration"><code>compute_transpiration</code></a> and <a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#calculate_ebound_granier"><code>calculate_Ebound_Granier</code></a>. ETP_r = ETP − evaporation_intercepted.</p></li>
+<li><p>ETP_r: Residual potential evapotranspiration after interception evaporation (mm). This is what drives transpiration in <code>compute_transpiration</code> and <code>calculate_Ebound_Granier</code>. ETP_r = ETP − evaporation_intercepted.</p></li>
 <li><p>intercepted_water: Updated after evaporation. Reduced by evaporation_intercepted, or set to 0 if fully dried.</p></li>
 </ul></li>
 </ul>
@@ -1194,15 +1182,13 @@ Case 1 — Dry canopy, no interception:
 <p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L1497" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="compute_transpiration" class="level3">
 <h3 class="anchored" data-anchor-id="compute_transpiration">compute_transpiration</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_transpiration(</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    state:SurEauPlantState, <span class="co"># Plant state object.</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    fluxes:SurEauPlantFluxes, <span class="co"># Plant fluxes object.</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    params:SurEauVegetationParams, <span class="co"># Vegetation parameters. </span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    clim:<span class="bu">dict</span>, <span class="co"># Climate snapshot.</span></span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    N_hours:<span class="bu">float</span>, <span class="co"># Hours in this sub-daily timestep. Used by Granier model only.</span></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauPlantFluxes: <span class="co"># Updated fluxes with all transpiration-related fields set.</span></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_transpiration(</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    state:SurEauPlantState, <span class="co"># Plant state object.</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    fluxes:SurEauPlantFluxes, <span class="co"># Plant fluxes object.</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    params:SurEauVegetationParams, <span class="co"># Vegetation parameters. </span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    clim:<span class="bu">dict</span>, <span class="co"># Climate snapshot.</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    N_hours:<span class="bu">float</span>, <span class="co"># Hours in this sub-daily timestep. Used by Granier model only.</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauPlantFluxes: <span class="co"># Updated fluxes with all transpiration-related fields set.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Compute all transpiration-related fluxes for the current sub-daily</em> timestep.</p>
 <p>This is the central transpiration calculator that ties together the leaf energy balance, cuticular conductance (<strong>Eqs. 31– 32</strong>), stomatal regulation (<strong>Eq. 34</strong>), and the implicit solver’s transpiration linearization (<strong>Eq. 60</strong>). It implements <strong>Equations 28–34</strong> from Ruffault et al.&nbsp;(2022).</p>
 <p>Two transpiration model formulations are available:</p>
@@ -1237,7 +1223,7 @@ Case 1 — Dry canopy, no interception:
 <li>regul_fact: Stomatal regulation factor γ (0–1). Eq. 34.</li>
 <li>g_crown: Crown aerodynamic conductance (Jarvis only).</li>
 <li>gs_lim: Water-limited stomatal conductance (Jarvis only).</li>
-<li>gs_bound: Light-limited stomatal conductance (Jarvis only). Written by <a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#calculate_gs_jarvis"><code>calculate_gs_jarvis</code></a> (mutates fluxes).</li>
+<li>gs_bound: Light-limited stomatal conductance (Jarvis only). Written by <code>calculate_gs_jarvis</code> (mutates fluxes).</li>
 <li>g_canopy_bound: Unstressed canopy conductance (Jarvis only).</li>
 <li>g_canopy_lim: Water-limited canopy conductance (Jarvis only).</li>
 </ul></li>
@@ -1254,7 +1240,7 @@ Case 1 — Dry canopy, no interception:
 <li>gs_max, jarvis_PAR, etc.: Jarvis stomatal params.</li>
 <li>P50_gs, slope_gs: Sigmoid stomatal regulation (Eq. 34).</li>
 </ul></li>
-<li><p>clim: Climate snapshot dictionary with keys: <code>T_air_mean</code>, <code>PAR</code>, <a href="https://ecamo19.github.io/plant_hydraulics/utils.html#potential_par"><code>potential_PAR</code></a>, <code>WS</code>, <code>RH_air_mean</code>, <code>VPD</code>, <code>ETP</code>, <code>ETP_veg</code> (optional).</p></li>
+<li><p>clim: Climate snapshot dictionary with keys: <code>T_air_mean</code>, <code>PAR</code>, <code>potential_PAR</code>, <code>WS</code>, <code>RH_air_mean</code>, <code>VPD</code>, <code>ETP</code>, <code>ETP_veg</code> (optional).</p></li>
 <li><p>N_hours: Number of hours in this sub-daily timestep. Used by the Granier model to convert daily ETP to sub-daily rate.</p></li>
 </ul>
 <p><strong>Returns:</strong></p>
@@ -1334,14 +1320,12 @@ LAI guard            None                 LAI_pheno &gt; 0</code></pre>
 <p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_processes.py#L1921" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="compute_water_storage" class="level3">
 <h3 class="anchored" data-anchor-id="compute_water_storage">compute_water_storage</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_water_storage(</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    state:SurEauPlantState, <span class="co"># Plant state object. </span></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    diag:SurEauPlantDiagnostics, <span class="co"># Diagnostics object. Written: ``LFMC``, ``LFMC_symp``, ``LFMC_apo``, ``DFMC``, ``FMC_canopy``.</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    params:SurEauVegetationParams, <span class="co"># Vegetation parameters.</span></span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>    VPD:<span class="bu">float</span>, <span class="co"># Vapor pressure deficit (kPa). </span></span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="bu">tuple</span>: <span class="co"># Updated with current water volumes in all compartments.</span></span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_water_storage(</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    state:SurEauPlantState, <span class="co"># Plant state object. </span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    diag:SurEauPlantDiagnostics, <span class="co"># Diagnostics object. Written: ``LFMC``, ``LFMC_symp``, ``LFMC_apo``, ``DFMC``, ``FMC_canopy``.</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    params:SurEauVegetationParams, <span class="co"># Vegetation parameters.</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    VPD:<span class="bu">float</span>, <span class="co"># Vapor pressure deficit (kPa). </span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="bu">tuple</span>: <span class="co"># Updated with current water volumes in all compartments.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Compute actual water content in all four plant compartments and</em> derive fuel moisture diagnostics for wildfire risk assessment.</p>
 <p>Converts the water potentials (ψ) tracked by the solver into actual water volumes (L/m² ground) using two mechanisms:</p>
 <ul>
@@ -1364,10 +1348,10 @@ LAI guard            None                 LAI_pheno &gt; 0</code></pre>
 <li>psi_SSym: Stem symplasm water potential (MPa).</li>
 <li>PLC_leaf: Percent loss of leaf hydraulic conductivity (%).</li>
 <li>PLC_stem: Percent loss of stem hydraulic conductivity (%).</li>
-<li>Q_LSym_sat_L: Leaf symplasm saturated water (L/m²). From <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks"><code>update_LAI_and_stocks</code></a> (Eqs. 36, 38).</li>
-<li>Q_LApo_sat_L: Leaf apoplasm saturated water (L/m²). From <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks"><code>update_LAI_and_stocks</code></a> (Eqs. 37, 38).</li>
-<li>Q_SSym_sat_L: Stem symplasm saturated water (L/m²). From <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks"><code>update_LAI_and_stocks</code></a> (Eq. 39).</li>
-<li>Q_SApo_sat_L: Stem apoplasm saturated water (L/m²). From <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks"><code>update_LAI_and_stocks</code></a> (Eq. 40).</li>
+<li>Q_LSym_sat_L: Leaf symplasm saturated water (L/m²). From <code>update_LAI_and_stocks</code> (Eqs. 36, 38).</li>
+<li>Q_LApo_sat_L: Leaf apoplasm saturated water (L/m²). From <code>update_LAI_and_stocks</code> (Eqs. 37, 38).</li>
+<li>Q_SSym_sat_L: Stem symplasm saturated water (L/m²). From <code>update_LAI_and_stocks</code> (Eq. 39).</li>
+<li>Q_SApo_sat_L: Stem apoplasm saturated water (L/m²). From <code>update_LAI_and_stocks</code> (Eq. 40).</li>
 <li>DM_live_canopy: Dry mass of living leaves (g/m²).</li>
 <li>DM_dead_canopy: Dry mass of dead leaves (g/m²).</li>
 </ul>
@@ -1383,7 +1367,7 @@ LAI guard            None                 LAI_pheno &gt; 0</code></pre>
 <li>LFMC_symp: Symplasmic leaf fuel moisture content (%).</li>
 <li>LFMC_apo: Apoplasmic leaf fuel moisture content (%).</li>
 <li>LFMC: Total live fuel moisture content (%). The key wildfire metric. Typically 40–150%.</li>
-<li>DFMC: Dead fuel moisture content (%). From VPD equilibrium via <a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_dfmc"><code>compute_DFMC</code></a>.</li>
+<li>DFMC: Dead fuel moisture content (%). From VPD equilibrium via <code>compute_DFMC</code>.</li>
 <li>FMC_canopy: Canopy fuel moisture content (%, live + dead).</li>
 </ul></li>
 <li><p>params: SurEauVegetationParams object with the following attributes:</p>
@@ -1394,7 +1378,7 @@ LAI guard            None                 LAI_pheno &gt; 0</code></pre>
 <li>epsilon_sym_stem: Bulk elastic modulus ε for stem symplasm (MPa).</li>
 <li>apo_frac_leaf: Apoplasmic fraction of leaf water (dimensionless, 0–1). Used to split DM for LFMC compartment diagnostics.</li>
 </ul></li>
-<li><p>VPD: Vapor pressure deficit (kPa). Drives dead fuel moisture equilibrium via <a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_dfmc"><code>compute_DFMC</code></a>.</p></li>
+<li><p>VPD: Vapor pressure deficit (kPa). Drives dead fuel moisture equilibrium via <code>compute_DFMC</code>.</p></li>
 </ul>
 <p><strong>Returns:</strong></p>
 <ul>

@@ -46,14 +46,13 @@ Root fraction calculated using Y(d) = 1 − β^d with β = 0.90 (shallow root pr
 ### soil_params
 
 ```python
-
 def soil_params(
     soil:Soil, # Soil object with the following input attribute:
-- texture : int
-    Soil texture class:
-        1: sand, 2: loamy sand, 3: sandy loam, 4: silt loam,
-        5: loam, 6: sandy clay loam, 7: silty clay loam,
-        8: clay loam, 9: sandy clay, 10: silty clay, 11: clay
+    # - texture : int
+    #     Soil texture class:
+    #         1: sand, 2: loamy sand, 3: sandy loam, 4: silt loam,
+    #         5: loam, 6: sandy clay loam, 7: silty clay loam,
+    #         8: clay loam, 9: sandy clay, 10: silty clay, 11: clay
 )->Soil: # Updated soil object with the following attributes:
 - nlevsoi : int
     Number of soil layers.
@@ -69,8 +68,6 @@ def soil_params(
     Soil layer hydraulic conductivity at saturation (mm H2O/s).
 - bsw : list[float]
     Soil layer Clapp and Hornberger "b" parameter (-).
-
-
 ```
 
 *Set soil hydraulic parameters, soil depth, and rooting fraction.*

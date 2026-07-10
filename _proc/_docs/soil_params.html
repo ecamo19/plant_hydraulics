@@ -505,30 +505,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="soil_params" class="level3">
 <h3 class="anchored" data-anchor-id="soil_params">soil_params</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> soil_params(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    soil:Soil, <span class="co"># Soil object with the following input attribute:</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> texture : <span class="bu">int</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    Soil texture <span class="kw">class</span>:</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1</span>: sand, <span class="dv">2</span>: loamy sand, <span class="dv">3</span>: sandy loam, <span class="dv">4</span>: silt loam,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="dv">5</span>: loam, <span class="dv">6</span>: sandy clay loam, <span class="dv">7</span>: silty clay loam,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="dv">8</span>: clay loam, <span class="dv">9</span>: sandy clay, <span class="dv">10</span>: silty clay, <span class="dv">11</span>: clay</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>Soil: <span class="co"># Updated soil object with the following attributes:</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> nlevsoi : <span class="bu">int</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    Number of soil layers.</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> dz : <span class="bu">list</span>[<span class="bu">float</span>]</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    Soil layer thickness (m).</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> rootfr : <span class="bu">list</span>[<span class="bu">float</span>]</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    Fraction of roots <span class="kw">in</span> each soil layer (<span class="op">-</span>).</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> watsat : <span class="bu">list</span>[<span class="bu">float</span>]</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    Soil layer volumetric water content at saturation, i.e. porosity (<span class="op">-</span>).</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> psisat : <span class="bu">list</span>[<span class="bu">float</span>]</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    Soil layer matric potential at saturation (mm).</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> hksat : <span class="bu">list</span>[<span class="bu">float</span>]</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    Soil layer hydraulic conductivity at saturation (mm H2O<span class="op">/</span>s).</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> bsw : <span class="bu">list</span>[<span class="bu">float</span>]</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    Soil layer Clapp <span class="kw">and</span> Hornberger <span class="st">"b"</span> parameter (<span class="op">-</span>).</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> soil_params(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    soil:Soil, <span class="co"># Soil object with the following input attribute:</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - texture : int</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Soil texture class:</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#         1: sand, 2: loamy sand, 3: sandy loam, 4: silt loam,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#         5: loam, 6: sandy clay loam, 7: silty clay loam,</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#         8: clay loam, 9: sandy clay, 10: silty clay, 11: clay</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>Soil: <span class="co"># Updated soil object with the following attributes:</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> nlevsoi : <span class="bu">int</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    Number of soil layers.</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> dz : <span class="bu">list</span>[<span class="bu">float</span>]</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    Soil layer thickness (m).</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> rootfr : <span class="bu">list</span>[<span class="bu">float</span>]</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    Fraction of roots <span class="kw">in</span> each soil layer (<span class="op">-</span>).</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> watsat : <span class="bu">list</span>[<span class="bu">float</span>]</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    Soil layer volumetric water content at saturation, i.e. porosity (<span class="op">-</span>).</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> psisat : <span class="bu">list</span>[<span class="bu">float</span>]</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    Soil layer matric potential at saturation (mm).</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> hksat : <span class="bu">list</span>[<span class="bu">float</span>]</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    Soil layer hydraulic conductivity at saturation (mm H2O<span class="op">/</span>s).</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> bsw : <span class="bu">list</span>[<span class="bu">float</span>]</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    Soil layer Clapp <span class="kw">and</span> Hornberger <span class="st">"b"</span> parameter (<span class="op">-</span>).</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Set soil hydraulic parameters, soil depth, and rooting fraction.</em></p>
 <p><strong>Parameters:</strong></p>
 <ul>

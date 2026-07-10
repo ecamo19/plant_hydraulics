@@ -14,12 +14,9 @@ title: Parameter classes
 ### Params
 
 ```python
-
 def Params(
     vis:int=0, nir:int=1
 )->None:
-
-
 ```
 
 *Object holding  Waveband indices*
@@ -35,14 +32,11 @@ def Params(
 ### PhysCon
 
 ```python
-
 def PhysCon(
     grav:float=9.80665, tfrz:float=273.15, sigma:float=5.67e-08, mmdry:float=0.02897, mmh2o:float=0.01802,
     cpd:float=1005.0, cpw:float=1846.0, rgas:float=8.31446, visc0:float=1.33e-05, Dh0:float=1.89e-05,
     Dv0:float=2.18e-05, Dc0:float=1.38e-05, denh2o:float=1000.0
 )->None:
-
-
 ```
 
 *Object holding Physical constants*
@@ -69,14 +63,11 @@ def PhysCon(
 ### Atmos
 
 ```python
-
 def Atmos(
     co2air:float=0.0, o2air:float=0.0, tair:float=0.0, relhum:float=0.0, eair:float=0.0, qair:float=0.0,
     wind:float=0.0, patm:float=0.0, rhomol:float=0.0, rhoair:float=0.0, mmair:float=0.0, cpair:float=0.0,
     irsky:float=0.0, swsky:list=<factory>
 )->None:
-
-
 ```
 
 *Object holding Atmospheric forcing variables*
@@ -104,12 +95,9 @@ def Atmos(
 ### Ground
 
 ```python
-
 def Ground(
     albsoi:list=<factory>, irgrd:float=0.0
 )->None:
-
-
 ```
 
 *Object holding Ground surface variables*
@@ -125,13 +113,10 @@ def Ground(
 ### Soil
 
 ```python
-
 def Soil(
     texture:int=5, nlevsoi:int=0, dz:list=<factory>, rootfr:list=<factory>, watsat:list=<factory>,
     psisat:list=<factory>, hksat:list=<factory>, bsw:list=<factory>, h2osoi_vol:list=<factory>, psi:list=<factory>
 )->None:
-
-
 ```
 
 *Object holding Soil parameters and state variables*
@@ -155,12 +140,9 @@ def Soil(
 ### RootVar
 
 ```python
-
 def RootVar(
     radius:float=0.0, density:float=0.0, resist:float=0.0, biomass:float=0.0
 )->None:
-
-
 ```
 
 *Object holding Fine root parameters*
@@ -178,7 +160,6 @@ def RootVar(
 ### Leaf
 
 ```python
-
 def Leaf(
     c3psn:int=1, colim:int=1, vcmax25:float=50, vcmaxha:float=58550.0, vcmaxhd:float=200000.0, vcmaxse:float=629.26,
     vcmaxc:float=0.0, jmax25:float=100, jmaxha:float=29680.0, jmaxhd:float=200000.0, jmaxse:float=631.88,
@@ -189,8 +170,6 @@ def Leaf(
     iota:float=0.0, capac:float=0.0, minl_wp:float=0.0, gplant:float=0.0, stomatal_model:Literal='optimization',
     g0:float=0.01, g1_medlyn:float=4.0, a_psi:float=4.0, psi_50:float=-2.5, stomata_distribution:Literal=1
 )->None:
-
-
 ```
 
 *Object holding Leaf physiological and structural parameters*
@@ -248,7 +227,6 @@ def Leaf(
 ### Flux
 
 ```python
-
 def Flux(
     height:float=0.0, lai:float=0.0, rplant:float=0.0, rsoil:float=0.0, lsc:float=0.0, psi_soil:float=0.0,
     psi_leaf:float=0.0, et_loss:list=<factory>, swinc:list=<factory>, swflx:list=<factory>, apar:float=0.0,
@@ -258,8 +236,6 @@ def Flux(
     aj:float=0.0, ap:float=0.0, ag:float=0.0, an:float=0.0, cs:float=0.0, ci:float=0.0, hs:float=0.0, vpd:float=0.0,
     dt:float=0.0
 )->None:
-
-
 ```
 
 *Object holding Flux variables (state and output)*
@@ -340,7 +316,6 @@ def Flux(
 ### SurEauVegetationParams
 
 ```python
-
 def SurEauVegetationParams(
     Patm_photo:float=100.0, K:float=0.5, transpiration_model:str='Medlyn', transpi_granier_a:float=-0.006,
     transpi_granier_b:float=0.134, transpi_granier_c:float=0.0, gmin20:float=4.0, TPhase_gmin:float=37.5,
@@ -368,8 +343,6 @@ def SurEauVegetationParams(
     k_RSApo_init:Union=None, k_LSym_init:float=0.0, leaf_size:float=50.0, leaf_angle:float=45.0,
     turn_off_EB:bool=False
 )->None:
-
-
 ```
 
 *Plant parameters for SurEau-Ecos — set once at initialisation.*
@@ -518,7 +491,6 @@ def SurEauVegetationParams(
 ### SurEauSoilParams
 
 ```python
-
 def SurEauSoilParams(
     depth:ndarray=<factory>, RFC:ndarray=<factory>, g_soil0:float=30.0, offset_psoil:ndarray=<factory>,
     psoil_at_field_capacity:float=0.033, reset_SWC:bool=False, water_soil_transfer:bool=True, soil_evap:bool=True,
@@ -528,8 +500,6 @@ def SurEauSoilParams(
     V_field_capacity:Union=None, V_saturation_capacity:Union=None, V_residual_capacity:Union=None,
     V_wilting_point:Union=None, B_GC:Union=None
 )->None:
-
-
 ```
 
 *Soil parameters for SurEau-Ecos — set once at initialisation.*
@@ -573,13 +543,10 @@ def SurEauSoilParams(
 ### SurEauComputationOptions
 
 ```python
-
 def SurEauComputationOptions(
     n_small_timesteps:List=<factory>, numerical_scheme:str='Implicit', Lsym:float=1.0, Ssym:float=1.0,
     Eord:float=1.0, Lcav:int=1, Scav:int=1, CLapo:float=1.0, CTapo:float=1.0
 )->None:
-
-
 ```
 
 *Numerical solver options for SurEau-Ecos.*
@@ -605,15 +572,12 @@ and the adaptive sub-stepping strategy used in run_sureau.
 ### SurEauModelOptions
 
 ```python
-
 def SurEauModelOptions(
     year_start:int=2000, year_end:int=2000, latitude:float=43.9, longitude:float=43.9, elevation:float=0,
     output_resolution:str='subdaily', ETP_formulation:str='PT', Rn_formulation:str='Linacre',
     constant_climate:bool=False, print_progress:bool=True, time_steps:ndarray=<factory>,
     comp_options:SurEauComputationOptions=<factory>
 )->None:
-
-
 ```
 
 *Simulation configuration for SurEau-Ecos.*
@@ -662,7 +626,6 @@ Design rationale (mirrors Bonan's Leaf → params, Flux → outputs):
 ### SurEauPlantState
 
 ```python
-
 def SurEauPlantState(
     psi_LApo:float=0.0, psi_SApo:float=0.0, psi_LSym:float=0.0, psi_SSym:float=0.0, psi_LApo_cav:float=0.0,
     psi_SApo_cav:float=0.0, psi_all_soil:float=0.0, k_plant:float=0.0, k_LSym:float=0.0, k_SSym:float=0.0,
@@ -675,8 +638,6 @@ def SurEauPlantState(
     Q_LSym_sat_mmol_per_LA:float=0.0, Q_SSym_sat_mmol_per_LA:float=0.0, Q_LApo_L:float=0.0, Q_SApo_L:float=0.0,
     Q_LSym_L:float=0.0, Q_SSym_L:float=0.0, DM_live_canopy:float=0.0, DM_dead_canopy:float=0.0
 )->None:
-
-
 ```
 
 *Plant hydraulic state for SurEau-Ecos — mutated by the solver, carried forward in time.*
@@ -770,7 +731,6 @@ Geosci. Model Dev., 15, 5593–5626.
 ### SurEauPlantFluxes
 
 ```python
-
 def SurEauPlantFluxes(
     gmin:float=0.0, gmin_S:float=0.0, regul_fact:float=0.01, gs_bound:float=0.0, gs_lim:float=0.0,
     g_canopy_bound:float=0.0, g_canopy_lim:float=0.0, g_BL:float=0.0, g_crown:float=0.0, E_prime:float=0.0,
@@ -780,8 +740,6 @@ def SurEauPlantFluxes(
     evaporation_intercepted:float=0.0, ETP_r:float=0.0, ETP:float=0.0, leaf_temperature:float=nan,
     leaf_VPD:float=0.0, An:float=0.0, ci:float=0.0, cs:float=0.0
 )->None:
-
-
 ```
 
 *Instantaneous fluxes and conductances for SurEau-Ecos — computed from state + forcing.*
@@ -844,14 +802,11 @@ fills them in from SurEauPlantState + atmospheric forcing.
 ### SurEauPlantDiagnostics
 
 ```python
-
 def SurEauPlantDiagnostics(
     diag_delta_regul_max:float=0.0, diag_delta_PLC_max:float=0.0, diag_timestep_hours:float=0.0,
     diag_nwhile_cavit:int=0, DFMC:float=0.0, LFMC_apo:float=0.0, LFMC_symp:float=0.0, LFMC:float=0.0,
     FMC_canopy:float=0.0
 )->None:
-
-
 ```
 
 *Solver diagnostics and derived fire/moisture outputs.*
@@ -867,13 +822,10 @@ back into the hydraulic solver.
 ### SurEauSoil
 
 ```python
-
 def SurEauSoil(
     soil_water_stock:Union=None, psi_soil:Union=None, k_soil:Union=None, REW:Union=None, evaporation:float=0.0,
     drainage:float=0.0, ETP:float=0.0, RWC:float=0.0, REW_tot:float=0.0, REW_wp:float=0.0
 )->None:
-
-
 ```
 
 *Solver diagnostics and derived fire/moisture outputs for SurEau-Ecos.*
@@ -904,15 +856,12 @@ back into the hydraulic solver.
 ### SurEauClimate
 
 ```python
-
 def SurEauClimate(
     DOY:int=0, year:int=0, date:str='', T_air_mean:float=0.0, T_air_max:float=0.0, T_air_min:float=0.0,
     RH_air_mean:float=0.0, RH_air_max:float=0.0, RH_air_min:float=0.0, PPT:float=0.0, RG:float=0.0,
     WS_mean:float=0.0, VPD:float=0.0, net_radiation:float=0.0, ETP:float=0.0, T_air_min_prev:float=0.0,
     T_air_max_prev:float=0.0, T_air_min_next:float=0.0
 )->None:
-
-
 ```
 
 *Daily climate forcing for SurEau-Ecos.*
@@ -967,12 +916,9 @@ simulation.
 ### SurEauClimateHourly
 
 ```python
-
 def SurEauClimateHourly(
-    args:VAR_POSITIONAL, kwargs:VAR_KEYWORD
+    *args, **kwargs
 ):
-
-
 ```
 
 *Sub-daily disaggregated climate for SurEau-Ecos.*

@@ -14,12 +14,9 @@ title: SurEau photosynthesis
 ### solve_coupled_medlyn_fvcb
 
 ```python
-
 def solve_coupled_medlyn_fvcb(
     T_leaf, PAR, VPD, params
 ):
-
-
 ```
 
 *Medlyn-coupled FvCB operating point reproduces plantecophys `Photosyn`,*
@@ -37,12 +34,9 @@ no CO₂ boundary layer (cs = Ca), matching the basic `Photosyn` path.
 ### calculate_gs_medlyn
 
 ```python
-
 def calculate_gs_medlyn(
     fluxes:SurEauPlantFluxes, params:SurEauVegetationParams, clim:dict
 )->SurEauPlantFluxes:
-
-
 ```
 
 *Medlyn et al. (2011) stomatal conductance coupled to FvCB photosynthesis.*

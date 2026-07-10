@@ -392,80 +392,78 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_vegetation_params.py#L17" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="sureau_vegetation_params" class="level3">
 <h3 class="anchored" data-anchor-id="sureau_vegetation_params">sureau_vegetation_params</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sureau_vegetation_params(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    veg:SurEauVegetationParams, <span class="co"># SurEau vegetation parameters object with the following input attributes:</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>Pressure<span class="op">-</span>volume curve:</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> pi_full_turgor_leaf : <span class="bu">float</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    Osmotic potential at full turgor, leaf (MPa).</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> epsilon_sym_leaf : <span class="bu">float</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    Bulk elastic modulus, leaf symplasm (MPa).</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> pi_full_turgor_stem : <span class="bu">float</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    Osmotic potential at full turgor, stem (MPa).</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> epsilon_sym_stem : <span class="bu">float</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    Bulk elastic modulus, stem symplasm (MPa).</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>Stomatal regulation:</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> stomatal_reg_formulation : <span class="bu">str</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    Regulation model: <span class="st">"Sigmoid"</span>, <span class="st">"PiecewiseLinear"</span>, <span class="kw">or</span> <span class="st">"Turgor"</span>.</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> P12_gs : <span class="bu">float</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    Water potential at <span class="dv">12</span><span class="op">%</span> stomatal closure (MPa).</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> P88_gs : <span class="bu">float</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    Water potential at <span class="dv">88</span><span class="op">%</span> stomatal closure (MPa).</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>Root distribution:</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> root_depth_max : <span class="bu">float</span> <span class="kw">or</span> <span class="va">None</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    Maximum rooting depth (m). If <span class="va">None</span>, uses deepest soil layer.</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> root_distribution_model : <span class="bu">str</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    Root profile model: <span class="st">"BRP"</span> (beta) <span class="kw">or</span> <span class="st">"LDR"</span> (linear dose<span class="op">-</span>response).</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> beta_root_profile : <span class="bu">float</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    Beta parameter <span class="cf">for</span> BRP root distribution (<span class="op">-</span>).</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> root_Z50 : <span class="bu">float</span> <span class="kw">or</span> <span class="va">None</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    Depth at <span class="dv">50</span><span class="op">%</span> root density <span class="cf">for</span> LDR model (m).</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> root_Z95 : <span class="bu">float</span> <span class="kw">or</span> <span class="va">None</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    Depth at <span class="dv">95</span><span class="op">%</span> root density <span class="cf">for</span> LDR model (m).</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> LAI_max : <span class="bu">float</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    Maximum leaf area index (m2<span class="op">/</span>m2).</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> f_root_to_leaf : <span class="bu">float</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    Root area index to LAI ratio (<span class="op">-</span>).</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> root_radius : <span class="bu">float</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    Fine root radius (m).</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>Hydraulic conductance:</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> k_plant_init : <span class="bu">float</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    Initial whole<span class="op">-</span>plant hydraulic conductance (mmol<span class="op">/</span>m2leaf<span class="op">/</span>s<span class="op">/</span>MPa).</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> sym_frac_leaf : <span class="bu">float</span></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    Fraction of whole<span class="op">-</span>plant resistance <span class="kw">in</span> leaf symplasm (<span class="op">-</span>).</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    soil:SurEauSoilParams, <span class="co"># SurEau soil parameters object with the following required attributes:</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> depth : np.ndarray</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    Cumulative depth of each soil layer bottom (m).</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> layer_thickness : np.ndarray</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    Thickness of each soil layer (m).</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> RFC : np.ndarray</span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    Rock fragment content <span class="cf">for</span> each layer (<span class="op">%</span>).</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauVegetationParams: <span class="co"># Updated SurEau vegetation parameters object with the following derived attributes:</span></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> psi_TLP_leaf : <span class="bu">float</span></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>    Turgor loss point, leaf (MPa).</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> psi_TLP_stem : <span class="bu">float</span></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>    Turgor loss point, stem (MPa).</span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> P50_gs : <span class="bu">float</span></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>    Water potential at <span class="dv">50</span><span class="op">%</span> stomatal closure (MPa).</span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> slope_gs : <span class="bu">float</span></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>    Slope of the stomatal sigmoid curve (<span class="dv">1</span><span class="op">/</span>MPa).</span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> root_distribution : np.ndarray</span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>    Normalised root fraction <span class="kw">in</span> each soil layer (<span class="op">-</span>).</span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> La : np.ndarray</span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>    Root area index per soil layer (m2root<span class="op">/</span>m2soil).</span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> Lv : np.ndarray</span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>    Root length density per soil layer (m root<span class="op">/</span>m3 soil).</span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> k_RSApo_init : np.ndarray</span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>    Initial root<span class="op">-</span>to<span class="op">-</span>stem apoplasm conductance per layer (mmol<span class="op">/</span>m2leaf<span class="op">/</span>s<span class="op">/</span>MPa).</span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> k_SLApo_init : <span class="bu">float</span></span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>    Initial stem<span class="op">-</span>to<span class="op">-</span>leaf apoplasm conductance (mmol<span class="op">/</span>m2leaf<span class="op">/</span>s<span class="op">/</span>MPa).</span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> k_LSym_init : <span class="bu">float</span></span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>    Initial leaf symplasm conductance (mmol<span class="op">/</span>m2leaf<span class="op">/</span>s<span class="op">/</span>MPa).</span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sureau_vegetation_params(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    veg:SurEauVegetationParams, <span class="co"># SurEau vegetation parameters object with the following input attributes:</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Pressure-volume curve:</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - pi_full_turgor_leaf : float</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Osmotic potential at full turgor, leaf (MPa).</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - epsilon_sym_leaf : float</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Bulk elastic modulus, leaf symplasm (MPa).</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - pi_full_turgor_stem : float</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Osmotic potential at full turgor, stem (MPa).</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - epsilon_sym_stem : float</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Bulk elastic modulus, stem symplasm (MPa).</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Stomatal regulation:</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - stomatal_reg_formulation : str</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Regulation model: "Sigmoid", "PiecewiseLinear", or "Turgor".</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - P12_gs : float</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Water potential at 12% stomatal closure (MPa).</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - P88_gs : float</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Water potential at 88% stomatal closure (MPa).</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Root distribution:</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - root_depth_max : float or None</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Maximum rooting depth (m). If None, uses deepest soil layer.</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - root_distribution_model : str</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Root profile model: "BRP" (beta) or "LDR" (linear dose-response).</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - beta_root_profile : float</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Beta parameter for BRP root distribution (-).</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - root_Z50 : float or None</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Depth at 50% root density for LDR model (m).</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - root_Z95 : float or None</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Depth at 95% root density for LDR model (m).</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - LAI_max : float</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Maximum leaf area index (m2/m2).</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - f_root_to_leaf : float</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Root area index to LAI ratio (-).</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - root_radius : float</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Fine root radius (m).</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Hydraulic conductance:</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - k_plant_init : float</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Initial whole-plant hydraulic conductance (mmol/m2leaf/s/MPa).</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - sym_frac_leaf : float</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Fraction of whole-plant resistance in leaf symplasm (-).</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    soil:SurEauSoilParams, <span class="co"># SurEau soil parameters object with the following required attributes:</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - depth : np.ndarray</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Cumulative depth of each soil layer bottom (m).</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - layer_thickness : np.ndarray</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Thickness of each soil layer (m).</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - RFC : np.ndarray</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Rock fragment content for each layer (%).</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauVegetationParams: <span class="co"># Updated SurEau vegetation parameters object with the following derived attributes:</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> psi_TLP_leaf : <span class="bu">float</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>    Turgor loss point, leaf (MPa).</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> psi_TLP_stem : <span class="bu">float</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>    Turgor loss point, stem (MPa).</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> P50_gs : <span class="bu">float</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>    Water potential at <span class="dv">50</span><span class="op">%</span> stomatal closure (MPa).</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> slope_gs : <span class="bu">float</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>    Slope of the stomatal sigmoid curve (<span class="dv">1</span><span class="op">/</span>MPa).</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> root_distribution : np.ndarray</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>    Normalised root fraction <span class="kw">in</span> each soil layer (<span class="op">-</span>).</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> La : np.ndarray</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>    Root area index per soil layer (m2root<span class="op">/</span>m2soil).</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> Lv : np.ndarray</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>    Root length density per soil layer (m root<span class="op">/</span>m3 soil).</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> k_RSApo_init : np.ndarray</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>    Initial root<span class="op">-</span>to<span class="op">-</span>stem apoplasm conductance per layer (mmol<span class="op">/</span>m2leaf<span class="op">/</span>s<span class="op">/</span>MPa).</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> k_SLApo_init : <span class="bu">float</span></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>    Initial stem<span class="op">-</span>to<span class="op">-</span>leaf apoplasm conductance (mmol<span class="op">/</span>m2leaf<span class="op">/</span>s<span class="op">/</span>MPa).</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> k_LSym_init : <span class="bu">float</span></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>    Initial leaf symplasm conductance (mmol<span class="op">/</span>m2leaf<span class="op">/</span>s<span class="op">/</span>MPa).</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Compute derived vegetation parameters from raw SurEau plant parameters.</em></p>
 <p>Calculates turgor loss points for leaf and stem, stomatal regulation sigmoid parameters, root distribution and root length density across soil layers, and partitions whole-plant hydraulic conductance among root-to-stem, stem-to-leaf, and leaf symplasm pathways.</p>
 <p><strong>Parameters:</strong></p>

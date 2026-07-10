@@ -14,58 +14,57 @@ title: SurEau vegetation params
 ### sureau_vegetation_params
 
 ```python
-
 def sureau_vegetation_params(
     veg:SurEauVegetationParams, # SurEau vegetation parameters object with the following input attributes:
-
-Pressure-volume curve:
-- pi_full_turgor_leaf : float
-    Osmotic potential at full turgor, leaf (MPa).
-- epsilon_sym_leaf : float
-    Bulk elastic modulus, leaf symplasm (MPa).
-- pi_full_turgor_stem : float
-    Osmotic potential at full turgor, stem (MPa).
-- epsilon_sym_stem : float
-    Bulk elastic modulus, stem symplasm (MPa).
-
-Stomatal regulation:
-- stomatal_reg_formulation : str
-    Regulation model: "Sigmoid", "PiecewiseLinear", or "Turgor".
-- P12_gs : float
-    Water potential at 12% stomatal closure (MPa).
-- P88_gs : float
-    Water potential at 88% stomatal closure (MPa).
-
-Root distribution:
-- root_depth_max : float or None
-    Maximum rooting depth (m). If None, uses deepest soil layer.
-- root_distribution_model : str
-    Root profile model: "BRP" (beta) or "LDR" (linear dose-response).
-- beta_root_profile : float
-    Beta parameter for BRP root distribution (-).
-- root_Z50 : float or None
-    Depth at 50% root density for LDR model (m).
-- root_Z95 : float or None
-    Depth at 95% root density for LDR model (m).
-- LAI_max : float
-    Maximum leaf area index (m2/m2).
-- f_root_to_leaf : float
-    Root area index to LAI ratio (-).
-- root_radius : float
-    Fine root radius (m).
-
-Hydraulic conductance:
-- k_plant_init : float
-    Initial whole-plant hydraulic conductance (mmol/m2leaf/s/MPa).
-- sym_frac_leaf : float
-    Fraction of whole-plant resistance in leaf symplasm (-).
+    # 
+    # Pressure-volume curve:
+    # - pi_full_turgor_leaf : float
+    #     Osmotic potential at full turgor, leaf (MPa).
+    # - epsilon_sym_leaf : float
+    #     Bulk elastic modulus, leaf symplasm (MPa).
+    # - pi_full_turgor_stem : float
+    #     Osmotic potential at full turgor, stem (MPa).
+    # - epsilon_sym_stem : float
+    #     Bulk elastic modulus, stem symplasm (MPa).
+    # 
+    # Stomatal regulation:
+    # - stomatal_reg_formulation : str
+    #     Regulation model: "Sigmoid", "PiecewiseLinear", or "Turgor".
+    # - P12_gs : float
+    #     Water potential at 12% stomatal closure (MPa).
+    # - P88_gs : float
+    #     Water potential at 88% stomatal closure (MPa).
+    # 
+    # Root distribution:
+    # - root_depth_max : float or None
+    #     Maximum rooting depth (m). If None, uses deepest soil layer.
+    # - root_distribution_model : str
+    #     Root profile model: "BRP" (beta) or "LDR" (linear dose-response).
+    # - beta_root_profile : float
+    #     Beta parameter for BRP root distribution (-).
+    # - root_Z50 : float or None
+    #     Depth at 50% root density for LDR model (m).
+    # - root_Z95 : float or None
+    #     Depth at 95% root density for LDR model (m).
+    # - LAI_max : float
+    #     Maximum leaf area index (m2/m2).
+    # - f_root_to_leaf : float
+    #     Root area index to LAI ratio (-).
+    # - root_radius : float
+    #     Fine root radius (m).
+    # 
+    # Hydraulic conductance:
+    # - k_plant_init : float
+    #     Initial whole-plant hydraulic conductance (mmol/m2leaf/s/MPa).
+    # - sym_frac_leaf : float
+    #     Fraction of whole-plant resistance in leaf symplasm (-).
     soil:SurEauSoilParams, # SurEau soil parameters object with the following required attributes:
-- depth : np.ndarray
-    Cumulative depth of each soil layer bottom (m).
-- layer_thickness : np.ndarray
-    Thickness of each soil layer (m).
-- RFC : np.ndarray
-    Rock fragment content for each layer (%).
+    # - depth : np.ndarray
+    #     Cumulative depth of each soil layer bottom (m).
+    # - layer_thickness : np.ndarray
+    #     Thickness of each soil layer (m).
+    # - RFC : np.ndarray
+    #     Rock fragment content for each layer (%).
 )->SurEauVegetationParams: # Updated SurEau vegetation parameters object with the following derived attributes:
 - psi_TLP_leaf : float
     Turgor loss point, leaf (MPa).
@@ -87,8 +86,6 @@ Hydraulic conductance:
     Initial stem-to-leaf apoplasm conductance (mmol/m2leaf/s/MPa).
 - k_LSym_init : float
     Initial leaf symplasm conductance (mmol/m2leaf/s/MPa).
-
-
 ```
 
 *Compute derived vegetation parameters from raw SurEau plant parameters.*

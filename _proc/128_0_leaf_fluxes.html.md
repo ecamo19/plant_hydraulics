@@ -14,12 +14,9 @@ title: Leaf fluxes
 ### leaf_fluxes
 
 ```python
-
 def leaf_fluxes(
     physcon:PhysCon, atmos:Atmos, leaf:Leaf, flux:Flux
 )->Flux:
-
-
 ```
 
 *Leaf fluxes — main entry point for computing leaf gas exchange.*

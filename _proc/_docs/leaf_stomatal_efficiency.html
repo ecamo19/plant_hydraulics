@@ -442,11 +442,9 @@ At gs = gs_val − delta    At gs = gs_val
 <p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/leaf_stomatal_efficiency.py#L16" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="leaf_stomatal_efficiency" class="level3">
 <h3 class="anchored" data-anchor-id="leaf_stomatal_efficiency">leaf_stomatal_efficiency</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> leaf_stomatal_efficiency(</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    physcon:PhysCon, atmos:Atmos, leaf:Leaf, flux:Flux, gs_val:<span class="bu">float</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="bu">tuple</span>:</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> leaf_stomatal_efficiency(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    physcon:PhysCon, atmos:Atmos, leaf:Leaf, flux:Flux, gs_val:<span class="bu">float</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="bu">tuple</span>:</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Stomatal water-use efficiency and cavitation check to determine</em> maximum gs.</p>
 <p>For the stomatal conductance gs_val, calculate photosynthesis and leaf water potential for an increase in stomatal conductance equal to “delta”.</p>
 <p>The returned value is positive if this increase produces a change in photosynthesis &gt; iota<em>vpd</em>delta or if the leaf water potential is &gt; minl_wp.</p>

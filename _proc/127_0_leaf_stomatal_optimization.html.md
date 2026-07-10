@@ -14,12 +14,9 @@ title: Leaf stomatal optimization
 ### leaf_stomatal_optimization
 
 ```python
-
 def leaf_stomatal_optimization(
     physcon:PhysCon, atmos:Atmos, leaf:Leaf, flux:Flux
 )->Flux:
-
-
 ```
 
 *Leaf stomatal optimization*

@@ -169,12 +169,9 @@ climatic variables
 ### new_climate_day
 
 ```python
-
 def new_climate_day(
     climate_df:DataFrame, date:int
 )->SurEauClimate:
-
-
 ```
 
 *Extract daily climate from each row of a DataFrame*
@@ -200,12 +197,9 @@ The column names in the data frame __MUST__ be named as the following:
 ### compute_Rn_and_ETP
 
 ```python
-
 def compute_Rn_and_ETP(
     clim:SurEauClimate, params:SurEauVegetationParams, opts:SurEauModelOptions
 )->SurEauClimate:
-
-
 ```
 
 *Compute daily net radiation and PET.*
@@ -234,12 +228,9 @@ Physics notes:
 ### new_climate_hourly
 
 ```python
-
 def new_climate_hourly(
     clim:SurEauClimate, opts:SurEauModelOptions, veg_params:SurEauVegetationParams
 )->SurEauClimateHourly:
-
-
 ```
 
 *Disaggregate daily climate to sub-daily time steps.*
@@ -252,12 +243,9 @@ def new_climate_hourly(
 ### interpolate_climate_hourly
 
 ```python
-
 def interpolate_climate_hourly(
     ch1_arrays:dict, ch2_arrays:dict, p:float=0.5
 )->dict:
-
-
 ```
 
 *Linearly interpolate between two hourly climate snapshots.*
@@ -270,12 +258,9 @@ def interpolate_climate_hourly(
 ### get_hourly_snapshot
 
 ```python
-
 def get_hourly_snapshot(
     ch:SurEauClimateHourly, idx:int
 )->dict:
-
-
 ```
 
 *Extract a single timestep from ClimateHourly as a dict.*

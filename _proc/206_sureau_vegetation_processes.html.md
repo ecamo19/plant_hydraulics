@@ -16,39 +16,36 @@ title: SurEau vegetation processes
 ### compute_pheno
 
 ```python
-
 def compute_pheno(
     state:SurEauPlantState, # Plant state object. The following fields are read/written:
-# - LAI_pheno : float
-#    Current phenological LAI (m²/m²). Written.
-# - LAI : float
-#    Current actual LAI (m²/m²). Read during senescence.
-# - sum_temperature : float
-#    Cumulative forcing temperature (°C). Read/written.
-# - budburst_date : float
-#    Day of year of budburst (int or NaN). Read/written.
+    # # - LAI_pheno : float
+    # #    Current phenological LAI (m²/m²). Written.
+    # # - LAI : float
+    # #    Current actual LAI (m²/m²). Read during senescence.
+    # # - sum_temperature : float
+    # #    Cumulative forcing temperature (°C). Read/written.
+    # # - budburst_date : float
+    # #    Day of year of budburst (int or NaN). Read/written.
     params:SurEauVegetationParams, # Vegetation parameters. Relevant attributes:
-# - foliage : str
-#    ``"Evergreen"``, ``"Deciduous"``, or ``"Forced"``.
-# - LAI_max : float
-#    Maximum leaf area index (m²/m²).
-# - T_base : float
-#    Minimum temperature for forcing accumulation (°C).
-# - F_crit : float
-#    Cumulative forcing threshold for budburst (°C).
-# - day_start : int
-#    First DOY for temperature accumulation.
-# - nb_day_LAI : int
-#    Days from budburst to full canopy.
-# - day_start_forced : int
-#    Fixed budburst DOY for Forced model.
-# - day_end_forced : int
-#    Fixed senescence DOY for Forced model.
+    # # - foliage : str
+    # #    ``"Evergreen"``, ``"Deciduous"``, or ``"Forced"``.
+    # # - LAI_max : float
+    # #    Maximum leaf area index (m²/m²).
+    # # - T_base : float
+    # #    Minimum temperature for forcing accumulation (°C).
+    # # - F_crit : float
+    # #    Cumulative forcing threshold for budburst (°C).
+    # # - day_start : int
+    # #    First DOY for temperature accumulation.
+    # # - nb_day_LAI : int
+    # #    Days from budburst to full canopy.
+    # # - day_start_forced : int
+    # #    Fixed budburst DOY for Forced model.
+    # # - day_end_forced : int
+    # #    Fixed senescence DOY for Forced model.
     temperature:float, # Daily mean air temperature (°C).
     DOY:int, # Day of year (1–365).
 )->SurEauPlantState: # Updated plant state with modified ``LAI_pheno``,``sum_temperature``, ``budburst_date``.
-
-
 ```
 
 *Update the phenological leaf area fraction (LAI_pheno) based on*
@@ -227,21 +224,18 @@ F_crit = 450, day_start = 55, nb_day_LAI = 21):__
 ### update_capacitances
 
 ```python
-
 def update_capacitances(
     state:SurEauPlantState, # Plant state object. 
     params:SurEauVegetationParams, # Vegetation parameters. Relevant attributes:
-        # - pi_full_turgor_leaf, pi_full_turgor_stem : float
-        #    Osmotic potential at full turgor π₀ (MPa).
-        # - epsilon_sym_leaf, epsilon_sym_stem : float
-        #   Bulk elastic modulus ε (MPa).
-        # - psi_TLP_leaf, psi_TLP_stem : float
-        #    Turgor loss point (MPa).
-        # - C_LApo_init, C_SApo_init : float
-        #    Constant apoplasm capacitances (mmol m⁻² MPa⁻¹).
+    #         # - pi_full_turgor_leaf, pi_full_turgor_stem : float
+    #         #    Osmotic potential at full turgor π₀ (MPa).
+    #         # - epsilon_sym_leaf, epsilon_sym_stem : float
+    #         #   Bulk elastic modulus ε (MPa).
+    #         # - psi_TLP_leaf, psi_TLP_stem : float
+    #         #    Turgor loss point (MPa).
+    #         # - C_LApo_init, C_SApo_init : float
+    #         #    Constant apoplasm capacitances (mmol m⁻² MPa⁻¹).
 )->SurEauPlantState: # Updated plant state with modified capacitances.
-
-
 ```
 
 *Update symplasmic and apoplasmic capacitances for all four plant*
@@ -462,13 +456,10 @@ __Special cases:__
 ### update_LAI_and_stocks
 
 ```python
-
 def update_LAI_and_stocks(
     state:SurEauPlantState, # Plant state object. 
     params:SurEauVegetationParams, # Vegetation parameters object. 
 )->SurEauPlantState: # Updated plant state with all LAI-dependent fields recalculated.
-
-
 ```
 
 *Update actual LAI from phenology and cavitation-induced*
@@ -510,7 +501,7 @@ __Parameters:__
     Read:
 
     - LAI_pheno: Phenological LAI target (m²/m²). Set by
-        [`compute_pheno`](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#compute_pheno).
+        `compute_pheno`.
     - PLC_leaf: Percent loss of leaf hydraulic conductivity (%).
         Used for cavitation-induced defoliation.
 
@@ -528,7 +519,7 @@ __Parameters:__
     - Q_LSym_sat_L: Leaf symplasm water at saturation (L/m²).
     - Q_LSym_sat_mmol: Same, in mmol/m² ground.
     - Q_LSym_sat_mmol_per_LA: Same, in mmol/m² leaf area.
-        Feeds Eq. 42 in [`update_capacitances`](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_capacitances).
+        Feeds Eq. 42 in `update_capacitances`.
     - Q_SSym_sat_L, Q_SSym_sat_mmol, Q_SSym_sat_mmol_per_LA:
         Same three units for stem symplasm.
     - Q_LApo_sat_L, Q_LApo_sat_mmol, Q_LApo_sat_mmol_per_LA:
@@ -536,7 +527,7 @@ __Parameters:__
     - Q_SApo_sat_L, Q_SApo_sat_mmol, Q_SApo_sat_mmol_per_LA:
         Same three units for stem apoplasm.
 
-    Written (capacitances, via [`update_capacitances`](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_capacitances)):
+    Written (capacitances, via `update_capacitances`):
 
     - C_LSym, C_SSym, C_LApo, C_SApo: Capacitances for all four
         compartments (mmol m⁻² MPa⁻¹).
@@ -573,7 +564,7 @@ __Parameters:__
     - apo_frac_stem: Apoplasmic fraction of stem water
         (dimensionless). α_SApo in Eq. 40.
 
-    Passed through to [`update_capacitances`](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_capacitances):
+    Passed through to `update_capacitances`:
 
     - pi_full_turgor_leaf, pi_full_turgor_stem: Osmotic potential
         at full turgor π₀ (MPa).
@@ -708,13 +699,10 @@ __Defoliation numerical example (PLC_leaf = 40%, LAI_pheno = 4.5):__
 ### update_kplant
 
 ```python
-
 def update_kplant(
     state:SurEauPlantState, # Updated plant state with modified conductances.
     soil:SurEauSoil, params:SurEauVegetationParams, # Vegetation parameters. 
 )->SurEauPlantState:
-
-
 ```
 
 *Update plant hydraulic conductances accounting for cavitation and*
@@ -791,11 +779,11 @@ __Parameters:__
 
     - k_RSApo_init: Maximum root-to-stem conductance per soil
         layer (mmol m⁻² s⁻¹ MPa⁻¹). Array. From
-        [`distribute_conductances`](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#distribute_conductances) (Eq. 17): K_max_j = RAI_j ×
+        `distribute_conductances` (Eq. 17): K_max_j = RAI_j ×
         K_R→SApo. Layers with more roots have higher values.
     - k_SLApo_init: Maximum stem-to-leaf apoplasmic conductance
         (mmol m⁻² s⁻¹ MPa⁻¹). Scalar. From
-        [`distribute_conductances`](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#distribute_conductances).
+        `distribute_conductances`.
 
 __Returns:__
 
@@ -883,14 +871,11 @@ PLC_leaf = 30%):__
 ### compute_interception
 
 ```python
-
 def compute_interception(
     state:SurEauPlantState, # Plant state object. 
     fluxes:SurEauPlantFluxes, # Plant fluxes object. 
     ppt:float, # Hourly precipitation (mm).
 )->SurEauPlantFluxes: # Updated fluxes with ``intercepted_water`` and ``ppt_soil`` set for this timestep.
-
-
 ```
 
 *Partition hourly rainfall into canopy interception and throughfall*
@@ -928,7 +913,7 @@ __Parameters:__
 - state: SurEauPlantState object. The following fields are read:
 
     - canopy_storage_capacity: Maximum water the canopy can hold
-        (mm). Computed in [`update_LAI_and_stocks`](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks) as
+        (mm). Computed in `update_LAI_and_stocks` as
         ``canopy_storage_param × LAI``. E.g. 1.8 mm for LAI = 4.5
         with param = 0.4 mm per LAI unit.
 
@@ -944,7 +929,7 @@ __Parameters:__
         on leaf surfaces (mm). Read to compute remaining capacity;
         written to update the total after this timestep.
         Accumulated across hourly timesteps within a day; reset
-        as it is evaporated by [`compute_evapo_intercepted`](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#compute_evapo_intercepted).
+        as it is evaporated by `compute_evapo_intercepted`.
 
     - ppt_soil: Rainfall reaching the soil surface this timestep
         (mm). Written. Feeds into Eq. 10 (top soil layer water
@@ -1025,12 +1010,9 @@ FCC = 0.9):__
 ### compute_evapo_intercepted
 
 ```python
-
 def compute_evapo_intercepted(
     fluxes:SurEauPlantFluxes, # Plant fluxes object. 
 )->SurEauPlantFluxes: # Updated fluxes with ``evaporation_intercepted``, ``ETP_r``, and ``intercepted_water`` set for this timestep.
-
-
 ```
 
 *Evaporate intercepted water from the canopy using available*
@@ -1065,7 +1047,7 @@ __Parameters:__
         climate forcing (Penman-Monteith or prescribed).
 
     - intercepted_water: Water currently stored on leaf surfaces
-        (mm). Accumulated by [`compute_interception`](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#compute_interception) during rain.
+        (mm). Accumulated by `compute_interception` during rain.
 
     Written:
 
@@ -1075,8 +1057,8 @@ __Parameters:__
 
     - ETP_r: Residual potential evapotranspiration after
         interception evaporation (mm). This is what drives
-        transpiration in [`compute_transpiration`](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#compute_transpiration) and
-        [`calculate_Ebound_Granier`](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#calculate_ebound_granier). ETP_r = ETP −
+        transpiration in `compute_transpiration` and
+        `calculate_Ebound_Granier`. ETP_r = ETP −
         evaporation_intercepted.
 
     - intercepted_water: Updated after evaporation. Reduced by
@@ -1151,7 +1133,6 @@ __Numerical examples:__
 ### compute_transpiration
 
 ```python
-
 def compute_transpiration(
     state:SurEauPlantState, # Plant state object.
     fluxes:SurEauPlantFluxes, # Plant fluxes object.
@@ -1159,8 +1140,6 @@ def compute_transpiration(
     clim:dict, # Climate snapshot.
     N_hours:float, # Hours in this sub-daily timestep. Used by Granier model only.
 )->SurEauPlantFluxes: # Updated fluxes with all transpiration-related fields set.
-
-
 ```
 
 *Compute all transpiration-related fluxes for the current sub-daily*
@@ -1231,7 +1210,7 @@ __Parameters:__
     - g_crown: Crown aerodynamic conductance (Jarvis only).
     - gs_lim: Water-limited stomatal conductance (Jarvis only).
     - gs_bound: Light-limited stomatal conductance (Jarvis only).
-        Written by [`calculate_gs_jarvis`](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#calculate_gs_jarvis) (mutates fluxes).
+        Written by `calculate_gs_jarvis` (mutates fluxes).
     - g_canopy_bound: Unstressed canopy conductance (Jarvis only).
     - g_canopy_lim: Water-limited canopy conductance (Jarvis only).
 
@@ -1250,7 +1229,7 @@ __Parameters:__
     - P50_gs, slope_gs: Sigmoid stomatal regulation (Eq. 34).
 
 - clim: Climate snapshot dictionary with keys: ``T_air_mean``,
-    ``PAR``, [`potential_PAR`](https://ecamo19.github.io/plant_hydraulics/utils.html#potential_par), ``WS``, ``RH_air_mean``, ``VPD``,
+    ``PAR``, `potential_PAR`, ``WS``, ``RH_air_mean``, ``VPD``,
     ``ETP``, ``ETP_veg`` (optional).
 
 - N_hours: Number of hours in this sub-daily timestep. Used by
@@ -1352,15 +1331,12 @@ sub-hourly timestep.
 ### compute_water_storage
 
 ```python
-
 def compute_water_storage(
     state:SurEauPlantState, # Plant state object. 
     diag:SurEauPlantDiagnostics, # Diagnostics object. Written: ``LFMC``, ``LFMC_symp``, ``LFMC_apo``, ``DFMC``, ``FMC_canopy``.
     params:SurEauVegetationParams, # Vegetation parameters.
     VPD:float, # Vapor pressure deficit (kPa). 
 )->tuple: # Updated with current water volumes in all compartments.
-
-
 ```
 
 *Compute actual water content in all four plant compartments and*
@@ -1405,13 +1381,13 @@ __Parameters:__
     - PLC_leaf: Percent loss of leaf hydraulic conductivity (%).
     - PLC_stem: Percent loss of stem hydraulic conductivity (%).
     - Q_LSym_sat_L: Leaf symplasm saturated water (L/m²).
-        From [`update_LAI_and_stocks`](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks) (Eqs. 36, 38).
+        From `update_LAI_and_stocks` (Eqs. 36, 38).
     - Q_LApo_sat_L: Leaf apoplasm saturated water (L/m²).
-        From [`update_LAI_and_stocks`](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks) (Eqs. 37, 38).
+        From `update_LAI_and_stocks` (Eqs. 37, 38).
     - Q_SSym_sat_L: Stem symplasm saturated water (L/m²).
-        From [`update_LAI_and_stocks`](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks) (Eq. 39).
+        From `update_LAI_and_stocks` (Eq. 39).
     - Q_SApo_sat_L: Stem apoplasm saturated water (L/m²).
-        From [`update_LAI_and_stocks`](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_lai_and_stocks) (Eq. 40).
+        From `update_LAI_and_stocks` (Eq. 40).
     - DM_live_canopy: Dry mass of living leaves (g/m²).
     - DM_dead_canopy: Dry mass of dead leaves (g/m²).
 
@@ -1430,7 +1406,7 @@ __Parameters:__
     - LFMC: Total live fuel moisture content (%). The key
         wildfire metric. Typically 40–150%.
     - DFMC: Dead fuel moisture content (%). From VPD
-        equilibrium via [`compute_DFMC`](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_dfmc).
+        equilibrium via `compute_DFMC`.
     - FMC_canopy: Canopy fuel moisture content (%, live + dead).
 
 - params: SurEauVegetationParams object with the following
@@ -1449,7 +1425,7 @@ __Parameters:__
         compartment diagnostics.
 
 - VPD: Vapor pressure deficit (kPa). Drives dead fuel moisture
-    equilibrium via [`compute_DFMC`](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_dfmc).
+    equilibrium via `compute_DFMC`.
 
 __Returns:__
 

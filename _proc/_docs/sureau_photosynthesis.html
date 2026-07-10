@@ -393,11 +393,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_photosynthesis.py#L65" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="solve_coupled_medlyn_fvcb" class="level3">
 <h3 class="anchored" data-anchor-id="solve_coupled_medlyn_fvcb">solve_coupled_medlyn_fvcb</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> solve_coupled_medlyn_fvcb(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    T_leaf, PAR, VPD, params</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>):</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> solve_coupled_medlyn_fvcb(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    T_leaf, PAR, VPD, params</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Medlyn-coupled FvCB operating point reproduces plantecophys <code>Photosyn</code>,</em> except Rd uses a peaked Arrhenius (plantecophys uses Q10).</p>
 <p>Solves the gs–A–Ci system analytically in one pass (no iteration): the Medlyn slope is baked into <a href="https://ecamo19.github.io/plant_hydraulics/sureau_photosynthesis.html#_getci"><code>_getci</code></a>’s quadratic,as in plantecophys. There is no CO₂ boundary layer (cs = Ca), matching the basic <code>Photosyn</code> path.</p>
 <hr>
@@ -405,11 +403,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="calculate_gs_medlyn" class="level3">
 <h3 class="anchored" data-anchor-id="calculate_gs_medlyn">calculate_gs_medlyn</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_gs_medlyn(</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    fluxes:SurEauPlantFluxes, params:SurEauVegetationParams, clim:<span class="bu">dict</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauPlantFluxes:</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_gs_medlyn(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    fluxes:SurEauPlantFluxes, params:SurEauVegetationParams, clim:<span class="bu">dict</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauPlantFluxes:</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Medlyn et al.&nbsp;(2011) stomatal conductance coupled to FvCB photosynthesis.</em></p>
 <p>Replacement for <a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#calculate_gs_jarvis"><code>calculate_gs_jarvis</code></a>stomatal conductance</p>
 <p>SurEau’s hydraulic regulation gamma (compute_regul_fact, applied by compute_transpiration) is what turns it into the water-limited gs_lim, so this routine has no knowledge of psi.</p>

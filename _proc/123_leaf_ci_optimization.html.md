@@ -45,47 +45,46 @@ Given: gs (stomatal conductance), gbc (boundary layer conductance for CO₂)
 ### leaf_ci_optimization
 
 ```python
-
 def leaf_ci_optimization(
     atmos:Atmos, # Atmospheric forcing variables:
-- o2air : float
-    Atmospheric O2 concentration (mmol/mol).
-- co2air : float
-    Atmospheric CO2 concentration (umol/mol).
+    # - o2air : float
+    #     Atmospheric O2 concentration (mmol/mol).
+    # - co2air : float
+    #     Atmospheric CO2 concentration (umol/mol).
     leaf:Leaf, # Leaf physiological parameters:
-- c3psn : int
-    Photosynthetic pathway: 1 = C3, 0 = C4 plant.
-- colim : int
-    Photosynthesis co-limitation: 0 = no, 1 = yes.
-- colim_c3 : float
-    Empirical curvature parameter for C3 co-limitation (-).
-- colim_c4a : float
-    Empirical curvature parameter for C4 co-limitation (-).
-- colim_c4b : float
-    Empirical curvature parameter for C4 co-limitation (-).
-- qe_c4 : float
-    C4 quantum yield (mol CO2 / mol photons).
+    # - c3psn : int
+    #     Photosynthetic pathway: 1 = C3, 0 = C4 plant.
+    # - colim : int
+    #     Photosynthesis co-limitation: 0 = no, 1 = yes.
+    # - colim_c3 : float
+    #     Empirical curvature parameter for C3 co-limitation (-).
+    # - colim_c4a : float
+    #     Empirical curvature parameter for C4 co-limitation (-).
+    # - colim_c4b : float
+    #     Empirical curvature parameter for C4 co-limitation (-).
+    # - qe_c4 : float
+    #     C4 quantum yield (mol CO2 / mol photons).
     flux:Flux, # Flux variables with the following inputs:
-- vcmax : float
-    Maximum carboxylation rate (umol/m2/s).
-- cp : float
-    CO2 compensation point (umol/mol).
-- kc : float
-    Michaelis-Menten constant for CO2 (umol/mol).
-- ko : float
-    Michaelis-Menten constant for O2 (mmol/mol).
-- je : float
-    Electron transport rate (umol/m2/s).
-- kp_c4 : float
-    C4 initial slope of CO2 response curve (mol/m2/s).
-- gs : float
-    Leaf stomatal conductance (mol H2O/m2 leaf/s).
-- gbc : float
-    Leaf boundary layer conductance for CO2 (mol CO2/m2 leaf/s).
-- apar : float
-    Leaf absorbed PAR (umol photon/m2 leaf/s).
-- rd : float
-    Leaf respiration rate (umol CO2/m2 leaf/s).
+    # - vcmax : float
+    #     Maximum carboxylation rate (umol/m2/s).
+    # - cp : float
+    #     CO2 compensation point (umol/mol).
+    # - kc : float
+    #     Michaelis-Menten constant for CO2 (umol/mol).
+    # - ko : float
+    #     Michaelis-Menten constant for O2 (mmol/mol).
+    # - je : float
+    #     Electron transport rate (umol/m2/s).
+    # - kp_c4 : float
+    #     C4 initial slope of CO2 response curve (mol/m2/s).
+    # - gs : float
+    #     Leaf stomatal conductance (mol H2O/m2 leaf/s).
+    # - gbc : float
+    #     Leaf boundary layer conductance for CO2 (mol CO2/m2 leaf/s).
+    # - apar : float
+    #     Leaf absorbed PAR (umol photon/m2 leaf/s).
+    # - rd : float
+    #     Leaf respiration rate (umol CO2/m2 leaf/s).
 )->Flux: # Updated flux object with the following attributes:
 - ac : float
     Rubisco-limited gross photosynthesis (umol CO2/m2 leaf/s).
@@ -102,14 +101,12 @@ def leaf_ci_optimization(
     Leaf surface CO2 concentration (umol/mol).
 - ci : float
     Leaf intercellular CO2 concentration (umol/mol).
-
-
 ```
 
 *Calculate leaf photosynthesis for a specified stomatal conductance,*
 then calculate Ci from the diffusion equation.
 
-__Phys 101:__ 
+__Plant Phys 101:__ 
 
 - Carboxilation rate: How many reactions (CO2 + RuBP -> 3-PGA) happen per 
 unit of leaf area per second.
@@ -117,7 +114,7 @@ unit of leaf area per second.
 - Vcmax: Maximum Carboxilation rate
 
 Meaning of Θ (aka the co-limitation curvature factor): Θ asks, when the 
-plant transitions from being Rubisco-limited to light-limited, is that 
+plant transition from being Rubisco-limited to light-limited, is that 
 transition sharp (Θ near 1) or gradual (Θ near 0)? 
 
 A sharp transition means one process dominates at any given moment. 

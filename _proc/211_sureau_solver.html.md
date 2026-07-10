@@ -14,15 +14,12 @@ title: SurEau solver
 ### sureau_solver
 
 ```python
-
 def sureau_solver(
     state:SurEauPlantState, # Plant state. Mutated in place. Read/written: all ψ fields, PLC fields, psi_all_soil.
     fluxes:SurEauPlantFluxes, diag:SurEauPlantDiagnostics, soil:SurEauSoil, params:SurEauVegetationParams,
     dt:float, # Timestep size (seconds).
     opt:SurEauComputationOptions, # Solver options: numerical scheme, scaling flags.
 )->SurEauPlantState: # Updated state with potentials at time n+1 and updated PLC.
-
-
 ```
 
 *ODE solver for SurEau-Ecos*
@@ -97,15 +94,15 @@ __Parameters:__
     - psi_LApo_cav, psi_SApo_cav: Historical minimum potentials
         (MPa). For cavitation flux (Eqs. 25–27).
     - k_LSym, k_SSym, k_SLApo: Plant conductances
-        (mmol m⁻² s⁻¹ MPa⁻¹). From [`update_kplant`](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_kplant).
+        (mmol m⁻² s⁻¹ MPa⁻¹). From `update_kplant`.
     - C_LSym, C_SSym, C_LApo, C_SApo: Capacitances
-        (mmol m⁻² MPa⁻¹). From [`update_capacitances`](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_capacitances).
+        (mmol m⁻² MPa⁻¹). From `update_capacitances`.
     - PLC_leaf, PLC_stem: Current percent loss of conductivity
         (%). For computing cavitation conductances (Eq. 26).
     - Q_LApo_sat_mmol_per_LA, Q_SApo_sat_mmol_per_LA: Saturated
         apoplasm water (mmol/m² leaf). For Eqs. 25, 27.
     - k_soil_to_stem: Soil-to-stem conductances per layer
-        (mmol m⁻² s⁻¹ MPa⁻¹). From [`update_kplant`](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_kplant)(Eq. 20).
+        (mmol m⁻² s⁻¹ MPa⁻¹). From `update_kplant`(Eq. 20).
 
     Written:
 
@@ -138,14 +135,14 @@ __Parameters:__
 
     - psi_soil: Soil water potentials per layer (MPa). Array.
     - k_soil: Not read directly (already folded into
-        state.k_soil_to_stem by [`update_kplant`](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_kplant)).
+        state.k_soil_to_stem by `update_kplant`).
 
 - params: SurEauVegetationParams object. Read only:
 
     - slope_VC_leaf, slope_VC_stem: Vulnerability curve slopes
-        (% MPa⁻¹). For [`compute_PLC_prime`](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_plc_prime) (Eq. 26).
+        (% MPa⁻¹). For `compute_PLC_prime` (Eq. 26).
     - P50_VC_leaf, P50_VC_stem: P50 values (MPa). For
-        [`compute_PLC`](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_plc) (Eq. 15).
+        `compute_PLC` (Eq. 15).
 
 - dt: Timestep size (seconds). Typically 60–3600 s for implicit/
     semi-implicit, < 0.01 s for explicit.

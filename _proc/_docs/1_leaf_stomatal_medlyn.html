@@ -392,20 +392,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/leaf_stomatal_medlyn.py#L17" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="leaf_stomatal_medlyn" class="level3">
 <h3 class="anchored" data-anchor-id="leaf_stomatal_medlyn">leaf_stomatal_medlyn</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> leaf_stomatal_medlyn(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    physcon:PhysCon, <span class="co"># Physical constants.</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    atmos:Atmos, <span class="co"># Atmospheric forcing variables.</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    leaf:Leaf, <span class="co"># Leaf parameters including:</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> g0 : <span class="bu">float</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    Minimum stomatal conductance (mol H2O<span class="op">/</span>m2<span class="op">/</span>s).</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> g1_medlyn : <span class="bu">float</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    Medlyn slope parameter (kPa<span class="op">^</span><span class="fl">0.5</span>).</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> minl_wp : <span class="bu">float</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    Minimum leaf water potential (MPa) — the cavitation threshold.</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    flux:Flux, <span class="co"># Flux variables. Must have tleaf, qa, psi_leaf, lsc, etc. set.</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>Flux: <span class="co"># Updated flux object with converged gs, An, Tleaf, psi_leaf, etc.</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> leaf_stomatal_medlyn(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    physcon:PhysCon, <span class="co"># Physical constants.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    atmos:Atmos, <span class="co"># Atmospheric forcing variables.</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    leaf:Leaf, <span class="co"># Leaf parameters including:</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - g0 : float</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Minimum stomatal conductance (mol H2O/m2/s).</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - g1_medlyn : float</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Medlyn slope parameter (kPa^0.5).</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - minl_wp : float</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Minimum leaf water potential (MPa) — the cavitation threshold.</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    flux:Flux, <span class="co"># Flux variables. Must have tleaf, qa, psi_leaf, lsc, etc. set.</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>Flux: <span class="co"># Updated flux object with converged gs, An, Tleaf, psi_leaf, etc.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Compute stomatal conductance using the Medlyn et al.&nbsp;(2011) model,</em> coupled with leaf energy balance, photosynthesis, and plant hydraulics.</p>
 <p>The Medlyn equation (Medlyn et al.&nbsp;2011, Eq. 11) is:</p>
 <pre><code>gs = g0 + 1.6 * (1 + g1 / sqrt(D)) * An / cs</code></pre>

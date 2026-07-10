@@ -14,21 +14,20 @@ title: Leaf params
 ### leaf_phys_params
 
 ```python
-
 def leaf_phys_params(
     params:Params, # Waveband indices:
-- vis : int
-    Waveband index for visible radiation.
-- nir : int
-    Waveband index for near-infrared radiation.
+    # - vis : int
+    #     Waveband index for visible radiation.
+    # - nir : int
+    #     Waveband index for near-infrared radiation.
     physcon:PhysCon, # Physical constants:
-- tfrz : float
-    Freezing point of water (K).
-- rgas : float
-    Universal gas constant (J/K/mol).
+    # - tfrz : float
+    #     Freezing point of water (K).
+    # - rgas : float
+    #     Universal gas constant (J/K/mol).
     leaf:Leaf, # Leaf object with the following input attribute:
-- c3psn : int
-    Photosynthetic pathway: 1 = C3, 0 = C4 plant.
+    # - c3psn : int
+    #     Photosynthetic pathway: 1 = C3, 0 = C4 plant.
 )->Leaf: # Updated Leaf object with the following attributes:
 
 Photosynthetic parameters at 25°C:
@@ -124,8 +123,6 @@ Stomatal and hydraulic parameters:
     Parameter that controls the steepness of this curve in the "profit_max" model
 - psi_50 : float
     Water potential at 50% loss of conductance (MPa). Always < 0.
-
-
 ```
 
 *Set leaf physiological parameters.*

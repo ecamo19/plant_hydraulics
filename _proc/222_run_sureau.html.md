@@ -14,23 +14,20 @@ title: Run SurEau
 ### run_sureau
 
 ```python
-
 def run_sureau(
     climate_df:DataFrame, # Daily climate forcing. Required columns: Year, Doy, DATE,
-Tair_mean, Tair_max, Tair_min, RHair_mean, RHair_max,
-RHair_min, PPT_sum, RG_sum, WS_mean.
+    # Tair_mean, Tair_max, Tair_min, RHair_mean, RHair_max,
+    # RHair_min, PPT_sum, RG_sum, WS_mean.
     veg_params:SurEauVegetationParams, # Species-specific vegetation parameters. Derived parameters
-are computed internally.
+    # are computed internally.
     soil_params:SurEauSoilParams, # Soil parameters. Derived parameters are computed internally.
     opts:SurEauModelOptions, # Simulation control options (years, numerical scheme,
-adaptive stepping, output resolution).
+    # adaptive stepping, output resolution).
     deep_water:bool=False, # If True, keep deepest soil layer at field capacity.
-Default False.
+    # Default False.
 )->DataFrame: # Simulation results at hourly resolution. One row per
 timestep, with columns for all state variables, fluxes,
 and diagnostics.
-
-
 ```
 
 *Run the SurEau-Ecos plant hydraulics simulation.*
@@ -83,14 +80,14 @@ __Parameters:__
     root_Z50/Z95 (root distribution); and many others.
     Derived parameters (root distribution, conductance
     partitioning, etc.) are computed internally by
-    [`sureau_vegetation_params`](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_params.html#sureau_vegetation_params).
+    `sureau_vegetation_params`.
 
 - soil_params: SurEauSoilParams object. Soil parameters including:
     depth (cumulative layer depths), texture parameters (alpha, n
     for van Genuchten), theta_sat, theta_res (porosity, residual
     water), RFC (rock fragment content), and initial water content.
     Derived parameters (layer thickness, field capacity, etc.)
-    are computed internally by [`sureau_soil_params`](https://ecamo19.github.io/plant_hydraulics/sureau_soil_params.html#sureau_soil_params).
+    are computed internally by `sureau_soil_params`.
 
 - opts: SurEauModelOptions object controlling the simulation:
 

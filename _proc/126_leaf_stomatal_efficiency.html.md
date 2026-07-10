@@ -67,12 +67,9 @@ At gs = gs_val − delta    At gs = gs_val
 ### leaf_stomatal_efficiency
 
 ```python
-
 def leaf_stomatal_efficiency(
     physcon:PhysCon, atmos:Atmos, leaf:Leaf, flux:Flux, gs_val:float
 )->tuple:
-
-
 ```
 
 *Stomatal water-use efficiency and cavitation check to determine*

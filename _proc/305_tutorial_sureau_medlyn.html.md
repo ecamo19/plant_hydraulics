@@ -9,7 +9,7 @@ title: 'Tutorial 5: SurEau-Medlyn Basic run'
 
 ## Load modules
 
-::: {#00deb99d .cell execution_count=3}
+::: {#00deb99d .cell}
 ``` {.python .cell-code}
 from siuba import *
 from plotnine import *
@@ -21,7 +21,7 @@ from IPython.display import HTML, display
 :::
 
 
-::: {#3aea328b .cell execution_count=4}
+::: {#3aea328b .cell}
 ``` {.python .cell-code}
 from plant_hydraulics.run_sureau import run_sureau
 from plant_hydraulics.sureau_climate import *  
@@ -41,7 +41,7 @@ from plant_hydraulics.utils import (
 
 # Object initialization
 
-::: {#fc94ce6e .cell execution_count=5}
+::: {#fc94ce6e .cell}
 ``` {.python .cell-code}
 # Model options
 opts = SurEauModelOptions(
@@ -73,7 +73,7 @@ opts = SurEauModelOptions(
 :::
 
 
-::: {#6644693f .cell execution_count=6}
+::: {#6644693f .cell}
 ``` {.python .cell-code}
 # Vegetation parameters
 veg_params = SurEauVegetationParams()
@@ -136,7 +136,7 @@ veg_params.gmin20 = 3
 :::
 
 
-::: {#3789b8ee .cell execution_count=7}
+::: {#3789b8ee .cell}
 ``` {.python .cell-code}
 soil_params = SurEauSoilParams()
 ```
@@ -147,7 +147,7 @@ soil_params = SurEauSoilParams()
 
 SurEau takes daily climatic data and then creates a hourly dataset 
 
-::: {#1f8aa1e4 .cell execution_count=8}
+::: {#1f8aa1e4 .cell}
 ``` {.python .cell-code}
 climate_df = load_example_data("sureau_medlyn_daily_climate.csv", sep=",")
 #climate_df["DATE"] = pd.to_datetime(climate_df["DATE"], format="%d/%m/%Y").dt.strftime("%Y-%m-%d")
@@ -286,7 +286,7 @@ width="64" viewBox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
 
 ### Explore climatic data
 
-::: {#4ea0b3df .cell execution_count=9}
+::: {#4ea0b3df .cell}
 ``` {.python .cell-code}
 hourly_data_from_daily = []
 for each_day in range(len(climate_df)):
@@ -323,7 +323,7 @@ hourly_data_from_daily = pd.concat(hourly_data_from_daily, ignore_index=True)
 
 ## Run the model
 
-::: {#bc1401ed .cell execution_count=10}
+::: {#bc1401ed .cell}
 ``` {.python .cell-code}
 results = run_sureau(
     climate_df=climate_df,
@@ -348,7 +348,7 @@ Year 2016 complete.
 :::
 
 
-::: {#8e04cd52 .cell execution_count=11}
+::: {#8e04cd52 .cell}
 ``` {.python .cell-code}
 results = results  >> filter(_.PAR > 0) >> mutate(e_total = _["E_lim"] + _["E_min"]) >> \
     mutate(gres = _["gmin"] + _["gmin_S"])
@@ -356,7 +356,7 @@ results = results  >> filter(_.PAR > 0) >> mutate(e_total = _["E_lim"] + _["E_mi
 :::
 
 
-::: {#48af42d7 .cell execution_count=12}
+::: {#48af42d7 .cell}
 ``` {.python .cell-code}
 html_str = to_html_datatable(results)
 display(HTML(html_str))
@@ -493,14 +493,14 @@ width="64" viewBox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
 
 ##  Plot results 
 
-::: {#6df2176f .cell execution_count=13}
+::: {#6df2176f .cell}
 ``` {.python .cell-code}
 raw_plc = load_example_data("drake_plc_data.csv", sep=",")
 ```
 :::
 
 
-::: {#fa49fde7 .cell execution_count=14}
+::: {#fa49fde7 .cell}
 ``` {.python .cell-code}
 raw_chamber_data = load_example_data("heatwave_raw_data_drake.csv", sep=",")
 
@@ -509,7 +509,7 @@ raw_chamber_data = raw_chamber_data >> filter(_.PAR >= 500) >> filter(_.T_treatm
 raw_chamber_data
 ```
 
-::: {.cell-output .cell-output-display execution_count=14}
+::: {.cell-output .cell-output-display}
 ```{=html}
 <div>
 <style scoped>
@@ -802,7 +802,7 @@ raw_chamber_data
 :::
 
 
-::: {#e7523b57 .cell execution_count=15}
+::: {#e7523b57 .cell}
 ``` {.python .cell-code}
 model_predictions = load_example_data("photosyneb_predictions_heatwave_data_drake.csv", sep=",")
 model_predictions = model_predictions >> filter(_.PPFD >= 500 )
@@ -810,7 +810,7 @@ model_predictions = model_predictions >> filter(_.PPFD >= 500 )
 :::
 
 
-::: {#aa0cb66e .cell execution_count=16}
+::: {#aa0cb66e .cell}
 ``` {.python .cell-code}
 (ggplot() 
  + geom_point(raw_chamber_data, aes(x = 'TargTempC_Avg', y = 'Photo')) 
@@ -832,13 +832,13 @@ model_predictions = model_predictions >> filter(_.PPFD >= 500 )
 ```
 :::
 
-::: {.cell-output .cell-output-display execution_count=16}
-![](305_tutorial_sureau_medlyn_files/figure-html/cell-15-output-2.png){width=4500 height=1500}
+::: {.cell-output .cell-output-display}
+![](305_tutorial_sureau_medlyn_files/figure-html/cell-15-output-2.png){}
 :::
 :::
 
 
-::: {#a137e0ba .cell execution_count=17}
+::: {#a137e0ba .cell}
 ``` {.python .cell-code}
 step = 2.5
 lo = np.floor(10 / step) * step
@@ -874,13 +874,13 @@ results['temp_bin'] = pd.cut(
 ```
 :::
 
-::: {.cell-output .cell-output-display execution_count=17}
-![](305_tutorial_sureau_medlyn_files/figure-html/cell-16-output-2.png){width=4500 height=1500}
+::: {.cell-output .cell-output-display}
+![](305_tutorial_sureau_medlyn_files/figure-html/cell-16-output-2.png){}
 :::
 :::
 
 
-::: {#0fdde71d .cell execution_count=18}
+::: {#0fdde71d .cell}
 ``` {.python .cell-code}
 (ggplot() 
     + geom_point(raw_chamber_data, aes(x = 'TargTempC_Avg', y = 'Trans')) 
@@ -912,13 +912,13 @@ which will replace the existing scale.
 ```
 :::
 
-::: {.cell-output .cell-output-display execution_count=18}
-![](305_tutorial_sureau_medlyn_files/figure-html/cell-17-output-2.png){width=4500 height=1500}
+::: {.cell-output .cell-output-display}
+![](305_tutorial_sureau_medlyn_files/figure-html/cell-17-output-2.png){}
 :::
 :::
 
 
-::: {#c3f1f6f0 .cell execution_count=19}
+::: {#c3f1f6f0 .cell}
 ``` {.python .cell-code}
 step = 2.5
 lo = np.floor(10 / step) * step
@@ -940,7 +940,7 @@ results['temp_bin'] = pd.cut(
 :::
 
 
-::: {#d308a51e .cell execution_count=20}
+::: {#d308a51e .cell}
 ``` {.python .cell-code}
 emin_bin = (results.groupby('temp_bin', observed=True)['E_min']
                    .mean().reset_index())          # one E_min per bin
@@ -965,13 +965,13 @@ emin_bin = (results.groupby('temp_bin', observed=True)['E_min']
 ```
 :::
 
-::: {.cell-output .cell-output-display execution_count=20}
-![](305_tutorial_sureau_medlyn_files/figure-html/cell-19-output-2.png){width=4500 height=1500}
+::: {.cell-output .cell-output-display}
+![](305_tutorial_sureau_medlyn_files/figure-html/cell-19-output-2.png){}
 :::
 :::
 
 
-::: {#1aa004a9 .cell execution_count=27}
+::: {#1aa004a9 .cell}
 ``` {.python .cell-code}
 p = (ggplot()
  + geom_boxplot(raw_chamber_data, aes(x='temp_bin', y='Trans'))
@@ -1003,13 +1003,13 @@ fig
 ```
 :::
 
-::: {.cell-output .cell-output-display execution_count=27}
+::: {.cell-output .cell-output-display}
 ![](305_tutorial_sureau_medlyn_files/figure-html/cell-20-output-2.png){}
 :::
 :::
 
 
-::: {#af31c0af .cell execution_count=21}
+::: {#af31c0af .cell}
 ``` {.python .cell-code}
 (ggplot() + 
     geom_point(model_predictions, aes(x="Tleaf", y = "GS*1000"), color='red') 
@@ -1036,8 +1036,8 @@ fig
 ```
 :::
 
-::: {.cell-output .cell-output-display execution_count=21}
-![](305_tutorial_sureau_medlyn_files/figure-html/cell-21-output-2.png){width=4500 height=1500}
+::: {.cell-output .cell-output-display}
+![](305_tutorial_sureau_medlyn_files/figure-html/cell-21-output-2.png){}
 :::
 :::
 
@@ -1171,15 +1171,15 @@ The above exception was the direct cause of the following exception:
 
 :::
 
-::: {.cell-output .cell-output-display execution_count=30}
+::: {.cell-output .cell-output-display}
 ```
-<plotnine.ggplot.ggplot object at 0x7f6c21a05710>
+<plotnine.ggplot.ggplot object>
 ```
 :::
 :::
 
 
-::: {#9b77d700 .cell execution_count=23}
+::: {#9b77d700 .cell}
 ``` {.python .cell-code}
 (raw_plc >> filter(_.HW_treatment == "heatwave") >> 
  select('T_treatment', 'HW_treatment', 'plc') 
@@ -1187,7 +1187,7 @@ The above exception was the direct cause of the following exception:
  )
 ```
 
-::: {.cell-output .cell-output-display execution_count=23}
+::: {.cell-output .cell-output-display}
 ```{=html}
 <div>
 <style scoped>
@@ -1365,7 +1365,7 @@ The above exception was the direct cause of the following exception:
 :::
 
 
-::: {#b9ef6934 .cell execution_count=29}
+::: {#b9ef6934 .cell}
 ``` {.python .cell-code}
 (ggplot()
  + geom_point(raw_chamber_data, aes(x = 'T_air', y = 'PLC_leaf'))
@@ -1374,7 +1374,7 @@ The above exception was the direct cause of the following exception:
 raw_chamber_data
 ```
 
-::: {.cell-output .cell-output-display execution_count=29}
+::: {.cell-output .cell-output-display}
 ```{=html}
 <div>
 <style scoped>

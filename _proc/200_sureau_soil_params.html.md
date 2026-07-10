@@ -14,12 +14,9 @@ title: SurEau soil params
 ### compute_soil_root_geometry
 
 ```python
-
 def compute_soil_root_geometry(
     soil:SurEauSoilParams, veg:SurEauVegetationParams
 )->SurEauSoilParams:
-
-
 ```
 
 *Compute soil parameters depending on plant parameters (Gardner-Cowan geometry).*
@@ -33,43 +30,42 @@ Old function name init_par_soil
 ### sureau_soil_params
 
 ```python
-
 def sureau_soil_params(
     soil:SurEauSoilParams, # SurEau soil parameters object with the following input attributes:
-- depth : np.ndarray
-    Cumulative depth of each soil layer bottom (m).
-- RFC : np.ndarray
-    Rock fragment content for each layer (%).
-- g_soil0 : float
-    Maximum soil surface conductance to water vapor (mmol/m2/s).
-- offset_psoil : np.ndarray
-    Offset applied to soil water potential for each layer (MPa).
-- psoil_at_field_capacity : float
-    Soil water potential at field capacity (MPa).
-- reset_SWC : bool
-    Whether to reset soil water content to field capacity each year.
-- water_soil_transfer : bool
-    Whether inter-layer water transfer is enabled.
-- soil_evap : bool
-    Whether soil surface evaporation is enabled.
-- PTF : str
-    Pedotransfer function to use: "VG" (van Genuchten) or "Campbell".
-- Ksat : np.ndarray
-    Saturated hydraulic conductivity for each layer (mm/h).
-- saturation_capacity : np.ndarray
-    Volumetric water content at saturation for each layer (m3/m3).
-- residual_capacity : np.ndarray
-    Residual volumetric water content for each layer (m3/m3).
-- alpha_vg : np.ndarray
-    Van Genuchten alpha parameter for each layer (cm-1).
-- n_vg : np.ndarray
-    Van Genuchten n shape parameter for each layer (-).
-- I_vg : np.ndarray
-    Van Genuchten tortuosity parameter for each layer (-).
-- b_camp : np.ndarray
-    Campbell b shape parameter for each layer (-).
-- psie_camp : np.ndarray
-    Campbell air-entry potential for each layer (MPa).
+    # - depth : np.ndarray
+    #     Cumulative depth of each soil layer bottom (m).
+    # - RFC : np.ndarray
+    #     Rock fragment content for each layer (%).
+    # - g_soil0 : float
+    #     Maximum soil surface conductance to water vapor (mmol/m2/s).
+    # - offset_psoil : np.ndarray
+    #     Offset applied to soil water potential for each layer (MPa).
+    # - psoil_at_field_capacity : float
+    #     Soil water potential at field capacity (MPa).
+    # - reset_SWC : bool
+    #     Whether to reset soil water content to field capacity each year.
+    # - water_soil_transfer : bool
+    #     Whether inter-layer water transfer is enabled.
+    # - soil_evap : bool
+    #     Whether soil surface evaporation is enabled.
+    # - PTF : str
+    #     Pedotransfer function to use: "VG" (van Genuchten) or "Campbell".
+    # - Ksat : np.ndarray
+    #     Saturated hydraulic conductivity for each layer (mm/h).
+    # - saturation_capacity : np.ndarray
+    #     Volumetric water content at saturation for each layer (m3/m3).
+    # - residual_capacity : np.ndarray
+    #     Residual volumetric water content for each layer (m3/m3).
+    # - alpha_vg : np.ndarray
+    #     Van Genuchten alpha parameter for each layer (cm-1).
+    # - n_vg : np.ndarray
+    #     Van Genuchten n shape parameter for each layer (-).
+    # - I_vg : np.ndarray
+    #     Van Genuchten tortuosity parameter for each layer (-).
+    # - b_camp : np.ndarray
+    #     Campbell b shape parameter for each layer (-).
+    # - psie_camp : np.ndarray
+    #     Campbell air-entry potential for each layer (MPa).
 )->SurEauSoilParams: # Updated SurEau soil parameters object with the following derived attributes:
 - n_layers : int
     Number of soil layers (-).
@@ -88,8 +84,6 @@ def sureau_soil_params(
 - B_GC : np.ndarray
     Gardner-Cowan geometry factor for each layer (-).
     Set to 0.5 placeholder if not previously computed from root geometry.
-
-
 ```
 
 *Compute derived soil hydraulic quantities from raw SurEau soil parameters.*

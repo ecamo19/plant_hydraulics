@@ -14,36 +14,35 @@ title: Leaf boundary layer
 ### leaf_boundary_layer
 
 ```python
-
 def leaf_boundary_layer(
     physcon:PhysCon, # Physical constants:
-- grav : float
-    Gravitational acceleration (m/s2).
-- tfrz : float
-    Freezing point of water (K).
-- visc0 : float
-    Kinematic viscosity at 0°C and 1013.25 hPa (m2/s).
-- Dh0 : float
-    Molecular diffusivity (heat) at 0°C and 1013.25 hPa (m2/s).
-- Dv0 : float
-    Molecular diffusivity (H2O) at 0°C and 1013.25 hPa (m2/s).
-- Dc0 : float
-    Molecular diffusivity (CO2) at 0°C and 1013.25 hPa (m2/s).
+    # - grav : float
+    #     Gravitational acceleration (m/s2).
+    # - tfrz : float
+    #     Freezing point of water (K).
+    # - visc0 : float
+    #     Kinematic viscosity at 0°C and 1013.25 hPa (m2/s).
+    # - Dh0 : float
+    #     Molecular diffusivity (heat) at 0°C and 1013.25 hPa (m2/s).
+    # - Dv0 : float
+    #     Molecular diffusivity (H2O) at 0°C and 1013.25 hPa (m2/s).
+    # - Dc0 : float
+    #     Molecular diffusivity (CO2) at 0°C and 1013.25 hPa (m2/s).
     atmos:Atmos, # Atmospheric forcing variables:
-- patm : float
-    Atmospheric pressure (Pa).
-- rhomol : float
-    Molar density (mol/m3).
-- wind : float
-    Wind speed (m/s).
-- tair : float
-    Air temperature (K).
+    # - patm : float
+    #     Atmospheric pressure (Pa).
+    # - rhomol : float
+    #     Molar density (mol/m3).
+    # - wind : float
+    #     Wind speed (m/s).
+    # - tair : float
+    #     Air temperature (K).
     leaf:Leaf, # Leaf parameters:
-- dleaf : float
-    Leaf dimension (m).
+    # - dleaf : float
+    #     Leaf dimension (m).
     flux:Flux, # Flux variables with the following input:
-- tleaf : float
-    Leaf temperature (K).
+    # - tleaf : float
+    #     Leaf temperature (K).
 )->Flux: # Updated flux object with the following attributes:
 - gbh : float
     Leaf boundary layer conductance for heat (mol/m2 leaf/s).
@@ -51,8 +50,6 @@ def leaf_boundary_layer(
     Leaf boundary layer conductance for H2O (mol H2O/m2 leaf/s).
 - gbc : float
     Leaf boundary layer conductance for CO2 (mol CO2/m2 leaf/s).
-
-
 ```
 
 *Calculate leaf boundary layer conductances.*

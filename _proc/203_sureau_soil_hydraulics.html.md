@@ -49,12 +49,9 @@ Soils 101:
 ### compute_soil_VG
 
 ```python
-
 def compute_soil_VG(
     soil:SurEauSoil, params:SurEauSoilParams
 )->SurEauSoil:
-
-
 ```
 
 *Transform soil moisture to water potential and conductance using Van Genuchten*
@@ -223,12 +220,9 @@ Equations implemented:
 ### compute_soil_Campbell
 
 ```python
-
 def compute_soil_Campbell(
     soil:SurEauSoil, params:SurEauSoilParams
 )->SurEauSoil:
-
-
 ```
 
 *Campbell kSoil and PsiSoil using a ower-law relationships*
@@ -276,12 +270,9 @@ Transform soil moisture into water potential and k conductance
 ### compute_soil_conductance_and_psi
 
 ```python
-
 def compute_soil_conductance_and_psi(
     soil:SurEauSoil, params:SurEauSoilParams
 )->SurEauSoil:
-
-
 ```
 
 *Dispatch to VG or Campbell.*
@@ -294,12 +285,9 @@ def compute_soil_conductance_and_psi(
 ### compute_infiltration
 
 ```python
-
 def compute_infiltration(
     soil:SurEauSoil, params:SurEauSoilParams, ppt_soil, cst_infil:float=0.7
 )->SurEauSoil:
-
-
 ```
 
 *Infiltration through soil layers, then update psi/k.*
@@ -365,12 +353,9 @@ Previous timestep's soil water
 ### update_soil_water
 
 ```python
-
 def update_soil_water(
     soil:SurEauSoil, params:SurEauSoilParams, flux_evap
 )->SurEauSoil:
-
-
 ```
 
 *Subtract transpiration flux from soil and update.*
@@ -383,12 +368,9 @@ def update_soil_water(
 ### set_SWC_to_field_capacity
 
 ```python
-
 def set_SWC_to_field_capacity(
     soil:SurEauSoil, params:SurEauSoilParams, layers:NoneType=None
 )->SurEauSoil:
-
-
 ```
 
 *Reset soil water stock to field capacity.*
@@ -408,12 +390,9 @@ the sponge back to its comfortable level."
 ### compute_evaporation
 
 ```python
-
 def compute_evaporation(
     soil:SurEauSoil, params:SurEauSoilParams, T_air, RH_air, N_hours
 )->SurEauSoil:
-
-
 ```
 
 *Soil surface evaporation *

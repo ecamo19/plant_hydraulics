@@ -392,14 +392,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_solver.py#L26" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="sureau_solver" class="level3">
 <h3 class="anchored" data-anchor-id="sureau_solver">sureau_solver</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sureau_solver(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    state:SurEauPlantState, <span class="co"># Plant state. Mutated in place. Read/written: all ψ fields, PLC fields, psi_all_soil.</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    fluxes:SurEauPlantFluxes, diag:SurEauPlantDiagnostics, soil:SurEauSoil, params:SurEauVegetationParams,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    dt:<span class="bu">float</span>, <span class="co"># Timestep size (seconds).</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    opt:SurEauComputationOptions, <span class="co"># Solver options: numerical scheme, scaling flags.</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauPlantState: <span class="co"># Updated state with potentials at time n+1 and updated PLC.</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sureau_solver(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    state:SurEauPlantState, <span class="co"># Plant state. Mutated in place. Read/written: all ψ fields, PLC fields, psi_all_soil.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    fluxes:SurEauPlantFluxes, diag:SurEauPlantDiagnostics, soil:SurEauSoil, params:SurEauVegetationParams,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    dt:<span class="bu">float</span>, <span class="co"># Timestep size (seconds).</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    opt:SurEauComputationOptions, <span class="co"># Solver options: numerical scheme, scaling flags.</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauPlantState: <span class="co"># Updated state with potentials at time n+1 and updated PLC.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>ODE solver for SurEau-Ecos</em></p>
 <p>Time-integrate one small timestep dt [seconds] for the four-compartment plant hydraulic system.</p>
 <p>This is the <strong>core ODE solver</strong> of the SurEau-Ecos model. It solves the four coupled water balance equations (<strong>Eqs. 6–9</strong>) for ψ at time n + 1 in all four plant compartments:</p>
@@ -430,11 +428,11 @@ this forces dt &lt; ~10 ms.</code></pre>
 <ul>
 <li>psi_LApo, psi_SApo, psi_LSym, psi_SSym: Water potentials at time n (MPa).</li>
 <li>psi_LApo_cav, psi_SApo_cav: Historical minimum potentials (MPa). For cavitation flux (Eqs. 25–27).</li>
-<li>k_LSym, k_SSym, k_SLApo: Plant conductances (mmol m⁻² s⁻¹ MPa⁻¹). From <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_kplant"><code>update_kplant</code></a>.</li>
-<li>C_LSym, C_SSym, C_LApo, C_SApo: Capacitances (mmol m⁻² MPa⁻¹). From <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_capacitances"><code>update_capacitances</code></a>.</li>
+<li>k_LSym, k_SSym, k_SLApo: Plant conductances (mmol m⁻² s⁻¹ MPa⁻¹). From <code>update_kplant</code>.</li>
+<li>C_LSym, C_SSym, C_LApo, C_SApo: Capacitances (mmol m⁻² MPa⁻¹). From <code>update_capacitances</code>.</li>
 <li>PLC_leaf, PLC_stem: Current percent loss of conductivity (%). For computing cavitation conductances (Eq. 26).</li>
 <li>Q_LApo_sat_mmol_per_LA, Q_SApo_sat_mmol_per_LA: Saturated apoplasm water (mmol/m² leaf). For Eqs. 25, 27.</li>
-<li>k_soil_to_stem: Soil-to-stem conductances per layer (mmol m⁻² s⁻¹ MPa⁻¹). From <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_kplant"><code>update_kplant</code></a>(Eq. 20).</li>
+<li>k_soil_to_stem: Soil-to-stem conductances per layer (mmol m⁻² s⁻¹ MPa⁻¹). From <code>update_kplant</code>(Eq. 20).</li>
 </ul>
 <p>Written:</p>
 <ul>
@@ -457,12 +455,12 @@ this forces dt &lt; ~10 ms.</code></pre>
 <li><p>soil: SurEauSoil object. Read only:</p>
 <ul>
 <li>psi_soil: Soil water potentials per layer (MPa). Array.</li>
-<li>k_soil: Not read directly (already folded into state.k_soil_to_stem by <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_processes.html#update_kplant"><code>update_kplant</code></a>).</li>
+<li>k_soil: Not read directly (already folded into state.k_soil_to_stem by <code>update_kplant</code>).</li>
 </ul></li>
 <li><p>params: SurEauVegetationParams object. Read only:</p>
 <ul>
-<li>slope_VC_leaf, slope_VC_stem: Vulnerability curve slopes (% MPa⁻¹). For <a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_plc_prime"><code>compute_PLC_prime</code></a> (Eq. 26).</li>
-<li>P50_VC_leaf, P50_VC_stem: P50 values (MPa). For <a href="https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_plc"><code>compute_PLC</code></a> (Eq. 15).</li>
+<li>slope_VC_leaf, slope_VC_stem: Vulnerability curve slopes (% MPa⁻¹). For <code>compute_PLC_prime</code> (Eq. 26).</li>
+<li>P50_VC_leaf, P50_VC_stem: P50 values (MPa). For <code>compute_PLC</code> (Eq. 15).</li>
 </ul></li>
 <li><p>dt: Timestep size (seconds). Typically 60–3600 s for implicit/ semi-implicit, &lt; 0.01 s for explicit.</p></li>
 <li><p>opt: SurEauComputationOptions object. Controls the solver:</p>

@@ -392,12 +392,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/leaf_stomatal_profit_max.py#L66" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="leaf_stomatal_profit_max" class="level3">
 <h3 class="anchored" data-anchor-id="leaf_stomatal_profit_max">leaf_stomatal_profit_max</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> leaf_stomatal_profit_max(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    physcon:PhysCon, atmos:Atmos, leaf:Leaf, <span class="co"># Must have: g0, g1_medlyn, minl_wp, a_psi.</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    flux:Flux</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>Flux: <span class="co"># With converged gs, An, Tleaf, psi_leaf, etc.</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> leaf_stomatal_profit_max(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    physcon:PhysCon, atmos:Atmos, leaf:Leaf, <span class="co"># Must have: g0, g1_medlyn, minl_wp, a_psi.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    flux:Flux</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>Flux: <span class="co"># With converged gs, An, Tleaf, psi_leaf, etc.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Stomatal conductance via Medlyn + profit-maximisation.</em></p>
 <p>Algorithm:</p>
 <ol type="1">

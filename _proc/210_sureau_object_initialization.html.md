@@ -16,12 +16,9 @@ title: SurEau object initialization
 ### init_soil
 
 ```python
-
 def init_soil(
     soil_params
 ):
-
-
 ```
 
 *Call self as a function.*
@@ -36,12 +33,9 @@ def init_soil(
 ### init_plant
 
 ```python
-
 def init_plant(
     veg:SurEauVegetationParams
 ):
-
-
 ```
 
 *Call self as a function.*
@@ -58,12 +52,9 @@ def init_plant(
 ### yearly_init_plant
 
 ```python
-
 def yearly_init_plant(
     state:SurEauPlantState, fluxes:SurEauPlantFluxes, diag:SurEauPlantDiagnostics, params:SurEauVegetationParams
 ):
-
-
 ```
 
 *Call self as a function.*

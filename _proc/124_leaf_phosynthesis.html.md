@@ -69,78 +69,77 @@ Input: Tleaf, APAR, gs, gbc, gbv, atmospheric conditions
 ### leaf_photosynthesis
 
 ```python
-
 def leaf_photosynthesis(
     physcon:PhysCon, # Physical constants:
-- tfrz : float
-    Freezing point of water (K).
-- rgas : float
-    Universal gas constant (J/K/mol).
+    # - tfrz : float
+    #     Freezing point of water (K).
+    # - rgas : float
+    #     Universal gas constant (J/K/mol).
     atmos:Atmos, # Atmospheric forcing variables:
-- co2air : float
-    Atmospheric CO2 concentration (umol/mol).
-- eair : float
-    Vapor pressure of air (Pa).
+    # - co2air : float
+    #     Atmospheric CO2 concentration (umol/mol).
+    # - eair : float
+    #     Vapor pressure of air (Pa).
     leaf:Leaf, # Leaf physiological parameters:
-
-Photosynthetic pathway and co-limitation:
-- c3psn : int
-    Photosynthetic pathway: 1 = C3, 0 = C4 plant.
-
-Rates at 25°C:
-- vcmax25 : float
-    Maximum carboxylation rate at 25°C (umol/m2/s).
-- jmax25 : float
-    Maximum electron transport rate at 25°C (umol/m2/s).
-- rd25 : float
-    Leaf respiration rate at 25°C (umol CO2/m2/s).
-
-Michaelis-Menten constants at 25°C:
-- kc25 : float
-    Michaelis-Menten constant for CO2 at 25°C (umol/mol).
-- ko25 : float
-    Michaelis-Menten constant for O2 at 25°C (mmol/mol).
-- cp25 : float
-    CO2 compensation point at 25°C (umol/mol).
-
-Activation energies (J/mol):
-- kcha, koha, cpha : float
-    Activation energies for Kc, Ko, and Γ* respectively.
-- vcmaxha, jmaxha, rdha : float
-    Activation energies for Vcmax, Jmax, and Rd respectively.
-
-Deactivation energies (J/mol):
-- vcmaxhd, jmaxhd, rdhd : float
-    Deactivation energies for Vcmax, Jmax, and Rd respectively.
-
-Entropy terms (J/mol/K):
-- vcmaxse, jmaxse, rdse : float
-    Entropy terms for Vcmax, Jmax, and Rd respectively.
-
-Scaling factors for high temperature inhibition (1.0 at 25°C):
-- vcmaxc, jmaxc, rdc : float
-    Scaling factors for Vcmax, Jmax, and Rd respectively.
-
-Electron transport:
-- phi_psii : float
-    Quantum yield of photosystem II (mol/mol).
-- theta_j : float
-    Empirical curvature parameter for electron transport rate (-).
-
-C4-specific:
-- kp25_c4 : float
-    Initial slope of CO2 response curve at 25°C (mol/m2/s).
+    # 
+    # Photosynthetic pathway and co-limitation:
+    # - c3psn : int
+    #     Photosynthetic pathway: 1 = C3, 0 = C4 plant.
+    # 
+    # Rates at 25°C:
+    # - vcmax25 : float
+    #     Maximum carboxylation rate at 25°C (umol/m2/s).
+    # - jmax25 : float
+    #     Maximum electron transport rate at 25°C (umol/m2/s).
+    # - rd25 : float
+    #     Leaf respiration rate at 25°C (umol CO2/m2/s).
+    # 
+    # Michaelis-Menten constants at 25°C:
+    # - kc25 : float
+    #     Michaelis-Menten constant for CO2 at 25°C (umol/mol).
+    # - ko25 : float
+    #     Michaelis-Menten constant for O2 at 25°C (mmol/mol).
+    # - cp25 : float
+    #     CO2 compensation point at 25°C (umol/mol).
+    # 
+    # Activation energies (J/mol):
+    # - kcha, koha, cpha : float
+    #     Activation energies for Kc, Ko, and Γ* respectively.
+    # - vcmaxha, jmaxha, rdha : float
+    #     Activation energies for Vcmax, Jmax, and Rd respectively.
+    # 
+    # Deactivation energies (J/mol):
+    # - vcmaxhd, jmaxhd, rdhd : float
+    #     Deactivation energies for Vcmax, Jmax, and Rd respectively.
+    # 
+    # Entropy terms (J/mol/K):
+    # - vcmaxse, jmaxse, rdse : float
+    #     Entropy terms for Vcmax, Jmax, and Rd respectively.
+    # 
+    # Scaling factors for high temperature inhibition (1.0 at 25°C):
+    # - vcmaxc, jmaxc, rdc : float
+    #     Scaling factors for Vcmax, Jmax, and Rd respectively.
+    # 
+    # Electron transport:
+    # - phi_psii : float
+    #     Quantum yield of photosystem II (mol/mol).
+    # - theta_j : float
+    #     Empirical curvature parameter for electron transport rate (-).
+    # 
+    # C4-specific:
+    # - kp25_c4 : float
+    #     Initial slope of CO2 response curve at 25°C (mol/m2/s).
     flux:Flux, # Flux variables with the following inputs:
-- gbv : float
-    Leaf boundary layer conductance for H2O (mol H2O/m2 leaf/s).
-- gbc : float
-    Leaf boundary layer conductance for CO2 (mol CO2/m2 leaf/s).
-- apar : float
-    Leaf absorbed PAR (umol photon/m2 leaf/s).
-- tleaf : float
-    Leaf temperature (K).
-- gs : float
-    Leaf stomatal conductance (mol H2O/m2 leaf/s).
+    # - gbv : float
+    #     Leaf boundary layer conductance for H2O (mol H2O/m2 leaf/s).
+    # - gbc : float
+    #     Leaf boundary layer conductance for CO2 (mol CO2/m2 leaf/s).
+    # - apar : float
+    #     Leaf absorbed PAR (umol photon/m2 leaf/s).
+    # - tleaf : float
+    #     Leaf temperature (K).
+    # - gs : float
+    #     Leaf stomatal conductance (mol H2O/m2 leaf/s).
 )->Flux: # Updated flux object with the following attributes:
 
 Temperature-adjusted parameters:
@@ -184,8 +183,6 @@ Leaf surface gas exchange:
     Leaf fractional humidity at surface (-).
 - vpd : float
     Leaf vapor pressure deficit at surface (Pa).
-
-
 ```
 
 *Calculate leaf photosynthesis for a specified stomatal conductance.*
@@ -195,8 +192,7 @@ Temperature-adjust photosynthetic parameters using the Arrhenius function
 
 Calculate the electron transport rate (Equation 11.21), then compute
 gross and net photosynthesis and intercellular CO2 via
-`[`leaf_ci_optimization`](https://ecamo19.github.io/plant_hydraulics/leaf_ci_optimization.html#leaf_ci_optimization)`. This routine is used with the water-use
-efficiency (WUE) stomatal optimization.
+`[`leaf_ci_optimization`](https://ecamo19.github.io/plant_hydraulics/leaf_ci_optimization.html#leaf_ci_optimization)`. 
 
 For C3 plants, temperature adjustment uses the Arrhenius function
 (Equation 11.34) for Kc, Ko, and Γ*, and the peaked Arrhenius

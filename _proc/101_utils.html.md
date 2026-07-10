@@ -14,12 +14,9 @@ title: Package utilities
 ### get_elevation
 
 ```python
-
 def get_elevation(
     lat:float, lon:float
 )->float:
-
-
 ```
 
 *Query Open-Elevation API for elevation in meters.*
@@ -33,12 +30,7 @@ Used in Penman-Montieh ETP_h calculation
 ### list_example_data
 
 ```python
-
-def list_example_data(
-    
-):
-
-
+def list_example_data():
 ```
 
 *List all available example data files in the package data folder.*
@@ -51,12 +43,9 @@ def list_example_data(
 ### load_example_data
 
 ```python
-
 def load_example_data(
     filename, sep:str=','
 ):
-
-
 ```
 
 *Call self as a function.*
@@ -69,12 +58,9 @@ def load_example_data(
 ### satvap
 
 ```python
-
 def satvap(
     tc:float, # Temperature (degC)
 )->tuple: # esat: Saturation vapor pressure (Pa), desat: d(esat)/dT (Pa/K).
-
-
 ```
 
 *Compute saturation vapor pressure (esat) and the rate of change in*
@@ -149,13 +135,10 @@ plt.show()
 ### latvap
 
 ```python
-
 def latvap(
     tc:float, # Temperature (degC).
     mmh2o:float, # Molecular mass of water (kg/mol).
 )->float: # Latent heat of vaporization (J/mol).
-
-
 ```
 
 *Latent heat of vaporization (J/mol) at temperature tc (degC).*
@@ -177,25 +160,22 @@ __Returns:__
 ### calc_radiative_forcing_qa
 
 ```python
-
 def calc_radiative_forcing_qa(
     solar_down, # Total downward solar radiation incident on the leaf (W/m2).
-Split equally between visible and near-infrared wavebands.
+    # Split equally between visible and near-infrared wavebands.
     leaf, # Leaf object with the following attributes:
-- rho : list[float]
-    Leaf reflectance for visible and near-infrared wavebands (-).
-- tau : list[float]
-    Leaf transmittance for visible and near-infrared wavebands (-).
-- emiss : float
-    Leaf emissivity (-).
+    # - rho : list[float]
+    #     Leaf reflectance for visible and near-infrared wavebands (-).
+    # - tau : list[float]
+    #     Leaf transmittance for visible and near-infrared wavebands (-).
+    # - emiss : float
+    #     Leaf emissivity (-).
     ground_albedo, # Ground surface albedo for visible and near-infrared wavebands (-).
     ground_lw, # Upward longwave radiation emitted by the ground surface (W/m2).
     irsky, # Downward atmospheric longwave radiation (W/m2).
 ): # Leaf radiative forcing (W/m2 leaf). Sum of absorbed solar radiation
 across both wavebands and absorbed longwave radiation from sky and
 ground.
-
-
 ```
 
 *Calculate leaf radiative forcing Qa (Equation 10.3).*
@@ -246,13 +226,10 @@ __Returns:__
 ### arrhenius_function
 
 ```python
-
 def arrhenius_function(
     tl, # Leaf Temperature (K)
     ha, # Activation Energy (J mol–1)
 ): # Scaling factor that equals 1.0 at 25°C, greater than 1.0 above 25°C, and less than 1.0 below 25°C.
-
-
 ```
 
 *Temperature response function used in [`leaf_photosynthesis()`](https://ecamo19.github.io/plant_hydraulics/leaf_phosynthesis.html#leaf_photosynthesis)*
@@ -307,15 +284,12 @@ for each_temperature in [10, 20, 30, 40]:
 ### inhibition_function
 
 ```python
-
 def inhibition_function(
     tl, # Leaf Temperature (K)
     hd, # Deactivation Energy (J mol–1)
     se, # Entropy term (MISSING UNITS)
     fc, # Overheat Protection (MISSING UNITS)
 ):
-
-
 ```
 
 *High-temperature inhibition function used in `leaf_photosysthesis()`.*
@@ -350,13 +324,10 @@ __Parameters:__
 ### brent_root
 
 ```python
-
 def brent_root(
     func, # Function with signature func(physcon, atmos, leaf, flux, x) -> (flux, fx)
     physcon:PhysCon, atmos:Atmos, leaf:Leaf, flux:Flux, xa:float, xb:float, tol:float, # Tolerance for the root.
 )->tuple: # Updated flux structure.
-
-
 ```
 
 *Brent's root finder*
@@ -424,12 +395,9 @@ Input: bracket [a, b] where f(a) and f(b) have opposite signs
 ### time_to_float
 
 ```python
-
 def time_to_float(
     time_str
 ):
-
-
 ```
 
 *Call self as a function.*
@@ -442,14 +410,11 @@ def time_to_float(
 ### diurnal_par
 
 ```python
-
 def diurnal_par(
     hour, # Hour of day (0-24). E.g., 6.5 = 6:30 AM.
     par_max:float=800.0, # Peak shortwave radiation at solar noon (W/m2).
     sunrise:float=6.0, sunset:float=20.0
 ):
-
-
 ```
 
 *Shortwave radiation following a sinusoidal daytime curve.*
@@ -526,12 +491,9 @@ plt.show()
 ### diurnal_temperature
 
 ```python
-
 def diurnal_temperature(
     hour, t_mean:float=25.0, t_amp:float=7.0, t_min_hour:float=5.5
 ):
-
-
 ```
 
 *Air temperature following a sinusoidal curve with minimum at dawn.*
@@ -617,12 +579,9 @@ plt.show()
 ### diurnal_relhum
 
 ```python
-
 def diurnal_relhum(
     hour, rh_mean:float=65.0, rh_amp:float=20.0
 ):
-
-
 ```
 
 *Relative humidity, anti-correlated with temperature.*
@@ -705,18 +664,15 @@ plt.show()
 ### compute_theta_at_psi_VG
 
 ```python
-
 def compute_theta_at_psi_VG(
     PsiTarget:ArrayLike, # Target soil water potential in **MPa** (positive = suction).
-For example, 1.5 MPa corresponds to the conventional wilting
-point.
+    # For example, 1.5 MPa corresponds to the conventional wilting
+    # point.
     thetaRes:ArrayLike, # Residual volumetric water content θ_r (m³/m³).
     thetaSat:ArrayLike, # Saturated volumetric water content θ_s (m³/m³).
     alpha_vg:ArrayLike, # Van Genuchten α parameter (cm⁻¹).
     n_vg:ArrayLike, # Van Genuchten n parameter (dimensionless).
 )->ndarray: # Volumetric water content θ at the target potential (m³/m³).
-
-
 ```
 
 *Compute volumetric water content at a given soil water potential*
@@ -754,15 +710,12 @@ where:
 ### compute_theta_at_psi_Campbell
 
 ```python
-
 def compute_theta_at_psi_Campbell(
     PsiTarget:ArrayLike, # Target soil water potential (MPa, **negative** = suction).
     thetaSat:ArrayLike, # Saturated volumetric water content θ_s (m³/m³).
     psie:ArrayLike, # Air-entry potential ψ_e (MPa, **negative**).
     b:ArrayLike, # Campbell shape parameter (positive, dimensionless).
 )->ndarray: # Volumetric water content θ at the target potential (m³/m³).
-
-
 ```
 
 *Compute volumetric water content at a given soil water potential*
@@ -797,12 +750,9 @@ convention (both *ψ_target* and *ψ_e* are negative / suction).
 ### flux_leaf_to_stand
 
 ```python
-
 def flux_leaf_to_stand(
     x, dt, LAI:float=1.0
 ):
-
-
 ```
 
 *mmol/m²leaf/s  →  mm/m²soil over dt hours.*
@@ -815,12 +765,9 @@ def flux_leaf_to_stand(
 ### flux_mm_to_mmol_m2leaf_s
 
 ```python
-
 def flux_mm_to_mmol_m2leaf_s(
     x, dt, LAI
 ):
-
-
 ```
 
 *mm/m²soil over dt hours → mmol/m²leaf/s.*
@@ -833,12 +780,9 @@ def flux_mm_to_mmol_m2leaf_s(
 ### convert_FtoV
 
 ```python
-
 def convert_FtoV(
     x, RFC, layer_thickness
 ):
-
-
 ```
 
 *Volumetric water content (m³/m³) → water height (mm).*
@@ -853,12 +797,9 @@ def convert_FtoV(
 ### compute_VPD
 
 ```python
-
 def compute_VPD(
     RH, T
 ):
-
-
 ```
 
 *Compute VPD [kPa] from relative humidity [%] and temperature [°C].*
@@ -871,12 +812,9 @@ def compute_VPD(
 ### compute_slope_sat
 
 ```python
-
 def compute_slope_sat(
     T
 ):
-
-
 ```
 
 *Slope of saturation vapour pressure curve [kPa/°C].*
@@ -889,12 +827,9 @@ def compute_slope_sat(
 ### compute_ETP_PT
 
 ```python
-
 def compute_ETP_PT(
     T_mean, net_radiation, PT_coeff, G:float=0.0
 ):
-
-
 ```
 
 *Priestley-Taylor PET [mm].*
@@ -907,12 +842,9 @@ def compute_ETP_PT(
 ### compute_ETP_PM
 
 ```python
-
 def compute_ETP_PM(
     T_mean, net_radiation, u, vpd, G:float=0.0
 ):
-
-
 ```
 
 *Penman-Monteith PET [mm].*
@@ -927,12 +859,9 @@ def compute_ETP_PM(
 ### Rg_MJ_to_Watt
 
 ```python
-
 def Rg_MJ_to_Watt(
     Rg_MJ, N_hours
 ):
-
-
 ```
 
 *MJ → W/m² given N_hours.*
@@ -945,12 +874,9 @@ def Rg_MJ_to_Watt(
 ### Rg_Watt_to_PPFD
 
 ```python
-
 def Rg_Watt_to_PPFD(
     Rg_W, J_to_mol:float=4.6, frac_PAR:float=0.5
 ):
-
-
 ```
 
 *W/m² → µmol/m²/s PPFD.*
@@ -963,12 +889,9 @@ def Rg_Watt_to_PPFD(
 ### declination
 
 ```python
-
 def declination(
     DOY
 ):
-
-
 ```
 
 *Solar declination [rad].*
@@ -981,12 +904,9 @@ def declination(
 ### potential_PAR
 
 ```python
-
 def potential_PAR(
     time_of_day, lat, DOY
 ):
-
-
 ```
 
 *Potential PAR [W/m²] at given hours, latitude, and DOY.*
@@ -999,12 +919,9 @@ def potential_PAR(
 ### daylength
 
 ```python
-
 def daylength(
     latitude, JDay
 ):
-
-
 ```
 
 *Compute sunrise [h], sunset [h], daylength [h].*
@@ -1017,12 +934,9 @@ def daylength(
 ### radiation_diurnal_pattern
 
 ```python
-
 def radiation_diurnal_pattern(
     time_sec, daylength_sec
 ):
-
-
 ```
 
 *Fractional radiation at time_sec from sunrise, given daylength in seconds.*
@@ -1035,12 +949,9 @@ def radiation_diurnal_pattern(
 ### temperature_diurnal
 
 ```python
-
 def temperature_diurnal(
     time_sec, tmin, tmax, tmin_prev, tmax_prev, tmin_next, daylength_sec
 ):
-
-
 ```
 
 *Sinusoidal temperature disaggregation (McMurtrie et al. 1990).*
@@ -1053,12 +964,9 @@ def temperature_diurnal(
 ### rh_diurnal
 
 ```python
-
 def rh_diurnal(
     temperature, tmin, tmax, rh_min, rh_max
 ):
-
-
 ```
 
 *Linear RH disaggregation.*

@@ -14,12 +14,9 @@ title: Root params
 ### root_params
 
 ```python
-
 def root_params(
     rootvar:type=RootVar
 )->RootVar:
-
-
 ```
 
 *Set fine root parameters.*

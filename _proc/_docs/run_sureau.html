@@ -392,22 +392,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/run_sureau.py#L131" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="run_sureau" class="level3">
 <h3 class="anchored" data-anchor-id="run_sureau">run_sureau</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_sureau(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    climate_df:DataFrame, <span class="co"># Daily climate forcing. Required columns: Year, Doy, DATE,</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>Tair_mean, Tair_max, Tair_min, RHair_mean, RHair_max,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>RHair_min, PPT_sum, RG_sum, WS_mean.</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    veg_params:SurEauVegetationParams, <span class="co"># Species-specific vegetation parameters. Derived parameters</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>are computed internally.</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    soil_params:SurEauSoilParams, <span class="co"># Soil parameters. Derived parameters are computed internally.</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    opts:SurEauModelOptions, <span class="co"># Simulation control options (years, numerical scheme,</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>adaptive stepping, output resolution).</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    deep_water:<span class="bu">bool</span><span class="op">=</span><span class="va">False</span>, <span class="co"># If True, keep deepest soil layer at field capacity.</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>Default <span class="va">False</span>.</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>DataFrame: <span class="co"># Simulation results at hourly resolution. One row per</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>timestep, <span class="cf">with</span> columns <span class="cf">for</span> <span class="bu">all</span> state variables, fluxes,</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">and</span> diagnostics.</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_sureau(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    climate_df:DataFrame, <span class="co"># Daily climate forcing. Required columns: Year, Doy, DATE,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Tair_mean, Tair_max, Tair_min, RHair_mean, RHair_max,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># RHair_min, PPT_sum, RG_sum, WS_mean.</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    veg_params:SurEauVegetationParams, <span class="co"># Species-specific vegetation parameters. Derived parameters</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># are computed internally.</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    soil_params:SurEauSoilParams, <span class="co"># Soil parameters. Derived parameters are computed internally.</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    opts:SurEauModelOptions, <span class="co"># Simulation control options (years, numerical scheme,</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># adaptive stepping, output resolution).</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    deep_water:<span class="bu">bool</span><span class="op">=</span><span class="va">False</span>, <span class="co"># If True, keep deepest soil layer at field capacity.</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Default False.</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>DataFrame: <span class="co"># Simulation results at hourly resolution. One row per</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>timestep, <span class="cf">with</span> columns <span class="cf">for</span> <span class="bu">all</span> state variables, fluxes,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="kw">and</span> diagnostics.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Run the SurEau-Ecos plant hydraulics simulation.</em></p>
 <p>This is the <strong>top-level simulation driver</strong> that orchestrates the entire SurEau-Ecos model (Ruffault et al.&nbsp;2022). It loops over years, days, and hours, calling every component function in the correct order to simulate the soil-plant-atmosphere water continuum, predict drought-induced hydraulic failure, and compute fuel moisture content for wildfire risk assessment.</p>
 <p>The simulation has three nested time scales:</p>
@@ -428,8 +426,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>RG_sum: Daily global radiation (MJ/m²/day or W/m², depending on <code>opts</code>).</li>
 <li>WS_mean: Daily mean wind speed (m/s).</li>
 </ul></li>
-<li><p>veg_params: SurEauVegetationParams object. Species-specific parameters including: LAI_max, LMA, LDMC (leaf traits); P50_VC_leaf/stem, slope_VC_leaf/stem (vulnerability curves); P12_gs, P88_gs (stomatal regulation); gmin20, TPhase_gmin, Q10_1/2_gmin (cuticular conductance); beta_root_profile or root_Z50/Z95 (root distribution); and many others. Derived parameters (root distribution, conductance partitioning, etc.) are computed internally by <a href="https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_params.html#sureau_vegetation_params"><code>sureau_vegetation_params</code></a>.</p></li>
-<li><p>soil_params: SurEauSoilParams object. Soil parameters including: depth (cumulative layer depths), texture parameters (alpha, n for van Genuchten), theta_sat, theta_res (porosity, residual water), RFC (rock fragment content), and initial water content. Derived parameters (layer thickness, field capacity, etc.) are computed internally by <a href="https://ecamo19.github.io/plant_hydraulics/sureau_soil_params.html#sureau_soil_params"><code>sureau_soil_params</code></a>.</p></li>
+<li><p>veg_params: SurEauVegetationParams object. Species-specific parameters including: LAI_max, LMA, LDMC (leaf traits); P50_VC_leaf/stem, slope_VC_leaf/stem (vulnerability curves); P12_gs, P88_gs (stomatal regulation); gmin20, TPhase_gmin, Q10_1/2_gmin (cuticular conductance); beta_root_profile or root_Z50/Z95 (root distribution); and many others. Derived parameters (root distribution, conductance partitioning, etc.) are computed internally by <code>sureau_vegetation_params</code>.</p></li>
+<li><p>soil_params: SurEauSoilParams object. Soil parameters including: depth (cumulative layer depths), texture parameters (alpha, n for van Genuchten), theta_sat, theta_res (porosity, residual water), RFC (rock fragment content), and initial water content. Derived parameters (layer thickness, field capacity, etc.) are computed internally by <code>sureau_soil_params</code>.</p></li>
 <li><p>opts: SurEauModelOptions object controlling the simulation:</p>
 <ul>
 <li>year_start, year_end: Simulation period.</li>

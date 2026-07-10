@@ -394,73 +394,69 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_params.py#L12" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="compute_soil_root_geometry" class="level3">
 <h3 class="anchored" data-anchor-id="compute_soil_root_geometry">compute_soil_root_geometry</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_soil_root_geometry(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    soil:SurEauSoilParams, veg:SurEauVegetationParams</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauSoilParams:</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_soil_root_geometry(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    soil:SurEauSoilParams, veg:SurEauVegetationParams</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauSoilParams:</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Compute soil parameters depending on plant parameters (Gardner-Cowan geometry).</em> Old function name init_par_soil</p>
 <hr>
 <p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_soil_params.py#L25" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureau_soil_params" class="level3">
 <h3 class="anchored" data-anchor-id="sureau_soil_params">sureau_soil_params</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sureau_soil_params(</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    soil:SurEauSoilParams, <span class="co"># SurEau soil parameters object with the following input attributes:</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> depth : np.ndarray</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    Cumulative depth of each soil layer bottom (m).</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> RFC : np.ndarray</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    Rock fragment content <span class="cf">for</span> each layer (<span class="op">%</span>).</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> g_soil0 : <span class="bu">float</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    Maximum soil surface conductance to water vapor (mmol<span class="op">/</span>m2<span class="op">/</span>s).</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> offset_psoil : np.ndarray</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    Offset applied to soil water potential <span class="cf">for</span> each layer (MPa).</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> psoil_at_field_capacity : <span class="bu">float</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    Soil water potential at field capacity (MPa).</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> reset_SWC : <span class="bu">bool</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    Whether to reset soil water content to field capacity each year.</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> water_soil_transfer : <span class="bu">bool</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    Whether inter<span class="op">-</span>layer water transfer <span class="kw">is</span> enabled.</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> soil_evap : <span class="bu">bool</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    Whether soil surface evaporation <span class="kw">is</span> enabled.</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> PTF : <span class="bu">str</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    Pedotransfer function to use: <span class="st">"VG"</span> (van Genuchten) <span class="kw">or</span> <span class="st">"Campbell"</span>.</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> Ksat : np.ndarray</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    Saturated hydraulic conductivity <span class="cf">for</span> each layer (mm<span class="op">/</span>h).</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> saturation_capacity : np.ndarray</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    Volumetric water content at saturation <span class="cf">for</span> each layer (m3<span class="op">/</span>m3).</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> residual_capacity : np.ndarray</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    Residual volumetric water content <span class="cf">for</span> each layer (m3<span class="op">/</span>m3).</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> alpha_vg : np.ndarray</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    Van Genuchten alpha parameter <span class="cf">for</span> each layer (cm<span class="op">-</span><span class="dv">1</span>).</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> n_vg : np.ndarray</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    Van Genuchten n shape parameter <span class="cf">for</span> each layer (<span class="op">-</span>).</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> I_vg : np.ndarray</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    Van Genuchten tortuosity parameter <span class="cf">for</span> each layer (<span class="op">-</span>).</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> b_camp : np.ndarray</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    Campbell b shape parameter <span class="cf">for</span> each layer (<span class="op">-</span>).</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> psie_camp : np.ndarray</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    Campbell air<span class="op">-</span>entry potential <span class="cf">for</span> each layer (MPa).</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauSoilParams: <span class="co"># Updated SurEau soil parameters object with the following derived attributes:</span></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> n_layers : <span class="bu">int</span></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    Number of soil layers (<span class="op">-</span>).</span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> layer_thickness : np.ndarray</span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    Thickness of each soil layer (m).</span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> m : np.ndarray</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    Van Genuchten m parameter, computed <span class="im">as</span> <span class="dv">1</span> <span class="op">-</span> <span class="dv">1</span><span class="op">/</span>n_vg (<span class="op">-</span>).</span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> V_field_capacity : np.ndarray</span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    Water height at field capacity <span class="cf">for</span> each layer (mm).</span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> V_saturation_capacity : np.ndarray</span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    Water height at saturation <span class="cf">for</span> each layer (mm).</span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> V_residual_capacity : np.ndarray</span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    Water height at residual content <span class="cf">for</span> each layer (mm).</span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> V_wilting_point : np.ndarray</span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    Water height at wilting point (<span class="op">-</span><span class="fl">1.5</span> MPa) <span class="cf">for</span> each layer (mm).</span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> B_GC : np.ndarray</span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    Gardner<span class="op">-</span>Cowan geometry factor <span class="cf">for</span> each layer (<span class="op">-</span>).</span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    Set to <span class="fl">0.5</span> placeholder <span class="cf">if</span> <span class="kw">not</span> previously computed <span class="im">from</span> root geometry.</span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sureau_soil_params(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    soil:SurEauSoilParams, <span class="co"># SurEau soil parameters object with the following input attributes:</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - depth : np.ndarray</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Cumulative depth of each soil layer bottom (m).</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - RFC : np.ndarray</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Rock fragment content for each layer (%).</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - g_soil0 : float</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Maximum soil surface conductance to water vapor (mmol/m2/s).</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - offset_psoil : np.ndarray</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Offset applied to soil water potential for each layer (MPa).</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - psoil_at_field_capacity : float</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Soil water potential at field capacity (MPa).</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - reset_SWC : bool</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Whether to reset soil water content to field capacity each year.</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - water_soil_transfer : bool</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Whether inter-layer water transfer is enabled.</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - soil_evap : bool</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Whether soil surface evaporation is enabled.</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - PTF : str</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Pedotransfer function to use: "VG" (van Genuchten) or "Campbell".</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - Ksat : np.ndarray</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Saturated hydraulic conductivity for each layer (mm/h).</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - saturation_capacity : np.ndarray</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Volumetric water content at saturation for each layer (m3/m3).</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - residual_capacity : np.ndarray</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Residual volumetric water content for each layer (m3/m3).</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - alpha_vg : np.ndarray</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Van Genuchten alpha parameter for each layer (cm-1).</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - n_vg : np.ndarray</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Van Genuchten n shape parameter for each layer (-).</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - I_vg : np.ndarray</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Van Genuchten tortuosity parameter for each layer (-).</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - b_camp : np.ndarray</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Campbell b shape parameter for each layer (-).</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - psie_camp : np.ndarray</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Campbell air-entry potential for each layer (MPa).</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>SurEauSoilParams: <span class="co"># Updated SurEau soil parameters object with the following derived attributes:</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> n_layers : <span class="bu">int</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    Number of soil layers (<span class="op">-</span>).</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> layer_thickness : np.ndarray</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    Thickness of each soil layer (m).</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> m : np.ndarray</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    Van Genuchten m parameter, computed <span class="im">as</span> <span class="dv">1</span> <span class="op">-</span> <span class="dv">1</span><span class="op">/</span>n_vg (<span class="op">-</span>).</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> V_field_capacity : np.ndarray</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    Water height at field capacity <span class="cf">for</span> each layer (mm).</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> V_saturation_capacity : np.ndarray</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    Water height at saturation <span class="cf">for</span> each layer (mm).</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> V_residual_capacity : np.ndarray</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    Water height at residual content <span class="cf">for</span> each layer (mm).</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> V_wilting_point : np.ndarray</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    Water height at wilting point (<span class="op">-</span><span class="fl">1.5</span> MPa) <span class="cf">for</span> each layer (mm).</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> B_GC : np.ndarray</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>    Gardner<span class="op">-</span>Cowan geometry factor <span class="cf">for</span> each layer (<span class="op">-</span>).</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    Set to <span class="fl">0.5</span> placeholder <span class="cf">if</span> <span class="kw">not</span> previously computed <span class="im">from</span> root geometry.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Compute derived soil hydraulic quantities from raw SurEau soil parameters.</em></p>
 <p>Broadcasts scalar inputs to per-layer arrays, computes layer thicknesses, van Genuchten or Campbell derived parameters, and converts volumetric water contents to water heights (mm) for field capacity and wilting point.</p>
 <p><strong>Parameters:</strong></p>

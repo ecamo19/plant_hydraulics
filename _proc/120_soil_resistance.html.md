@@ -68,50 +68,49 @@ Input: Soil layers (θ, ψ, K, b, Δz), root parameters, LAI
 ### soil_resistance
 
 ```python
-
 def soil_resistance(
     physcon:PhysCon, # Physical constants:
-- grav : float
-    Gravitational acceleration (m/s2).
-- denh2o : float
-    Density of liquid water (kg/m3).
-- mmh2o : float
-    Molecular mass of water (kg/mol).
+    # - grav : float
+    #     Gravitational acceleration (m/s2).
+    # - denh2o : float
+    #     Density of liquid water (kg/m3).
+    # - mmh2o : float
+    #     Molecular mass of water (kg/mol).
     leaf:Leaf, # Leaf parameters:
-- minl_wp : float
-    Minimum leaf water potential (MPa).
+    # - minl_wp : float
+    #     Minimum leaf water potential (MPa).
     rootvar:RootVar, # Fine root parameters:
-- biomass : float
-    Fine root biomass (g biomass/m2).
-- radius : float
-    Fine root radius (m).
-- density : float
-    Fine root density (g biomass/m3 root).
-- resist : float
-    Hydraulic resistivity of root tissue
-    (MPa · s · g/mmol H2O).
+    # - biomass : float
+    #     Fine root biomass (g biomass/m2).
+    # - radius : float
+    #     Fine root radius (m).
+    # - density : float
+    #     Fine root density (g biomass/m3 root).
+    # - resist : float
+    #     Hydraulic resistivity of root tissue
+    #     (MPa · s · g/mmol H2O).
     soil:Soil, # Soil profile variables:
-- nlevsoi : int
-    Number of soil layers.
-- h2osoi_vol : list of float
-    Volumetric water content for each layer (m3/m3).
-- psi : list of float
-    Matric potential for each layer (mm).
-- watsat : list of float
-    Volumetric water content at saturation (porosity)
-    for each layer (m3/m3).
-- hksat : list of float
-    Hydraulic conductivity at saturation for each layer
-    (mm H2O/s).
-- bsw : list of float
-    Clapp and Hornberger "b" parameter for each layer (-).
-- rootfr : list of float
-    Fraction of roots in each layer (-).
-- dz : list of float
-    Thickness of each layer (m).
+    # - nlevsoi : int
+    #     Number of soil layers.
+    # - h2osoi_vol : list of float
+    #     Volumetric water content for each layer (m3/m3).
+    # - psi : list of float
+    #     Matric potential for each layer (mm).
+    # - watsat : list of float
+    #     Volumetric water content at saturation (porosity)
+    #     for each layer (m3/m3).
+    # - hksat : list of float
+    #     Hydraulic conductivity at saturation for each layer
+    #     (mm H2O/s).
+    # - bsw : list of float
+    #     Clapp and Hornberger "b" parameter for each layer (-).
+    # - rootfr : list of float
+    #     Fraction of roots in each layer (-).
+    # - dz : list of float
+    #     Thickness of each layer (m).
     flux:Flux, # Flux variables:
-- lai : float
-    Canopy leaf area index (m2/m2).
+    # - lai : float
+    #     Canopy leaf area index (m2/m2).
 )->Flux: # Updated flux object with the following attributes:
 - rsoil : float
     Soil hydraulic resistance (MPa · s · m2/mmol H2O).
@@ -119,8 +118,6 @@ def soil_resistance(
     Weighted soil water potential (MPa).
 - et_loss : list of float
     Fraction of total transpiration from each soil layer (-).
-
-
 ```
 
 *Calculate soil hydraulic resistance, weighted soil water potential,*

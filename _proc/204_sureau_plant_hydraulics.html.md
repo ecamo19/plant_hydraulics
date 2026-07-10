@@ -16,14 +16,11 @@ title: SurEau plant hydraulics
 ### compute_Rs
 
 ```python
-
 def compute_Rs(
     pi_FT, # Osmotic potential at full turgor π₀ (MPa). Negative value,
     epsilon, # Bulk modulus of elasticity ε of the symplasm (MPa). 
     psi, # Current water potential ψ of the symplasm (MPa). 
 ): # Relative symplasmic water deficit (dimensionless, 0 to 1).
-
-
 ```
 
 *Compute the relative symplasmic water deficit Rs = 1 − RWC.*
@@ -158,14 +155,11 @@ __Returns:__
 ### compute_turgor
 
 ```python
-
 def compute_turgor(
     pi_FT, # Osmotic potential at full turgor π₀ (MPa).  
     epsilon, # Bulk modulus of elasticity ε of the symplasm (MPa).  
     Rs, # Relative symplasmic water deficit (dimensionless, 0 to 1). 
 ): # Turgor pressure (MPa). 
-
-
 ```
 
 *Compute turgor pressure from the elastic component of the*
@@ -218,7 +212,7 @@ __Parameters:__
 
 - Rs: Relative symplasmic water deficit (dimensionless, 0 to 1).
     Rs = 0 means fully hydrated (RWC = 1); Rs = 1 means completely
-    desiccated (RWC = 0). Obtained from [`compute_Rs()`](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_rs).
+    desiccated (RWC = 0). Obtained from `compute_Rs()`.
 
 __Returns:__
 
@@ -235,12 +229,9 @@ __Returns:__
 ### compute_TLP
 
 ```python
-
 def compute_TLP(
     pi_FT, epsilon
 ):
-
-
 ```
 
 *Turgor loss point [MPa].*
@@ -253,12 +244,9 @@ def compute_TLP(
 ### compute_turgor_from_psi
 
 ```python
-
 def compute_turgor_from_psi(
     pi_FT, epsilon, psi
 ):
-
-
 ```
 
 *Turgor directly from water potential.*
@@ -273,14 +261,11 @@ def compute_turgor_from_psi(
 ### compute_PLC
 
 ```python
-
 def compute_PLC(
     psi, # Water potential of the apoplasm ψ (MPa). 
     slope, # Slope of the linear rate of embolism spread at the inflection point P50. 
     P50, # Water potential causing 50 % loss of hydraulic conductance (MPa). 
 ):
-
-
 ```
 
 *Compute the percent loss of hydraulic conductivity from a sigmoidal*
@@ -360,13 +345,10 @@ __Numerical example (Quercus petraea: P50 = −3.4, slope = 60):__
 ### compute_PLC_prime
 
 ```python
-
 def compute_PLC_prime(
     PLC, # Current percent loss of conductivity (%, 0 to 100). 
     slope, # Slope of the linear rate of embolism spread at the inflection point P50  
 ): # Derivative dPLC/dψ (% MPa⁻¹). Always negative or zero.
-
-
 ```
 
 *Compute the derivative of the percent loss of conductivity with*
@@ -421,7 +403,7 @@ Tree Physiology, 18, 589–593, 1998.
 __Parameters:__
 
 - PLC: Current percent loss of conductivity (%, 0 to 100). Obtained
-    from [`compute_PLC()`](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_plc). Corresponds to ``PLC_leaf`` or
+    from `compute_PLC()`. Corresponds to ``PLC_leaf`` or
     ``PLC_stem`` in SurEauPlantState.
 
 - slope: Slope of the linear rate of embolism spread at the
@@ -471,12 +453,9 @@ __Numerical example (slope = 60):__
 ### kseries
 
 ```python
-
 def kseries(
     k1, k2
 ):
-
-
 ```
 
 *Two conductances in series: 1/(1/k1 + 1/k2) = k1*k2/(k1+k2).*
@@ -489,12 +468,9 @@ def kseries(
 ### distribute_conductances
 
 ```python
-
 def distribute_conductances(
     k_plant_init:float, ri:ndarray, sym_frac_leaf:float=0.4
 )->tuple:
-
-
 ```
 
 *Distribute whole-plant K among root, stem-leaf, and leaf symplasm.*
@@ -507,12 +483,9 @@ def distribute_conductances(
 ### compute_g_crown
 
 ```python
-
 def compute_g_crown(
     g_crown0:float, wind_speed:float
 )->float:
-
-
 ```
 
 *Crown aerodynamic conductance.*
@@ -527,13 +500,10 @@ def compute_g_crown(
 ### compute_root_profile_BRP
 
 ```python
-
 def compute_root_profile_BRP(
     z:ndarray, # Cumulative depth of the bottom of each soil layer (m).  
     beta:float, # Species-specific root distribution parameter (dimensionless, 0 < β < 1). 
 )->ndarray: # Root fraction in each soil layer (dimensionless). Same length as z. 
-
-
 ```
 
 *Compute per-layer root fractions using the Beta Root Profile model.*
@@ -640,14 +610,11 @@ __Numerical example (β = 0.97, depths = [0.2, 0.8, 2.0] m):__
 ### compute_root_profile_LDR
 
 ```python
-
 def compute_root_profile_LDR(
     z:ndarray, # Cumulative depth of the bottom of each soil layer (m).
     z50:float, # Depth above which 50 % of root density is found (m). 
     z95:float, # Depth above which 95 % of root density is found (m). 
 )->ndarray: # Root fraction in each soil layer (dimensionless). Same length as z. 
-
-
 ```
 
 *Compute per-layer root fractions using the Linear Dose-Response*
@@ -772,25 +739,22 @@ depths = [0.2, 0.8, 2.0] m):__
 ### compute_root_profile
 
 ```python
-
 def compute_root_profile(
     soil_params:SurEauSoilParams, # Soil parameters object with the following attributes:
-       # - depth : np.ndarray
-       #   Cumulative depth of the bottom of each soil layer (m).
+    #        # - depth : np.ndarray
+    #        #   Cumulative depth of the bottom of each soil layer (m).
     veg_params:SurEauVegetationParams, # Vegetation parameters object with the following attributes:
-        # - root_distribution_model : str
-        #   "BRP" for Beta Root Profile (Eq. 19) or "LDR"
-        # - beta_root_profile : float
-        #   β parameter for BRP (dimensionless, 0 < β < 1). Only used when model is "BRP".
-        # - root_Z50 : float or None
-        #   Depth above which 50 % of roots are found (m). Only used when model is "LDR".
-        # - root_Z95 : float or None
-        #   Depth above which 95 % of roots are found (m). Only used when model is "LDR".
-        # - root_depth_max : float or None
-        #   Maximum rooting depth (m). If None, defaults to the depth of the deepest soil layer.
+    #         # - root_distribution_model : str
+    #         #   "BRP" for Beta Root Profile (Eq. 19) or "LDR"
+    #         # - beta_root_profile : float
+    #         #   β parameter for BRP (dimensionless, 0 < β < 1). Only used when model is "BRP".
+    #         # - root_Z50 : float or None
+    #         #   Depth above which 50 % of roots are found (m). Only used when model is "LDR".
+    #         # - root_Z95 : float or None
+    #         #   Depth above which 95 % of roots are found (m). Only used when model is "LDR".
+    #         # - root_depth_max : float or None
+    #         #   Maximum rooting depth (m). If None, defaults to the depth of the deepest soil layer.
 )->ndarray: # Normalized root fraction in each soil layer (dimensionless).
-
-
 ```
 
 *Compute and normalize the vertical root distribution across soil*
@@ -926,25 +890,22 @@ root_depth_max = 0.8 m):__
 ### compute_root_length
 
 ```python
-
 def compute_root_length(
     soil_params:SurEauSoilParams, # Soil parameters object with the following attributes:
-# - layer_thickness : np.ndarray
-#    Thickness of each soil layer (m).    
-# - RFC : np.ndarray
-#    Rock fragment content of each soil layer (%). 
+    # # - layer_thickness : np.ndarray
+    # #    Thickness of each soil layer (m).    
+    # # - RFC : np.ndarray
+    # #    Rock fragment content of each soil layer (%). 
     veg_params:SurEauVegetationParams, # Vegetation parameters object with the following attributes:
-# - LAI_max : float
-#    Maximum leaf area index of the stand (m²_leaf / m²_soil).
-# - f_root_to_leaf : float
-#    Root-to-leaf area ratio RaLa (dimensionless). 
-# - root_distribution : np.ndarray
-#    Normalized root fraction in each soil layer (dimensionless, sums to 1.0). 
-# - root_radius : float
-#    Fine root radius r (m). E.g. 0.0002.
+    # # - LAI_max : float
+    # #    Maximum leaf area index of the stand (m²_leaf / m²_soil).
+    # # - f_root_to_leaf : float
+    # #    Root-to-leaf area ratio RaLa (dimensionless). 
+    # # - root_distribution : np.ndarray
+    # #    Normalized root fraction in each soil layer (dimensionless, sums to 1.0). 
+    # # - root_radius : float
+    # #    Fine root radius r (m). E.g. 0.0002.
 )->tuple: # Root length per unit soil area for each layer
-
-
 ```
 
 *Compute root length per soil area (La) and root length density per*
@@ -991,7 +952,7 @@ __Parameters:__
 
     - layer_thickness: Thickness of each soil layer (m). NumPy
         array, e.g. ``np.array([0.2, 0.6, 1.2])``. Computed by
-        [`sureau_soil_params()`](https://ecamo19.github.io/plant_hydraulics/sureau_soil_params.html#sureau_soil_params) from ``soil_params.depth``.
+        `sureau_soil_params()` from ``soil_params.depth``.
 
     - RFC: Rock fragment content of each soil layer (%). NumPy
         array, e.g. ``np.array([75.0, 75.0, 75.0])``. Reduces
@@ -1009,7 +970,7 @@ __Parameters:__
 
     - root_distribution: Normalized root fraction in each soil
         layer (dimensionless array summing to 1.0). Output of
-        [`compute_root_profile()`](https://ecamo19.github.io/plant_hydraulics/sureau_plant_hydraulics.html#compute_root_profile). Equivalent to r_j in Eq. 18.
+        `compute_root_profile()`. Equivalent to r_j in Eq. 18.
 
     - root_radius: Fine root radius r (m). E.g. 0.0002 (= 0.2
         mm). Equivalent to ``dR`` in Table 1.
@@ -1092,34 +1053,31 @@ root_radius = 0.0002 m, root_distribution = [0.4562, 0.4562,
 ### compute_regul_fact
 
 ```python
-
 def compute_regul_fact(
     psi, # Water potential of the leaf symplasm ψ_LSym (MPa). 
     params:SurEauVegetationParams, # Vegetation parameters object. Which attributes are read depends on the formulation:
-# - stomatal_reg_formulation : str
-#    ``"Sigmoid"`` (default), ``"PiecewiseLinear"``, or ``"Turgor"``.
-# Sigmoid:
-# - P50_gs : float
-#    Water potential at 50 % stomatal closure (MPa). Derived
-#    from ``(P12_gs + P88_gs) / 2``.
-# - slope_gs : float
-#    Slope of the stomatal sigmoid at P50_gs (% MPa⁻¹).
-#    Derived from ``100 / (P12_gs − P88_gs)``.
-# PiecewiseLinear:
-# - psi_start_closing : float
-#    ψ above which stomata are fully open (MPa).
-# - psi_close : float
-#    ψ below which stomata are fully closed (MPa).
-# Turgor:
-# - pi_full_turgor_leaf : float
-#    Osmotic potential at full turgor π₀ (MPa).
-# - epsilon_sym_leaf : float
-#    Bulk elastic modulus ε (MPa).
-# - turgor_pressure_at_gs_max : float
-#    Turgor at which stomata are fully open (MPa).
+    # # - stomatal_reg_formulation : str
+    # #    ``"Sigmoid"`` (default), ``"PiecewiseLinear"``, or ``"Turgor"``.
+    # # Sigmoid:
+    # # - P50_gs : float
+    # #    Water potential at 50 % stomatal closure (MPa). Derived
+    # #    from ``(P12_gs + P88_gs) / 2``.
+    # # - slope_gs : float
+    # #    Slope of the stomatal sigmoid at P50_gs (% MPa⁻¹).
+    # #    Derived from ``100 / (P12_gs − P88_gs)``.
+    # # PiecewiseLinear:
+    # # - psi_start_closing : float
+    # #    ψ above which stomata are fully open (MPa).
+    # # - psi_close : float
+    # #    ψ below which stomata are fully closed (MPa).
+    # # Turgor:
+    # # - pi_full_turgor_leaf : float
+    # #    Osmotic potential at full turgor π₀ (MPa).
+    # # - epsilon_sym_leaf : float
+    # #    Bulk elastic modulus ε (MPa).
+    # # - turgor_pressure_at_gs_max : float
+    # #    Turgor at which stomata are fully open (MPa).
 ): # Stomatal regulation factor γ (dimensionless, 0 to 1).
-
-
 ```
 
 *Compute the stomatal regulation factor γ and its derivative dγ/dψ.*
@@ -1187,11 +1145,11 @@ __Parameters:__
 
         - P50_gs: Water potential at 50 % stomatal closure (MPa).
             Derived from (P12_gs + P88_gs) / 2 in
-            [`sureau_vegetation_params`](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_params.html#sureau_vegetation_params) .
+            `sureau_vegetation_params` .
 
         - slope_gs: Slope of the stomatal sigmoid at P50_gs
             (% MPa⁻¹). Derived from 100 / (P12_gs − P88_gs) in
-            [`sureau_vegetation_params`](https://ecamo19.github.io/plant_hydraulics/sureau_vegetation_params.html#sureau_vegetation_params) .
+            `sureau_vegetation_params` .
 
     - PiecewiseLinear parameters:
 
@@ -1319,12 +1277,9 @@ turgor_at_gs_max = 2.0):__
 ### calculate_gs_jarvis
 
 ```python
-
 def calculate_gs_jarvis(
     fluxes:SurEauPlantFluxes, params:SurEauVegetationParams, PAR:float
 )->SurEauPlantFluxes:
-
-
 ```
 
 *Jarvis-type stomatal conductance with temperature correction.*
@@ -1339,12 +1294,9 @@ def calculate_gs_jarvis(
 ### calculate_Ebound_mm_Granier
 
 ```python
-
 def calculate_Ebound_mm_Granier(
     ETP, LAI, a:float=-0.006, b:float=0.134, c:float=0.0
 ):
-
-
 ```
 
 *Granier-type energy-limited transpiration [mm].*
@@ -1357,12 +1309,9 @@ def calculate_Ebound_mm_Granier(
 ### calculate_Ebound_Granier
 
 ```python
-
 def calculate_Ebound_Granier(
     ETP:float, LAI:float, time_step:float, params:SurEauVegetationParams
 )->float:
-
-
 ```
 
 *Ebound in mmol/m²leaf/s from Granier formulation.*
@@ -1377,12 +1326,9 @@ def calculate_Ebound_Granier(
 ### compute_gmin
 
 ```python
-
 def compute_gmin(
     fluxes:SurEauPlantFluxes, veg_params:SurEauVegetationParams
 )->float:
-
-
 ```
 
 *gmin as function of leaf temperature (Cochard et al. 2019).*
@@ -1395,12 +1341,9 @@ def compute_gmin(
 ### compute_E_min
 
 ```python
-
 def compute_E_min(
     gmin:float, g_BL:float, g_crown:float, VPD:float, P_atm:float=101.3
 )->float:
-
-
 ```
 
 *Minimal transpiration from cuticular/boundary layer/crown conductances.*
@@ -1420,12 +1363,9 @@ It needs to travel out of the crown to reach the open atmosphere above
 ### compute_T_leaf
 
 ```python
-
 def compute_T_leaf(
     state:SurEauPlantState, fluxes:SurEauPlantFluxes, veg_params:SurEauVegetationParams, clim:dict
 )->tuple: # Leaf temperature (°C).
-
-
 ```
 
 *Compute leaf temperature, boundary-layer conductance, and leaf VPD*
@@ -1997,12 +1937,9 @@ RH = 50%, gs = 100 mmol/m²/s, g_cuti = 4 mmol/m²/s):__
 ### compute_DFMC
 
 ```python
-
 def compute_DFMC(
     VPD, FM0:float=5.43, FM1:float=52.91, m:float=0.64
 ):
-
-
 ```
 
 *Dead fuel moisture content [%dry mass] (De Dios et al. 2015).*
