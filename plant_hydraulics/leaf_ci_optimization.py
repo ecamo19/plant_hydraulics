@@ -15,7 +15,7 @@ def leaf_ci_optimization(atmos: Atmos, leaf: Leaf, flux: Flux) -> Flux:
     Calculate leaf photosynthesis for a specified stomatal conductance,
     then calculate Ci from the diffusion equation.
     
-    __Phys 101:__ 
+    __Plant Phys 101:__ 
     
     - Carboxilation rate: How many reactions (CO2 + RuBP -> 3-PGA) happen per 
     unit of leaf area per second.
@@ -23,7 +23,7 @@ def leaf_ci_optimization(atmos: Atmos, leaf: Leaf, flux: Flux) -> Flux:
     - Vcmax: Maximum Carboxilation rate
     
     Meaning of Θ (aka the co-limitation curvature factor): Θ asks, when the 
-    plant transitions from being Rubisco-limited to light-limited, is that 
+    plant transition from being Rubisco-limited to light-limited, is that 
     transition sharp (Θ near 1) or gradual (Θ near 0)? 
     
     A sharp transition means one process dominates at any given moment. 
@@ -204,18 +204,19 @@ def leaf_ci_optimization(atmos: Atmos, leaf: Leaf, flux: Flux) -> Flux:
     # Leaf conductance (mol CO2/m2/s) -------------------------------------------
     gleaf = 1.0 / (1.0 / flux.gbc + 1.6 / flux.gs)
 
-    # Gross assimilation rates --------------------------------------------------
+    # Gross assimilation rates pp 171 -------------------------------------------
     if leaf.c3psn == 1:
         
-        # C3: Rubisco-limited photosynthesis
+        # C3: Rubisco-limited photosynthesis 
         a0 = flux.vcmax
         e0 = 1.0
 
         # km == d0: Mechaelis-Mentel constant pp 53.
         # The term (1.0 + atmos.o2air / flux.ko) represents the competitive 
-        # inhibition of 02 over CO2. Rubisco can take either C02 and O2 molecules
-        # if it take more O2 molecules then VCMAX is reduced.
-        # Therefore do is the intercellular CO2 concentration at which 50% of 
+        # inhibition of 02 over CO2. Rubisco can take either C02 and O2 
+        # molecules if it take more O2 molecules then VCMAX is reduced.
+
+        # Therefore, d0 is the intercellular CO2 concentration at which 50% of 
         # the carboxilation occurs adjusted for the o2 concentration 
         d0 = flux.kc * (1.0 + atmos.o2air / flux.ko)
 
@@ -223,10 +224,11 @@ def leaf_ci_optimization(atmos: Atmos, leaf: Leaf, flux: Flux) -> Flux:
         bquad = -(e0 * atmos.co2air + d0) - (a0 - e0 * flux.rd) / gleaf
         cquad = a0 * (atmos.co2air - flux.cp) - flux.rd * (e0 * atmos.co2air + d0)
 
-        # Solve the Θv² − (v1 + v2)v + v1v2 = 0 eq 4.19
+        # Solve eq 4.19 which is the same as 11.31: Θv² − (v1 + v2)v + v1v2 = 0 
         roots = np.roots([aquad, bquad, cquad])
 
-        # Carboxylation rate
+        # Gross Rubisco-limited assimilation rate (Ac)
+        # gross assimilation (Ac, Eq 11.28) =  carboxylation − photorespiration 
         flux.ac = min(roots.real) + flux.rd
 
         # C3: RuBP regeneration-limited photosynthesis Aj is the photosynthesis 
@@ -237,10 +239,9 @@ def leaf_ci_optimization(atmos: Atmos, leaf: Leaf, flux: Flux) -> Flux:
 
         aquad = e0 / gleaf
         bquad = -(e0 * atmos.co2air + d0) - (a0 - e0 * flux.rd) / gleaf
+        cquad = a0 * (atmos.co2air - flux.cp) - flux.rd *(e0 * atmos.co2air + d0)
         
-        cquad = a0 * (atmos.co2air - flux.cp) - flux.rd * (e0 * atmos.co2air + d0)
-        
-        # Solve the Θv² − (v1 + v2)v + v1v2 = 0 eq 4.19
+        # Solve eq 4.19 which is the same as 11.31: Θv² − (v1 + v2)v + v1v2 = 0 
         roots = np.roots([aquad, bquad, cquad])
 
         # .real is used beacuse it can return Imaginary numbers (i.e sqrt(-2))
@@ -254,6 +255,7 @@ def leaf_ci_optimization(atmos: Atmos, leaf: Leaf, flux: Flux) -> Flux:
         flux.ap = 0.0
 
     else:
+
         # C4: Rubisco-limited photosynthesis (carboxylation rate)
         flux.ac = flux.vcmax
 
@@ -297,10 +299,11 @@ def leaf_ci_optimization(atmos: Atmos, leaf: Leaf, flux: Flux) -> Flux:
         # limiting response
         ai = min(roots.real)
 
-        # Now co-limit again using Ap (PEP carboxylase-limited,
-        # but only for C4 plants. Solve the
-        # polynomial: aquad*Ag^2 + bquad*Ag + cquad = 0 for Ag.
-        # Correct solution is the smallest of the two roots. Ignore the
+        # Now co-limit again using Ap (PEP carboxylase-limited, but only for 
+        # C4 plants. Solve the polynomial: 
+        # aquad*Ag^2 + bquad*Ag + cquad = 0 for Ag.
+        # 
+        # Correct solution is the smallest of the two roots. Ignore the 
         # product-limited rate For C3 plants.
 
         # Co-limit with Ap (PEP carboxylase-limited) for C4 plants
