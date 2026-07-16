@@ -37,19 +37,22 @@ def leaf_stomatal_optimization(
     flux, check2 = leaf_stomatal_efficiency(physcon, atmos, leaf, flux, gs2)
 
     if check1 * check2 < 0:
+
         # Calculate gs using the function leaf_stomatal_efficiency to iterate gs
         # to an accuracy of tol (mol H2O/m2/s)
+        tol = 0.002
 
-        tol = 0.004
         flux, root = brent_root(
             leaf_stomatal_efficiency, physcon, atmos, leaf, flux, gs1, gs2, tol
         )
+
         flux.gs = root
+    
     else:
         # Low light or drought stress: set gs to minimum conductance
         flux.gs = 0.002
 
-    # Leaf fluxes for this gs
+    # Now that gs is known calculate everything else ----------------------------
     flux = leaf_boundary_layer(physcon, atmos, leaf, flux)
     flux = leaf_temperature(physcon, atmos, leaf, flux)
     flux = leaf_photosynthesis(physcon, atmos, leaf, flux)

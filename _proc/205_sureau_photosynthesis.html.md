@@ -9,7 +9,7 @@ title: SurEau photosynthesis
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_photosynthesis.py#L65){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_photosynthesis.py#L86){target="_blank" style="float:right; font-size:smaller"}
 
 ### solve_coupled_medlyn_fvcb
 
@@ -29,7 +29,7 @@ no CO₂ boundary layer (cs = Ca), matching the basic `Photosyn` path.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_photosynthesis.py#L170){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_photosynthesis.py#L191){target="_blank" style="float:right; font-size:smaller"}
 
 ### calculate_gs_medlyn
 

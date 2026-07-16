@@ -93,6 +93,3 @@ where:
    gs = 0.222 mol H2O/m2/s
 
 
-#### Example leaf_stomatal_medlyn()
-
-

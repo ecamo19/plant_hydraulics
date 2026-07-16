@@ -19,13 +19,15 @@ def leaf_fluxes(physcon: PhysCon, atmos: Atmos, leaf: Leaf, flux: Flux) -> Flux:
     Dispatches to the appropriate stomatal model based on
     leaf.stomatal_model:
 
-        "optimization" → Original WUE optimization (Bonan Ch. 13)
-        "medlyn"       → Medlyn et al. (2011) empirical model
-        "profit_max"   → Medlyn + Sperry profit-maximisation
+        "optimization" = Original WUE optimization (Bonan Ch. 13)
+        "medlyn"       = Medlyn semi-empirical model
+        "profit_max"   = Medlyn + Sperry profit-maximisation
     """
     if leaf.stomatal_model == "medlyn":
         return leaf_stomatal_medlyn(physcon, atmos, leaf, flux)
+    
     elif leaf.stomatal_model == "profit_max":
-        return leaf_stomatal_profit_max(physcon, atmos, leaf, flux)
+        return leaf_stomatal_profit_max(physcon, atmos, leaf, flux)\
+        
     else:
         return leaf_stomatal_optimization(physcon, atmos, leaf, flux)

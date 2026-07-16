@@ -16,50 +16,71 @@ from plant_hydraulics.parameter_classes import (
 
 # %% ../nbs/205_sureau_photosynthesis.ipynb #b6be9a18
 def _quadp(a, b, c):
-    """Larger root of a·x² + b·x + c = 0 (similar to plantecophys ).
+
+    """Larger root of a·x2 + b·x + c = 0.
     Returns 0 for imaginary roots or a == 0 with b == 0."""
+    
     disc = b * b - 4.0 * a * c
+    
     if disc < 0.0:
         return 0.0
+    
     if a == 0.0:
         return 0.0 if b == 0.0 else -c / b
+    
     return (-b + np.sqrt(disc)) / (2.0 * a)
 
 
 # %% ../nbs/205_sureau_photosynthesis.ipynb #33069108
 def _getci(VJ, GSDIVA, PAR, Ca, g0c, Rd, Vcmax, Jmax, Km, Gstar):
+
     """Coupled operating Ci for the Rubisco- and RuBP-limited rates.
 
-    Exact port of plantecophys `getCI` (photosyn.R): substitutes the Medlyn
+    Same as plantecophys `getCI` (photosyn.R): substitutes the Medlyn
     supply (gs = g0 + GSDIVA·A, CO₂ basis) into each Farquhar demand and solves
     the resulting quadratic in Ci with the larger root. `g0c` and `GSDIVA` are on
-    a CO₂ basis. Returns (CIJ, CIC).
+    a CO2 basis. 
+    
+    Returns (cij, cic).
     """
+
+    # No photosynthesis at night ------------------------------------------------
     if PAR == 0.0 or VJ == 0.0:
         return Ca, Ca
     
     # Rubisco-limited -----------------------------------------------------------
-    A = g0c + GSDIVA * (Vcmax - Rd)
+
+    # Analog to g0/1.6  +  ν·(a − Rd) in 12.26
+    a = g0c + GSDIVA * (Vcmax - Rd)
     
-    B = (1.0 - Ca * GSDIVA) * (Vcmax - Rd) + g0c * (Km - Ca) \
+    # Analog to (1 − ν·cs)(a − Rd)  +  (g0/1.6)(b − cs)  −  ν(a·Γ* + b·Rd) in 
+    # 12.26
+    b = (1.0 - Ca * GSDIVA) * (Vcmax - Rd) + g0c * (Km - Ca) \
         - GSDIVA * (Vcmax * Gstar + Km * Rd)
     
-    C = -(1.0 - Ca * GSDIVA) * (Vcmax * Gstar + Km * Rd) - g0c * Km * Ca
+    # Analog to −(1 − ν·cs)(a·Γ* + b·Rd)  −  (g0/1.6)·b·cs in 12.26
+    c = -(1.0 - Ca * GSDIVA) * (Vcmax * Gstar + Km * Rd) - g0c * Km * Ca
     
-    CIC = _quadp(A, B, C)
+    # Get the larger root
+    cic = _quadp(a, b, c)
     
     # RuBP-regeneration-limited -------------------------------------------------
-    A = g0c + GSDIVA * (VJ - Rd)
     
-    B = (1.0 - Ca * GSDIVA) * (VJ - Rd) + g0c * (2.0 * Gstar - Ca) \
+    # Analog to g0/1.6  +  ν·(a − Rd) in 12.26
+    a = g0c + GSDIVA * (VJ - Rd)
+    
+    # Analog to (1 − ν·cs)(a − Rd)  +  (g0/1.6)(b − cs)  −  ν(a·Γ* + b·Rd) in 
+    # 12.26
+    b = (1.0 - Ca * GSDIVA) * (VJ - Rd) + g0c * (2.0 * Gstar - Ca) \
         - GSDIVA * (VJ * Gstar + 2.0 * Gstar * Rd)
     
-    C = -(1.0 - Ca * GSDIVA) * Gstar * (VJ + 2.0 * Rd) - g0c * 2.0 * Gstar * Ca
+    # Analog to −(1 − ν·cs)(a·Γ* + b·Rd)  −  (g0/1.6)·b·cs in 12.26
+    c = -(1.0 - Ca * GSDIVA) * Gstar * (VJ + 2.0 * Rd) - g0c * 2.0 * Gstar * Ca
     
-    CIJ = _quadp(A, B, C)
+    # Get the larger root
+    cij = _quadp(a, b, c)
     
-    
-    return CIJ, CIC
+    return cij, cic
 
 # %% ../nbs/205_sureau_photosynthesis.ipynb #db0aae6a
 def solve_coupled_medlyn_fvcb(T_leaf, PAR, VPD, params):

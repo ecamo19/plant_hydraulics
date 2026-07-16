@@ -24,8 +24,8 @@ def leaf_fluxes(
 Dispatches to the appropriate stomatal model based on
 leaf.stomatal_model:
 
-    "optimization" → Original WUE optimization (Bonan Ch. 13)
-    "medlyn"       → Medlyn et al. (2011) empirical model
-    "profit_max"   → Medlyn + Sperry profit-maximisation
+    "optimization" = Original WUE optimization (Bonan Ch. 13)
+    "medlyn"       = Medlyn semi-empirical model
+    "profit_max"   = Medlyn + Sperry profit-maximisation
 
 

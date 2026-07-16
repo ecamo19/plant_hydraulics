@@ -107,45 +107,38 @@ def leaf_stomatal_medlyn(
     """
 
     # Compute boundary layer conductances ---------------------------------------
-
-    # WHY first: gbh, gbv, gbc depend on wind speed and leaf size, not on gs.
-    # They are needed by leaf_temperature and leaf_photosynthesis.
+    # gbh, gbv, gbc depend on wind speed and leaf size, not on gs.
+    # Needed by leaf_temperature and leaf_photosynthesis.
     flux = leaf_boundary_layer(physcon, atmos, leaf, flux)
 
     # Set initial guess for gs --------------------------------------------------
-
-    # WHY 0.1: A reasonable starting point for most conditions.
-    # Too low (e.g., 0.001) can cause numerical issues in the first
-    # photosynthesis calculation. Too high (e.g., 2.0) wastes iterations.
     # The value 0.1 mol/m2/s is typical for an unstressed broadleaf tree.
     flux.gs = 0.1
 
     # Iteratively solve the gs-An coupling --------------------------------------
 
-    # WHY iterate: gs and An are mutually dependent (circular).
-    # We use fixed-point iteration (Picard iteration, Appendix A.5 NEEDX MORE
-    # INFO HERE):
+    # gs and An are mutually dependent (circular).
+    # We use fixed-point iteration:
 
     #   gs_{n+1} = Medlyn(An_n, cs_n, VPD_n)
 
     # This converges because the Medlyn equation is a contraction mapping
-    # for reasonable parameter values — each iteration brings gs closer
+    # for reasonable parameter values, each iteration brings gs closer
     # to the fixed point.
 
-    # Safety limit — should converge in 5-15 iterations
+    # Safety limit
     max_iter = 50
 
     # Convergence tolerance (mol H2O/m2/s)
-    # 0.002 is stricter than the 0.004 used in brent_root
-    # because we want accurate gs for the hydraulic check
     tol = 0.002
 
     for each_iteration in range(max_iter):
+
         # Save previous gs to check convergence
         gs_old = flux.gs
 
         # Solve leaf energy balance for current gs
-        # WHY: Opening stomata changes transpiration, which changes latent
+        # Opening stomata changes transpiration, which changes latent
         # heat flux, which changes leaf temperature. We need the correct
         # Tleaf for the photosynthesis temperature adjustments.
         # Example: At gs = 0.3 mol/m2/s, Tleaf might be 33°C.
@@ -153,7 +146,7 @@ def leaf_stomatal_medlyn(
         flux = leaf_temperature(physcon, atmos, leaf, flux)
 
         # Solve photosynthesis for current gs
-        # WHY: We need An, cs, and VPD at the leaf surface.
+        # We need An, cs, and VPD at the leaf surface.
         # leaf_photosynthesis computes:
         #   - Temperature-adjusted Vcmax, Jmax, Rd, Kc, Ko, Gamma*
         #   - Electron transport rate J
@@ -163,20 +156,17 @@ def leaf_stomatal_medlyn(
         #   - Leaf surface VPD
         flux = leaf_photosynthesis(physcon, atmos, leaf, flux)
 
-        # Apply the Medlyn equation to compute new gs
-
-        # VPD at leaf surface in kPa (Medlyn equation uses kPa, not Pa)
-        # WHY kPa: The g1 parameter has units of kPa^0.5, so D must be in kPa
+        # Apply the Medlyn equation to compute new gs ---------------------------
+        
+        # Transform VPD Pa to kPa
+        # The g1 parameter has units of kPa^0.5, so D must be in kPa
         # for dimensional consistency.
-        # Example: VPD = 1500 Pa → vpd_kpa = 1.5 kPa
+        # Example: VPD = 1500 Pa  vpd_kpa = 1.5 kPa
         vpd_kpa = flux.vpd / 1000.0
 
-        # Floor VPD at 0.1 kPa to prevent division by zero in sqrt(D)
-        # WHY 0.1: At very low VPD (fog, early morning), 1/sqrt(D) → infinity,
-        # which would give unrealistically high gs. The floor of 0.1 kPa
-        # caps gs at a sensible maximum. This is standard practice in land
-        # surface models (e.g., CLM, CABLE).
+        # Prevent division by zero in sqrt(D). 
         vpd_kpa = max(vpd_kpa, 0.1)
+
 
         if flux.an > 0:
             # The Medlyn equation (Medlyn et al. 2011, Eq. 11):
@@ -184,19 +174,29 @@ def leaf_stomatal_medlyn(
             #   gs = g0 + 1.6 * (1 + g1 / sqrt(D)) * An / cs
             #
             # Breaking this down:
-            #   g0                  → baseline conductance (always present)
-            #   1.6                 → H2O/CO2 diffusivity ratio
+            #   g0: minimum conductance
+            #   1.6: H2O/CO2 diffusivity ratio
             #
-            #   (1 + g1/sqrt(D))   → VPD sensitivity factor:
-            #       - When D is small (humid): g1/sqrt(D) is large → gs is high
-            #       - When D is large (dry):   g1/sqrt(D) is small → gs is low
+            #   (1 + g1/sqrt(D)): VPD sensitivity factor
+
+            #       - When D is small (humid): g1/sqrt(D) is large therefore 
+            #         gs is high
+
+            #       - When D is large (dry): g1/sqrt(D) is small therefore 
+            #         gs is low
+
             #       - g1 controls the magnitude of this VPD response
             #
-            #  An / cs             → photosynthetic demand factor:
-            #       - High An and low cs → stomata open wide for CO2
-            #       - Low An (shade)     → little need to open stomata
+            #    An / cs: photosynthetic demand factor
+
+            #       - High An and low cs therefore stomata open wide for CO2
+            #       - Low An (shade)  tehrefore little need to open stomata
             #
-            # Example with g0=0.01, g1=4.45, D=1.5 kPa, An=10, cs=350:
+            # Example with g0 = 0.01, 
+            #              g1 = 4.45, 
+            #              D = 1.5 kPa, 
+            #              An = 10, 
+            #              cs = 350:
             #   gs = 0.01 + 1.6 * (1 + 4.45/sqrt(1.5)) * 10/350
             #   gs = 0.01 + 1.6 * (1 + 3.633) * 0.02857
             #   gs = 0.01 + 1.6 * 4.633 * 0.02857
@@ -206,51 +206,35 @@ def leaf_stomatal_medlyn(
                 leaf.g0
                 + 1.6 * (1.0 + leaf.g1_medlyn / np.sqrt(vpd_kpa)) * flux.an / flux.cs
             )
+
         else:
-            # When An <= 0 (e.g., at night, or under very low light where
-            # respiration exceeds photosynthesis), the Medlyn equation
-            # would give gs < g0 or even negative gs. In this case, set
-            # gs to the minimum conductance.
-            # WHY: Stomata don't fully close — there's always some residual
-            # conductance through the cuticle and incompletely closed guard cells.
+            
+            # Set gs to the minimum conductance. at night, or under very low
+            #  light whererespiration exceeds photosynthesis.
             flux.gs = leaf.g0
 
         # Enforce minimum conductance
-        # WHY: Even during the iteration, gs should never drop below g0.
+        # gs should never drop below g0.
         # This prevents numerical instability in leaf_temperature (which
         # computes gleaf = gs*gbv/(gs+gbv) — if gs = 0, this causes issues).
         flux.gs = max(flux.gs, leaf.g0)
 
-        # Check convergence
-        # WHY abs(gs - gs_old): If the change in gs between iterations is
-        # smaller than the tolerance, we've found the fixed point.
-        # Typical convergence pattern:
-        #   Iteration 1: gs = 0.100 → 0.250 (big jump from initial guess)
-        #   Iteration 2: gs = 0.250 → 0.220 (overshoot correction)
-        #   Iteration 3: gs = 0.220 → 0.225 (settling)
-        #   Iteration 4: gs = 0.225 → 0.224 (converged, |Δgs| < 0.002)
+        # Check convergence 
+        # If the change in gs between iterations is smaller than the tolerance, 
+        # we've found the fixed point. 
         if abs(flux.gs - gs_old) < tol:
             break
 
-    # STEP 4: Hydraulic safety check
-
-    # WHY: The Medlyn equation has no knowledge of plant hydraulics — it
-    # only considers the gas-exchange optimality. But in dry soil or tall
-    # trees, the transpiration rate implied by the Medlyn gs might pull
-    # leaf water potential below the cavitation threshold (leaf.minl_wp).
+    # Hydraulic safety check ----------------------------------------------------
     #
-    # This is equivalent to the "minpsi" check in stomata_efficiency(),
+    # This is equivalent to the "minpsi" check in leaf_stomata_efficiency(),
     # but applied as a post-hoc constraint rather than being built into
     # the root-finding process.
     #
-    # Approach: If psi_leaf < minl_wp, iteratively reduce gs by 5% until
+    # If psi_leaf < minl_wp, iteratively reduce gs by 5% until
     # hydraulic safety is restored (or gs hits g0).
-    #
-    # WHY 5% steps: A gentler reduction than halving. Large jumps can
-    # overshoot and give unnecessarily low gs. The iteration is fast
-    # because leaf_temperature converges in 3-5 Newton-Raphson steps.
-
-    # First compute fluxes at the converged Medlyn gs
+    
+    # Compute fluxes at the converged Medlyn gs
     flux = leaf_boundary_layer(physcon, atmos, leaf, flux)
     flux = leaf_temperature(physcon, atmos, leaf, flux)
     flux = leaf_photosynthesis(physcon, atmos, leaf, flux)
@@ -259,21 +243,24 @@ def leaf_stomatal_medlyn(
     flux = leaf_water_potential(physcon, leaf, flux)
 
     # If psi_leaf is below the cavitation threshold, reduce gs
+
+    # Hold the count
     hydraulic_iter = 0
     max_hydraulic_iter = 50
 
+    # Reduce gs in 5% stepss
     while flux.psi_leaf < leaf.minl_wp and flux.gs > leaf.g0:
+        
+        # Increase count
         hydraulic_iter += 1
+
         if hydraulic_iter > max_hydraulic_iter:
+            
             # Safety exit. Set to minimum conductance
             flux.gs = leaf.g0
             break
 
         # Reduce gs by 5%
-        # WHY 5%: Small enough to find a precise gs, large enough to
-        # converge in reasonable iterations. For example, if Medlyn
-        # gives gs = 0.3 but hydraulic limit requires gs = 0.2, this
-        # takes about 8 iterations: 0.3 → 0.285 → 0.271 → ... → 0.201
         flux.gs = max(flux.gs * 0.95, leaf.g0)
 
         # Recompute all fluxes at the reduced gs

@@ -25,6 +25,3 @@ Leaf temperature, energy fluxes, photosynthesis, and stomatal conductance
 with water-use efficiency stomatal optimization.
 
 
-#### Example leaf_stomatal_optimization()
-
-
