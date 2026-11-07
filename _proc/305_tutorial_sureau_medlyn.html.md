@@ -158,7 +158,7 @@ display(HTML(html_str))
 ::: {.cell-output .cell-output-display}
 ```{=html}
 <!--| quarto-html-table-processing: none -->
-<table id="itables_326f3f9e_c8a6_47d3_900c_e6d5502238a9">
+<table id="itables_16ed0e82_add9_4940_894e_9ef69f6b8cd3">
   <tbody>
     <tr>
       <td style="vertical-align:middle; text-align:left"><a href=https://mwouts.github.io/itables/><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -261,7 +261,7 @@ width="64" viewBox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.5.5/dt_bundle.js';
 
-    document.querySelectorAll("#itables_326f3f9e_c8a6_47d3_900c_e6d5502238a9:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_16ed0e82_add9_4940_894e_9ef69f6b8cd3:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -365,7 +365,7 @@ display(HTML(html_str))
 ::: {.cell-output .cell-output-display}
 ```{=html}
 <!--| quarto-html-table-processing: none -->
-<table id="itables_1ec59b95_5d2a_4169_b2fd_990ab97e0b07">
+<table id="itables_46c56533_5e57_44ea_ad8a_aac06dfc2299">
   <tbody>
     <tr>
       <td style="vertical-align:middle; text-align:left"><a href=https://mwouts.github.io/itables/><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -468,7 +468,7 @@ width="64" viewBox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.5.5/dt_bundle.js';
 
-    document.querySelectorAll("#itables_1ec59b95_5d2a_4169_b2fd_990ab97e0b07:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_46c56533_5e57_44ea_ad8a_aac06dfc2299:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -826,9 +826,9 @@ model_predictions = model_predictions >> filter(_.PPFD >= 500 )
 
 ::: {.cell-output .cell-output-stderr}
 ```
-/var/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/layer.py:374: PlotnineWarning: geom_point : Removed 7 rows containing missing values.
-/var/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/layer.py:374: PlotnineWarning: geom_point : Removed 5 rows containing missing values.
-/var/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/layer.py:374: PlotnineWarning: geom_point : Removed 6 rows containing missing values.
+/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/layer.py:374: PlotnineWarning: geom_point : Removed 7 rows containing missing values.
+/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/layer.py:374: PlotnineWarning: geom_point : Removed 5 rows containing missing values.
+/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/layer.py:374: PlotnineWarning: geom_point : Removed 6 rows containing missing values.
 ```
 :::
 
@@ -870,7 +870,7 @@ results['temp_bin'] = pd.cut(
 
 ::: {.cell-output .cell-output-stderr}
 ```
-/var/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/layer.py:293: PlotnineWarning: stat_boxplot : Removed 7 rows containing non-finite values.
+/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/layer.py:293: PlotnineWarning: stat_boxplot : Removed 7 rows containing non-finite values.
 ```
 :::
 
@@ -901,14 +901,14 @@ results['temp_bin'] = pd.cut(
 
 ::: {.cell-output .cell-output-stderr}
 ```
-/var/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/scales/scales.py:48: PlotnineWarning: Scale for 'y' is already present.
+/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/scales/scales.py:48: PlotnineWarning: Scale for 'y' is already present.
 Adding another scale for 'y',
 which will replace the existing scale.
 
-/var/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/layer.py:374: PlotnineWarning: geom_point : Removed 20 rows containing missing values.
-/var/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/layer.py:374: PlotnineWarning: geom_point : Removed 5 rows containing missing values.
-/var/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/geoms/geom_path.py:100: PlotnineWarning: geom_path: Removed 6 rows containing missing values.
-/var/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/geoms/geom_path.py:100: PlotnineWarning: geom_path: Removed 6 rows containing missing values.
+/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/layer.py:374: PlotnineWarning: geom_point : Removed 20 rows containing missing values.
+/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/layer.py:374: PlotnineWarning: geom_point : Removed 5 rows containing missing values.
+/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/geoms/geom_path.py:100: PlotnineWarning: geom_path: Removed 6 rows containing missing values.
+/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/geoms/geom_path.py:100: PlotnineWarning: geom_path: Removed 6 rows containing missing values.
 ```
 :::
 
@@ -961,7 +961,7 @@ emin_bin = (results.groupby('temp_bin', observed=True)['E_min']
 
 ::: {.cell-output .cell-output-stderr}
 ```
-/var/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/layer.py:293: PlotnineWarning: stat_boxplot : Removed 20 rows containing non-finite values.
+/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/layer.py:293: PlotnineWarning: stat_boxplot : Removed 20 rows containing non-finite values.
 ```
 :::
 
@@ -999,7 +999,7 @@ fig
 
 ::: {.cell-output .cell-output-stderr}
 ```
-/var/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/layer.py:293: PlotnineWarning: stat_boxplot : Removed 20 rows containing non-finite values.
+/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/layer.py:293: PlotnineWarning: stat_boxplot : Removed 20 rows containing non-finite values.
 ```
 :::
 
@@ -1029,10 +1029,10 @@ fig
 
 ::: {.cell-output .cell-output-stderr}
 ```
-/var/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/layer.py:374: PlotnineWarning: geom_point : Removed 5 rows containing missing values.
-/var/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/geoms/geom_path.py:100: PlotnineWarning: geom_path: Removed 6 rows containing missing values.
-/var/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/geoms/geom_path.py:100: PlotnineWarning: geom_path: Removed 6 rows containing missing values.
-/var/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/layer.py:374: PlotnineWarning: geom_point : Removed 15 rows containing missing values.
+/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/layer.py:374: PlotnineWarning: geom_point : Removed 5 rows containing missing values.
+/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/geoms/geom_path.py:100: PlotnineWarning: geom_path: Removed 6 rows containing missing values.
+/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/geoms/geom_path.py:100: PlotnineWarning: geom_path: Removed 6 rows containing missing values.
+/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/layer.py:374: PlotnineWarning: geom_point : Removed 15 rows containing missing values.
 ```
 :::
 
@@ -1062,619 +1062,14 @@ gres_bin = (results.groupby('temp_bin', observed=True)['gres']
  )
 ```
 
-::: {.cell-output .cell-output-error}
-
-::: {.ansi-escaped-output}
-```{=html}
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/mapping/evaluation.py:165</span>, in <span class="ansi-cyan-fg">evaluate</span><span class="ansi-blue-fg">(aesthetics, data, env)</span>
-<span class="ansi-green-fg">    164</span> <span style="font-weight:bold;color:rgb(0,135,0)">try</span>:
-<span class="ansi-green-fg">--&gt; </span><span class="ansi-green-fg">165</span>     new_val = <span class="ansi-black-fg ansi-yellow-bg">env</span><span class="ansi-black-fg ansi-yellow-bg">.</span><span class="ansi-black-fg ansi-yellow-bg">eval</span><span class="ansi-black-fg ansi-yellow-bg">(</span><span class="ansi-black-fg ansi-yellow-bg">col</span><span class="ansi-black-fg ansi-yellow-bg">,</span><span class="ansi-black-fg ansi-yellow-bg"> </span><span class="ansi-black-fg ansi-yellow-bg">inner_namespace</span><span class="ansi-black-fg ansi-yellow-bg">=</span><span class="ansi-black-fg ansi-yellow-bg">data</span><span class="ansi-black-fg ansi-yellow-bg">)</span>
-<span class="ansi-green-fg">    166</span> <span style="font-weight:bold;color:rgb(0,135,0)">except</span> <span style="font-weight:bold;color:rgb(215,95,95)">Exception</span> <span style="font-weight:bold;color:rgb(0,135,0)">as</span> e:
-
-<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/mapping/_env.py:71</span>, in <span class="ansi-cyan-fg">Environment.eval</span><span class="ansi-blue-fg">(self, expr, inner_namespace)</span>
-<span class="ansi-green-fg">     70</span> code = _compile_eval(expr)
-<span class="ansi-green-fg">---&gt; </span><span class="ansi-green-fg">71</span> <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span class="ansi-black-fg ansi-yellow-bg">eval</span><span class="ansi-black-fg ansi-yellow-bg">(</span>
-<span class="ansi-green-fg">     72</span> <span class="ansi-black-fg ansi-yellow-bg">    </span><span class="ansi-black-fg ansi-yellow-bg">code</span><span class="ansi-black-fg ansi-yellow-bg">,</span><span class="ansi-black-fg ansi-yellow-bg"> </span><span class="ansi-black-fg ansi-yellow-bg">{</span><span class="ansi-black-fg ansi-yellow-bg">}</span><span class="ansi-black-fg ansi-yellow-bg">,</span><span class="ansi-black-fg ansi-yellow-bg"> </span><span class="ansi-black-fg ansi-yellow-bg">StackedLookup</span><span class="ansi-black-fg ansi-yellow-bg">(</span><span class="ansi-black-fg ansi-yellow-bg">[</span><span class="ansi-black-fg ansi-yellow-bg">inner_namespace</span><span class="ansi-black-fg ansi-yellow-bg">]</span><span class="ansi-black-fg ansi-yellow-bg"> </span><span class="ansi-black-fg ansi-yellow-bg">+</span><span class="ansi-black-fg ansi-yellow-bg"> </span><span class="ansi-black-fg ansi-yellow-bg">self</span><span class="ansi-black-fg ansi-yellow-bg">.</span><span class="ansi-black-fg ansi-yellow-bg">namespaces</span><span class="ansi-black-fg ansi-yellow-bg">)</span>
-<span class="ansi-green-fg">     73</span> <span class="ansi-black-fg ansi-yellow-bg">)</span>
-
-<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">&lt;string-expression&gt;:1</span>
-<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">1</span> <span class="ansi-yellow-fg">'Could not get source, probably due dynamically evaluated source code.'</span>
-
-<span class="ansi-red-fg">NameError</span>: name 'log' is not defined
-
-The above exception was the direct cause of the following exception:
-
-<span class="ansi-red-fg">PlotnineError</span>                             Traceback (most recent call last)
-<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/ggplot.py:172</span>, in <span class="ansi-cyan-fg">ggplot._repr_mimebundle_</span><span class="ansi-blue-fg">(self, include, exclude)</span>
-<span class="ansi-green-fg">    169</span>     <span style="color:rgb(0,135,0)">self</span>.theme = <span style="color:rgb(0,135,0)">self</span>.theme.to_retina()
-<span class="ansi-green-fg">    171</span> buf = BytesIO()
-<span class="ansi-green-fg">--&gt; </span><span class="ansi-green-fg">172</span> <span class="ansi-black-fg ansi-yellow-bg">self</span><span class="ansi-black-fg ansi-yellow-bg">.</span><span class="ansi-black-fg ansi-yellow-bg">save</span><span class="ansi-black-fg ansi-yellow-bg">(</span><span class="ansi-black-fg ansi-yellow-bg">buf</span><span class="ansi-black-fg ansi-yellow-bg">,</span><span class="ansi-black-fg ansi-yellow-bg"> </span><span class="ansi-black-fg ansi-yellow-bg">"</span><span class="ansi-black-fg ansi-yellow-bg">png</span><span class="ansi-black-fg ansi-yellow-bg">"</span><span class="ansi-black-fg ansi-yellow-bg"> </span><span class="ansi-black-fg ansi-yellow-bg ansi-bold">if</span><span class="ansi-black-fg ansi-yellow-bg"> </span><span class="ansi-black-fg ansi-yellow-bg">format</span><span class="ansi-black-fg ansi-yellow-bg"> </span><span class="ansi-black-fg ansi-yellow-bg">==</span><span class="ansi-black-fg ansi-yellow-bg"> </span><span class="ansi-black-fg ansi-yellow-bg">"</span><span class="ansi-black-fg ansi-yellow-bg">retina</span><span class="ansi-black-fg ansi-yellow-bg">"</span><span class="ansi-black-fg ansi-yellow-bg"> </span><span class="ansi-black-fg ansi-yellow-bg ansi-bold">else</span><span class="ansi-black-fg ansi-yellow-bg"> </span><span class="ansi-black-fg ansi-yellow-bg">format</span><span class="ansi-black-fg ansi-yellow-bg">,</span><span class="ansi-black-fg ansi-yellow-bg"> </span><span class="ansi-black-fg ansi-yellow-bg">verbose</span><span class="ansi-black-fg ansi-yellow-bg">=</span><span class="ansi-black-fg ansi-yellow-bg ansi-bold">False</span><span class="ansi-black-fg ansi-yellow-bg">)</span>
-<span class="ansi-green-fg">    173</span> figure_size_px = <span style="color:rgb(0,135,0)">self</span>.theme._figure_size_px
-<span class="ansi-green-fg">    174</span> <span style="font-weight:bold;color:rgb(0,135,0)">return</span> get_mimebundle(buf.getvalue(), <span style="color:rgb(0,135,0)">format</span>, figure_size_px)
-
-<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/ggplot.py:681</span>, in <span class="ansi-cyan-fg">ggplot.save</span><span class="ansi-blue-fg">(self, filename, format, path, width, height, units, dpi, limitsize, verbose, **kwargs)</span>
-<span class="ansi-green-fg">    632</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span><span style="color:rgb(188,188,188)"> </span><span class="ansi-blue-fg">save</span>(
-<span class="ansi-green-fg">    633</span>     <span style="color:rgb(0,135,0)">self</span>,
-<span class="ansi-green-fg">    634</span>     filename: Optional[<span style="color:rgb(0,135,0)">str</span> | Path | BytesIO] = <span style="font-weight:bold;color:rgb(0,135,0)">None</span>,
-<span class="ansi-green-fg">   (...)</span><span class="ansi-green-fg">    643</span>     **kwargs: Any,
-<span class="ansi-green-fg">    644</span> ):
-<span class="ansi-green-fg">    645</span> <span style="color:rgb(188,188,188)">    </span><span style="font-style:italic" class="ansi-yellow-fg">"""</span>
-<span class="ansi-green-fg">    646</span> <span style="font-style:italic" class="ansi-yellow-fg">    Save a ggplot object as an image file</span>
-<span class="ansi-green-fg">    647</span> 
-<span class="ansi-green-fg">   (...)</span><span class="ansi-green-fg">    679</span> <span style="font-style:italic" class="ansi-yellow-fg">        Additional arguments to pass to matplotlib `savefig()`.</span>
-<span class="ansi-green-fg">    680</span> <span style="font-style:italic" class="ansi-yellow-fg">    """</span>
-<span class="ansi-green-fg">--&gt; </span><span class="ansi-green-fg">681</span>     sv = <span class="ansi-black-fg ansi-yellow-bg">self</span><span class="ansi-black-fg ansi-yellow-bg">.</span><span class="ansi-black-fg ansi-yellow-bg">save_helper</span><span class="ansi-black-fg ansi-yellow-bg">(</span>
-<span class="ansi-green-fg">    682</span> <span class="ansi-black-fg ansi-yellow-bg">        </span><span class="ansi-black-fg ansi-yellow-bg">filename</span><span class="ansi-black-fg ansi-yellow-bg">=</span><span class="ansi-black-fg ansi-yellow-bg">filename</span><span class="ansi-black-fg ansi-yellow-bg">,</span>
-<span class="ansi-green-fg">    683</span> <span class="ansi-black-fg ansi-yellow-bg">        </span><span class="ansi-black-fg ansi-yellow-bg">format</span><span class="ansi-black-fg ansi-yellow-bg">=</span><span class="ansi-black-fg ansi-yellow-bg">format</span><span class="ansi-black-fg ansi-yellow-bg">,</span>
-<span class="ansi-green-fg">    684</span> <span class="ansi-black-fg ansi-yellow-bg">        </span><span class="ansi-black-fg ansi-yellow-bg">path</span><span class="ansi-black-fg ansi-yellow-bg">=</span><span class="ansi-black-fg ansi-yellow-bg">path</span><span class="ansi-black-fg ansi-yellow-bg">,</span>
-<span class="ansi-green-fg">    685</span> <span class="ansi-black-fg ansi-yellow-bg">        </span><span class="ansi-black-fg ansi-yellow-bg">width</span><span class="ansi-black-fg ansi-yellow-bg">=</span><span class="ansi-black-fg ansi-yellow-bg">width</span><span class="ansi-black-fg ansi-yellow-bg">,</span>
-<span class="ansi-green-fg">    686</span> <span class="ansi-black-fg ansi-yellow-bg">        </span><span class="ansi-black-fg ansi-yellow-bg">height</span><span class="ansi-black-fg ansi-yellow-bg">=</span><span class="ansi-black-fg ansi-yellow-bg">height</span><span class="ansi-black-fg ansi-yellow-bg">,</span>
-<span class="ansi-green-fg">    687</span> <span class="ansi-black-fg ansi-yellow-bg">        </span><span class="ansi-black-fg ansi-yellow-bg">units</span><span class="ansi-black-fg ansi-yellow-bg">=</span><span class="ansi-black-fg ansi-yellow-bg">units</span><span class="ansi-black-fg ansi-yellow-bg">,</span>
-<span class="ansi-green-fg">    688</span> <span class="ansi-black-fg ansi-yellow-bg">        </span><span class="ansi-black-fg ansi-yellow-bg">dpi</span><span class="ansi-black-fg ansi-yellow-bg">=</span><span class="ansi-black-fg ansi-yellow-bg">dpi</span><span class="ansi-black-fg ansi-yellow-bg">,</span>
-<span class="ansi-green-fg">    689</span> <span class="ansi-black-fg ansi-yellow-bg">        </span><span class="ansi-black-fg ansi-yellow-bg">limitsize</span><span class="ansi-black-fg ansi-yellow-bg">=</span><span class="ansi-black-fg ansi-yellow-bg">limitsize</span><span class="ansi-black-fg ansi-yellow-bg">,</span>
-<span class="ansi-green-fg">    690</span> <span class="ansi-black-fg ansi-yellow-bg">        </span><span class="ansi-black-fg ansi-yellow-bg">verbose</span><span class="ansi-black-fg ansi-yellow-bg">=</span><span class="ansi-black-fg ansi-yellow-bg">verbose</span><span class="ansi-black-fg ansi-yellow-bg">,</span>
-<span class="ansi-green-fg">    691</span> <span class="ansi-black-fg ansi-yellow-bg">        </span><span class="ansi-black-fg ansi-yellow-bg">*</span><span class="ansi-black-fg ansi-yellow-bg">*</span><span class="ansi-black-fg ansi-yellow-bg">kwargs</span><span class="ansi-black-fg ansi-yellow-bg">,</span>
-<span class="ansi-green-fg">    692</span> <span class="ansi-black-fg ansi-yellow-bg">    </span><span class="ansi-black-fg ansi-yellow-bg">)</span>
-<span class="ansi-green-fg">    694</span>     <span style="font-weight:bold;color:rgb(0,135,0)">with</span> plot_context(<span style="color:rgb(0,135,0)">self</span>).rc_context:
-<span class="ansi-green-fg">    695</span>         sv.figure.savefig(**sv.kwargs)
-
-<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/ggplot.py:629</span>, in <span class="ansi-cyan-fg">ggplot.save_helper</span><span class="ansi-blue-fg">(self, filename, format, path, width, height, units, dpi, limitsize, verbose, **kwargs)</span>
-<span class="ansi-green-fg">    626</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> dpi <span style="font-weight:bold;color:rgb(175,0,255)">is</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>:
-<span class="ansi-green-fg">    627</span>     <span style="color:rgb(0,135,0)">self</span>.theme = <span style="color:rgb(0,135,0)">self</span>.theme + theme(dpi=dpi)
-<span class="ansi-green-fg">--&gt; </span><span class="ansi-green-fg">629</span> figure = <span class="ansi-black-fg ansi-yellow-bg">self</span><span class="ansi-black-fg ansi-yellow-bg">.</span><span class="ansi-black-fg ansi-yellow-bg">draw</span><span class="ansi-black-fg ansi-yellow-bg">(</span><span class="ansi-black-fg ansi-yellow-bg">show</span><span class="ansi-black-fg ansi-yellow-bg">=</span><span class="ansi-black-fg ansi-yellow-bg ansi-bold">False</span><span class="ansi-black-fg ansi-yellow-bg">)</span>
-<span class="ansi-green-fg">    630</span> <span style="font-weight:bold;color:rgb(0,135,0)">return</span> mpl_save_view(figure, fig_kwargs)
-
-<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/ggplot.py:306</span>, in <span class="ansi-cyan-fg">ggplot.draw</span><span class="ansi-blue-fg">(self, show)</span>
-<span class="ansi-green-fg">    304</span> <span style="font-weight:bold;color:rgb(0,135,0)">with</span> plot_context(<span style="color:rgb(0,135,0)">self</span>, show=show):
-<span class="ansi-green-fg">    305</span>     figure = <span style="color:rgb(0,135,0)">self</span>._setup()
-<span class="ansi-green-fg">--&gt; </span><span class="ansi-green-fg">306</span>     <span class="ansi-black-fg ansi-yellow-bg">self</span><span class="ansi-black-fg ansi-yellow-bg">.</span><span class="ansi-black-fg ansi-yellow-bg">_build</span><span class="ansi-black-fg ansi-yellow-bg">(</span><span class="ansi-black-fg ansi-yellow-bg">)</span>
-<span class="ansi-green-fg">    308</span>     <span style="font-style:italic;color:rgb(95,135,135)"># setup</span>
-<span class="ansi-green-fg">    309</span>     <span style="color:rgb(0,135,0)">self</span>.axs = <span style="color:rgb(0,135,0)">self</span>.facet.setup(<span style="color:rgb(0,135,0)">self</span>)
-
-<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/ggplot.py:379</span>, in <span class="ansi-cyan-fg">ggplot._build</span><span class="ansi-blue-fg">(self)</span>
-<span class="ansi-green-fg">    375</span> layout.setup(layers, <span style="color:rgb(0,135,0)">self</span>)
-<span class="ansi-green-fg">    377</span> <span style="font-style:italic;color:rgb(95,135,135)"># Compute aesthetics to produce data with generalised</span>
-<span class="ansi-green-fg">    378</span> <span style="font-style:italic;color:rgb(95,135,135)"># variable names</span>
-<span class="ansi-green-fg">--&gt; </span><span class="ansi-green-fg">379</span> <span class="ansi-black-fg ansi-yellow-bg">layers</span><span class="ansi-black-fg ansi-yellow-bg">.</span><span class="ansi-black-fg ansi-yellow-bg">compute_aesthetics</span><span class="ansi-black-fg ansi-yellow-bg">(</span><span class="ansi-black-fg ansi-yellow-bg">self</span><span class="ansi-black-fg ansi-yellow-bg">)</span>
-<span class="ansi-green-fg">    381</span> <span style="font-style:italic;color:rgb(95,135,135)"># Transform data using all scales</span>
-<span class="ansi-green-fg">    382</span> layers.transform(scales)
-
-<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/layer.py:485</span>, in <span class="ansi-cyan-fg">Layers.compute_aesthetics</span><span class="ansi-blue-fg">(self, plot)</span>
-<span class="ansi-green-fg">    483</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span><span style="color:rgb(188,188,188)"> </span><span class="ansi-blue-fg">compute_aesthetics</span>(<span style="color:rgb(0,135,0)">self</span>, plot: ggplot):
-<span class="ansi-green-fg">    484</span>     <span style="font-weight:bold;color:rgb(0,135,0)">for</span> l <span style="font-weight:bold;color:rgb(175,0,255)">in</span> <span style="color:rgb(0,135,0)">self</span>:
-<span class="ansi-green-fg">--&gt; </span><span class="ansi-green-fg">485</span>         <span class="ansi-black-fg ansi-yellow-bg">l</span><span class="ansi-black-fg ansi-yellow-bg">.</span><span class="ansi-black-fg ansi-yellow-bg">compute_aesthetics</span><span class="ansi-black-fg ansi-yellow-bg">(</span><span class="ansi-black-fg ansi-yellow-bg">plot</span><span class="ansi-black-fg ansi-yellow-bg">)</span>
-
-<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/layer.py:269</span>, in <span class="ansi-cyan-fg">layer.compute_aesthetics</span><span class="ansi-blue-fg">(self, plot)</span>
-<span class="ansi-green-fg">    262</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span><span style="color:rgb(188,188,188)"> </span><span class="ansi-blue-fg">compute_aesthetics</span>(<span style="color:rgb(0,135,0)">self</span>, plot: ggplot):
-<span class="ansi-green-fg">    263</span> <span style="color:rgb(188,188,188)">    </span><span style="font-style:italic" class="ansi-yellow-fg">"""</span>
-<span class="ansi-green-fg">    264</span> <span style="font-style:italic" class="ansi-yellow-fg">    Return a dataframe where the columns match the aesthetic mappings</span>
-<span class="ansi-green-fg">    265</span> 
-<span class="ansi-green-fg">    266</span> <span style="font-style:italic" class="ansi-yellow-fg">    Transformations like 'factor(cyl)' and other</span>
-<span class="ansi-green-fg">    267</span> <span style="font-style:italic" class="ansi-yellow-fg">    expression evaluation are  made in here</span>
-<span class="ansi-green-fg">    268</span> <span style="font-style:italic" class="ansi-yellow-fg">    """</span>
-<span class="ansi-green-fg">--&gt; </span><span class="ansi-green-fg">269</span>     evaled = <span class="ansi-black-fg ansi-yellow-bg">evaluate</span><span class="ansi-black-fg ansi-yellow-bg">(</span><span class="ansi-black-fg ansi-yellow-bg">self</span><span class="ansi-black-fg ansi-yellow-bg">.</span><span class="ansi-black-fg ansi-yellow-bg">mapping</span><span class="ansi-black-fg ansi-yellow-bg">.</span><span class="ansi-black-fg ansi-yellow-bg">_starting</span><span class="ansi-black-fg ansi-yellow-bg">,</span><span class="ansi-black-fg ansi-yellow-bg"> </span><span class="ansi-black-fg ansi-yellow-bg">self</span><span class="ansi-black-fg ansi-yellow-bg">.</span><span class="ansi-black-fg ansi-yellow-bg">data</span><span class="ansi-black-fg ansi-yellow-bg">,</span><span class="ansi-black-fg ansi-yellow-bg"> </span><span class="ansi-black-fg ansi-yellow-bg">plot</span><span class="ansi-black-fg ansi-yellow-bg">.</span><span class="ansi-black-fg ansi-yellow-bg">environment</span><span class="ansi-black-fg ansi-yellow-bg">)</span>
-<span class="ansi-green-fg">    270</span>     evaled_aes = aes(**{<span style="color:rgb(0,135,0)">str</span>(col): col <span style="font-weight:bold;color:rgb(0,135,0)">for</span> col <span style="font-weight:bold;color:rgb(175,0,255)">in</span> evaled})
-<span class="ansi-green-fg">    271</span>     plot.scales.add_defaults(evaled, evaled_aes)
-
-<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/mapping/evaluation.py:168</span>, in <span class="ansi-cyan-fg">evaluate</span><span class="ansi-blue-fg">(aesthetics, data, env)</span>
-<span class="ansi-green-fg">    166</span> <span style="font-weight:bold;color:rgb(0,135,0)">except</span> <span style="font-weight:bold;color:rgb(215,95,95)">Exception</span> <span style="font-weight:bold;color:rgb(0,135,0)">as</span> e:
-<span class="ansi-green-fg">    167</span>     msg = _TPL_EVAL_FAIL.format(ae, col, <span style="color:rgb(0,135,0)">str</span>(e))
-<span class="ansi-green-fg">--&gt; </span><span class="ansi-green-fg">168</span>     <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> PlotnineError(msg) <span style="font-weight:bold;color:rgb(0,135,0)">from</span><span style="color:rgb(188,188,188)"> </span><span class="ansi-blue-fg ansi-bold">e</span>
-<span class="ansi-green-fg">    170</span> <span style="font-weight:bold;color:rgb(0,135,0)">try</span>:
-<span class="ansi-green-fg">    171</span>     evaled[ae] = new_val
-
-<span class="ansi-red-fg">PlotnineError</span>: "Could not evaluate the 'y' mapping: 'log(gs*1000)' (original error: name 'log' is not defined)"</pre>
+::: {.cell-output .cell-output-stderr}
 ```
-:::
-
+/home/ecamo19/Documents/projects/modeling/plant_hydraulics/.pixi/envs/default/lib/python3.14/site-packages/plotnine/layer.py:293: PlotnineWarning: stat_boxplot : Removed 15 rows containing non-finite values.
+```
 :::
 
 ::: {.cell-output .cell-output-display}
-```
-<plotnine.ggplot.ggplot object>
-```
-:::
-:::
-
-
-::: {#9b77d700 .cell}
-``` {.python .cell-code}
-(raw_plc >> filter(_.HW_treatment == "heatwave") >> 
- select('T_treatment', 'HW_treatment', 'plc') 
- 
- )
-```
-
-::: {.cell-output .cell-output-display}
-```{=html}
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>T_treatment</th>
-      <th>HW_treatment</th>
-      <th>plc</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>4</th>
-      <td>ambient</td>
-      <td>heatwave</td>
-      <td>7.159086</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>ambient</td>
-      <td>heatwave</td>
-      <td>6.325573</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>elevated</td>
-      <td>heatwave</td>
-      <td>7.594950</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>elevated</td>
-      <td>heatwave</td>
-      <td>3.176804</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>ambient</td>
-      <td>heatwave</td>
-      <td>7.540274</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>ambient</td>
-      <td>heatwave</td>
-      <td>6.877202</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>ambient</td>
-      <td>heatwave</td>
-      <td>2.091609</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>ambient</td>
-      <td>heatwave</td>
-      <td>6.171386</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>elevated</td>
-      <td>heatwave</td>
-      <td>0.141553</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>elevated</td>
-      <td>heatwave</td>
-      <td>0.547783</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>elevated</td>
-      <td>heatwave</td>
-      <td>0.834611</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>elevated</td>
-      <td>heatwave</td>
-      <td>0.009616</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>ambient</td>
-      <td>heatwave</td>
-      <td>7.962911</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>ambient</td>
-      <td>heatwave</td>
-      <td>10.545035</td>
-    </tr>
-    <tr>
-      <th>30</th>
-      <td>elevated</td>
-      <td>heatwave</td>
-      <td>2.116451</td>
-    </tr>
-    <tr>
-      <th>31</th>
-      <td>elevated</td>
-      <td>heatwave</td>
-      <td>6.023741</td>
-    </tr>
-    <tr>
-      <th>36</th>
-      <td>ambient</td>
-      <td>heatwave</td>
-      <td>12.800527</td>
-    </tr>
-    <tr>
-      <th>37</th>
-      <td>ambient</td>
-      <td>heatwave</td>
-      <td>15.382486</td>
-    </tr>
-    <tr>
-      <th>40</th>
-      <td>ambient</td>
-      <td>heatwave</td>
-      <td>6.726526</td>
-    </tr>
-    <tr>
-      <th>41</th>
-      <td>ambient</td>
-      <td>heatwave</td>
-      <td>11.251698</td>
-    </tr>
-    <tr>
-      <th>42</th>
-      <td>elevated</td>
-      <td>heatwave</td>
-      <td>1.294043</td>
-    </tr>
-    <tr>
-      <th>43</th>
-      <td>elevated</td>
-      <td>heatwave</td>
-      <td>1.166225</td>
-    </tr>
-    <tr>
-      <th>46</th>
-      <td>elevated</td>
-      <td>heatwave</td>
-      <td>4.157611</td>
-    </tr>
-    <tr>
-      <th>47</th>
-      <td>elevated</td>
-      <td>heatwave</td>
-      <td>0.071176</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-```
-:::
-:::
-
-
-::: {#b9ef6934 .cell}
-``` {.python .cell-code}
-(ggplot()
- + geom_point(raw_chamber_data, aes(x = 'T_air', y = 'PLC_leaf'))
- )
-
-raw_chamber_data
-```
-
-::: {.cell-output .cell-output-display}
-```{=html}
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>DateTime_hr</th>
-      <th>chamber</th>
-      <th>T_treatment</th>
-      <th>HWtrt</th>
-      <th>combotrt</th>
-      <th>PAR</th>
-      <th>PPFD_Avg</th>
-      <th>Tair_al</th>
-      <th>TargTempC_Avg</th>
-      <th>VPD</th>
-      <th>Photo</th>
-      <th>Trans</th>
-      <th>FluxCO2</th>
-      <th>FluxH2O</th>
-      <th>LeafArea</th>
-      <th>Tdiff</th>
-      <th>leaftoairVPD</th>
-      <th>gs</th>
-      <th>Atogs</th>
-      <th>temp_bin</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>42</th>
-      <td>2016-10-29 08:30:00</td>
-      <td>C09</td>
-      <td>ambient</td>
-      <td>HW</td>
-      <td>ambient_HW</td>
-      <td>805.4</td>
-      <td>259.073333</td>
-      <td>18.411248</td>
-      <td>18.946667</td>
-      <td>0.261311</td>
-      <td>4.653162</td>
-      <td>0.317972</td>
-      <td>0.079854</td>
-      <td>0.005457</td>
-      <td>17.161261</td>
-      <td>0.535419</td>
-      <td>0.333722</td>
-      <td>0.095281</td>
-      <td>0.048836</td>
-      <td>(17.5, 20.0]</td>
-    </tr>
-    <tr>
-      <th>45</th>
-      <td>2016-10-29 09:00:00</td>
-      <td>C03</td>
-      <td>ambient</td>
-      <td>HW</td>
-      <td>ambient_HW</td>
-      <td>1243.8</td>
-      <td>1398.156667</td>
-      <td>20.985444</td>
-      <td>24.001667</td>
-      <td>0.436916</td>
-      <td>9.816100</td>
-      <td>0.758170</td>
-      <td>0.121192</td>
-      <td>0.009361</td>
-      <td>12.346251</td>
-      <td>3.016223</td>
-      <td>0.938592</td>
-      <td>0.080777</td>
-      <td>0.121520</td>
-      <td>(22.5, 25.0]</td>
-    </tr>
-    <tr>
-      <th>47</th>
-      <td>2016-10-29 09:00:00</td>
-      <td>C07</td>
-      <td>ambient</td>
-      <td>HW</td>
-      <td>ambient_HW</td>
-      <td>1453.1</td>
-      <td>1305.076667</td>
-      <td>20.042771</td>
-      <td>23.336000</td>
-      <td>0.363751</td>
-      <td>8.640184</td>
-      <td>0.756307</td>
-      <td>0.126152</td>
-      <td>0.011043</td>
-      <td>14.600664</td>
-      <td>3.293229</td>
-      <td>0.888600</td>
-      <td>0.085112</td>
-      <td>0.101515</td>
-      <td>(22.5, 25.0]</td>
-    </tr>
-    <tr>
-      <th>48</th>
-      <td>2016-10-29 09:00:00</td>
-      <td>C09</td>
-      <td>ambient</td>
-      <td>HW</td>
-      <td>ambient_HW</td>
-      <td>1556.9</td>
-      <td>1322.333333</td>
-      <td>20.100288</td>
-      <td>22.714000</td>
-      <td>0.341839</td>
-      <td>10.455595</td>
-      <td>0.625009</td>
-      <td>0.179431</td>
-      <td>0.010726</td>
-      <td>17.161261</td>
-      <td>2.613712</td>
-      <td>0.751975</td>
-      <td>0.083116</td>
-      <td>0.125796</td>
-      <td>(22.5, 25.0]</td>
-    </tr>
-    <tr>
-      <th>51</th>
-      <td>2016-10-29 09:30:00</td>
-      <td>C03</td>
-      <td>ambient</td>
-      <td>HW</td>
-      <td>ambient_HW</td>
-      <td>1630.4</td>
-      <td>1597.200000</td>
-      <td>21.338174</td>
-      <td>24.484667</td>
-      <td>0.494652</td>
-      <td>11.834850</td>
-      <td>0.727829</td>
-      <td>0.146116</td>
-      <td>0.008986</td>
-      <td>12.346251</td>
-      <td>3.146493</td>
-      <td>1.029771</td>
-      <td>0.070679</td>
-      <td>0.167446</td>
-      <td>(22.5, 25.0]</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>2295</th>
-      <td>2016-11-11 15:00:00</td>
-      <td>C07</td>
-      <td>ambient</td>
-      <td>HW</td>
-      <td>ambient_HW</td>
-      <td>1138.9</td>
-      <td>342.773333</td>
-      <td>27.244663</td>
-      <td>28.716333</td>
-      <td>1.528418</td>
-      <td>6.530467</td>
-      <td>1.777868</td>
-      <td>0.095349</td>
-      <td>0.025958</td>
-      <td>14.600664</td>
-      <td>1.471671</td>
-      <td>1.853797</td>
-      <td>0.095904</td>
-      <td>0.068094</td>
-      <td>(27.5, 30.0]</td>
-    </tr>
-    <tr>
-      <th>2296</th>
-      <td>2016-11-11 15:00:00</td>
-      <td>C09</td>
-      <td>ambient</td>
-      <td>HW</td>
-      <td>ambient_HW</td>
-      <td>1099.0</td>
-      <td>1077.433333</td>
-      <td>26.930350</td>
-      <td>29.116000</td>
-      <td>1.432955</td>
-      <td>6.692262</td>
-      <td>1.775116</td>
-      <td>0.114848</td>
-      <td>0.030463</td>
-      <td>17.161261</td>
-      <td>2.185650</td>
-      <td>1.917356</td>
-      <td>0.092581</td>
-      <td>0.072285</td>
-      <td>(27.5, 30.0]</td>
-    </tr>
-    <tr>
-      <th>2299</th>
-      <td>2016-11-11 15:30:00</td>
-      <td>C03</td>
-      <td>ambient</td>
-      <td>HW</td>
-      <td>ambient_HW</td>
-      <td>989.4</td>
-      <td>252.983333</td>
-      <td>26.396116</td>
-      <td>26.331333</td>
-      <td>1.217014</td>
-      <td>2.138628</td>
-      <td>0.431374</td>
-      <td>0.026404</td>
-      <td>0.005326</td>
-      <td>12.346251</td>
-      <td>-0.064782</td>
-      <td>1.203831</td>
-      <td>0.035833</td>
-      <td>0.059683</td>
-      <td>(25.0, 27.5]</td>
-    </tr>
-    <tr>
-      <th>2301</th>
-      <td>2016-11-11 15:30:00</td>
-      <td>C07</td>
-      <td>ambient</td>
-      <td>HW</td>
-      <td>ambient_HW</td>
-      <td>946.8</td>
-      <td>375.263333</td>
-      <td>26.470588</td>
-      <td>27.694000</td>
-      <td>1.427771</td>
-      <td>6.061805</td>
-      <td>1.729572</td>
-      <td>0.088506</td>
-      <td>0.025253</td>
-      <td>14.600664</td>
-      <td>1.223412</td>
-      <td>1.686123</td>
-      <td>0.102577</td>
-      <td>0.059095</td>
-      <td>(27.5, 30.0]</td>
-    </tr>
-    <tr>
-      <th>2302</th>
-      <td>2016-11-11 15:30:00</td>
-      <td>C09</td>
-      <td>ambient</td>
-      <td>HW</td>
-      <td>ambient_HW</td>
-      <td>824.5</td>
-      <td>362.280000</td>
-      <td>26.329185</td>
-      <td>28.269667</td>
-      <td>1.369254</td>
-      <td>6.451270</td>
-      <td>1.651240</td>
-      <td>0.110712</td>
-      <td>0.028337</td>
-      <td>17.161261</td>
-      <td>1.940481</td>
-      <td>1.783698</td>
-      <td>0.092574</td>
-      <td>0.069688</td>
-      <td>(27.5, 30.0]</td>
-    </tr>
-  </tbody>
-</table>
-<p>637 rows × 20 columns</p>
-</div>
-```
+![](305_tutorial_sureau_medlyn_files/figure-html/cell-22-output-2.png){}
 :::
 :::
 
