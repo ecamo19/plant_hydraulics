@@ -9,26 +9,23 @@ title: Leaf stomatal Medlyn
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/leaf_stomatal_medlyn.py#L15){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/leaf_stomatal_medlyn.py#L17){target="_blank" style="float:right; font-size:smaller"}
 
 ### leaf_stomatal_medlyn
 
 ```python
-
 def leaf_stomatal_medlyn(
     physcon:PhysCon, # Physical constants.
     atmos:Atmos, # Atmospheric forcing variables.
     leaf:Leaf, # Leaf parameters including:
-- g0 : float
-    Minimum stomatal conductance (mol H2O/m2/s).
-- g1_medlyn : float
-    Medlyn slope parameter (kPa^0.5).
-- minl_wp : float
-    Minimum leaf water potential (MPa) — the cavitation threshold.
+    # - g0 : float
+    #     Minimum stomatal conductance (mol H2O/m2/s).
+    # - g1_medlyn : float
+    #     Medlyn slope parameter (kPa^0.5).
+    # - minl_wp : float
+    #     Minimum leaf water potential (MPa) — the cavitation threshold.
     flux:Flux, # Flux variables. Must have tleaf, qa, psi_leaf, lsc, etc. set.
 )->Flux: # Updated flux object with converged gs, An, Tleaf, psi_leaf, etc.
-
-
 ```
 
 *Compute stomatal conductance using the Medlyn et al. (2011) model,*
@@ -94,8 +91,5 @@ where:
    gs = 0.01 + 1.6 * 4.633 * 0.02857
    gs = 0.01 + 0.212
    gs = 0.222 mol H2O/m2/s
-
-
-#### Example leaf_stomatal_medlyn()
 
 

@@ -11,36 +11,34 @@ title: SurEau object initialization
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_object_initialization.py#L17){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_object_initialization.py#L19){target="_blank" style="float:right; font-size:smaller"}
 
 ### init_soil
 
 ```python
-
 def init_soil(
     soil_params
 ):
-
-
 ```
+
+*Call self as a function.*
 
 
 
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_object_initialization.py#L35){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_object_initialization.py#L37){target="_blank" style="float:right; font-size:smaller"}
 
 ### init_plant
 
 ```python
-
 def init_plant(
     veg:SurEauVegetationParams
 ):
-
-
 ```
+
+*Call self as a function.*
 
 
 ## Yearly initialisation
@@ -49,17 +47,16 @@ def init_plant(
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_object_initialization.py#L61){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/sureau_object_initialization.py#L63){target="_blank" style="float:right; font-size:smaller"}
 
 ### yearly_init_plant
 
 ```python
-
 def yearly_init_plant(
     state:SurEauPlantState, fluxes:SurEauPlantFluxes, diag:SurEauPlantDiagnostics, params:SurEauVegetationParams
 ):
-
-
 ```
+
+*Call self as a function.*
 
 

@@ -41,43 +41,44 @@ Start with initial guess: Tleaf = Tair
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/leaf_temperature.py#L11){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/leaf_temperature.py#L13){target="_blank" style="float:right; font-size:smaller"}
 
 ### leaf_temperature
 
 ```python
-
 def leaf_temperature(
     physcon:PhysCon, # Physical constants:
-- tfrz : float
-    Freezing point of water (K).
-- mmh2o : float
-    Molecular mass of water (kg/mol).
-- sigma : float
-    Stefan-Boltzmann constant (W/m2/K4).
+    # - tfrz : float
+    #     Freezing point of water (K).
+    # - mmh2o : float
+    #     Molecular mass of water (kg/mol).
+    # - sigma : float
+    #     Stefan-Boltzmann constant (W/m2/K4).
     atmos:Atmos, # Atmospheric forcing variables:
-- patm : float
-    Atmospheric pressure (Pa).
-- cpair : float
-    Specific heat of air at constant pressure (J/mol/K).
-- tair : float
-    Air temperature (K).
-- eair : float
-    Vapor pressure of air (Pa).
+    # - patm : float
+    #     Atmospheric pressure (Pa).
+    # - cpair : float
+    #     Specific heat of air at constant pressure (J/mol/K).
+    # - tair : float
+    #     Air temperature (K).
+    # - eair : float
+    #     Vapor pressure of air (Pa).
     leaf:Leaf, # Leaf parameters:
-- emiss : float
-    Leaf emissivity (-).
-- tleaf : float
-    Leaf temperature (K). Used as initial guess on input
+    # - emiss : float
+    #     Leaf emissivity (-).
+    # - tleaf : float
+    #     Leaf temperature (K). Used as initial guess on input
+    # - stomata_distribution : int 
+    #      1 (hypostomatous) or 2 (amphistomatous) 
     flux:Flux, # Flux variables with the following inputs:
-- gbh : float
-    Leaf boundary layer conductance for heat (mol/m2 leaf/s).
-- gbv : float
-    Leaf boundary layer conductance for H2O (mol H2O/m2 leaf/s).
-- gs : float
-    Leaf stomatal conductance (mol H2O/m2 leaf/s).
-- qa : float
-    Leaf radiative forcing (W/m2 leaf).
+    # - gbh : float
+    #     Leaf boundary layer conductance for heat (mol/m2 leaf/s).
+    # - gbv : float
+    #     Leaf boundary layer conductance for H2O (mol H2O/m2 leaf/s).
+    # - gs : float
+    #     Leaf stomatal conductance (mol H2O/m2 leaf/s).
+    # - qa : float
+    #     Leaf radiative forcing (W/m2 leaf).
 )->Flux: # Updated flux object with the following attributes:
 - tleaf : float
     Leaf temperature (K). Updated to energy-balance solution on output.
@@ -91,14 +92,17 @@ def leaf_temperature(
     Leaf latent heat flux (W/m2 leaf).
 - etflx : float
     Leaf transpiration flux (mol H2O/m2 leaf/s).
-
-
 ```
 
 *Calculate leaf temperature and energy fluxes.*
 
-Solve the leaf energy balance using Newton-Raphson iteration to find the
-temperature that balances radiative forcing against longwave emission,
+The leaf temperature model implemented here is a steady state 
+meaning that Rn - H - λE = 0. This implies that the leaf temperature is 
+always in equilibrium with its environment, so there is no thermal lag. In
+other words, this model assumes no heat storage. 
+
+The leaf energy balance is solved by using Newton-Raphson iteration to find 
+the temperature that balances radiative forcing against longwave emission,
 sensible heat flux, and latent heat flux.
 
 __Parameters:__
@@ -120,6 +124,7 @@ __Parameters:__
 
     - emiss: Leaf emissivity (-).
     - tleaf: Leaf temperature (K). Used as initial guess on input
+    - stomata_distribution: 1 (hypostomatous) or 2 (amphistomatous) 
 
 - Flux: variables with the following inputs:
 

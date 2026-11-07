@@ -131,7 +131,7 @@ def sureau_soil_params(soil: SurEauSoilParams) -> SurEauSoilParams:
     n = len(depth)
     soil.n_layers = n
 
-    # Ensure arrays are properly sized
+    # Ensure arrays are properly sized ------------------------------------------
     for attr in [
         "RFC",
         "offset_psoil",
@@ -148,21 +148,26 @@ def sureau_soil_params(soil: SurEauSoilParams) -> SurEauSoilParams:
         if val.ndim == 0 or len(val) == 1:
             setattr(soil, attr, np.full(n, float(val.flat[0])))
 
-    # Layer thickness
+    # Layer thickness -----------------------------------------------------------
     soil.layer_thickness = np.concatenate([[depth[0]], np.diff(depth)])
 
-    # VG derived parameter
+    # VG m derived parameter-----------------------------------------------------
     soil.m = 1 - 1 / soil.n_vg
 
-    # Volumetric capacities → water heights [mm]
+    # Volumetric capacities -----------------------------------------------------
+    # Same as θ_sat in equation 8.8 but here express as water stock. For example
+    # a soil layer is 30 cm thick with θ_sat = 0.4 soil.V_saturation_capacity 
+    # will have 12 cm of water (0.4 × 30 cm) 
     soil.V_saturation_capacity = convert_FtoV(
         soil.saturation_capacity, soil.RFC, soil.layer_thickness
     )
+    
+    # Same as θ_res in equation 8.8 but here express as water stock.
     soil.V_residual_capacity = convert_FtoV(
         soil.residual_capacity, soil.RFC, soil.layer_thickness
     )
 
-    # Field capacity from psoil_at_field_capacity
+    # Field capacity from psoil_at_field_capacity -------------------------------
     if soil.PTF == "VG":
         theta_fc = (
             soil.residual_capacity
@@ -176,7 +181,7 @@ def sureau_soil_params(soil: SurEauSoilParams) -> SurEauSoilParams:
         ) ** (-1 / soil.b_camp)
     soil.V_field_capacity = convert_FtoV(theta_fc, soil.RFC, soil.layer_thickness)
 
-    # Wilting point at -1.5 MPa
+    # Wilting point at -1.5 MPa -------------------------------------------------
     if soil.PTF == "VG":
         theta_wp = (
             soil.residual_capacity

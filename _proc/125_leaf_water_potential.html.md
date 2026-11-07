@@ -48,32 +48,29 @@ Input: ψ_soil (soil water supply)
                     ▼
             Return ψ_leaf_new
                     │
-          (used by StomataEfficiency
+          (used by stomatal_efficiency
            to check: ψ_leaf > ψ_min ?)
 ```
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/leaf_water_potential.py#L109){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/leaf_water_potential.py#L111){target="_blank" style="float:right; font-size:smaller"}
 
 ### leaf_water_potential
 
 ```python
-
 def leaf_water_potential(
     physcon, # Physical constants (denh2o, grav).
     leaf, # Must always have:  capac, minl_wp
-For Mode A also:   vc_b, vc_c, gplant
-For Mode B also:   (uses flux.lsc, no extra leaf params)
+    # For Mode A also:   vc_b, vc_c, gplant
+    # For Mode B also:   (uses flux.lsc, no extra leaf params)
     flux, # etflx   — transpiration [mol H₂O/m²/s]
-psi_leaf — water potential at previous timestep [MPa]
-psi_soil — soil water potential [MPa]
-lsc      — leaf-specific conductance [mmol/m²/s/MPa]
-height   — canopy height [m]
-dt       — timestep [s]
+    # psi_leaf — water potential at previous timestep [MPa]
+    # psi_soil — soil water potential [MPa]
+    # lsc      — leaf-specific conductance [mmol/m²/s/MPa]
+    # height   — canopy height [m]
+    # dt       — timestep [s]
 ):
-
-
 ```
 
 *Leaf water potential with supply-curve equilibrium + capacitance dynamics.*

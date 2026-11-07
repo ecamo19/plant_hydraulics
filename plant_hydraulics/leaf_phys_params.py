@@ -211,10 +211,12 @@ def leaf_phys_params(params: Params, physcon: PhysCon, leaf: Leaf) -> Leaf:
     """
     # Vcmax and other parameters (at 25C) ---------------------------------------
     if leaf.c3psn == 1:
+        
         leaf.vcmax25 = 60.0
         leaf.jmax25 = 1.67 * leaf.vcmax25
         leaf.kp25_c4 = 0.0
         leaf.rd25 = 0.015 * leaf.vcmax25
+    
     else:
         leaf.vcmax25 = 40.0
         leaf.jmax25 = 0.0

@@ -62,20 +62,17 @@ At gs = gs_val − delta    At gs = gs_val
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/leaf_stomatal_efficiency.py#L14){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/leaf_stomatal_efficiency.py#L16){target="_blank" style="float:right; font-size:smaller"}
 
 ### leaf_stomatal_efficiency
 
 ```python
-
 def leaf_stomatal_efficiency(
     physcon:PhysCon, atmos:Atmos, leaf:Leaf, flux:Flux, gs_val:float
 )->tuple:
-
-
 ```
 
-*Stomatal water-use efficiency check and cavitation check to determine*
+*Stomatal water-use efficiency and cavitation check to determine*
 maximum gs.
 
 For the stomatal conductance gs_val, calculate photosynthesis and leaf

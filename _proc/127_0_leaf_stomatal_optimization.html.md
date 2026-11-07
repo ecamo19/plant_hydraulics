@@ -9,25 +9,19 @@ title: Leaf stomatal optimization
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/leaf_stomatal_optimization.py#L16){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/leaf_stomatal_optimization.py#L18){target="_blank" style="float:right; font-size:smaller"}
 
 ### leaf_stomatal_optimization
 
 ```python
-
 def leaf_stomatal_optimization(
     physcon:PhysCon, atmos:Atmos, leaf:Leaf, flux:Flux
 )->Flux:
-
-
 ```
 
 *Leaf stomatal optimization*
 
 Leaf temperature, energy fluxes, photosynthesis, and stomatal conductance
 with water-use efficiency stomatal optimization.
-
-
-#### Example leaf_stomatal_optimization()
 
 

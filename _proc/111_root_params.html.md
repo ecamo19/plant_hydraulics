@@ -9,17 +9,14 @@ title: Root params
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/root_parms.py#L10){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/root_parms.py#L12){target="_blank" style="float:right; font-size:smaller"}
 
 ### root_params
 
 ```python
-
 def root_params(
-    rootvar:type=<class 'plant_hydraulics.parameter_classes.RootVar'>
+    rootvar:type=RootVar
 )->RootVar:
-
-
 ```
 
 *Set fine root parameters.*
