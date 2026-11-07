@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Package utilities – plant_hydraulics</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./tree.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-447e42e69aaa9833c0ba1b986f430b20.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-d46534f1e0f77343e69d3aa2468cbef4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-d46534f1e0f77343e69d3aa2468cbef4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-d46534f1e0f77343e69d3aa2468cbef4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="Package utilities – plant_hydraulics">
+<meta property="og:image" content="https://ecamo19.github.io/plant_hydraulics/101_utils_files/figure-html/cell-7-output-1.png">
+<meta property="og:site_name" content="plant_hydraulics">
+<meta property="og:image:height" content="432">
+<meta property="og:image:width" content="589">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Site">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./tree.png" alt="" class="navbar-logo light-content">
+    <img src="./tree.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">plant_hydraulics</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-end">
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" aria-label="Toolbar">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./utils.html">Package utilities</a></li></ol></nav>
+        <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto" aria-label="Section">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./tree.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="./tree.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">plant_hydraulics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parameter_classes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parameter classes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./utils.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Package utilities</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./soil_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Soil params</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./root_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Root params</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./leaf_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leaf params</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./soil_resistance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Soil resistance</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./leaf_boundary_layer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leaf boundary layer</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./leaf_temperature.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leaf temperature</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./leaf_ci_optimization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leaf Ci optimization</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./leaf_phosynthesis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leaf photosynthesis</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./leaf_water_potential.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leaf water potential</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./leaf_stomatal_efficiency.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leaf stomatal efficiency</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./0_leaf_stomatal_optimization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leaf stomatal optimization</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./1_leaf_stomatal_medlyn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leaf stomatal Medlyn</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./2_leaf_stomatal_profit_max.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leaf stomatal profit-max</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./0_leaf_fluxes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Leaf fluxes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sureau_soil_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SurEau soil params</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sureau_vegetation_params.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SurEau vegetation params</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sureau_climate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SurEau climate</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sureau_soil_hydraulics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SurEau soil hydraulics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sureau_plant_hydraulics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SurEau plant hydraulics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sureau_photosynthesis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SurEau photosynthesis</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sureau_vegetation_processes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SurEau vegetation processes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sureau_object_initialization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SurEau object initialization</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sureau_solver.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SurEau solver</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./run_sureau.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Run SurEau</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tutorial_1_basic_run.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial 1: Basic model run</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tutorial_2_gs_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial 2: Stomatal model comparisons</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tutorial_3_profit_max_validation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial 3: Validating profix-max model vrs Sperry et al 2017 results</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tutorial_4_diurnal_sureau.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial 4: SurEau Basic run</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tutorial_sureau_medlyn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial 5: SurEau-Medlyn Basic run</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#sureau-utilities" id="toc-sureau-utilities" class="nav-link active" data-scroll-target="#sureau-utilities">SurEau utilities</a>
+  <ul class="collapse">
+  <li><a href="#soil-utilities" id="toc-soil-utilities" class="nav-link" data-scroll-target="#soil-utilities">Soil utilities</a></li>
+  <li><a href="#flux-conversions" id="toc-flux-conversions" class="nav-link" data-scroll-target="#flux-conversions">Flux conversions</a></li>
+  <li><a href="#climate-utilities" id="toc-climate-utilities" class="nav-link" data-scroll-target="#climate-utilities">Climate utilities</a></li>
+  <li><a href="#radiation-conversions" id="toc-radiation-conversions" class="nav-link" data-scroll-target="#radiation-conversions">Radiation conversions</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/ecamo19/plant_hydraulics/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content" tabindex="-1">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Package utilities</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<div id="6c4fe4fa" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:14.846884+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:14.968707+00:00&quot;,&quot;total&quot;:0.12182889199999636}}" data-execution_count="4">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L22" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="get_elevation" class="level3">
+<h3 class="anchored" data-anchor-id="get_elevation">get_elevation</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_elevation(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    lat:<span class="bu">float</span>, lon:<span class="bu">float</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="bu">float</span>:</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Query Open-Elevation API for elevation in meters.</em> Used in Penman-Montieh ETP_h calculation</p>
+</section>
+</div>
+<div id="eda5bc2a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:14.973381+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:14.979871+00:00&quot;,&quot;total&quot;:0.006495347999987189}}" data-execution_count="6">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L31" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="list_example_data" class="level3">
+<h3 class="anchored" data-anchor-id="list_example_data">list_example_data</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> list_example_data():</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>List all available example data files in the package data folder.</em></p>
+</section>
+</div>
+<div id="aa6e3da7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:14.982358+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:14.995920+00:00&quot;,&quot;total&quot;:0.013566765999996733}}" data-execution_count="8">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L44" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="load_example_data" class="level3">
+<h3 class="anchored" data-anchor-id="load_example_data">load_example_data</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_example_data(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    filename, sep:<span class="bu">str</span><span class="op">=</span><span class="st">','</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</div>
+<div id="13c966a8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.005558+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.024988+00:00&quot;,&quot;total&quot;:0.019434994999983246}}" data-execution_count="10">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L49" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="satvap" class="level3">
+<h3 class="anchored" data-anchor-id="satvap">satvap</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> satvap(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    tc:<span class="bu">float</span>, <span class="co"># Temperature (degC)</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="bu">tuple</span>[<span class="bu">float</span>, <span class="bu">float</span>]: <span class="co"># esat: Saturation vapor pressure (Pa), desat: d(esat)/dT (Pa/K).</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Compute saturation vapor pressure (esat) and the rate of change in</em> saturation vapor pressure with respect to temperature (dsat = d(esat)/dT).</p>
+<p>Polynomial approximations are from: Flatau et al.&nbsp;(1992) Polynomial fits to saturation vapor pressure. Journal of Applied Meteorology 31:1507-1513. Input temperature is Celsius.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li>tc: Temperature (degC).</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li>esat: Saturation vapor pressure (Pa)</li>
+<li>desat: d(esat)/dT (Pa/K).</li>
+</ul>
+</section>
+<section id="returns" class="level2">
+<h2 class="anchored" data-anchor-id="returns">Returns</h2>
+<p>esat,dsat : float esat: Saturation vapor pressure (Pa), desat: d(esat)/dT (Pa/K).</p>
+</section>
+</div>
+<section id="example-satvap" class="level4">
+<h4 class="anchored">Example satvap():</h4>
+<div id="047184af" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.025168+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.031188+00:00&quot;,&quot;total&quot;:0.006023763000001736}}" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="b16c7f88" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>saturation_vapor_pressure_esat <span class="op">=</span> []</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>saturation_vapor_pressure_dsat <span class="op">=</span> []</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>temperature_range <span class="op">=</span> []</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> each_temperature <span class="kw">in</span> <span class="bu">range</span>(<span class="op">-</span><span class="dv">20</span>, <span class="dv">65</span>, <span class="dv">5</span>):</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    temperature_range.append(each_temperature)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    saturation_vapor_pressure_esat.append(satvap(each_temperature)[<span class="dv">0</span>])</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    saturation_vapor_pressure_dsat.append(satvap(each_temperature)[<span class="dv">1</span>])</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Temperature"</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Esat"</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>plt.plot(temperature_range, saturation_vapor_pressure_esat)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="101_utils_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="29e81adf" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Temperature"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Dsat"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.plot(temperature_range, saturation_vapor_pressure_dsat)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="101_utils_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="4f1fa239" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.038336+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.045764+00:00&quot;,&quot;total&quot;:0.0074326790000043275}}" data-execution_count="13">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L167" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="latvap" class="level3">
+<h3 class="anchored" data-anchor-id="latvap">latvap</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> latvap(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    tc:<span class="bu">float</span>, <span class="co"># Temperature (degC).</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    mmh2o:<span class="bu">float</span>, <span class="co"># Molecular mass of water (kg/mol).</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="bu">float</span>: <span class="co"># Latent heat of vaporization (J/mol).</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Latent heat of vaporization (J/mol) at temperature tc (degC).</em></p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li>tc: Temperature (degC).</li>
+<li>mmh2o: Molecular mass of water (kg/mol).</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li>val: Latent heat of vaporization (J/mol).</li>
+</ul>
+</section>
+<section id="returns-1" class="level2">
+<h2 class="anchored" data-anchor-id="returns-1">Returns</h2>
+<p>val : float Latent heat of vaporization (J/mol).</p>
+</section>
+</div>
+<div id="c19b538d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.050314+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.062179+00:00&quot;,&quot;total&quot;:0.011871939000002385}}" data-execution_count="15">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L198" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="calc_radiative_forcing_qa" class="level3">
+<h3 class="anchored" data-anchor-id="calc_radiative_forcing_qa">calc_radiative_forcing_qa</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calc_radiative_forcing_qa(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    solar_down, <span class="co"># Total downward solar radiation incident on the leaf (W/m2).</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Split equally between visible and near-infrared wavebands.</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    leaf, <span class="co"># Leaf object with the following attributes:</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - rho : list[float]</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Leaf reflectance for visible and near-infrared wavebands (-).</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - tau : list[float]</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Leaf transmittance for visible and near-infrared wavebands (-).</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - emiss : float</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     Leaf emissivity (-).</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    ground_albedo, <span class="co"># Ground surface albedo for visible and near-infrared wavebands (-).</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    ground_lw, <span class="co"># Upward longwave radiation emitted by the ground surface (W/m2).</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    irsky, <span class="co"># Downward atmospheric longwave radiation (W/m2).</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>): <span class="co"># Leaf radiative forcing (W/m2 leaf). Sum of absorbed solar radiation</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>across both wavebands <span class="kw">and</span> absorbed longwave radiation <span class="im">from</span> sky <span class="kw">and</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>ground.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Calculate leaf radiative forcing Qa (Equation 10.3).</em></p>
+<p>Compute the total radiation absorbed by a leaf from solar (visible and near-infrared wavebands) and longwave (sky and ground) sources. Solar radiation is split equally between visible and near-infrared wavebands, and includes both direct and ground-reflected components.</p>
+<p>Implements Equation (10.3) from Bonan (2019):</p>
+<pre><code>Qa = Σ_Λ S↓_Λ (1 + ρg_Λ)(1 - ρℓ_Λ - τℓ_Λ) + εℓ (L↓sky + L↑g)</code></pre>
+<p>where Λ denotes visible and near-infrared wavebands, ρg is ground albedo, ρℓ and τℓ are leaf reflectance and transmittance, and εℓ is leaf emissivity. The factor (1 + ρg) accounts for solar radiation striking the upper leaf surface directly plus radiation reflected from the ground striking the lower surface.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><p>solar_down: Total downward solar radiation incident on the leaf (W/m2). Split equally between visible and near-infrared wavebands.</p></li>
+<li><p>leaf: Leaf object with the following attributes:</p>
+<ul>
+<li>rho: Leaf reflectance for visible and near-infrared wavebands (-).</li>
+<li>tau: Leaf transmittance for visible and near-infrared wavebands (-).</li>
+<li>emiss: Leaf emissivity (-).</li>
+</ul></li>
+<li><p>ground_albedo: Ground surface albedo for visible and near-infrared wavebands (-).</p></li>
+<li><p>ground_lw: Upward longwave radiation emitted by the ground surface (W/m2).</p></li>
+<li><p>irsky: Downward atmospheric longwave radiation (W/m2).</p></li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li>qa: Leaf radiative forcing (W/m2 leaf). Sum of absorbed solar radiation across both wavebands and absorbed longwave radiation from sky and ground.</li>
+</ul>
+</section>
+<section id="parameters" class="level2">
+<h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
+<p>solar_down : float Total downward solar radiation incident on the leaf (W/m2). Split equally between visible and near-infrared wavebands. leaf : Leaf Leaf object with the following attributes: - rho : list[float] Leaf reflectance for visible and near-infrared wavebands (-). - tau : list[float] Leaf transmittance for visible and near-infrared wavebands (-). - emiss : float Leaf emissivity (-). ground_albedo : list[float] Ground surface albedo for visible and near-infrared wavebands (-). ground_lw : float Upward longwave radiation emitted by the ground surface (W/m2). irsky : float Downward atmospheric longwave radiation (W/m2).</p>
+</section>
+<section id="returns-2" class="level2">
+<h2 class="anchored" data-anchor-id="returns-2">Returns</h2>
+<p>qa : float Leaf radiative forcing (W/m2 leaf). Sum of absorbed solar radiation across both wavebands and absorbed longwave radiation from sky and ground.</p>
+</section>
+</div>
+<div id="4347664b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.064044+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.074912+00:00&quot;,&quot;total&quot;:0.010873284000012973}}" data-execution_count="17">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L287" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="arrhenius_function" class="level3">
+<h3 class="anchored" data-anchor-id="arrhenius_function">arrhenius_function</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> arrhenius_function(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    tl, <span class="co"># Leaf Temperature (K)</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    ha, <span class="co"># Activation Energy (J mol–1)</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>): <span class="co"># Scaling factor that equals 1.0 at 25°C, greater than 1.0 above 25°C, and less than 1.0 below 25°C.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Temperature response function used in <a href="https://ecamo19.github.io/plant_hydraulics/leaf_phosynthesis.html#leaf_photosynthesis"><code>leaf_photosynthesis()</code></a></em></p>
+<p>Follows Eq 11.34:</p>
+<pre><code>f(t) = exp((deltaHa/298.15*r) * (1-298.15/Tl))</code></pre>
+<p>where deltaHa is the activation energy (J mol–1), Tl is the leaf temperature and r is the Universal gas constant (J/K/mol)</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li>tl: Leaf Temperature (K)</li>
+<li>ha: Activation Energy (deltaHa). This parameter controls how sensible each enzyme is to warming. A high deltaHa means the enzyme’s speed changes dramatically with temperature; a low deltaHa means it’s more stable.</li>
+</ul>
+<p>At 25°C (298.15 K), the function returns exactly 1.0, that’s the reference point. Above 25°C, it returns values greater than 1 (faster). Below 25°C, values less than 1 (slower).</p>
+</section>
+<section id="parameters-1" class="level2">
+<h2 class="anchored" data-anchor-id="parameters-1">Parameters</h2>
+<p>ha : float Activation Energy (J mol–1) tl : float Leaf Temperature (K)</p>
+</section>
+<section id="returns-3" class="level2">
+<h2 class="anchored" data-anchor-id="returns-3">Returns</h2>
+<p>fc: float Scaling factor that equals 1.0 at 25°C, greater than 1.0 above 25°C, and less than 1.0 below 25°C.</p>
+</section>
+</div>
+</section>
+<section id="example-arrhenious_function" class="level4">
+<h4 class="anchored">Example arrhenious_function()</h4>
+<div id="92747cdf" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> each_temperature <span class="kw">in</span> [<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>]:</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(each_temperature)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(arrhenius_function(tl<span class="op">=</span>each_temperature, ha<span class="op">=</span><span class="fl">9430.0</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>10
+2.4874007435848738e-48
+20
+1.0565873380195099e-23
+30
+1.7111652386662447e-15
+40
+2.1776356758106435e-11</code></pre>
+</div>
+</div>
+<div id="1d4a8877" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.076678+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.085880+00:00&quot;,&quot;total&quot;:0.00920770700000162}}" data-execution_count="19">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L327" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="inhibition_function" class="level3">
+<h3 class="anchored" data-anchor-id="inhibition_function">inhibition_function</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> inhibition_function(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    tl, <span class="co"># Leaf Temperature (K)</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    hd, <span class="co"># Deactivation Energy (J mol–1)</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    se, <span class="co"># Entropy term (MISSING UNITS)</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    fc, <span class="co"># Overheat Protection (MISSING UNITS)</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>High-temperature inhibition function used in <code>leaf_photosysthesis()</code>.</em> This function represents thermal breakdown of biochemical processes.</p>
+<p>Follows Eq 11.36:</p>
+<pre><code>        1 + exp[(298.15·ΔS - ΔHd) / (298.15·R)]</code></pre>
+<p>fH(Tl) = ────────────────────────────────────────── 1 + exp[(ΔS·Tl - ΔHd) / (R·Tl)]</p>
+<p>where deltaHd is the deactivation energy (J mol-1), Tl is the leaf temperature, deltaS is an entropy term and r is the Universal gas constant (J/K/mol).</p>
+<p>The combination arrhenius_function() * inhibition_function() creates the peaked response shown in the textbook’s Figure 11.3 — activity rises, peaks at an optimum, then falls.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li>tl : Leaf Temperature (K)</li>
+<li>hd : Deactivation Energy (J mol–1)</li>
+<li>se : Entropy term (MISSING UNITS)</li>
+<li>fc : Overheat Protection (MISSING UNITS)</li>
+</ul>
+</section>
+<section id="parameters-2" class="level2">
+<h2 class="anchored" data-anchor-id="parameters-2">Parameters</h2>
+<p>tl : float Leaf Temperature (K) hd : float Deactivation Energy (J mol–1) se : float Entropy term (MISSING UNITS) fc : float Overheat Protection (MISSING UNITS)</p>
+</section>
+</div>
+<div id="162c31a0" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.093245+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.103621+00:00&quot;,&quot;total&quot;:0.010382644000003438}}" data-execution_count="21">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L370" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="brent_root" class="level3">
+<h3 class="anchored" data-anchor-id="brent_root">brent_root</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> brent_root(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    func, <span class="co"># Function with signature func(physcon, atmos, leaf, flux, x) -&gt; (flux, fx)</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    physcon:plant_hydraulics.parameter_classes.PhysCon, atmos:plant_hydraulics.parameter_classes.Atmos,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    leaf:plant_hydraulics.parameter_classes.Leaf, flux:plant_hydraulics.parameter_classes.Flux, xa:<span class="bu">float</span>, xb:<span class="bu">float</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    tol:<span class="bu">float</span>, <span class="co"># Tolerance for the root.</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="bu">tuple</span>[plant_hydraulics.parameter_classes.Flux, <span class="bu">float</span>]: <span class="co"># Updated flux structure.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Brent’s root finder</em></p>
+<p>Use Brent’s method to find the root of a function, which is known to exist between xa and xb. The root is updated until its accuracy is tol. func is the name of the function to solve. The variable root is returned as the root of the function. The function being evaluated has the definition statement:</p>
+<p>function [flux, fx] = func (physcon, atmos, leaf, flux, x)</p>
+<p>The function func is exaluated at x and the returned value is fx. It uses variables in the physcon, atmos, leaf, and flux structures. These are passed in as input arguments. It also calculates values for variables in the flux structure so this must be returned in the function call as an output argument.</p>
+</section>
+<section id="parameters-3" class="level2">
+<h2 class="anchored" data-anchor-id="parameters-3">Parameters</h2>
+<p>func : callable Function with signature func(physcon, atmos, leaf, flux, x) -&gt; (flux, fx) xa, xb : float Bracket for the root. tol : float Tolerance for the root.</p>
+</section>
+<section id="returns-4" class="level2">
+<h2 class="anchored" data-anchor-id="returns-4">Returns</h2>
+<p>flux : Flux Updated flux structure. root : float Root of the function.</p>
+</section>
+</div>
+<pre><code>Input: bracket [a, b] where f(a) and f(b) have opposite signs
+                    │
+                    ▼
+        ┌───────────────────────────┐
+        │ Verify bracket:           │
+        │ f(a) · f(b) &lt; 0 ?         │
+        │ If not → ERROR            │
+        └───────────────────────────┘
+                    │
+                    ▼
+        ┌───────────────────────────┐
+        │ Initialize:               │
+        │ c = b, fc = fb            │
+        │ b = best guess            │
+        └───────────────────────────┘
+                    │
+                    ▼
+        ┌───────────────────────────┐
+        │       Main loop           │
+        │                           │
+        │  1 Ensure b,c bracket root│
+        │  2 Keep b as best guess   │
+        │  3 Converged? → STOP      │
+        │                           │
+        │  4 Can we interpolate?    │
+        │     ├─ YES: secant or     │
+        │     │  inverse quadratic  │
+        │     │    ├─ Step OK? USE  │
+        │     │    └─ Step bad?     │
+        │     │       BISECT        │
+        │     └─ NO: BISECT         │
+        │                           │
+        │  5 Take step: b = b + d   │
+        │  6 Evaluate f(b)          │
+        │  7 Loop back to 1         │
+        └───────────────────────────┘
+                    │
+                    ▼
+            Return b as root</code></pre>
+<div id="efa4b2ef" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.104930+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.108232+00:00&quot;,&quot;total&quot;:0.003306051000009802}}" data-execution_count="23">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L543" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="time_to_float" class="level3">
+<h3 class="anchored" data-anchor-id="time_to_float">time_to_float</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> time_to_float(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    time_str</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</div>
+<div id="26cfe907" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.109802+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.114134+00:00&quot;,&quot;total&quot;:0.004336868000024197}}" data-execution_count="25">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L548" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="diurnal_par" class="level3">
+<h3 class="anchored" data-anchor-id="diurnal_par">diurnal_par</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> diurnal_par(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    hour, <span class="co"># Hour of day (0-24). E.g., 6.5 = 6:30 AM.</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    par_max:<span class="bu">float</span><span class="op">=</span><span class="fl">800.0</span>, <span class="co"># Peak shortwave radiation at solar noon (W/m2).</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    sunrise:<span class="bu">float</span><span class="op">=</span><span class="fl">6.0</span>, sunset:<span class="bu">float</span><span class="op">=</span><span class="fl">20.0</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Shortwave radiation following a sinusoidal daytime curve.</em></p>
+<p>PAR = par_max * sin(π * (hour - sunrise) / daylength)</p>
+<p>Returns total shortwave in W/m² (split 50/50 VIS/NIR later). At night (before sunrise or after sunset): returns 0.</p>
+</section>
+<section id="parameters-4" class="level2">
+<h2 class="anchored" data-anchor-id="parameters-4">Parameters</h2>
+<p>hour : float Hour of day (0-24). E.g., 6.5 = 6:30 AM. par_max : float Peak shortwave radiation at solar noon (W/m2). sunrise, sunset : float Hours of sunrise and sunset.</p>
+</section>
+</div>
+</section>
+<section id="example-diurnal_par" class="level4">
+<h4 class="anchored">Example diurnal_par()</h4>
+<div id="52a03cae" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.114318+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.115031+00:00&quot;,&quot;total&quot;:0.0007163819999789212}}" data-execution_count="26">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime, timedelta</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="3950eb2c" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize start time (00:00)</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>start_time <span class="op">=</span> datetime.strptime(<span class="st">"00:00"</span>, <span class="st">"%H:%M"</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list of times every 30 minutes</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>current_time <span class="op">=</span> start_time</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create storing objects</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> []</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>par <span class="op">=</span> []</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 24 hours × 2 half-hour intervals</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">48</span>):</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Generate interval</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    current_time <span class="op">+=</span> timedelta(minutes<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    time.append(current_time.strftime(<span class="st">"%H:%M"</span>))</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calulate PAR</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    par.append(diurnal_par(hour<span class="op">=</span>time_to_float(current_time.strftime(<span class="st">"%H:%M"</span>))))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="5496fbaf" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>plt.plot(time, par, color<span class="op">=</span><span class="st">"blue"</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">"right"</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Hour"</span>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"PAR"</span>)</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/var/folders/xw/8jb87np92s1_mncrtmpvkzb80000gn/T/ipykernel_5902/1713457667.py:5: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+  plt.legend()</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="101_utils_files/figure-html/cell-19-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="24c33742" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.117200+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.121472+00:00&quot;,&quot;total&quot;:0.004275359000018852}}" data-execution_count="28">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L573" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="diurnal_temperature" class="level3">
+<h3 class="anchored" data-anchor-id="diurnal_temperature">diurnal_temperature</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> diurnal_temperature(</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    hour, t_mean:<span class="bu">float</span><span class="op">=</span><span class="fl">25.0</span>, t_amp:<span class="bu">float</span><span class="op">=</span><span class="fl">7.0</span>, t_min_hour:<span class="bu">float</span><span class="op">=</span><span class="fl">5.5</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Air temperature following a sinusoidal curve with minimum at dawn.</em></p>
+<p>Tair = t_mean + t_amp * sin(2π * (hour - t_min_hour) / 24 - π/2)</p>
+<p>This gives: Minimum at t_min_hour (dawn, ~5:30) Maximum at t_min_hour + 6 = 11:30… but real Tmax lags to ~14:00.</p>
+<p>To get the ~2-hour lag, we shift the phase: Tair = t_mean + t_amp * sin(2π * (hour - t_max_hour) / 24) where t_max_hour = 14.0 (2 PM), so minimum is at 14 - 12 = 2 AM… That’s too early for Tmin.</p>
+<p>Better approach: use an asymmetric function. Simpler: just use a sine with Tmax at 14:00. Tair = t_mean + t_amp * sin(2π * (hour - 8.0) / 24) This gives Tmax at 14:00 and Tmin at 2:00 AM. At dawn (6:00): T = 25 + 7<em>sin(2π</em>(-2)/24) = 25 + 7<em>sin(-π/6) = 25 - 3.5 = 21.5°C At noon (12:00): T = 25 + 7</em>sin(2π<em>4/24) = 25 + 7</em>sin(π/3) = 25 + 6.06 = 31.1°C At 14:00: T = 25 + 7<em>sin(2π</em>6/24) = 25 + 7<em>sin(π/2) = 32°C ← max At 20:00: T = 25 + 7</em>sin(2π*12/24) = 25 + 0 = 25°C</p>
+<p>That looks realistic!</p>
+</section>
+</div>
+</section>
+<section id="example-diurnal_temperature" class="level4">
+<h4 class="anchored">Example diurnal_temperature()</h4>
+<div id="8b936b6a" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize start time (00:00)</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>start_time <span class="op">=</span> datetime.strptime(<span class="st">"00:00"</span>, <span class="st">"%H:%M"</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list of times every 30 minutes</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>current_time <span class="op">=</span> start_time</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create storing objects</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> []</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>temp <span class="op">=</span> []</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 24 hours × 2 half-hour intervals</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">48</span>):</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Generate interval</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    current_time <span class="op">+=</span> timedelta(minutes<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    time.append(current_time.strftime(<span class="st">"%H:%M"</span>))</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calulate PAR</span></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>    temp.append(diurnal_temperature(hour<span class="op">=</span>time_to_float(current_time.strftime(<span class="st">"%H:%M"</span>))))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="50680137" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>plt.plot(time, temp, color<span class="op">=</span><span class="st">"red"</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">"right"</span>)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Hour"</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Temperature"</span>)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/var/folders/xw/8jb87np92s1_mncrtmpvkzb80000gn/T/ipykernel_5902/3388095162.py:5: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+  plt.legend()</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="101_utils_files/figure-html/cell-22-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="81be950e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.123786+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.127907+00:00&quot;,&quot;total&quot;:0.004124144000002161}}" data-execution_count="30">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L604" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="diurnal_relhum" class="level3">
+<h3 class="anchored" data-anchor-id="diurnal_relhum">diurnal_relhum</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> diurnal_relhum(</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    hour, rh_mean:<span class="bu">float</span><span class="op">=</span><span class="fl">65.0</span>, rh_amp:<span class="bu">float</span><span class="op">=</span><span class="fl">20.0</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Relative humidity, anti-correlated with temperature.</em></p>
+<p>RH is highest at dawn and lowest in the afternoon. We use the OPPOSITE phase of temperature: RH = rh_mean - rh_amp * sin(2π * (hour - 8) / 24)</p>
+<p>This gives: Maximum at 2:00 AM: 65 + 20 = 85% At dawn (6:00): 65 + 10 = 75% At noon (12:00): 65 - 17.3 = 47.7% Minimum at 14:00: 65 - 20 = 45% At sunset (20:00): 65%</p>
+<p>The negative sign flips the phase relative to temperature.</p>
+</section>
+</div>
+</section>
+<section id="example-diurnal_relhum" class="level4">
+<h4 class="anchored" data-anchor-id="example-diurnal_relhum">Example diurnal_relhum()</h4>
+<div id="4ccaa279" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize start time (00:00)</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>start_time <span class="op">=</span> datetime.strptime(<span class="st">"00:00"</span>, <span class="st">"%H:%M"</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list of times every 30 minutes</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>current_time <span class="op">=</span> start_time</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create storing objects</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> []</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>relative_humidity <span class="op">=</span> []</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 24 hours × 2 half-hour intervals</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">48</span>):</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Generate interval</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>    current_time <span class="op">+=</span> timedelta(minutes<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>    time.append(current_time.strftime(<span class="st">"%H:%M"</span>))</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calulate PAR</span></span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>    relative_humidity.append(</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>        diurnal_relhum(hour<span class="op">=</span>time_to_float(current_time.strftime(<span class="st">"%H:%M"</span>)))</span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="a51d6ab7" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>plt.plot(time, relative_humidity, color<span class="op">=</span><span class="st">"Green"</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">"right"</span>)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Hour"</span>)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Relative Humidity"</span>)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/var/folders/xw/8jb87np92s1_mncrtmpvkzb80000gn/T/ipykernel_5902/1613661216.py:5: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+  plt.legend()</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="101_utils_files/figure-html/cell-25-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sureau-utilities" class="level1">
+<h1>SurEau utilities</h1>
+<section id="soil-utilities" class="level2">
+<h2 class="anchored" data-anchor-id="soil-utilities">Soil utilities</h2>
+<div id="4895cb56" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.131337+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.137629+00:00&quot;,&quot;total&quot;:0.006296292000001813}}" data-execution_count="32">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L628" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="compute_theta_at_psi_vg" class="level3">
+<h3 class="anchored" data-anchor-id="compute_theta_at_psi_vg">compute_theta_at_psi_VG</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_theta_at_psi_VG(</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    PsiTarget:ArrayLike, <span class="co"># Target soil water potential in **MPa** (positive = suction).</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># For example, 1.5 MPa corresponds to the conventional wilting</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># point.</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    thetaRes:ArrayLike, <span class="co"># Residual volumetric water content θ_r (m³/m³).</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    thetaSat:ArrayLike, <span class="co"># Saturated volumetric water content θ_s (m³/m³).</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    alpha_vg:ArrayLike, <span class="co"># Van Genuchten α parameter (cm⁻¹).</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    n_vg:ArrayLike, <span class="co"># Van Genuchten n parameter (dimensionless).</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>numpy.ndarray: <span class="co"># Volumetric water content θ at the target potential (m³/m³).</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Compute volumetric water content at a given soil water potential</em> using the van Genuchten (1980) water retention model.</p>
+<p>The van Genuchten closed-form retention curve relates the effective saturation <em>S_e</em> to the matric potential <em>ψ</em> (suction) via two shape parameters α and n:</p>
+<p>.. math::</p>
+<pre><code>\theta(\psi) = \theta_r
+    + \frac{\theta_s - \theta_r}
+           {\bigl[1 + (\alpha \,|\psi|)^{n}\bigr]^{m}}</code></pre>
+<p>where:</p>
+<ul>
+<li><em>θ_s</em> is the saturated water content (m³/m³),</li>
+<li><em>θ_r</em> is the residual water content (m³/m³),</li>
+<li><em>α</em> is related to the inverse of the air-entry pressure (cm⁻¹),</li>
+<li><em>n</em> is the pore-size distribution index (dimensionless, n &gt; 1),</li>
+<li><em>m = 1 − 1/n</em> (Mualem constraint).</li>
+</ul>
+<p>.. note:: In SurEau-Ecos, <em>PsiTarget</em> is supplied in <strong>MPa</strong> (positive suction convention) and is converted internally to the hPa (≡ cm H₂O) domain expected by the VG α parameter via multiplication by 10 000.</p>
+</section>
+<section id="parameters-5" class="level2">
+<h2 class="anchored" data-anchor-id="parameters-5">Parameters</h2>
+<p>PsiTarget : array_like Target soil water potential in <strong>MPa</strong> (positive = suction). For example, 1.5 MPa corresponds to the conventional wilting point. thetaRes : array_like Residual volumetric water content θ_r (m³/m³). thetaSat : array_like Saturated volumetric water content θ_s (m³/m³). alpha_vg : array_like Van Genuchten α parameter (cm⁻¹). n_vg : array_like Van Genuchten n parameter (dimensionless).</p>
+</section>
+<section id="returns-5" class="level2">
+<h2 class="anchored" data-anchor-id="returns-5">Returns</h2>
+<p>np.ndarray Volumetric water content θ at the target potential (m³/m³).</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p>van Genuchten, M.Th. (1980). A closed-form equation for predicting the hydraulic conductivity of unsaturated soils. <em>Soil Sci. Soc. Am. J.</em>, 44(5), 892–898.</p>
+</section>
+</div>
+<div id="c0c91451" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.139802+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.145373+00:00&quot;,&quot;total&quot;:0.005575446999984024}}" data-execution_count="34">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L701" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="compute_theta_at_psi_campbell" class="level3">
+<h3 class="anchored" data-anchor-id="compute_theta_at_psi_campbell">compute_theta_at_psi_Campbell</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_theta_at_psi_Campbell(</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    PsiTarget:ArrayLike, <span class="co"># Target soil water potential (MPa, **negative** = suction).</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    thetaSat:ArrayLike, <span class="co"># Saturated volumetric water content θ_s (m³/m³).</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    psie:ArrayLike, <span class="co"># Air-entry potential ψ_e (MPa, **negative**).</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    b:ArrayLike, <span class="co"># Campbell shape parameter (positive, dimensionless).</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span>numpy.ndarray: <span class="co"># Volumetric water content θ at the target potential (m³/m³).</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Compute volumetric water content at a given soil water potential</em> using the inverse Campbell (1974) retention curve.</p>
+<p>Starting from the Campbell retention equation:</p>
+<p>.. math::</p>
+<pre><code>\psi = \psi_e \left(\frac{\theta}{\theta_s}\right)^{-b}</code></pre>
+<p>algebraic inversion yields the water content at a target potential <em>ψ_target</em>:</p>
+<p>.. math::</p>
+<pre><code>\theta(\psi_{\text{target}}) = \theta_s
+    \left(
+        \frac{-\psi_{\text{target}}}{-\psi_e}
+    \right)^{-1/b}</code></pre>
+<p>The double negation ensures correct handling of the sign convention (both <em>ψ_target</em> and <em>ψ_e</em> are negative / suction).</p>
+</section>
+<section id="parameters-6" class="level2">
+<h2 class="anchored" data-anchor-id="parameters-6">Parameters</h2>
+<p>PsiTarget : array_like Target soil water potential (MPa, <strong>negative</strong> = suction). thetaSat : array_like Saturated volumetric water content θ_s (m³/m³). psie : array_like Air-entry potential ψ_e (MPa, <strong>negative</strong>). b : array_like Campbell shape parameter (positive, dimensionless).</p>
+</section>
+<section id="returns-6" class="level2">
+<h2 class="anchored" data-anchor-id="returns-6">Returns</h2>
+<p>np.ndarray Volumetric water content θ at the target potential (m³/m³).</p>
+</section>
+<section id="notes" class="level2">
+<h2 class="anchored" data-anchor-id="notes">Notes</h2>
+<p>For very dry conditions (|ψ_target| ≫ |ψ_e|), the returned water content can approach zero. In the SurEau model this value is used as the “residual capacity” for the Campbell PTF (e.g. θ at −100 MPa serves as an approximate θ_r).</p>
+</section>
+<section id="references-1" class="level2">
+<h2 class="anchored" data-anchor-id="references-1">References</h2>
+<p>Campbell, G.S. (1974). A simple method for determining unsaturated conductivity from moisture retention data. <em>Soil Science</em>, 117(6), 311–314.</p>
+</section>
+</div>
+</section>
+<section id="flux-conversions" class="level2">
+<h2 class="anchored" data-anchor-id="flux-conversions">Flux conversions</h2>
+<div id="f25d6d6d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.146536+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.149917+00:00&quot;,&quot;total&quot;:0.0033848969999894507}}" data-execution_count="36">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L767" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="flux_leaf_to_stand" class="level3">
+<h3 class="anchored" data-anchor-id="flux_leaf_to_stand">flux_leaf_to_stand</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> flux_leaf_to_stand(</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    x, dt, LAI:<span class="bu">float</span><span class="op">=</span><span class="fl">1.0</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>mmol/m²leaf/s → mm/m²soil over dt hours.</em></p>
+</section>
+</div>
+<div id="980d8719" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.151253+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.154880+00:00&quot;,&quot;total&quot;:0.0036310219999791116}}" data-execution_count="38">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L772" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="flux_mm_to_mmol_m2leaf_s" class="level3">
+<h3 class="anchored" data-anchor-id="flux_mm_to_mmol_m2leaf_s">flux_mm_to_mmol_m2leaf_s</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> flux_mm_to_mmol_m2leaf_s(</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    x, dt, LAI</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>mm/m²soil over dt hours → mmol/m²leaf/s.</em></p>
+</section>
+</div>
+<div id="e511b38b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.155995+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.159413+00:00&quot;,&quot;total&quot;:0.0034226499999761018}}" data-execution_count="40">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L779" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="convert_ftov" class="level3">
+<h3 class="anchored" data-anchor-id="convert_ftov">convert_FtoV</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> convert_FtoV(</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>    x, RFC, layer_thickness</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Volumetric water content (m³/m³) → water height (mm).</em></p>
+</section>
+</div>
+</section>
+<section id="climate-utilities" class="level2">
+<h2 class="anchored" data-anchor-id="climate-utilities">Climate utilities</h2>
+<div id="654d68b3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.161057+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.164831+00:00&quot;,&quot;total&quot;:0.0037780789999999342}}" data-execution_count="42">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L784" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="compute_vpd" class="level3">
+<h3 class="anchored" data-anchor-id="compute_vpd">compute_VPD</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_VPD(</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    RH, T</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Compute VPD [kPa] from relative humidity [%] and temperature [°C].</em></p>
+</section>
+</div>
+<div id="7afaaca2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.165955+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.169429+00:00&quot;,&quot;total&quot;:0.0034790780000264476}}" data-execution_count="44">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L795" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="compute_slope_sat" class="level3">
+<h3 class="anchored" data-anchor-id="compute_slope_sat">compute_slope_sat</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_slope_sat(</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    T</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Slope of saturation vapour pressure curve [kPa/°C].</em></p>
+</section>
+</div>
+<div id="92489dc2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.170763+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.174370+00:00&quot;,&quot;total&quot;:0.003610960999992585}}" data-execution_count="46">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L800" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="compute_etp_pt" class="level3">
+<h3 class="anchored" data-anchor-id="compute_etp_pt">compute_ETP_PT</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_ETP_PT(</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    T_mean, net_radiation, PT_coeff, G:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Priestley-Taylor PET [mm].</em></p>
+</section>
+</div>
+<div id="83a5a888" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.176680+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.181164+00:00&quot;,&quot;total&quot;:0.00448890500001653}}" data-execution_count="48">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L808" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="compute_etp_pm" class="level3">
+<h3 class="anchored" data-anchor-id="compute_etp_pm">compute_ETP_PM</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_ETP_PM(</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>    T_mean, net_radiation, u, vpd, G:<span class="bu">float</span><span class="op">=</span><span class="fl">0.0</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Penman-Monteith PET [mm].</em></p>
+</section>
+</div>
+</section>
+<section id="radiation-conversions" class="level2">
+<h2 class="anchored" data-anchor-id="radiation-conversions">Radiation conversions</h2>
+<div id="200afdf1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.182284+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.185768+00:00&quot;,&quot;total&quot;:0.003488304000001108}}" data-execution_count="50">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L824" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="rg_mj_to_watt" class="level3">
+<h3 class="anchored" data-anchor-id="rg_mj_to_watt">Rg_MJ_to_Watt</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> Rg_MJ_to_Watt(</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>    Rg_MJ, N_hours</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>MJ → W/m² given N_hours.</em></p>
+</section>
+</div>
+<div id="c8d79464" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.186865+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.190445+00:00&quot;,&quot;total&quot;:0.00358434299999999}}" data-execution_count="52">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L829" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="rg_watt_to_ppfd" class="level3">
+<h3 class="anchored" data-anchor-id="rg_watt_to_ppfd">Rg_Watt_to_PPFD</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> Rg_Watt_to_PPFD(</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>    Rg_W, J_to_mol:<span class="bu">float</span><span class="op">=</span><span class="fl">4.6</span>, frac_PAR:<span class="bu">float</span><span class="op">=</span><span class="fl">0.5</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>W/m² → µmol/m²/s PPFD.</em></p>
+</section>
+</div>
+<div id="2d1d0825" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.191873+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.195500+00:00&quot;,&quot;total&quot;:0.003631903000012926}}" data-execution_count="54">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L834" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="declination" class="level3">
+<h3 class="anchored" data-anchor-id="declination">declination</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> declination(</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    DOY</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Solar declination [rad].</em></p>
+</section>
+</div>
+<div id="901ab4b3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.198329+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.203529+00:00&quot;,&quot;total&quot;:0.005204243999997971}}" data-execution_count="56">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L843" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="potential_par" class="level3">
+<h3 class="anchored" data-anchor-id="potential_par">potential_PAR</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> potential_PAR(</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>    time_of_day, lat, DOY</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Potential PAR [W/m²] at given hours, latitude, and DOY.</em></p>
+</section>
+</div>
+<div id="6144b03e" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.206402+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.211488+00:00&quot;,&quot;total&quot;:0.005090357000000267}}" data-execution_count="58">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L863" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="daylength" class="level3">
+<h3 class="anchored" data-anchor-id="daylength">daylength</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> daylength(</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>    latitude, JDay</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Compute sunrise [h], sunset [h], daylength [h].</em></p>
+</section>
+</div>
+<div id="aa2ebe32" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.213313+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.217367+00:00&quot;,&quot;total&quot;:0.004058890000010251}}" data-execution_count="60">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L888" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="radiation_diurnal_pattern" class="level3">
+<h3 class="anchored" data-anchor-id="radiation_diurnal_pattern">radiation_diurnal_pattern</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> radiation_diurnal_pattern(</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>    time_sec, daylength_sec</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Fractional radiation at time_sec from sunrise, given daylength in seconds.</em></p>
+</section>
+</div>
+<div id="34630530" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.219502+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.224056+00:00&quot;,&quot;total&quot;:0.004557887000004257}}" data-execution_count="62">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L901" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="temperature_diurnal" class="level3">
+<h3 class="anchored" data-anchor-id="temperature_diurnal">temperature_diurnal</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> temperature_diurnal(</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>    time_sec, tmin, tmax, tmin_prev, tmax_prev, tmin_next, daylength_sec</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Sinusoidal temperature disaggregation (McMurtrie et al.&nbsp;1990).</em></p>
+</section>
+</div>
+<div id="e21e9033" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-11-07T03:39:15.225526+00:00&quot;,&quot;shell.execute_reply&quot;:&quot;2026-11-07T03:39:15.229206+00:00&quot;,&quot;total&quot;:0.0036849109999934626}}" data-execution_count="64">
+<hr>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/utils.py#L920" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="rh_diurnal" class="level3">
+<h3 class="anchored" data-anchor-id="rh_diurnal">rh_diurnal</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> rh_diurnal(</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>    temperature, tmin, tmax, rh_min, rh_max</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>):</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>Linear RH disaggregation.</em></p>
+</section>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/ecamo19\.github\.io\/plant_hydraulics");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+          if (!link.classList.contains('no-external-icon')) {
+          }
+        }
+      }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
+          if (lineIds.length > 0) {
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            placeBand(gutterDiv, el, lastEl);
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ecamo19/plant_hydraulics/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
