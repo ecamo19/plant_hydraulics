@@ -826,7 +826,7 @@ class SurEauVegetationParams:
     K: float = 0.5
     
     # Transpiration formulation: "Jarvis" (Eq. 29), "Granier" or "Medlyn"
-    transpiration_model: str = "Medlyn"
+    transpiration_model: str = "Jarvis"
     
     # Granier transpiration quadratic coefficient for LAI (-)
     transpi_granier_a: float = -0.006

@@ -317,7 +317,7 @@ def Flux(
 
 ```python
 def SurEauVegetationParams(
-    Patm_photo:float=100.0, K:float=0.5, transpiration_model:str='Medlyn', transpi_granier_a:float=-0.006,
+    Patm_photo:float=100.0, K:float=0.5, transpiration_model:str='Jarvis', transpi_granier_a:float=-0.006,
     transpi_granier_b:float=0.134, transpi_granier_c:float=0.0, gmin20:float=4.0, TPhase_gmin:float=37.5,
     Q10_1_gmin:float=1.2, Q10_2_gmin:float=3.0, canopy_storage_param:float=1.5, k_plant_init:float=0.62,
     PT_coeff:float=1.14, LAI_max:float=4.5, P50_VC_leaf:float=-3.4, slope_VC_leaf:float=60.0,
