@@ -438,17 +438,29 @@ def run_sureau(
     climate_df["_doy"]  = parsed.dt.dayofyear
     
     
-    for each_YEAR in range(opts.year_start, opts.year_end + 1):
-        
-        # Flag for tree mortality
-        stop_dead = False
+    # Flag for tree mortality: persists across years when the plant is not reset
+    stop_dead = False
 
-        # Reset soil water content to field capacity at the start of each year 
+    for each_YEAR in range(opts.year_start, opts.year_end + 1):
+    
+        # Reset year-dependent plant state (PLC, cavitation memory, k_plant, 
+        # LAI_dead).
+        # SurEau-Ecos does this every year; reset_plant_yearly = False 
+        # carries damage across years, and a plant that died last year ends the 
+        # run.
+        first_year = each_YEAR == opts.year_start
+        
+        if opts.reset_plant_yearly or first_year:
+
+            state, fluxes, diag = yearly_init_plant(state, fluxes, diag, veg_params)
+            stop_dead = False
+            
+        elif stop_dead:
+            break
+
+        # Reset soil water content to field capacity at the start of each year
         if soil_params.reset_SWC:
             soil = set_SWC_to_field_capacity(soil, soil_params)
-
-        # Reset year-dependent plant state: reset the phenological cycle 
-        state, fluxes, diag = yearly_init_plant(state, fluxes, diag, veg_params)
 
         # Get all dates for this year from the climate DataFrame
         year_mask = climate_df["_year"] == each_YEAR

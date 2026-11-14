@@ -317,7 +317,7 @@ def Flux(
 
 ```python
 def SurEauVegetationParams(
-    Patm_photo:float=100.0, K:float=0.5, transpiration_model:str='Medlyn', transpi_granier_a:float=-0.006,
+    Patm_photo:float=100.0, K:float=0.5, transpiration_model:str='Jarvis', transpi_granier_a:float=-0.006,
     transpi_granier_b:float=0.134, transpi_granier_c:float=0.0, gmin20:float=4.0, TPhase_gmin:float=37.5,
     Q10_1_gmin:float=1.2, Q10_2_gmin:float=3.0, canopy_storage_param:float=1.5, k_plant_init:float=0.62,
     PT_coeff:float=1.14, LAI_max:float=4.5, P50_VC_leaf:float=-3.4, slope_VC_leaf:float=60.0,
@@ -573,8 +573,8 @@ and the adaptive sub-stepping strategy used in run_sureau.
 
 ```python
 def SurEauModelOptions(
-    year_start:int=2000, year_end:int=2000, latitude:float=43.9, longitude:float=43.9, elevation:float=0,
-    output_resolution:str='subdaily', ETP_formulation:str='PT', Rn_formulation:str='Linacre',
+    reset_plant_yearly:bool=True, year_start:int=2000, year_end:int=2000, latitude:float=43.9, longitude:float=43.9,
+    elevation:float=0, output_resolution:str='subdaily', ETP_formulation:str='PT', Rn_formulation:str='Linacre',
     constant_climate:bool=False, print_progress:bool=True, time_steps:ndarray=<factory>,
     comp_options:SurEauComputationOptions=<factory>
 )->None:
@@ -587,6 +587,9 @@ climate processing options, and numerical solver settings.
 References are from Ruffault et al. (2022), Geosci. Model Dev.,
 15, 5593–5626, where applicable.
 
+- reset_plant_yearly: Set False when the plant's state must persist across 
+                      calendar years. Note: with False, a deciduous canopy 
+                      regrows each spring on permanently embolised xylem 
 - year_start:        First year of the simulation period (int)
 - year_end:          Last year of the simulation period (int)
 - latitude:          Site latitude for daylength and solar geometry calculations (°, Eq. 19 context, Appendix A)
@@ -621,7 +624,7 @@ Design rationale (mirrors Bonan's Leaf → params, Flux → outputs):
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1400){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1410){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauPlantState
 
@@ -726,7 +729,7 @@ Geosci. Model Dev., 15, 5593–5626.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1640){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1650){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauPlantFluxes
 
@@ -797,7 +800,7 @@ fills them in from SurEauPlantState + atmospheric forcing.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1788){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1798){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauPlantDiagnostics
 
@@ -817,7 +820,7 @@ back into the hydraulic solver.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1820){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1830){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauSoil
 
@@ -851,7 +854,7 @@ back into the hydraulic solver.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1854){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1864){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauClimate
 
@@ -911,7 +914,7 @@ simulation.
 
 ---
 
-[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1920){target="_blank" style="float:right; font-size:smaller"}
+[source](https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1930){target="_blank" style="float:right; font-size:smaller"}
 
 ### SurEauClimateHourly
 

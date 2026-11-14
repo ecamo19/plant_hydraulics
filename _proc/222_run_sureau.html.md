@@ -279,3 +279,90 @@ __Key outputs for applications:__
         soil.SWC             → soil water content per layer
 
 
+
+# reset_plant_yearly test
+
+::: {#c7e6f03c .cell}
+``` {.python .cell-code}
+from plant_hydraulics.parameter_classes import (SurEauVegetationParams,
+                                                SurEauSoilParams, SurEauModelOptions)
+```
+:::
+
+
+::: {#54cad73e .cell}
+``` {.python .cell-code}
+# 1. synthetic driver: 2019-2020, hot and dry, no rain
+dates = pd.date_range("2019-01-01", "2020-12-31", freq="D")
+clim = pd.DataFrame({"DATE": dates.strftime("%Y-%m-%d"),
+                     "Tair_min": 18.0, "Tair_max": 34.0, "Tair_mean": 26.0,
+                     "RHair_min": 20.0, "RHair_max": 60.0, "RHair_mean": 40.0,
+                     "RG_sum": 25.0, "PPT_sum": 0.0, "WS_mean": 2.0})
+
+veg  = SurEauVegetationParams(foliage="Evergreen", defoliation=True,
+                              transpiration_model="Jarvis",  
+
+                              # keep the run alive past PLC 90
+                              threshold_mortality=101.0)      
+soil = SurEauSoilParams()
+```
+:::
+
+
+::: {#e0894975 .cell}
+``` {.python .cell-code}
+# 2. the two runs
+def boundary(reset):
+    out = run_sureau(clim, veg, soil,
+                     SurEauModelOptions(year_start=2019, year_end=2020,
+                                        reset_plant_yearly=reset, print_progress=False))
+    a = out[(out.year == 2019) & (out.doy == 365)].iloc[-1]
+    b = out[(out.year == 2020) & (out.doy == 1)].iloc[0]
+    return pd.DataFrame({"31 Dec 2019": a, "1 Jan 2020": b}).loc[
+        ["PLC_leaf", "PLC_stem", "LAI", "k_plant", "psi_soil_mean"]].round(3)
+```
+:::
+
+
+::: {#4d135322 .cell}
+``` {.python .cell-code}
+with np.errstate(divide="ignore"):
+    out_true = boundary(True)
+
+print(out_true)
+```
+
+::: {.cell-output .cell-output-stdout}
+```
+               31 Dec 2019  1 Jan 2020
+PLC_leaf           100.000      16.466
+PLC_stem            66.054      15.880
+LAI                  0.000       4.500
+k_plant              0.000       0.556
+psi_soil_mean       -3.396      -3.395
+```
+:::
+:::
+
+
+::: {#47e430be .cell}
+``` {.python .cell-code}
+with np.errstate(divide="ignore"):
+    out_false = boundary(False)
+
+print(out_false)
+```
+
+::: {.cell-output .cell-output-stdout}
+```
+               31 Dec 2019  1 Jan 2020
+PLC_leaf           100.000     100.000
+PLC_stem            66.054      66.054
+LAI                  0.000       0.000
+k_plant              0.000       0.000
+psi_soil_mean       -3.396      -3.396
+```
+:::
+:::
+
+

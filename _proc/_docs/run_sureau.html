@@ -362,6 +362,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#run_sureau" id="toc-run_sureau" class="nav-link active" data-scroll-target="#run_sureau">run_sureau</a></li>
+  <li><a href="#reset_plant_yearly-test" id="toc-reset_plant_yearly-test" class="nav-link" data-scroll-target="#reset_plant_yearly-test">reset_plant_yearly test</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/ecamo19/plant_hydraulics/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -564,6 +565,67 @@ Water balance:
     transpiration_mm     → total plant water loss
     flux_soil_to_stem_mm → soil water uptake per layer
     soil.SWC             → soil water content per layer</code></pre>
+</section>
+<section id="reset_plant_yearly-test" class="level1">
+<h1>reset_plant_yearly test</h1>
+<div id="c7e6f03c" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plant_hydraulics.parameter_classes <span class="im">import</span> (SurEauVegetationParams,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                                                SurEauSoilParams, SurEauModelOptions)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="54cad73e" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. synthetic driver: 2019-2020, hot and dry, no rain</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>dates <span class="op">=</span> pd.date_range(<span class="st">"2019-01-01"</span>, <span class="st">"2020-12-31"</span>, freq<span class="op">=</span><span class="st">"D"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>clim <span class="op">=</span> pd.DataFrame({<span class="st">"DATE"</span>: dates.strftime(<span class="st">"%Y-%m-</span><span class="sc">%d</span><span class="st">"</span>),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Tair_min"</span>: <span class="fl">18.0</span>, <span class="st">"Tair_max"</span>: <span class="fl">34.0</span>, <span class="st">"Tair_mean"</span>: <span class="fl">26.0</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"RHair_min"</span>: <span class="fl">20.0</span>, <span class="st">"RHair_max"</span>: <span class="fl">60.0</span>, <span class="st">"RHair_mean"</span>: <span class="fl">40.0</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"RG_sum"</span>: <span class="fl">25.0</span>, <span class="st">"PPT_sum"</span>: <span class="fl">0.0</span>, <span class="st">"WS_mean"</span>: <span class="fl">2.0</span>})</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>veg  <span class="op">=</span> SurEauVegetationParams(foliage<span class="op">=</span><span class="st">"Evergreen"</span>, defoliation<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                              transpiration_model<span class="op">=</span><span class="st">"Jarvis"</span>,  </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>                              <span class="co"># keep the run alive past PLC 90</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>                              threshold_mortality<span class="op">=</span><span class="fl">101.0</span>)      </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>soil <span class="op">=</span> SurEauSoilParams()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="e0894975" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. the two runs</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> boundary(reset):</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> run_sureau(clim, veg, soil,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                     SurEauModelOptions(year_start<span class="op">=</span><span class="dv">2019</span>, year_end<span class="op">=</span><span class="dv">2020</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                                        reset_plant_yearly<span class="op">=</span>reset, print_progress<span class="op">=</span><span class="va">False</span>))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> out[(out.year <span class="op">==</span> <span class="dv">2019</span>) <span class="op">&amp;</span> (out.doy <span class="op">==</span> <span class="dv">365</span>)].iloc[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> out[(out.year <span class="op">==</span> <span class="dv">2020</span>) <span class="op">&amp;</span> (out.doy <span class="op">==</span> <span class="dv">1</span>)].iloc[<span class="dv">0</span>]</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame({<span class="st">"31 Dec 2019"</span>: a, <span class="st">"1 Jan 2020"</span>: b}).loc[</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        [<span class="st">"PLC_leaf"</span>, <span class="st">"PLC_stem"</span>, <span class="st">"LAI"</span>, <span class="st">"k_plant"</span>, <span class="st">"psi_soil_mean"</span>]].<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="4d135322" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> np.errstate(divide<span class="op">=</span><span class="st">"ignore"</span>):</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    out_true <span class="op">=</span> boundary(<span class="va">True</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(out_true)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               31 Dec 2019  1 Jan 2020
+PLC_leaf           100.000      16.466
+PLC_stem            66.054      15.880
+LAI                  0.000       4.500
+k_plant              0.000       0.556
+psi_soil_mean       -3.396      -3.395</code></pre>
+</div>
+</div>
+<div id="47e430be" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> np.errstate(divide<span class="op">=</span><span class="st">"ignore"</span>):</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    out_false <span class="op">=</span> boundary(<span class="va">False</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(out_false)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               31 Dec 2019  1 Jan 2020
+PLC_leaf           100.000     100.000
+PLC_stem            66.054      66.054
+LAI                  0.000       0.000
+k_plant              0.000       0.000
+psi_soil_mean       -3.396      -3.396</code></pre>
+</div>
+</div>
 
 
 </section>
