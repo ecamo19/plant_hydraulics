@@ -1343,6 +1343,10 @@ class SurEauModelOptions:
     References are from Ruffault et al. (2022), Geosci. Model Dev.,
     15, 5593–5626, where applicable.
 
+    
+    - reset_plant_yearly: Set False when the plant's state must persist across 
+                          calendar years. Note: with False, a deciduous canopy 
+                          regrows each spring on permanently embolised xylem 
     - year_start:        First year of the simulation period (int)
     - year_end:          Last year of the simulation period (int)
     - latitude:          Site latitude for daylength and solar geometry calculations (°, Eq. 19 context, Appendix A)
@@ -1356,6 +1360,12 @@ class SurEauModelOptions:
     - time_steps:        Array of hours defining the sub-daily temporal resolution. Default np.arange(24) gives hourly resolution. The paper describes sub-daily resolution from 0.01 to 1800 s depending on scheme (Sect. 2.1, Table 2)
     - comp_options:      SurEauComputationOptions object controlling the numerical solver (Sect. 2.6, Appendix C)
     """
+
+    # Re-initialise the plant state (PLC, cavitation memory, k_plant, LAI_dead) 
+    # at the start of every simulation year, as SurEau-Ecos does. 
+    # False carries damage across years.   
+    reset_plant_yearly: bool = True
+
     # First year of the simulation period 
     year_start: int = 2000
     

@@ -927,14 +927,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="sureaumodeloptions" class="level3">
 <h3 class="anchored" data-anchor-id="sureaumodeloptions">SurEauModelOptions</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SurEauModelOptions(</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    year_start:<span class="bu">int</span><span class="op">=</span><span class="dv">2000</span>, year_end:<span class="bu">int</span><span class="op">=</span><span class="dv">2000</span>, latitude:<span class="bu">float</span><span class="op">=</span><span class="fl">43.9</span>, longitude:<span class="bu">float</span><span class="op">=</span><span class="fl">43.9</span>, elevation:<span class="bu">float</span><span class="op">=</span><span class="dv">0</span>,</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    output_resolution:<span class="bu">str</span><span class="op">=</span><span class="st">'subdaily'</span>, ETP_formulation:<span class="bu">str</span><span class="op">=</span><span class="st">'PT'</span>, Rn_formulation:<span class="bu">str</span><span class="op">=</span><span class="st">'Linacre'</span>,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    reset_plant_yearly:<span class="bu">bool</span><span class="op">=</span><span class="va">True</span>, year_start:<span class="bu">int</span><span class="op">=</span><span class="dv">2000</span>, year_end:<span class="bu">int</span><span class="op">=</span><span class="dv">2000</span>, latitude:<span class="bu">float</span><span class="op">=</span><span class="fl">43.9</span>, longitude:<span class="bu">float</span><span class="op">=</span><span class="fl">43.9</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    elevation:<span class="bu">float</span><span class="op">=</span><span class="dv">0</span>, output_resolution:<span class="bu">str</span><span class="op">=</span><span class="st">'subdaily'</span>, ETP_formulation:<span class="bu">str</span><span class="op">=</span><span class="st">'PT'</span>, Rn_formulation:<span class="bu">str</span><span class="op">=</span><span class="st">'Linacre'</span>,</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    constant_climate:<span class="bu">bool</span><span class="op">=</span><span class="va">False</span>, print_progress:<span class="bu">bool</span><span class="op">=</span><span class="va">True</span>, time_steps:ndarray<span class="op">=&lt;</span>factory<span class="op">&gt;</span>,</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    comp_options:SurEauComputationOptions<span class="op">=&lt;</span>factory<span class="op">&gt;</span></span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>)<span class="op">-&gt;</span><span class="va">None</span>:</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Simulation configuration for SurEau-Ecos.</em></p>
 <p>Controls the simulation period, site location, temporal resolution, climate processing options, and numerical solver settings. References are from Ruffault et al.&nbsp;(2022), Geosci. Model Dev., 15, 5593–5626, where applicable.</p>
 <ul>
+<li>reset_plant_yearly: Set False when the plant’s state must persist across calendar years. Note: with False, a deciduous canopy regrows each spring on permanently embolised xylem</li>
 <li>year_start: First year of the simulation period (int)</li>
 <li>year_end: Last year of the simulation period (int)</li>
 <li>latitude: Site latitude for daylength and solar geometry calculations (°, Eq. 19 context, Appendix A)</li>
@@ -964,7 +965,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="state-class-persists-across-timesteps" class="level3">
 <h3 class="anchored" data-anchor-id="state-class-persists-across-timesteps">State class: persists across timesteps</h3>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1400" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1410" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureauplantstate" class="level3">
 <h3 class="anchored" data-anchor-id="sureauplantstate">SurEauPlantState</h3>
@@ -1060,7 +1061,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="fluxes-class-recomputed-every-sub-timestep" class="level3">
 <h3 class="anchored" data-anchor-id="fluxes-class-recomputed-every-sub-timestep">Fluxes class: recomputed every (sub-)timestep</h3>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1640" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1650" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureauplantfluxes" class="level3">
 <h3 class="anchored" data-anchor-id="sureauplantfluxes">SurEauPlantFluxes</h3>
@@ -1126,7 +1127,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="diagnostics-class-solver-quality-derived-monitoring-outputs-class" class="level3">
 <h3 class="anchored" data-anchor-id="diagnostics-class-solver-quality-derived-monitoring-outputs-class">Diagnostics class: solver quality + derived monitoring outputs class</h3>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1788" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1798" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureauplantdiagnostics" class="level3">
 <h3 class="anchored" data-anchor-id="sureauplantdiagnostics">SurEauPlantDiagnostics</h3>
@@ -1138,7 +1139,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><em>Solver diagnostics and derived fire/moisture outputs.</em></p>
 <p>Used for logging, quality control, and post-processing — never fed back into the hydraulic solver.</p>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1820" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1830" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureausoil" class="level3">
 <h3 class="anchored" data-anchor-id="sureausoil">SurEauSoil</h3>
@@ -1166,7 +1167,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 </ul>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1854" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1864" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureauclimate" class="level3">
 <h3 class="anchored" data-anchor-id="sureauclimate">SurEauClimate</h3>
@@ -1220,7 +1221,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 </ul>
 <hr>
-<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1920" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/ecamo19/plant_hydraulics/blob/main/plant_hydraulics/parameter_classes.py#L1930" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="sureauclimatehourly" class="level3">
 <h3 class="anchored" data-anchor-id="sureauclimatehourly">SurEauClimateHourly</h3>
