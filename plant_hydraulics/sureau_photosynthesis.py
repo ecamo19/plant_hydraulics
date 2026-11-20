@@ -213,8 +213,10 @@ def calculate_gs_medlyn(
         fluxes.leaf_temperature, clim["PAR"], fluxes.leaf_VPD, params
     )
     
-    #Convert mol to mmol (SurEau convention)
-    fluxes.gs_bound = gs_mol * 1000.0               
+    # Night / low-light floor, as in the Jarvis branch: the Medlyn intercept g0
+    # defaults to 0, so without this the canopy conductance (Eq. 29) divides 
+    # by zero.
+    fluxes.gs_bound = max(gs_mol * 1000.0, params.gs_night)           
     fluxes.An = An
     fluxes.ci = ci
     fluxes.cs = cs
